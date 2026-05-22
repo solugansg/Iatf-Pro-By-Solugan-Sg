@@ -1,4 +1,4 @@
-const CACHE_NAME = 'iatf-pro-cache-v3';
+const CACHE_NAME = 'iatf-pro-cache-v4';
 const ASSETS = [
   './',
   './index.html',
@@ -7,7 +7,10 @@ const ASSETS = [
   './app.js',
   './manifest.json',
   './icon-192.jpg',
-  './icon-512.jpg'
+  './icon-512.jpg',
+  'https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js',
+  'https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js',
+  'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js'
 ];
 
 // Instalar Service Worker y guardar en caché los recursos base

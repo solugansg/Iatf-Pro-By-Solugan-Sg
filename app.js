@@ -1,3 +1,229 @@
+// ==========================================
+// CONFIGURACIÓN E INTEGRACIÓN DE FIREBASE
+// ==========================================
+const firebaseConfig = {
+  apiKey: "AIzaSyAxY70iSsexqNcAIm6h1ygCTzt2QHZ8umw",
+  authDomain: "iatf-pro-by-solugan-sg.firebaseapp.com",
+  projectId: "iatf-pro-by-solugan-sg",
+  storageBucket: "iatf-pro-by-solugan-sg.firebasestorage.app",
+  messagingSenderId: "171982395464",
+  appId: "1:171982395464:web:9302b7ae708b69097de07d"
+};
+
+// Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+// Habilitar persistencia offline en Firestore para uso sin conexión
+db.enablePersistence()
+  .catch((err) => {
+    if (err.code == 'failed-precondition') {
+      console.warn("Persistencia Firestore: Múltiples pestañas abiertas.");
+    } else if (err.code == 'unimplemented') {
+      console.warn("Persistencia Firestore: Navegador no compatible.");
+    }
+  });
+
+const ADMIN_EMAIL = "solugansg@gmail.com";
+
+// Escuchar cambios en el estado de autenticación
+auth.onAuthStateChanged(user => {
+  const authContainer = document.getElementById('auth-container');
+  const appMainLayout = document.getElementById('app-main-layout');
+  const navBtnAdmin = document.getElementById('nav-btn-admin');
+
+  if (user) {
+    // Usuario autenticado
+    authContainer.style.display = 'none';
+    appMainLayout.style.display = 'flex';
+    
+    // Si el usuario es el administrador, mostrar pestaña de administración
+    if (user.email === ADMIN_EMAIL) {
+      navBtnAdmin.style.display = 'inline-flex';
+      cargarUsuariosAdmin();
+    } else {
+      navBtnAdmin.style.display = 'none';
+    }
+    
+    // Recalcular tablero de control inicial
+    if (typeof calcTableroControl === 'function') {
+      calcTableroControl();
+    }
+  } else {
+    // Usuario no autenticado
+    authContainer.style.display = 'flex';
+    appMainLayout.style.display = 'none';
+    navBtnAdmin.style.display = 'none';
+  }
+  lucide.createIcons();
+});
+
+// Funciones para alternar formularios de autenticación
+window.showLoginForm = function() {
+  document.getElementById('register-form').style.display = 'none';
+  document.getElementById('login-form').style.display = 'block';
+  document.getElementById('auth-subtitle').innerText = "Inicia sesión para continuar";
+};
+
+window.showRegisterForm = function() {
+  document.getElementById('register-form').style.display = 'block';
+  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('auth-subtitle').innerText = "Crea tu cuenta para comenzar a usar la app";
+};
+
+// Registro de usuarios
+window.handleRegister = function(event) {
+  event.preventDefault();
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const phone = document.getElementById('reg-phone').value.trim();
+  const finca = document.getElementById('reg-finca').value.trim();
+  const pass = document.getElementById('reg-pass').value;
+
+  if (pass.length < 6) {
+    alert("La contraseña debe tener al menos 6 caracteres.");
+    return;
+  }
+
+  const btn = event.target.querySelector('button[type="submit"]');
+  const origText = btn.innerText;
+  btn.disabled = true;
+  btn.innerText = "Registrando...";
+
+  auth.createUserWithEmailAndPassword(email, pass)
+    .then(cred => {
+      // Guardar información extendida del usuario en Firestore Database
+      return db.collection("users").doc(cred.user.uid).set({
+        uid: cred.user.uid,
+        name: name,
+        email: email,
+        phone: phone,
+        finca: finca,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    })
+    .then(() => {
+      console.log("Registro completado con éxito en Auth y Firestore");
+    })
+    .catch(err => {
+      btn.disabled = false;
+      btn.innerText = origText;
+      console.error("Error en registro:", err);
+      alert("Error al registrarse: " + traducirErrorFirebase(err.code));
+    });
+};
+
+// Inicio de sesión
+window.handleLogin = function(event) {
+  event.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-pass').value;
+
+  const btn = event.target.querySelector('button[type="submit"]');
+  const origText = btn.innerText;
+  btn.disabled = true;
+  btn.innerText = "Iniciando sesión...";
+
+  auth.signInWithEmailAndPassword(email, pass)
+    .then(() => {
+      console.log("Sesión iniciada con éxito");
+    })
+    .catch(err => {
+      btn.disabled = false;
+      btn.innerText = origText;
+      console.error("Error en login:", err);
+      alert("Error al iniciar sesión: " + traducirErrorFirebase(err.code));
+    });
+};
+
+// Cierre de sesión
+window.handleLogout = function() {
+  if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+    auth.signOut()
+      .then(() => {
+        // Limpiar campos
+        document.getElementById('login-email').value = '';
+        document.getElementById('login-pass').value = '';
+        document.getElementById('reg-name').value = '';
+        document.getElementById('reg-email').value = '';
+        document.getElementById('reg-phone').value = '';
+        document.getElementById('reg-finca').value = '';
+        document.getElementById('reg-pass').value = '';
+        showRegisterForm();
+      })
+      .catch(err => {
+        console.error("Error al cerrar sesión:", err);
+      });
+  }
+};
+
+// Traducir códigos de error de Firebase
+function traducirErrorFirebase(code) {
+  switch (code) {
+    case 'auth/email-already-in-use':
+      return "Este correo electrónico ya está registrado por otro usuario.";
+    case 'auth/invalid-email':
+      return "El formato del correo electrónico no es válido.";
+    case 'auth/weak-password':
+      return "La contraseña es muy débil. Debe tener al menos 6 caracteres.";
+    case 'auth/user-not-found':
+    case 'auth/wrong-password':
+      return "Correo o contraseña incorrectos. Por favor verifica tus credenciales.";
+    case 'auth/network-request-failed':
+      return "Error de conexión de red. Inténtalo de nuevo más tarde.";
+    default:
+      return "Ocurrió un error inesperado. Código: " + code;
+  }
+}
+
+// Cargar lista de usuarios para el administrador
+window.cargarUsuariosAdmin = function() {
+  const tbody = document.getElementById('admin-users-body');
+  const totalUsersEl = document.getElementById('admin-total-users');
+  if (!tbody) return;
+
+  tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;" class="text-muted">Cargando usuarios...</td></tr>';
+
+  db.collection("users").orderBy("createdAt", "desc").get()
+    .then(querySnapshot => {
+      tbody.innerHTML = '';
+      totalUsersEl.innerText = querySnapshot.size;
+
+      if (querySnapshot.empty) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;" class="text-muted">No hay usuarios registrados.</td></tr>';
+        return;
+      }
+
+      querySnapshot.forEach(doc => {
+        const userData = doc.data();
+        let fechaStr = "N/A";
+        if (userData.createdAt) {
+          const d = userData.createdAt.toDate();
+          fechaStr = d.toLocaleString('es-ES', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+        
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${userData.name || 'Sin nombre'}</strong></td>
+          <td>${userData.email || 'N/A'}</td>
+          <td>
+            <a href="https://wa.me/${(userData.phone || '').replace(/[^0-9]/g, '')}" target="_blank" style="color: #10b981; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; font-weight: 500;">
+              ${userData.phone || 'N/A'}
+            </a>
+          </td>
+          <td>${userData.finca || 'N/A'}</td>
+          <td>${fechaStr}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("Error al cargar usuarios de Firestore:", err);
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--danger);">Error al cargar datos. Asegúrate de tener permisos de administrador.</td></tr>`;
+    });
+};
+
 // Formatter and Icons
 const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
 lucide.createIcons();

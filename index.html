@@ -9,10 +9,67 @@
   <meta name="theme-color" content="#0ea5e9">
   <link rel="apple-touch-icon" href="icon-192.jpg">
   <script src="lucide.min.js"></script>
+  <!-- Firebase Compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
-  <div class="app-container">
+  <!-- Pantalla de Login / Registro (Oculta tras verificar sesión) -->
+  <div id="auth-container" class="auth-wrapper" style="display: none;">
+    <div class="auth-card glass-panel">
+      <div class="auth-header">
+        <div class="logo-icon large">
+          <i data-lucide="activity"></i>
+        </div>
+        <h2>Iatf<span class="text-accent"> Pro</span></h2>
+        <p id="auth-subtitle">Crea tu cuenta para comenzar a usar la app</p>
+      </div>
+
+      <!-- Formulario de Registro -->
+      <form id="register-form" onsubmit="handleRegister(event)">
+        <div class="input-group">
+          <label>Nombre Completo</label>
+          <input type="text" id="reg-name" required placeholder="Ej: Juan Pérez">
+        </div>
+        <div class="input-group">
+          <label>Correo Electrónico</label>
+          <input type="email" id="reg-email" required placeholder="ejemplo@correo.com">
+        </div>
+        <div class="input-group">
+          <label>Teléfono / WhatsApp</label>
+          <input type="tel" id="reg-phone" required placeholder="Ej: +57 300 123 4567">
+        </div>
+        <div class="input-group">
+          <label>Finca o Empresa</label>
+          <input type="text" id="reg-finca" required placeholder="Nombre de tu finca">
+        </div>
+        <div class="input-group">
+          <label>Contraseña</label>
+          <input type="password" id="reg-pass" required placeholder="Mínimo 6 caracteres">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Registrarse y Comenzar</button>
+        <p class="auth-toggle">¿Ya tienes cuenta? <span onclick="showLoginForm()">Inicia Sesión</span></p>
+      </form>
+
+      <!-- Formulario de Login -->
+      <form id="login-form" onsubmit="handleLogin(event)" style="display: none;">
+        <div class="input-group">
+          <label>Correo Electrónico</label>
+          <input type="email" id="login-email" required placeholder="ejemplo@correo.com">
+        </div>
+        <div class="input-group">
+          <label>Contraseña</label>
+          <input type="password" id="login-pass" required placeholder="Ingresa tu contraseña">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+        <p class="auth-toggle">¿No tienes cuenta? <span onclick="showRegisterForm()">Regístrate</span></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="app-container" id="app-main-layout" style="display: none;">
     <aside class="sidebar glass-panel">
       <div class="sidebar-header">
         <div class="logo-icon">
@@ -40,10 +97,16 @@
         <button class="nav-btn" data-target="resultados">
           <i data-lucide="layout-dashboard"></i> Resultados
         </button>
+        <button class="nav-btn" data-target="admin-users" id="nav-btn-admin" style="display: none; border-left: 3px solid #f59e0b; color: #f59e0b; background: rgba(245, 158, 11, 0.03);">
+          <i data-lucide="users"></i> Usuarios (Admin)
+        </button>
       </nav>
 
-      <div class="sidebar-footer">
-        <p>Iatf Pro · Solugan SG</p>
+      <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 0.75rem; align-items: center;">
+        <p style="margin: 0;">Iatf Pro · Solugan SG</p>
+        <button class="btn" id="btn-logout" onclick="handleLogout()" style="padding: 0.4rem 0.8rem; font-size: 0.75rem; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2); width: 85%; justify-content: center;">
+          <i data-lucide="log-out" style="width: 12px; height: 12px;"></i> Cerrar Sesión
+        </button>
       </div>
     </aside>
 
@@ -338,6 +401,47 @@
 
       <section id="resultados" class="tab-content view-transition">
         <header class="section-header"><h1>Resultados</h1></header>
+      </section>
+
+      <!-- 7. PANEL DE ADMINISTRADOR -->
+      <section id="admin-users" class="tab-content view-transition">
+        <header class="section-header">
+          <h1>Panel de Administración</h1>
+          <p>Visualiza y gestiona las personas registradas en tu aplicación</p>
+        </header>
+
+        <div class="stats-grid mb-2">
+          <div class="stat-card glass-panel" style="background: rgba(14, 165, 233, 0.05); border-left: 4px solid var(--accent);">
+            <div class="stat-icon">
+              <i data-lucide="users"></i>
+            </div>
+            <div class="stat-info">
+              <h3>Total Usuarios Registrados</h3>
+              <div class="stat-value text-accent" id="admin-total-users">0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel p-2">
+          <div class="table-responsive">
+            <table class="data-table" id="tabla-usuarios-admin" style="font-size: 0.9rem; min-width: 700px;">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th>Teléfono</th>
+                  <th>Finca</th>
+                  <th>Fecha de Registro</th>
+                </tr>
+              </thead>
+              <tbody id="admin-users-body">
+                <tr>
+                  <td colspan="5" style="text-align: center;" class="text-muted">Cargando datos...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
 
     </main>
