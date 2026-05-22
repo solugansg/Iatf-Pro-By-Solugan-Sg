@@ -1,0 +1,13 @@
+{
+  "name": "iatf-pro",
+  "version": "1.0.0",
+  "description": "Iatf Pro - Analisis de Costos con proteccion de formulas y soporte offline",
+  "main": "app.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "javascript-obfuscator": "^4.1.0"
+  }
+}
