@@ -11,7 +11,7 @@ if (!fs.existsSync(distDir)) {
 }
 
 // Archivos que se copian tal cual
-const filesToCopy = ['index.html', 'style.css', 'lucide.min.js', 'sw.js', 'manifest.json', 'icon-192.png', 'icon-512.png'];
+const filesToCopy = ['index.html', 'style.css', 'lucide.min.js', 'sw.js', 'manifest.json', 'icon-192.jpg', 'icon-512.jpg'];
 
 filesToCopy.forEach(file => {
   const srcPath = path.join(srcDir, file);

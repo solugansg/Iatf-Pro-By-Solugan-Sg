@@ -1,10 +1,13 @@
-const CACHE_NAME = 'iatf-pro-cache-v2';
+const CACHE_NAME = 'iatf-pro-cache-v3';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './lucide.min.js',
-  './app.js'
+  './app.js',
+  './manifest.json',
+  './icon-192.jpg',
+  './icon-512.jpg'
 ];
 
 // Instalar Service Worker y guardar en caché los recursos base
