@@ -1,7 +1,7 @@
 ﻿// Iatf Pro by Solugan SG - Service Worker v2.8.2
 const CACHE_NAME = 'iatfpro-v2.8.2';
 
-// Todos los archivos que se guardan en cachÃ© para uso offline
+// Todos los archivos que se guardan en caché para uso offline
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -14,7 +14,7 @@ const ASSETS_TO_CACHE = [
   '/icon-512.png',
   '/apple-touch-icon.png',
   '/Logo Iatf Pro.png',
-  // LibrerÃ­as locales
+  // Librerías locales
   '/libs/chart.min.js',
   '/libs/chartjs-plugin-datalabels.min.js',
   '/libs/html2pdf.min.js',
@@ -26,7 +26,7 @@ const ASSETS_TO_CACHE = [
   '/fonts/inter-800.ttf'
 ];
 
-// â”€â”€â”€ INSTALL: Descargar y cachear todo al instalar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── INSTALL: Descargar y cachear todo al instalar ───────────────────────────
 self.addEventListener('install', (event) => {
   console.log('[Iatf Pro SW] Instalando y cacheando recursos...');
   event.waitUntil(
@@ -39,33 +39,33 @@ self.addEventListener('install', (event) => {
         )
       );
     }).then(() => {
-      console.log('[Iatf Pro SW] InstalaciÃ³n completa. App lista para uso offline.');
+      console.log('[Iatf Pro SW] Instalación completa. App lista para uso offline.');
       return self.skipWaiting(); // Activar inmediatamente
     })
   );
 });
 
-// â”€â”€â”€ ACTIVATE: Limpiar cachÃ©s viejos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── ACTIVATE: Limpiar cachés viejos ─────────────────────────────────────────
 self.addEventListener('activate', (event) => {
-  console.log('[Iatf Pro SW] Activando nueva versiÃ³n...');
+  console.log('[Iatf Pro SW] Activando nueva versión...');
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames
           .filter(name => name !== CACHE_NAME)
           .map(name => {
-            console.log(`[SW] Eliminando cachÃ© viejo: ${name}`);
+            console.log(`[SW] Eliminando caché viejo: ${name}`);
             return caches.delete(name);
           })
       );
     }).then(() => {
-      console.log('[Iatf Pro SW] Activado. Controlando todas las pestaÃ±as.');
+      console.log('[Iatf Pro SW] Activado. Controlando todas las pestañas.');
       return self.clients.claim();
     })
   );
 });
 
-// â”€â”€â”€ FETCH: Servir desde cachÃ©, con red como respaldo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── FETCH: Servir desde caché, con red como respaldo ────────────────────────
 self.addEventListener('fetch', (event) => {
   // Solo manejar solicitudes GET
   if (event.request.method !== 'GET') return;
@@ -75,7 +75,7 @@ self.addEventListener('fetch', (event) => {
 
   event.respondWith(
     caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
-      // Si estÃ¡ en cachÃ© â†’ usar cachÃ© (funciona offline)
+      // Si está en caché → usar caché (funciona offline)
       if (cachedResponse) {
         // En segundo plano, intentar actualizar desde red
         fetch(event.request)
@@ -91,10 +91,10 @@ self.addEventListener('fetch', (event) => {
         return cachedResponse;
       }
 
-      // Si NO estÃ¡ en cachÃ© â†’ intentar red
+      // Si NO está en caché → intentar red
       return fetch(event.request)
         .then(networkResponse => {
-          // Guardar en cachÃ© para la prÃ³xima vez
+          // Guardar en caché para la próxima vez
           if (networkResponse && networkResponse.status === 200) {
             const responseClone = networkResponse.clone();
             caches.open(CACHE_NAME).then(cache => {
@@ -104,7 +104,7 @@ self.addEventListener('fetch', (event) => {
           return networkResponse;
         })
         .catch(() => {
-          // Sin cachÃ© y sin internet â†’ mostrar pÃ¡gina offline bÃ¡sica
+          // Sin caché y sin internet → mostrar página offline básica
           if (event.request.destination === 'document') {
             return caches.match('/index.html');
           }
@@ -113,7 +113,7 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
-// â”€â”€â”€ MESSAGE: Forzar actualizaciÃ³n desde la app â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── MESSAGE: Forzar actualización desde la app ───────────────────────────────
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();

@@ -1,4 +1,4 @@
-// ==========================================
+﻿// ==========================================
 // CONFIGURACIÓN E INTEGRACIÓN DE FIREBASE
 // ==========================================
 const firebaseConfig = {
@@ -364,21 +364,21 @@ window.dashCatCosts = { pi: { hormonas:0, genetica:0, asistencia:0, diagnostico:
 window.isResx1 = function(p) {
   if(!p || !p.name) return false;
   let n = p.name.toLowerCase();
-  return n.includes('resincronizacion 1') || n.includes('resincronizaciÃ³n 1') || n.includes('resx 1') || n.includes('resx1') || n === 'rec 1' || p.role === 'resx1';
+  return n.includes('resincronizacion 1') || n.includes('resincronización 1') || n.includes('resx 1') || n.includes('resx1') || n === 'rec 1' || p.role === 'resx1';
 };
 window.isResx2 = function(p) {
   if(!p || !p.name) return false;
   let n = p.name.toLowerCase();
-  return n.includes('resincronizacion 2') || n.includes('resincronizaciÃ³n 2') || n.includes('resx 2') || n.includes('resx2') || n === 'rec 2' || p.role === 'resx2';
+  return n.includes('resincronizacion 2') || n.includes('resincronización 2') || n.includes('resx 2') || n.includes('resx2') || n === 'rec 2' || p.role === 'resx2';
 };
 window.getResx1 = function(matriz) {
   if(!matriz) return null;
-  let p = matriz.find(x => { let n = (x.name||'').toLowerCase(); return n.includes('resincronizacion 1') || n.includes('resincronizaciÃ³n 1') || n.includes('resx 1') || n.includes('resx1') || n === 'rec 1'; });
+  let p = matriz.find(x => { let n = (x.name||'').toLowerCase(); return n.includes('resincronizacion 1') || n.includes('resincronización 1') || n.includes('resx 1') || n.includes('resx1') || n === 'rec 1'; });
   return p || matriz.find(x => x.role === 'resx1');
 };
 window.getResx2 = function(matriz) {
   if(!matriz) return null;
-  let p = matriz.find(x => { let n = (x.name||'').toLowerCase(); return n.includes('resincronizacion 2') || n.includes('resincronizaciÃ³n 2') || n.includes('resx 2') || n.includes('resx2') || n === 'rec 2'; });
+  let p = matriz.find(x => { let n = (x.name||'').toLowerCase(); return n.includes('resincronizacion 2') || n.includes('resincronización 2') || n.includes('resx 2') || n.includes('resx2') || n === 'rec 2'; });
   return p || matriz.find(x => x.role === 'resx2');
 };
 
@@ -390,21 +390,21 @@ window.translations = {
     sidebar_resx1: "ReSx1",
     sidebar_resx2: "ReSx2",
     sidebar_dash_roi: "Dashboard y ROI",
-    sidebar_history: "Buscador HistÃ³rico",
-    sidebar_info: "Tablas de InformaciÃ³n",
+    sidebar_history: "Buscador Histórico",
+    sidebar_info: "Tablas de Información",
     tc_title: "TABLERO DE CONTROL CARNE Y LECHE",
-    tc_subtitle: "MÃ©tricas productivas base y matriz de programaciÃ³n de protocolos",
+    tc_subtitle: "Métricas productivas base y matriz de programación de protocolos",
     tc_finca: "Finca",
     tc_nit: "NIT / C.C.",
-    tc_pais: "PaÃ­s",
-    tc_movil: "MÃ³vil / WhatsApp",
-    tc_ganaderia: "Tipo de GanaderÃ­a",
-    tc_leche_title: "ProducciÃ³n de Leche",
-    tc_carne_title: "ProducciÃ³n de Carne",
+    tc_pais: "País",
+    tc_movil: "Móvil / WhatsApp",
+    tc_ganaderia: "Tipo de Ganadería",
+    tc_leche_title: "Producción de Leche",
+    tc_carne_title: "Producción de Carne",
     tc_precio_leche: "Precio Venta Litro Leche",
     tc_precio_carne: "Precio Venta Kilo Carne",
-    tc_duracion: "DuraciÃ³n Lactancia",
-    tc_duracion_carne: "DÃ­as a Destete",
+    tc_duracion: "Duración Lactancia",
+    tc_duracion_carne: "Días a Destete",
     tc_litros: "Litros Por Lactancia",
     tc_peso: "Peso Destete",
     tc_promedio_lts: "Promedio Lts/Animal",
@@ -419,62 +419,62 @@ window.translations = {
     btn_show: "MOSTRAR",
     btn_hide: "OCULTAR",
     btn_delete: "BORRAR DATOS",
-    btn_config: "ConfiguraciÃ³n precios y dosis",
+    btn_config: "Configuración precios y dosis",
     btn_excel: "EXCEL",
     btn_pdf: "PDF",
     pi_title: "Protocolo Inicial",
-    pi_subtitle: "GeneraciÃ³n de cronograma detallado comercial y aplicado.",
+    pi_subtitle: "Generación de cronograma detallado comercial y aplicado.",
     pi_date: "Fecha de Inicio",
     pi_time: "Hora de Inicio",
     pi_select_p: "Protocolo a Sincronizar",
     pi_animals: "Animales a Sincronizar",
-    pi_preg: "PreÃ±eces (Proyectado o Dx1 Real)",
-    pi_include_resync: "Â¿Deseas incluir fases de resincronizaciÃ³n?",
-    pi_include_resx1: "INCLUIR ResincronizaciÃ³n 1",
-    pi_include_resx2: "INCLUIR ResincronizaciÃ³n 2",
-    resx1_title: "ResincronizaciÃ³n 1 (ReSx1)",
-    resx1_subtitle: "GestiÃ³n de animales vacÃ­os tras el primer diagnÃ³stico (Dx1).",
-    resx1_animals: "Animales en ResincronizaciÃ³n (VacÃ­as PI)",
-    resx2_title: "ResincronizaciÃ³n 2 (ReSx2)",
-    resx2_subtitle: "GestiÃ³n de animales vacÃ­os tras el segundo diagnÃ³stico (Dx2).",
-    resx2_animals: "Animales en ResincronizaciÃ³n (VacÃ­as ReSx1)",
-    dash_title: "Reporte de SincronizaciÃ³n y ROI",
+    pi_preg: "Preñeces (Proyectado o Dx1 Real)",
+    pi_include_resync: "¿Deseas incluir fases de resincronización?",
+    pi_include_resx1: "INCLUIR Resincronización 1",
+    pi_include_resx2: "INCLUIR Resincronización 2",
+    resx1_title: "Resincronización 1 (ReSx1)",
+    resx1_subtitle: "Gestión de animales vacíos tras el primer diagnóstico (Dx1).",
+    resx1_animals: "Animales en Resincronización (Vacías PI)",
+    resx2_title: "Resincronización 2 (ReSx2)",
+    resx2_subtitle: "Gestión de animales vacíos tras el segundo diagnóstico (Dx2).",
+    resx2_animals: "Animales en Resincronización (Vacías ReSx1)",
+    dash_title: "Reporte de Sincronización y ROI",
     dash_protocolo: "Protocolo",
     dash_animales: "Animales Sincronizados",
-    stat_inversion: "InversiÃ³n Total Aplicada",
+    stat_inversion: "Inversión Total Aplicada",
     stat_ingreso: "Ingreso Bruto Proyectado",
-    stat_costo_p: "Costo por PreÃ±ez",
-    stat_exito: "Ã‰xito Reproductivo",
-    stat_roi: "Retorno InversiÃ³n (ROI)",
+    stat_costo_p: "Costo por Preñez",
+    stat_exito: "Éxito Reproductivo",
+    stat_roi: "Retorno Inversión (ROI)",
     stat_utilidad: "Utilidad Neta Proyectada",
     dash_roi_table: "Resumen Financiero (ROI)",
-    dash_investment_breakdown: "Desglose de InversiÃ³n",
-    hist_title: "Buscador HistÃ³rico de Protocolos",
-    hist_subtitle: "Consulta el histÃ³rico de trabajos realizados filtrando por NIT.",
+    dash_investment_breakdown: "Desglose de Inversión",
+    hist_title: "Buscador Histórico de Protocolos",
+    hist_subtitle: "Consulta el histórico de trabajos realizados filtrando por NIT.",
     hist_btn: "BUSCAR AHORA",
-    modal_title: "ConfiguraciÃ³n de Precios e Insumos",
+    modal_title: "Configuración de Precios e Insumos",
     modal_subtitle: "Mostrando exclusivamente los insumos requeridos por el protocolo actual.",
     col_insumo: "Insumo / Servicio",
-    col_dosis: "Dosis EstÃ¡ndar",
-    col_presentacion: "PresentaciÃ³n Producto",
+    col_dosis: "Dosis Estándar",
+    col_presentacion: "Presentación Producto",
     col_valor_c: "VALOR DE COMPRA",
     col_cant: "Cant. a comprar",
     col_costo_total: "Costo Consolidado ($)",
     col_valor_d: "VALOR DOSIS ($)",
     modal_total_hormonas: "TOTAL COMPRA HORMONAS:",
-    info_title: "Tablas de InformaciÃ³n y Referencia",
-    info_subtitle: "Consulta de parÃ¡metros tÃ©cnicos y bases de datos del sistema.",
+    info_title: "Tablas de Información y Referencia",
+    info_subtitle: "Consulta de parámetros técnicos y bases de datos del sistema.",
     tc_matriz_title: "MATRIZ DE PROTOCOLOS",
     btn_show_p: "MOSTRAR PROTOCOLO",
     btn_hide_p: "OCULTAR PROTOCOLO",
     btn_reset: "Restaurar Base",
     btn_save: "Guardar y Bloquear",
-    // CategorÃ­as
+    // Categorías
     cat_hormonas: "MEDICAMENTOS HORMONALES",
-    cat_asistencia: "ASISTENCIA TÃ‰CNICA",
+    cat_asistencia: "ASISTENCIA TÉCNICA",
     cat_iate: "HONORARIOS IA / TE",
-    cat_genetica: "MATERIAL GENÃ‰TICO",
-    cat_diagnostico: "DIAGNÃ“STICO Y OTROS",
+    cat_genetica: "MATERIAL GENÉTICO",
+    cat_diagnostico: "DIAGNÓSTICO Y OTROS",
     // Insumos y Actividades
     ins_dib: "Dispositivo Intravaginal Bovino",
     ins_be1: "Benzoato de Estradiol (1a Dosis)",
@@ -486,15 +486,15 @@ window.translations = {
     ins_pgf3: "Prostaglandina (3a Dosis)",
     ins_ecg: "eCG (Gonadotropina)",
     ins_ce: "Cipionato de Estradiol",
-    ins_gen: "GenÃ©tica (Semen/EmbriÃ³n)",
-    ins_mo1: "Asistencia TÃ©cnica 1",
-    ins_mo2: "Asistencia TÃ©cnica 2",
+    ins_gen: "Genética (Semen/Embrión)",
+    ins_mo1: "Asistencia Técnica 1",
+    ins_mo2: "Asistencia Técnica 2",
     ins_iate: "IA / TE",
-    ins_dx1: "DiagnÃ³stico PreÃ±ez Dx1",
-    ins_dx2: "DiagnÃ³stico PreÃ±ez Dx2",
+    ins_dx1: "Diagnóstico Preñez Dx1",
+    ins_dx2: "Diagnóstico Preñez Dx2",
     ins_retdib: "Retiro DIB",
-    ins_opu: "AspiraciÃ³n Folicular (OPU)",
-    act_ia: "EVENTO: INSEMINACIÃ“N ARTIFICIAL",
+    ins_opu: "Aspiración Folicular (OPU)",
+    act_ia: "EVENTO: INSEMINACIÓN ARTIFICIAL",
     obs_label: "Obs:",
     pi_hormones_ref: "Hormonas/Vaca",
     pi_iate_ref: "IA/TE/Vaca",
@@ -502,8 +502,8 @@ window.translations = {
     r1_iate_ref: "IA/TE/Vaca",
     r2_hormones_ref: "Hormonas/Vaca",
     r2_iate_ref: "IA/TE/Vaca",
-    btn_contact_wa: "ContÃ¡ctenos",
-    contact_placeholder: "Escribe tu mensaje aquÃ­..."
+    btn_contact_wa: "Contáctenos",
+    contact_placeholder: "Escribe tu mensaje aquí..."
   },
   en: {
     sidebar_dashboard: "Control Dashboard",
@@ -590,7 +590,7 @@ window.translations = {
     btn_hide_p: "HIDE PROTOCOL",
     btn_reset: "Restore Base",
     btn_save: "Save and Lock",
-    // CategorÃ­as
+    // Categorías
     cat_hormonas: "HORMONAL MEDICATIONS",
     cat_asistencia: "TECHNICAL ASSISTANCE",
     cat_iate: "AI / ET FEES",
@@ -628,7 +628,7 @@ window.translations = {
   }
 };
 
-// Helper de traducciÃ³n - FUNCIÃ“N CRÃTICA
+// Helper de traducción - FUNCIÓN CRÍTICA
 window.t = function(key) {
   const lang = window.currentLang || 'es';
   return (window.translations[lang] && window.translations[lang][key]) 
@@ -664,13 +664,13 @@ window.changeLanguage = function(lang) {
   const selector = document.getElementById('language-selector');
   if (selector) selector.value = lang;
 
-  // Re-renderizar componentes dinÃ¡micos
+  // Re-renderizar componentes dinámicos
   if (typeof updateResultados === 'function') updateResultados();
   if (typeof calcTableroControl === 'function') calcTableroControl();
   lucide.createIcons();
 };
 
-// Ejecutar al cargar si no es espaÃ±ol
+// Ejecutar al cargar si no es español
 document.addEventListener('DOMContentLoaded', () => {
   if (window.currentLang !== 'es') {
     setTimeout(() => changeLanguage(window.currentLang), 100);
@@ -745,14 +745,14 @@ window.spinVal = function(id, step, isCurrency) {
   } else {
     el.value = current;
   }
-  // Disparar recÃ¡lculo
+  // Disparar recálculo
   el.dispatchEvent(new Event('input', { bubbles: true }));
   el.dispatchEvent(new Event('change', { bubbles: true }));
   if (typeof calcTableroControl === 'function') calcTableroControl();
   if (typeof debouncedSave === 'function') debouncedSave();
 };
 
-// Soporte para incremento rÃ¡pido al mantener presionado
+// Soporte para incremento rápido al mantener presionado
 (function() {
   let spinTimer = null;
   let spinInterval = null;
@@ -771,18 +771,18 @@ window.spinVal = function(id, step, isCurrency) {
     const action = btn.getAttribute('onclick');
     if (!action) return;
 
-    // Evitar mÃºltiples disparos
+    // Evitar múltiples disparos
     stopSpin();
 
     spinTimer = setTimeout(() => {
       spinInterval = setInterval(() => {
         try {
-          // Ejecutamos la misma acciÃ³n definida en el onclick
+          // Ejecutamos la misma acción definida en el onclick
           const fn = new Function(action);
           fn();
         } catch(err) { stopSpin(); }
-      }, 70); // Velocidad de rÃ¡faga (70ms)
-    }, 450); // Retraso para detectar pulsaciÃ³n larga
+      }, 70); // Velocidad de ráfaga (70ms)
+    }, 450); // Retraso para detectar pulsación larga
   };
 
   document.addEventListener('mousedown', startSpin);
@@ -803,7 +803,7 @@ navBtns.forEach(btn => {
     const target = btn.getAttribute('data-target');
     document.getElementById(target).classList.add('active');
 
-    // Auto-ejecutar cronograma de la fase activa al cambiar de pestaÃ±a
+    // Auto-ejecutar cronograma de la fase activa al cambiar de pestaña
     setTimeout(() => {
       try {
         const piProtocol = document.getElementById('pi-protocolo')?.value;
@@ -819,10 +819,10 @@ navBtns.forEach(btn => {
         } else if (target === 'dashboard') {
           updateResultados();
         } else if (target === 'buscador-historico') {
-          // No requiere ejecuciÃ³n automÃ¡tica por ahora
+          // No requiere ejecución automática por ahora
         }
         lucide.createIcons();
-      } catch(e) { console.warn('Error al cambiar de pestaÃ±a:', e); }
+      } catch(e) { console.warn('Error al cambiar de pestaña:', e); }
     }, 50);
   });
 });
@@ -843,15 +843,15 @@ const state = {
     pgf1: { name: 'Prostaglandina (1a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 100000, def: 0, resx1: 2, resx2: 2, cat: 'hormonas', obs: 'Pgf2@ 1a Dosis' },
     pgf2: { name: 'Prostaglandina (2a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 100000, def: 0, resx1: 2, resx2: 2, cat: 'hormonas', obs: 'Pgf2@ 2a Dosis' },
     pgf3: { name: 'Prostaglandina (3a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 100000, def: 0, resx1: 2, resx2: 2, cat: 'hormonas', obs: 'Pgf2@ 3a Dosis' },
-    ecg: { name: 'Gonadotropina CoriÃ³nica Equina (eCG)', tipo: 'ml', tamano: 30, valorFrasco: 190000, def: 0, resx1: 1, resx2: 1, cat: 'hormonas', obs: 'eCG' },
+    ecg: { name: 'Gonadotropina Coriónica Equina (eCG)', tipo: 'ml', tamano: 30, valorFrasco: 190000, def: 0, resx1: 1, resx2: 1, cat: 'hormonas', obs: 'eCG' },
     ce: { name: 'Cipionato de Estradiol (C.E)', tipo: 'ml', tamano: 100, valorFrasco: 87000, def: 0, resx1: 1, resx2: 1, cat: 'hormonas', obs: 'C.E' },
-    gen: { name: 'GenÃ©tica (Semen / EmbriÃ³n)', tipo: 'Semen', tamano: 1, valorFrasco: 40000, def: 0, resx1: 0, resx2: 0, cat: 'genetica', obs: 'Solugan SG' },
+    gen: { name: 'Genética (Semen / Embrión)', tipo: 'Semen', tamano: 1, valorFrasco: 40000, def: 0, resx1: 0, resx2: 0, cat: 'genetica', obs: 'Solugan SG' },
     retdib: { name: 'Retiro DIB', tipo: 'M.O', tamano: 1, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'asistencia', obs: 'R.Dib' },
-    mo1: { name: 'Asistencia TÃ©cnica 1', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 40000, def: 0, resx1: 1, resx2: 1, cat: 'asistencia', obs: 'Solugan SG' },
-    mo2: { name: 'Asistencia TÃ©cnica 2', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 0, def: 0, resx1: 1, resx2: 1, cat: 'asistencia', obs: 'Solugan SG' },
-    opu: { name: 'AspiraciÃ³n Folicular (OPU)', tipo: 'Proc', tamano: 1, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'asistencia', obs: 'OPU' },
-    dx1: { name: 'ConfirmaciÃ³n preÃ±ez Dx1', tipo: 'Dx1', tamano: 1, valorFrasco: 10000, def: 0, resx1: 0, resx2: 0, cat: 'diagnostico', obs: 'Solugan SG' },
-    dx2: { name: 'ConfirmaciÃ³n preÃ±ez Dx2', tipo: 'Dx2', tamano: 1, valorFrasco: 10000, def: 0, resx1: 0, resx2: 0, cat: 'diagnostico', obs: 'Solugan SG' },
+    mo1: { name: 'Asistencia Técnica 1', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 40000, def: 0, resx1: 1, resx2: 1, cat: 'asistencia', obs: 'Solugan SG' },
+    mo2: { name: 'Asistencia Técnica 2', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 0, def: 0, resx1: 1, resx2: 1, cat: 'asistencia', obs: 'Solugan SG' },
+    opu: { name: 'Aspiración Folicular (OPU)', tipo: 'Proc', tamano: 1, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'asistencia', obs: 'OPU' },
+    dx1: { name: 'Confirmación preñez Dx1', tipo: 'Dx1', tamano: 1, valorFrasco: 10000, def: 0, resx1: 0, resx2: 0, cat: 'diagnostico', obs: 'Solugan SG' },
+    dx2: { name: 'Confirmación preñez Dx2', tipo: 'Dx2', tamano: 1, valorFrasco: 10000, def: 0, resx1: 0, resx2: 0, cat: 'diagnostico', obs: 'Solugan SG' },
     iate: { name: 'Ia/Te', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 15000, def: 0, resx1: 1, resx2: 1, cat: 'iate', obs: 'Solugan SG' }
   },
   
@@ -866,14 +866,14 @@ const state = {
     { name: 'SELECTSYNCH(IA)', days: ['-','-','-','0','-','7','-','-','-','-','10','-','0','-','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'Observar celo - IA 12 horas post celo estable' },
     { name: 'DIBVACAS(IA)', days: ['0','-','-','0','8','7','-','-','-','-','8','-','0','7','8','-','28','58'], hours: Array(18).fill('08:00'), ia: '8', obs: 'IA celo detectado + GnRh' },
     { name: 'DIBNOVILLAS(IA)', days: ['0','0','-','8','-','7','-','-','-','-','8','-','0','7','8','-','28','58'], hours: Array(18).fill('08:00'), ia: '8', obs: 'IA celo detectado + GnRh' },
-    { name: 'DOBLEPGF2@(IA)', days: ['-','-','-','-','-','0','11','-','-','-','2','-','0','-','2','-','20','50'], hours: Array(18).fill('08:00'), ia: '2', obs: 'Observar celo 1-5 dÃ­as IA 12 horas post celo estable' },
+    { name: 'DOBLEPGF2@(IA)', days: ['-','-','-','-','-','0','11','-','-','-','2','-','0','-','2','-','20','50'], hours: Array(18).fill('08:00'), ia: '2', obs: 'Observar celo 1-5 días IA 12 horas post celo estable' },
     { name: 'MM1(IA)', days: ['-','-','-','0','-','7','-','-','-','-','9','-','0','-','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
     { name: 'MM2(IA)', days: ['-','8','-','0','-','7','-','-','-','-','9','-','0','-','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
     { name: 'MMDIB(IA)', days: ['0','-','-','0','-','7','-','-','-','-','9','8','0','7','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
     { name: 'REC 1', role: 'resx1', days: ['0','0','0','-','-','5','-','-','5','-','10','5','0','5','18','10','18','48'], hours: Array(18).fill('08:00'), ia: '18', obs: 'Transferencia de Embriones' },
     { name: 'REC 2', role: 'resx2', days: ['0','0','-','-','-','8','-','-','8','9','9','8','0','8','17','9','17','47'], hours: Array(18).fill('08:00'), ia: '17', obs: 'Transferencia de Embriones' },
-    { name: 'REC 1', role: 'resx1b', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','42','-','62','92'], hours: Array(18).fill('08:00'), ia: '42', obs: 'DIB dÃ­a 32. Inseminar dÃ­a 42.' },
-    { name: 'REC 2', role: 'resx2b', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','74','-','94','124'], hours: Array(18).fill('08:00'), ia: '74', obs: 'Re-sincronizaciÃ³n tras Dx2. Inseminar dÃ­a 74.' }
+    { name: 'REC 1', role: 'resx1b', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','42','-','62','92'], hours: Array(18).fill('08:00'), ia: '42', obs: 'DIB día 32. Inseminar día 42.' },
+    { name: 'REC 2', role: 'resx2b', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','74','-','94','124'], hours: Array(18).fill('08:00'), ia: '74', obs: 'Re-sincronización tras Dx2. Inseminar día 74.' }
   ],
   logoEmpresa: 'Logo Iatf Pro.png',
   activeList: []
@@ -903,7 +903,7 @@ window.autoCalcPrenez = function(source = 'prenadas') {
     if (elPorc) elPorc.value = Math.round(porc);
   }
   
-  // Actualizar automÃ¡ticamente animales para ReSx1
+  // Actualizar automáticamente animales para ReSx1
   const vacias = tot - pren;
   const elResx1Anim = document.getElementById('resx1-animales');
   if(elResx1Anim) elResx1Anim.value = vacias > 0 ? vacias : 0;
@@ -945,7 +945,7 @@ function actualizarSelectProtocolos() {
   const currentVal = selectPI.value;
   selectPI.innerHTML = '<option value="">-- SELECCIONAR PROTOCOLO --</option>';
   state.matriz.forEach(p => {
-    // Excluir protocolos de resincronizaciÃ³n (identificados por su campo role)
+    // Excluir protocolos de resincronización (identificados por su campo role)
     if (!p.role) {
       const opt = document.createElement('option'); 
       opt.value = p.name; 
@@ -1043,7 +1043,7 @@ function renderMatriz() {
       : `<span style="font-weight: 500; font-size: 0.85rem;">${protocol.name}</span>`;
     tr.innerHTML = `<td style="text-align: left;">${nameHtml}</td>`;
     
-    // 2. DÃ­as (Cols 2 a 19 - Son exactamente 18 columnas de datos)
+    // 2. Días (Cols 2 a 19 - Son exactamente 18 columnas de datos)
     // El orden en colDefs es: 0..13 (Hormonas), 14 (IA), 15 (Asp), 16 (Dx1), 17 (Dx2)
     for (let i = 0; i < state.colDefs.length; i++) {
       const val = protocol.days[i] || '-';
@@ -1070,7 +1070,7 @@ function renderMatriz() {
 window.agregarNuevoProtocolo = function() {
   if (!isMatrixUnlocked) {
     unlockMatriz();
-    if (!isMatrixUnlocked) return; // Si cancelÃ³ el prompt
+    if (!isMatrixUnlocked) return; // Si canceló el prompt
   }
   const nuevo = {
     name: 'NUEVO PROTOCOLO',
@@ -1088,10 +1088,10 @@ window.agregarNuevoProtocolo = function() {
   const container = document.querySelector('.table-responsive');
   if(container) container.scrollTop = container.scrollHeight;
   
-  // Opcional: enfocar el Ãºltimo input de nombre
+  // Opcional: enfocar el último input de nombre
   setTimeout(() => {
     const inputs = document.querySelectorAll('#tc-matriz-body input');
-    if(inputs.length > 0) inputs[inputs.length - (16 + 2 + 1)].focus(); // Enfoca el nombre del Ãºltimo
+    if(inputs.length > 0) inputs[inputs.length - (16 + 2 + 1)].focus(); // Enfoca el nombre del último
   }, 100);
 }
 
@@ -1099,10 +1099,10 @@ window.eliminarProtocolo = function(idx) {
   const pName = state.matriz[idx].name;
   const isResx = state.matriz.find(p => p.name === pName && (window.isResx1(p) || window.isResx2(p)));
   if (isResx) {
-    alert("Este protocolo de resincronizaciÃ³n es vital para el sistema y no se puede eliminar.");
+    alert("Este protocolo de resincronización es vital para el sistema y no se puede eliminar.");
     return;
   }
-  if(confirm(`Â¿EstÃ¡s seguro de eliminar el protocolo "${pName}"?`)) {
+  if(confirm(`¿Estás seguro de eliminar el protocolo "${pName}"?`)) {
     state.matriz.splice(idx, 1);
     renderMatriz();
     saveState();
@@ -1111,16 +1111,16 @@ window.eliminarProtocolo = function(idx) {
 
 window.unlockMatriz = function() {
   if (isMatrixUnlocked) return;
-  const pass = prompt("Acceso Restringido. Ingresa la contraseÃ±a de administrador:");
+  const pass = prompt("Acceso Restringido. Ingresa la contraseña de administrador:");
   if (pass === "jan5362") {
     isMatrixUnlocked = true;
     document.getElementById('btn-unlock').style.display = 'none';
     document.getElementById('btn-reset-matriz').style.display = 'inline-flex';
     document.getElementById('btn-save-matriz').style.display = 'inline-flex';
-    document.getElementById('lbl-matriz-instruccion').innerText = "Modo EdiciÃ³n Activo. Puedes aÃ±adir, modificar o eliminar protocolos.";
+    document.getElementById('lbl-matriz-instruccion').innerText = "Modo Edición Activo. Puedes añadir, modificar o eliminar protocolos.";
     renderMatriz();
   } else {
-    if(pass !== null) alert("ContraseÃ±a incorrecta.");
+    if(pass !== null) alert("Contraseña incorrecta.");
   }
 }
 
@@ -1128,30 +1128,30 @@ window.irAEditarMatriz = function() {
   const container = document.getElementById('matriz-container');
   const btnToggle = document.getElementById('btn-toggle-protocolos');
   
-  // Mostrar la secciÃ³n si estÃ¡ oculta
+  // Mostrar la sección si está oculta
   if(container.style.display === 'none') {
     container.style.display = 'block';
     btnToggle.innerHTML = '<i data-lucide="eye-off"></i> Ocultar Protocolos';
   }
   
-  // Desplazar a la secciÃ³n
+  // Desplazar a la sección
   document.getElementById('matriz-container').scrollIntoView({ behavior: 'smooth' });
   
-  // Desbloquear si no lo estÃ¡
+  // Desbloquear si no lo está
   if(!isMatrixUnlocked) {
     unlockMatriz();
   }
 }
 
 window.restaurarProtocolosBase = function() {
-  if(confirm("Â¿Restaurar protocolos originales de Solugan SG? Se perderÃ¡n los cambios actuales.")) {
+  if(confirm("¿Restaurar protocolos originales de Solugan SG? Se perderán los cambios actuales.")) {
     state.matriz = [
       { name: 'TRADICIONAL(IATF)', days: ['0','0','-','10','-','8','-','-','8','8','10','8','0','8','-','28','58'], hours: Array(17).fill('08:00'), ia: '10', obs: 'Protocolo base.' },
       { name: 'JSYNCH(IATF)', days: ['0','0','-','9','-','6','-','-','6','-','9','6','0','6','-','28','58'], hours: Array(17).fill('08:00'), ia: '9', obs: 'Proestro prolongado.' },
       { name: 'NOVILLAS(IATF)', days: ['0','0','9','-','-','8','-','-','8','-','10','8','0','8','-','30','60'], hours: Array(17).fill('08:00'), ia: '10', obs: 'BE al retiro.' },
       { name: 'OVSYNCH(IATF)', days: ['-','-','-','0','9','7','-','-','-','-','10','-','0','-','-','30','60'], hours: Array(17).fill('08:00'), ia: '10', obs: 'Basado en GnRh.' },
-      { name: 'REC 1', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','-','62','92'], hours: Array(17).fill('08:00'), ia: '42', obs: 'DIB dÃ­a 32. Inseminar dÃ­a 42.' },
-      { name: 'REC 2', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','-','94','124'], hours: Array(17).fill('08:00'), ia: '74', obs: 'Re-sincronizaciÃ³n tras Dx2. Inseminar dÃ­a 74.' }
+      { name: 'REC 1', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','-','62','92'], hours: Array(17).fill('08:00'), ia: '42', obs: 'DIB día 32. Inseminar día 42.' },
+      { name: 'REC 2', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','-','94','124'], hours: Array(17).fill('08:00'), ia: '74', obs: 'Re-sincronización tras Dx2. Inseminar día 74.' }
     ];
     renderMatriz(); saveState(); alert("Protocolos base restaurados correctamente.");
   }
@@ -1165,7 +1165,7 @@ window.guardarMatrizProtocolos = function() {
   document.getElementById('lbl-matriz-instruccion').innerText = "Modo Consulta. Haz clic en \"EDITAR\" para modificar.";
   renderMatriz(); 
   saveState();
-  alert("Cambios guardados con Ã©xito.");
+  alert("Cambios guardados con éxito.");
 }
 
 window.updateRowName = function(r, val) { 
@@ -1175,16 +1175,16 @@ window.updateRowName = function(r, val) {
 window.updateCell = function(r, c, val, field = 'days') { 
   if (!state.matriz[r][field]) state.matriz[r][field] = Array(18).fill(field === 'days' ? '-' : '08:00');
   state.matriz[r][field][c] = val; 
-  // Sincronizar propiedad .ia si se edita la columna 15 (Ã­ndice 14)
+  // Sincronizar propiedad .ia si se edita la columna 15 (índice 14)
   if (c === 14 && field === 'days') {
     state.matriz[r].ia = val;
   }
   debouncedSave();
-  ejecutarProtocoloInicial(); // Refrescar cÃ¡lculos si es el activo
+  ejecutarProtocoloInicial(); // Refrescar cálculos si es el activo
 }
 window.updateRowIa = function(r, val, field = 'ia') { 
   state.matriz[r][field] = val; 
-  // Sincronizar tambiÃ©n en el array de dÃ­as (Ã­ndice 14)
+  // Sincronizar también en el array de días (índice 14)
   if (state.matriz[r].days) state.matriz[r].days[14] = val;
   debouncedSave();
   ejecutarProtocoloInicial();
@@ -1210,7 +1210,7 @@ window.toggleVerProtocolos = function() {
     btn.style.borderColor = 'rgba(14, 165, 233, 0.4)';
     btn.style.color = '#ffffff';
     saveState();
-    // Re-ejecutar lÃ³gica para aplicar cambios de la matriz si hay un protocolo seleccionado
+    // Re-ejecutar lógica para aplicar cambios de la matriz si hay un protocolo seleccionado
     if(document.getElementById('pi-protocolo').value) {
       ejecutarProtocoloInicial();
       syncFases();
@@ -1230,11 +1230,11 @@ window.abrirModalPrecios = function(context = 'pi') {
   
   const pName = document.getElementById(pId)?.value || document.getElementById('pi-protocolo').value;
   if(!pName) { 
-    alert(`âš ï¸ Por favor, selecciona primero un 'Protocolo' para configurar sus precios.`); 
+    alert(`⚠️ Por favor, selecciona primero un 'Protocolo' para configurar sus precios.`); 
     return; 
   }
   
-  const titleMap = { 'pi': 'Protocolo Inicial', 'resx1': 'ResincronizaciÃ³n 1', 'resx2': 'ResincronizaciÃ³n 2' };
+  const titleMap = { 'pi': 'Protocolo Inicial', 'resx1': 'Resincronización 1', 'resx2': 'Resincronización 2' };
   const elTitle = document.getElementById('modal-title');
   const elSub = document.getElementById('modal-subtitle');
   if(elTitle) elTitle.innerText = `COSTOS Y DOSIS: ${titleMap[context]}`;
@@ -1245,7 +1245,7 @@ window.abrirModalPrecios = function(context = 'pi') {
   tbody.innerHTML = '';
   
   const protocol = state.matriz.find(p => p.name === pName);
-  if(!protocol) { alert("Selecciona un protocolo vÃ¡lido."); return; }
+  if(!protocol) { alert("Selecciona un protocolo válido."); return; }
   
   const animalesNum = parseInt(document.getElementById(aId).value) || 0;
   const categories = [
@@ -1290,10 +1290,10 @@ window.abrirModalPrecios = function(context = 'pi') {
 
         const insName = t('ins_' + id) + useSuffix;
 
-        // REGLA: OPU solo se muestra si estÃ¡ incluido en el protocolo
+        // REGLA: OPU solo se muestra si está incluido en el protocolo
         if (id === 'opu' && (dayStr === '-' || dayStr === '')) return;
         
-        // Cargar dosis segÃºn el contexto con fallback a los nuevos defaults
+        // Cargar dosis según el contexto con fallback a los nuevos defaults
         let currentDef = 0;
         if (dayStr !== '-' && dayStr !== '') {
            if (context === 'pi') {
@@ -1308,7 +1308,7 @@ window.abrirModalPrecios = function(context = 'pi') {
            }
         }
         
-        // REGLA UNIVERSAL: si el protocolo incluye el insumo (dayStr vÃ¡lido), servicios binarios = 1 activo
+        // REGLA UNIVERSAL: si el protocolo incluye el insumo (dayStr válido), servicios binarios = 1 activo
         if (['dib','opu','mo1','mo2','retdib','dx1','dx2'].includes(id) && dayStr !== '-' && dayStr !== '') {
           if (currentDef === 0) currentDef = 1;
         }
@@ -1421,7 +1421,7 @@ window.abrirModalPrecios = function(context = 'pi') {
     recalcModalTotals();
     lucide.createIcons();
   } catch(e) {
-    console.error("Error en cÃ¡lculos del modal:", e);
+    console.error("Error en cálculos del modal:", e);
   }
 
   document.getElementById('modal-precios').style.display = 'flex';
@@ -1452,12 +1452,12 @@ window.recalcModalTotals = function() {
       const valor = unformatNumber(vEl.value);
       const isService = ['gen','retdib','mo1','mo2','dx1','dx2','opu','iate'].includes(id);
       
-      // Divisor dinÃ¡mico para DIB basado en etapas activas
+      // Divisor dinámico para DIB basado en etapas activas
       const divisorDIB = getDIBDivisor();
       const factorUsos = (id === 'dib') ? divisorDIB : 1;
       const unitsToBuy = def * animalesNum;
       
-      // La inversiÃ³n de COMPRA (Cash out) solo aplica si no es DIB reutilizado
+      // La inversión de COMPRA (Cash out) solo aplica si no es DIB reutilizado
       let isReusedDIB = (id === 'dib' && (modalContext === 'resx1' || modalContext === 'resx2'));
       let tamano = (state.insumos[id].tamano || 1);
       let costoCompraEfectiva = isReusedDIB ? 0 : (isService ? (unitsToBuy * valor) : (Math.ceil(unitsToBuy / tamano) * valor));
@@ -1466,7 +1466,7 @@ window.recalcModalTotals = function() {
         totalHormonasCompra += costoCompraEfectiva;
       }
       
-      // La inversiÃ³n APLICADA (para ROI) siempre se divide por el factor dinÃ¡mico
+      // La inversión APLICADA (para ROI) siempre se divide por el factor dinámico
       let costoAplicado = isService ? (unitsToBuy * valor / factorUsos) : (unitsToBuy * (valor / tamano) / factorUsos);
       
       totals[state.insumos[id].cat] += costoAplicado;
@@ -1501,14 +1501,14 @@ window.recalcFilaModal = function(id, isService) {
    
    if (id === 'dib') {
        effectiveDose = def / factorUsos;
-       // Actualizar el estado para que coincida con el divisor dinÃ¡mico
+       // Actualizar el estado para que coincida con el divisor dinámico
        state.insumos[id].usos = divisorDIB;
    }
 
    // El costo por dosis SIEMPRE se divide por usos
    let costDosis = isService ? (val / factorUsos) : (val / tamano * effectiveDose);
    
-   // LÃ³gica de Compra: Si es ReSx y es un dispositivo, la compra es 0 (reutilizaciÃ³n)
+   // Lógica de Compra: Si es ReSx y es un dispositivo, la compra es 0 (reutilización)
    let isReusedDIB = (id === 'dib' && (modalContext === 'resx1' || modalContext === 'resx2'));
    let totalFrascos = isReusedDIB ? 0 : (isService ? (def * an) : Math.ceil((def * an) / tamano));
    let costTotalRow = totalFrascos * val;
@@ -1523,7 +1523,7 @@ window.recalcFilaModal = function(id, isService) {
 window.cerrarModalPrecios = function() { document.getElementById('modal-precios').style.display = 'none'; }
 
 window.guardarPreciosModal = function() {
-  // Usar el protocolo correcto segÃºn el contexto activo
+  // Usar el protocolo correcto según el contexto activo
   const pId = modalContext === 'pi' ? 'pi-protocolo' : (modalContext === 'resx1' ? 'resx1-protocolo' : 'resx2-protocolo');
   const pName = document.getElementById(pId)?.value || document.getElementById('pi-protocolo').value;
   const protocol = state.matriz.find(p => p.name === pName);
@@ -1546,7 +1546,7 @@ window.guardarPreciosModal = function() {
     if(dEl) {
       const val = parseFloat(dEl.value) || 0;
 
-      // LÃ³gica de servicios: sincronizaciÃ³n bidireccional con el protocolo
+      // Lógica de servicios: sincronización bidireccional con el protocolo
       if(['dx1','dx2','mo1','mo2','retdib'].includes(id)) {
         const idx = state.colDefs.indexOf(id);
         if(val > 0) {
@@ -1557,7 +1557,7 @@ window.guardarPreciosModal = function() {
                 if (idx !== -1) protocol.days[idx] = postIa.toString();
               }
            } else if (idx !== -1 && protocol.days[idx] === '-') {
-              // Asignar dÃ­a base del DIB del protocolo activo para ReSx
+              // Asignar día base del DIB del protocolo activo para ReSx
               const dibIdx = state.colDefs.indexOf('dib');
               const dibDay = (protocol.days[dibIdx] !== '-' && protocol.days[dibIdx] !== '') ? parseInt(protocol.days[dibIdx]) : 0;
               if (id === 'mo1') protocol.days[idx] = dibDay.toString();
@@ -1593,7 +1593,7 @@ window.toggleProtocolo = function(fase) {
   const isHidden = (resDiv.style.display === 'none' || resDiv.style.display === '');
 
   if (isHidden) {
-     // ACCIÃ“N: VAMOS A MOSTRAR
+     // ACCIÓN: VAMOS A MOSTRAR
      if (fase === 'pi') {
         const pName = document.getElementById('pi-protocolo').value;
         const fechaStr = document.getElementById('pi-fecha').value;
@@ -1609,7 +1609,7 @@ window.toggleProtocolo = function(fase) {
      btn.classList.add('active-toggle'); // Rojo
      btn.innerHTML = '<i data-lucide="eye-off"></i> <span id="txt-toggle-' + fase + '">' + t('btn_hide_p') + '</span>';
   } else {
-     // ACCIÃ“N: VAMOS A OCULTAR
+     // ACCIÓN: VAMOS A OCULTAR
      resDiv.style.display = 'none';
      btn.classList.remove('active-toggle'); // Azul
      btn.innerHTML = '<i data-lucide="eye"></i> <span id="txt-toggle-' + fase + '">' + t('btn_show_p') + '</span>';
@@ -1656,7 +1656,7 @@ window.ejecutarProtocoloInicial = function() {
     }
     state.activeList.push({ colId: 'retdib', dayOffset: diaRetiro, hour: horaRetiro });
   }
-  // HITO DE INSEMINACIÃ“N ARTIFICIAL: ia_event se mantiene para la lÃ³gica de visualizaciÃ³n de hitos
+  // HITO DE INSEMINACIÓN ARTIFICIAL: ia_event se mantiene para la lógica de visualización de hitos
   if (protocol.ia !== '' && protocol.ia !== '-') {
     state.activeList.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: protocol.ia_hour || '16:00' });
   }
@@ -1670,7 +1670,7 @@ window.ejecutarProtocoloInicial = function() {
   
   document.getElementById('pi-resultados').style.display = 'block';
   
-  // Sincronizar el botÃ³n si se ejecuta desde carga automÃ¡tica o manual
+  // Sincronizar el botón si se ejecuta desde carga automática o manual
   const btn = document.getElementById('btn-toggle-pi');
   if(btn) {
     btn.innerHTML = `<i data-lucide="eye-off"></i> <span id="txt-toggle-pi">${t('btn_hide_p')}</span>`;
@@ -1688,10 +1688,10 @@ window.ejecutarProtocoloInicial = function() {
           </div>
           <div style="display: flex; gap: 2rem; font-size: 0.95rem; color: var(--text-main); font-weight: 600;">
             <span><i data-lucide="calendar"></i> Inicio: ${fBase.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-            <span><i data-lucide="activity" style="color:var(--accent);"></i> Inseminar: DÃ­a ${protocol.ia} (${sumDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })})</span>
+            <span><i data-lucide="activity" style="color:var(--accent);"></i> Inseminar: Día ${protocol.ia} (${sumDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })})</span>
           </div>
           <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1); color: var(--text-muted); font-size: 0.9rem;">
-            <i data-lucide="message-circle" style="width:16px;"></i> <strong>Obs:</strong> ${protocol.obs || 'Protocolo estÃ¡ndar.'}
+            <i data-lucide="message-circle" style="width:16px;"></i> <strong>Obs:</strong> ${protocol.obs || 'Protocolo estándar.'}
           </div>
         </div>
         ${state.logoEmpresa ? `<div style="width: 80px; height: 80px; background: white; padding: 5px; border-radius: 8px;"><img src="${state.logoEmpresa}" style="width: 100%; height: 100%; object-fit: contain;"></div>` : ''}
@@ -1705,7 +1705,7 @@ window.ejecutarProtocoloInicial = function() {
 
   reCalcTablaPI();
 
-  // Sincronizar ReSx1 y ReSx2 segÃºn configuraciÃ³n
+  // Sincronizar ReSx1 y ReSx2 según configuración
   syncFases();
 }
 
@@ -1809,7 +1809,7 @@ function reCalcTablaPI() {
   lucide.createIcons();
 }
 
-// 5. GESTIÃ“N DE LOGO
+// 5. GESTIÓN DE LOGO
 window.manejarSubidaLogo = function(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -1833,7 +1833,7 @@ function actualizarVistaLogo() {
     if(container) container.style.display = 'block';
     if(img) img.src = state.logoEmpresa;
     
-    // Cambiar todos los iconos de la cabecera por el logo tambiÃ©n
+    // Cambiar todos los iconos de la cabecera por el logo también
     sidebarIcons.forEach(sidebarIcon => {
       if (state.logoEmpresa === 'Logo Iatf Pro.png') {
         sidebarIcon.innerHTML = `<img src="${state.logoEmpresa}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 16px;">`;
@@ -1941,7 +1941,7 @@ window.loadState = function() {
       for(let k in parsed.insumos) {
         if(state.insumos[k]) {
           Object.assign(state.insumos[k], parsed.insumos[k]);
-          // Aplicar defaults si los valores de resx estÃ¡n en 0 (datos de versiÃ³n antigua)
+          // Aplicar defaults si los valores de resx están en 0 (datos de versión antigua)
           if (state.insumos[k].resx1 === 0 && resx_defaults[k]) state.insumos[k].resx1 = resx_defaults[k];
           if (state.insumos[k].resx2 === 0 && resx_defaults[k]) state.insumos[k].resx2 = resx_defaults[k];
         }
@@ -1949,14 +1949,14 @@ window.loadState = function() {
     }
     
     if(parsed.matriz && Array.isArray(parsed.matriz)) {
-      // VALIDACIÃ“N: Solo cargar si la longitud de columnas coincide con colDefs
+      // VALIDACIÓN: Solo cargar si la longitud de columnas coincide con colDefs
       const expectedLen = state.colDefs.length;
       const isValid = parsed.matriz.every(p => p.days && p.days.length === expectedLen);
       
       if (isValid) {
         state.matriz = parsed.matriz;
 
-        // MIGRACIÃ“N: asignar campo role a protocolos que aÃºn no lo tienen
+        // MIGRACIÓN: asignar campo role a protocolos que aún no lo tienen
         let resx1Count = 0, resx2Count = 0;
         state.matriz.forEach(p => {
           if (!p.role) {
@@ -1974,7 +1974,7 @@ window.loadState = function() {
           }
         });
 
-        // DEDUPLICACIÃ“N: eliminar entradas duplicadas con el mismo role
+        // DEDUPLICACIÓN: eliminar entradas duplicadas con el mismo role
         const seenRoles = {};
         state.matriz = state.matriz.filter(p => {
           if (!p.role) return true;
@@ -2036,7 +2036,7 @@ window.loadState = function() {
     
     syncFases();
     
-    // Re-ejecutar cÃ¡lculos globales despuÃ©s de cargar para sincronizar etiquetas y vacÃ­as
+    // Re-ejecutar cálculos globales después de cargar para sincronizar etiquetas y vacías
     renderMatriz();
     actualizarSelectProtocolos();
     window.autoCalcPrenez();
@@ -2066,7 +2066,7 @@ window.ejecutarResx1 = function() {
   }
   
   if (!protocol) {
-    console.error("No se encontrÃ³ el protocolo REC 1");
+    console.error("No se encontró el protocolo REC 1");
     return;
   }
   
@@ -2402,7 +2402,7 @@ window.syncFases = function() {
   const includeR1 = document.getElementById('pi-check-resx1')?.checked;
   const includeR2 = document.getElementById('pi-check-resx2')?.checked;
 
-  // Asignar automÃ¡ticamente los usos del DIB segÃºn las fases de resincronizaciÃ³n activas
+  // Asignar automáticamente los usos del DIB según las fases de resincronización activas
   const autoUsos = (includeR1 && includeR2) ? 3 : (includeR1 ? 2 : 1);
   if (state.insumos.dib) {
     state.insumos.dib.usos = autoUsos;
@@ -2520,7 +2520,7 @@ window.syncFases = function() {
   if(includeR1) {
     ejecutarResx1();
   } else {
-    // Si no estÃ¡ incluido, resetear costos para que no sumen al total
+    // Si no está incluido, resetear costos para que no sumen al total
     window.dashCatCosts.resx1 = { hormonas:0, genetica:0, asistencia:0, diagnostico:0, iate:0 };
   }
 
@@ -2567,7 +2567,7 @@ window.toggleFase = function(faseId, isActive) {
       }
     }
   }
-  // Asegurar que el checkbox refleje el estado (por si se llama programÃ¡ticamente)
+  // Asegurar que el checkbox refleje el estado (por si se llama programáticamente)
   if (faseId === 'resincronizacion1') document.getElementById('pi-check-resx1').checked = isActive;
   if (faseId === 'resincronizacion2') document.getElementById('pi-check-resx2').checked = isActive;
 
@@ -2582,7 +2582,7 @@ window.onProtocoloChange = function() {
       const pVal = document.getElementById('pi-protocolo')?.value;
       if (!pVal) return;
 
-      // Asignar dosis por defecto a insumos que estÃ©n en 0 para que no desaparezcan del calendario
+      // Asignar dosis por defecto a insumos que estén en 0 para que no desaparezcan del calendario
       const defaults = { dib: 1, be1: 0.5, be2: 0.5, gnrh1: 2.5, gnrh2: 2.5, pgf1: 2, pgf2: 2, pgf3: 2, ecg: 1, ce: 1, mo1: 1, mo2: 1 };
       for (let k in state.insumos) {
         if (state.insumos[k] && state.insumos[k].def === 0 && defaults[k]) {
@@ -2593,7 +2593,7 @@ window.onProtocoloChange = function() {
       // Sincronizar selectores de ReSx
       syncFases();
 
-      // Actualizar el calendario principal automÃ¡ticamente
+      // Actualizar el calendario principal automáticamente
       ejecutarProtocoloInicial();
       
       saveState();
@@ -2605,7 +2605,7 @@ window.onProtocoloChange = function() {
 }
 
 window.resetPantallaPI = function() {
-  if(!confirm("Â¿Deseas BORRAR TODOS los datos del proyecto actual? Esta acciÃ³n no se puede deshacer.")) return;
+  if(!confirm("¿Deseas BORRAR TODOS los datos del proyecto actual? Esta acción no se puede deshacer.")) return;
   
   // Limpiar todos los campos de entrada
   ['pi-fecha','pi-finca'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
@@ -2639,7 +2639,7 @@ window.resetPantallaPI = function() {
   alert("Todos los datos del proyecto han sido borrados correctamente.");
 }
 
-// --- LÃ“GICA DE REGISTRO INICIAL ---
+// --- LÓGICA DE REGISTRO INICIAL ---
 window.guardarRegistroInicial = function() {
   try {
     const nombre = document.getElementById('reg-nombre').value.trim();
@@ -2649,7 +2649,7 @@ window.guardarRegistroInicial = function() {
     const email = document.getElementById('reg-email').value.trim();
 
     if (!nombre || !nit || !movil) {
-      alert("Por favor, completa al menos Nombre, IdentificaciÃ³n y TelÃ©fono.");
+      alert("Por favor, completa al menos Nombre, Identificación y Teléfono.");
       return;
     }
 
@@ -2704,7 +2704,7 @@ function verificarRegistro() {
   const welcome = document.getElementById('welcome-screen');
   const sidebarConsultor = document.getElementById('sidebar-consultor');
 
-  // SIEMPRE mostrar la pantalla de registro al iniciar, como pidiÃ³ el usuario
+  // SIEMPRE mostrar la pantalla de registro al iniciar, como pidió el usuario
   if (welcome) {
     welcome.style.display = 'flex';
     welcome.style.opacity = '1';
@@ -2760,7 +2760,7 @@ window.updateResultados = function() {
   const r2Anim = (includeR1 && includeR2) ? Math.max(0, r1Anim - r1Pren) : 0;
   const r2Pren = (includeR1 && includeR2) ? Math.max(0, parseInt(document.getElementById('resx2-prenadas').value) || 0) : 0;
 
-  // 2. COSTOS POR FASE (InversiÃ³n aplicada por fase)
+  // 2. COSTOS POR FASE (Inversión aplicada por fase)
   const piCostPerAnim = unformatNumber(document.getElementById('pi-total-footer')?.innerText || "0");
   const r1CostPerAnim = unformatNumber(document.getElementById('resx1-total-footer')?.innerText || "0");
   const r2CostPerAnim = unformatNumber(document.getElementById('resx2-total-footer')?.innerText || "0");
@@ -2774,8 +2774,8 @@ window.updateResultados = function() {
   const totalPren = piPren + r1Pren + r2Pren;
   const totalCostPren = totalPren > 0 ? totalInv / totalPren : 0;
 
-  // 3. DESGLOSE POR CATEGORÃAS
-  // Para el desglose de hormonas, sÃ­ usamos el costo aplicado (dividido) para que cuadre con el ROI
+  // 3. DESGLOSE POR CATEGORÍAS
+  // Para el desglose de hormonas, sí usamos el costo aplicado (dividido) para que cuadre con el ROI
   const totalHormonas = (window.dashCatCosts.pi?.hormonas || 0) + (includeR1 ? (window.dashCatCosts.resx1?.hormonas || 0) : 0) + (includeR2 ? (window.dashCatCosts.resx2?.hormonas || 0) : 0);
   const totalGenetica = (window.dashCatCosts.pi?.genetica || 0) + (includeR1 ? (window.dashCatCosts.resx1?.genetica || 0) : 0) + (includeR2 ? (window.dashCatCosts.resx2?.genetica || 0) : 0);
   const totalAsistencia = (window.dashCatCosts.pi?.asistencia || 0) + (includeR1 ? (window.dashCatCosts.resx1?.asistencia || 0) : 0) + (includeR2 ? (window.dashCatCosts.resx2?.asistencia || 0) : 0);
@@ -2786,12 +2786,12 @@ window.updateResultados = function() {
   const valTernero = 0;
   const ingVentaLeche = state.tableroLeche.litros * state.tableroLeche.precio;
   const ingVentaCarne = state.tableroCarne.peso * state.tableroCarne.precio;
-  // El ingreso total es la suma de Leche + Carne (Ternero), ya que ambos son productos de la preÃ±ez.
+  // El ingreso total es la suma de Leche + Carne (Ternero), ya que ambos son productos de la preñez.
   const ingVenta = ingVentaLeche + ingVentaCarne + valTernero;
   
   const retornoBruto = totalPren * ingVenta;
   
-  // CÃ¡lculo de Tiempo de Retorno y Costo de Sostenimiento
+  // Cálculo de Tiempo de Retorno y Costo de Sostenimiento
   const fIniStr = document.getElementById('pi-fecha').value;
   const pName = document.getElementById('pi-protocolo').value;
   const protocol = state.matriz.find(p => p.name === pName);
@@ -2813,11 +2813,11 @@ window.updateResultados = function() {
     const totalDiasCiclo = diaIA + 285 + duracionProductiva;
     fRetorno.setDate(fBase.getDate() + totalDiasCiclo);
     
-    // Costo de sostenimiento total = Costo/dÃ­a * DÃ­as * Animales preÃ±ados
+    // Costo de sostenimiento total = Costo/día * Días * Animales preñados
     totalGastoSostenimiento = costoDiaSost * totalDiasCiclo * totalPren;
     
     fechaRetornoHtml = `<div style="font-size: 0.65rem; margin-top: 4px; color: rgba(255,255,255,0.6); font-weight: 500;">
-      Ciclo completo: ${totalDiasCiclo} dÃ­as<br>
+      Ciclo completo: ${totalDiasCiclo} días<br>
       <span style="color: var(--accent); opacity: 0.9;">Retorno: ${fRetorno.toLocaleDateString('es-ES', {month:'short', year:'numeric'}).toUpperCase()}</span>
     </div>`;
   }
@@ -2910,7 +2910,7 @@ window.updateResultados = function() {
   if (elResCostoPrenez) elResCostoPrenez.innerText = formatter.format(totalCostPren);
   if (elResTotalPreneces) elResTotalPreneces.innerText = totalPren;
 
-  // 6. TABLA ROI (Estructura Fija para evitar desalineaciÃ³n)
+  // 6. TABLA ROI (Estructura Fija para evitar desalineación)
   const thead = document.getElementById('res-head-roi');
   const hasR1 = includeR1 && r1Anim > 0;
   const hasR2 = includeR1 && includeR2 && r2Anim > 0;
@@ -2931,7 +2931,7 @@ window.updateResultados = function() {
   if (tbody) {
     tbody.innerHTML = `
       <tr>
-        <td style="text-align:left;">InversiÃ³n por Fase</td>
+        <td style="text-align:left;">Inversión por Fase</td>
         <td>${piAnim > 0 ? formatter.format(piCost) : '-'}</td>
         <td>${hasR1 ? formatter.format(r1Cost) : '-'}</td>
         <td>${hasR2 ? formatter.format(r2Cost) : '-'}</td>
@@ -2945,21 +2945,21 @@ window.updateResultados = function() {
         <td>-</td>
       </tr>
       <tr>
-        <td style="text-align:left;">PreÃ±eces Logradas</td>
+        <td style="text-align:left;">Preñeces Logradas</td>
         <td>${piAnim > 0 ? piPren : '-'}</td>
         <td>${hasR1 ? r1Pren : '-'}</td>
         <td>${hasR2 ? r2Pren : '-'}</td>
         <td><strong>${totalPren}</strong></td>
       </tr>
       <tr>
-        <td style="text-align:left;">InversiÃ³n Perdida (VacÃ­as)</td>
+        <td style="text-align:left;">Inversión Perdida (Vacías)</td>
         <td>${piAnim > 0 ? formatter.format((piAnim - piPren) * (piCost / piAnim)) : '-'}</td>
         <td>${hasR1 ? formatter.format((r1Anim - r1Pren) * (r1Cost / r1Anim)) : '-'}</td>
         <td>${hasR2 ? formatter.format((r2Anim - r2Pren) * (r2Cost / r2Anim)) : '-'}</td>
         <td><strong style="color:var(--danger);">${formatter.format( (piAnim > 0 ? (piAnim - piPren) * (piCost / piAnim) : 0) + (hasR1 ? (r1Anim - r1Pren) * (r1Cost / r1Anim) : 0) + (hasR2 ? (r2Anim - r2Pren) * (r2Cost / r2Anim) : 0) )}</strong></td>
       </tr>
       <tr>
-        <td style="text-align:left;">Costo/PreÃ±ez en Fase</td>
+        <td style="text-align:left;">Costo/Preñez en Fase</td>
         <td>${piPren > 0 ? formatter.format(piCost / piPren) : '-'}</td>
         <td>${(hasR1 && r1Pren > 0) ? formatter.format(r1Cost / r1Pren) : '-'}</td>
         <td>${(hasR2 && r2Pren > 0) ? formatter.format(r2Cost / r2Pren) : '-'}</td>
@@ -3012,7 +3012,7 @@ function renderNewDashboardCharts(aPI, pPI, aR1, pR1, aR2, pR2, cHormonas, cGene
       data: {
         labels: ['Prot. Inicial', 'Resinc. 1', 'Resinc. 2'].filter((_, i) => [aPI > 0, aR1 > 0, aR2 > 0][i]),
         datasets: [{
-          label: 'PreÃ±eces',
+          label: 'Preñeces',
           data: [pPI, pR1, pR2].filter((_, i) => [aPI > 0, aR1 > 0, aR2 > 0][i]),
           backgroundColor: '#fde047',
           borderRadius: 4
@@ -3031,7 +3031,7 @@ function renderNewDashboardCharts(aPI, pPI, aR1, pR1, aR2, pR2, cHormonas, cGene
             formatter: (val, ctx) => {
               const anims = [aPI, aR1, aR2].filter((v) => v > 0)[ctx.dataIndex];
               const porc = anims > 0 ? Math.round((val / anims) * 100) : 0;
-              return `${val} preÃ±eces (${porc}%)`;
+              return `${val} preñeces (${porc}%)`;
             }
           }
         },
@@ -3056,10 +3056,10 @@ function renderNewDashboardCharts(aPI, pPI, aR1, pR1, aR2, pR2, cHormonas, cGene
     
     const dataObj = [
       { lbl: 'Hormonas', val: cHormonas, col: '#ef4444' },
-      { lbl: 'GenÃ©tica', val: cGenetica, col: '#f59e0b' },
-      { lbl: 'Asistencia TÃ©cnica', val: cAsistencia, col: '#a855f7' },
+      { lbl: 'Genética', val: cGenetica, col: '#f59e0b' },
+      { lbl: 'Asistencia Técnica', val: cAsistencia, col: '#a855f7' },
       { lbl: 'Honorarios IA/TE', val: cIate, col: '#ec4899' },
-      { lbl: 'Dx PreÃ±ez', val: cDiagnostico, col: '#0ea5e9' }
+      { lbl: 'Dx Preñez', val: cDiagnostico, col: '#0ea5e9' }
     ].sort((a,b) => b.val - a.val);
 
     const maxVal = Math.max(...dataObj.map(d => d.val));
@@ -3119,7 +3119,7 @@ function renderNewDashboardCharts(aPI, pPI, aR1, pR1, aR2, pR2, cHormonas, cGene
     chartLeche = new Chart(ctxLeche, {
       type: 'doughnut',
       data: {
-        labels: ['Ingreso Neto', 'InversiÃ³n Total'],
+        labels: ['Ingreso Neto', 'Inversión Total'],
         datasets: [{
           data: [retL > 0 ? retL : 0, cTotal],
           backgroundColor: ['#10b981', '#ef4444'],
@@ -3205,31 +3205,31 @@ window.exportarExcel = function() {
   const pName = document.getElementById('pi-protocolo').value;
   const fIni = document.getElementById('pi-fecha').value;
   if (!pName || !fIni) {
-    alert("âš ï¸ No hay datos suficientes para exportar. Selecciona un protocolo y genera el cronograma primero.");
+    alert("⚠️ No hay datos suficientes para exportar. Selecciona un protocolo y genera el cronograma primero.");
     return;
   }
 
   // Array de arrays para SheetJS
   let data = [];
   
-  // TÃ­tulo Principal
-  data.push(["REPORTE INTEGRAL DE INVERSIÃ“N - IATF PRO BY SOLUGAN SG"]);
+  // Título Principal
+  data.push(["REPORTE INTEGRAL DE INVERSIÓN - IATF PRO BY SOLUGAN SG"]);
   data.push(["Fecha Reporte:", new Date().toLocaleDateString()]);
-  data.push(["Finca:", document.getElementById('pi-finca')?.value || '-', "UbicaciÃ³n:", document.getElementById('pi-ubicacion')?.value || '-']);
-  data.push([]); // Fila vacÃ­a
+  data.push(["Finca:", document.getElementById('pi-finca')?.value || '-', "Ubicación:", document.getElementById('pi-ubicacion')?.value || '-']);
+  data.push([]); // Fila vacía
 
   // --- 1. DASHBOARD / RESUMEN ---
   data.push(["RESUMEN DE RESULTADOS (DASHBOARD)"]);
-  data.push(["InversiÃ³n Total Proyecto:", document.getElementById('res-total-inversion')?.innerText || '0']);
-  data.push(["Costo Promedio por PreÃ±ez:", document.getElementById('res-costo-prenez')?.innerText || '0']);
-  data.push(["Total PreÃ±eces Proyectadas:", document.getElementById('res-total-preneces')?.innerText || '0']);
+  data.push(["Inversión Total Proyecto:", document.getElementById('res-total-inversion')?.innerText || '0']);
+  data.push(["Costo Promedio por Preñez:", document.getElementById('res-costo-prenez')?.innerText || '0']);
+  data.push(["Total Preñeces Proyectadas:", document.getElementById('res-total-preneces')?.innerText || '0']);
   data.push([]);
 
   // --- 2. TABLA ROI ---
-  data.push(["TABLA DE RETORNO DE INVERSIÃ“N (ROI)"]);
+  data.push(["TABLA DE RETORNO DE INVERSIÓN (ROI)"]);
   const roiBody = document.getElementById('res-body-roi');
   if (roiBody) {
-    data.push(["CategorÃ­a", "Protocolo Inicial", "ReSx1", "ReSx2", "Total Proyecto"]);
+    data.push(["Categoría", "Protocolo Inicial", "ReSx1", "ReSx2", "Total Proyecto"]);
     for (let i = 0; i < roiBody.rows.length; i++) {
       let rowData = [];
       for (let j = 0; j < roiBody.rows[i].cells.length; j++) {
@@ -3263,7 +3263,7 @@ window.exportarExcel = function() {
   // --- 3. PROTOCOLO INICIAL ---
   data.push(["DETALLE: PROTOCOLO INICIAL"]);
   data.push(["Protocolo:", pName, "Fecha Inicio:", fIni, "Animales:", document.getElementById('pi-animales').value]);
-  const piRows = extractToAOA('tc-pi-body', ["DÃ­a", "Fecha", "Hora", "Actividad / Insumo", "Dosis", "Unidad", "Valor Unitario", "InversiÃ³n Total"]);
+  const piRows = extractToAOA('tc-pi-body', ["Día", "Fecha", "Hora", "Actividad / Insumo", "Dosis", "Unidad", "Valor Unitario", "Inversión Total"]);
   data = data.concat(piRows);
   data.push(["", "", "", "", "", "", "TOTAL PI:", document.getElementById('pi-total-footer')?.innerText || '0']);
   data.push([]);
@@ -3271,9 +3271,9 @@ window.exportarExcel = function() {
   // --- 4. RESINCRO 1 ---
   const resx1Res = document.getElementById('resx1-resultados');
   if (resx1Res && resx1Res.style.display !== 'none') {
-    data.push(["DETALLE: RESINCRONIZACIÃ“N 1 (ReSx1)"]);
+    data.push(["DETALLE: RESINCRONIZACIÓN 1 (ReSx1)"]);
     data.push(["Protocolo:", document.getElementById('resx1-protocolo').value, "Fecha Inicio:", document.getElementById('resx1-fecha').value, "Animales:", document.getElementById('resx1-animales').value]);
-    const r1Rows = extractToAOA('tc-resx1-body', ["DÃ­a", "Fecha", "Hora", "Hormona / Insumo", "Dosis", "Valor Unitario"]);
+    const r1Rows = extractToAOA('tc-resx1-body', ["Día", "Fecha", "Hora", "Hormona / Insumo", "Dosis", "Valor Unitario"]);
     data = data.concat(r1Rows);
     data.push(["", "", "", "", "TOTAL RESX1:", document.getElementById('resx1-total-footer')?.innerText || '0']);
     data.push([]);
@@ -3282,9 +3282,9 @@ window.exportarExcel = function() {
   // --- 5. RESINCRO 2 ---
   const resx2Res = document.getElementById('resx2-resultados');
   if (resx2Res && resx2Res.style.display !== 'none') {
-    data.push(["DETALLE: RESINCRONIZACIÃ“N 2 (ReSx2)"]);
+    data.push(["DETALLE: RESINCRONIZACIÓN 2 (ReSx2)"]);
     data.push(["Protocolo:", document.getElementById('resx2-protocolo').value, "Fecha Inicio:", document.getElementById('resx2-fecha').value, "Animales:", document.getElementById('resx2-animales').value]);
-    const r2Rows = extractToAOA('tc-resx2-body', ["DÃ­a", "Fecha", "Hora", "Hormona / Insumo", "Dosis", "Valor Unitario"]);
+    const r2Rows = extractToAOA('tc-resx2-body', ["Día", "Fecha", "Hora", "Hormona / Insumo", "Dosis", "Valor Unitario"]);
     data = data.concat(r2Rows);
     data.push(["", "", "", "", "TOTAL RESX2:", document.getElementById('resx2-total-footer')?.innerText || '0']);
     data.push([]);
@@ -3294,7 +3294,7 @@ window.exportarExcel = function() {
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(data);
   
-  // Ajustar anchos de columna bÃ¡sicos
+  // Ajustar anchos de columna básicos
   ws['!cols'] = [{wch: 28}, {wch: 18}, {wch: 12}, {wch: 38}, {wch: 12}, {wch: 12}, {wch: 22}, {wch: 22}];
 
   // -------------------------------------------------------------
@@ -3321,7 +3321,7 @@ window.exportarExcel = function() {
         }
       };
 
-      // Fila 0: TÃ­tulo principal
+      // Fila 0: Título principal
       if (R === 0) {
         style.font = { name: "Arial", sz: 14, bold: true, color: { rgb: "FFFFFF" } };
         style.fill = { fgColor: { rgb: "0F4C81" } };
@@ -3341,12 +3341,12 @@ window.exportarExcel = function() {
           if(!ws['!merges']) ws['!merges'] = [];
           ws['!merges'].push({ s: {r:R, c:0}, e: {r:R, c:7} });
         }
-        else if (v === "CATEGORÃA" || v === "DÃA" || v === "FECHA" || v === "HORA" || v === "ACTIVIDAD / INSUMO" || v === "DOSIS" || v === "UNIDAD" || v === "VALOR UNITARIO" || v === "INVERSIÃ“N TOTAL" || v === "HORMONA / INSUMO" || v === "PROTOCOLO INICIAL" || v === "RESX1" || v === "RESX2" || (v === "TOTAL PROYECTO" && C > 0)) {
+        else if (v === "CATEGORÍA" || v === "DÍA" || v === "FECHA" || v === "HORA" || v === "ACTIVIDAD / INSUMO" || v === "DOSIS" || v === "UNIDAD" || v === "VALOR UNITARIO" || v === "INVERSIÓN TOTAL" || v === "HORMONA / INSUMO" || v === "PROTOCOLO INICIAL" || v === "RESX1" || v === "RESX2" || (v === "TOTAL PROYECTO" && C > 0)) {
           style.font = { name: "Arial", sz: 10, bold: true, color: { rgb: "FFFFFF" } };
           style.fill = { fgColor: { rgb: "475569" } };
           style.alignment = { horizontal: "center", vertical: "center" };
         }
-        else if (v.includes("TOTAL PI") || v.includes("TOTAL RESX1") || v.includes("TOTAL RESX2") || (v === "TOTAL PROYECTO" && C === 0) || v.includes("RETORNO TOTAL PROYECTADO") || v.includes("INVERSIÃ“N TOTAL PROYECTO:") || v.includes("COSTO PROMEDIO") || v.includes("INVERSIÃ“N PERDIDA")) {
+        else if (v.includes("TOTAL PI") || v.includes("TOTAL RESX1") || v.includes("TOTAL RESX2") || (v === "TOTAL PROYECTO" && C === 0) || v.includes("RETORNO TOTAL PROYECTADO") || v.includes("INVERSIÓN TOTAL PROYECTO:") || v.includes("COSTO PROMEDIO") || v.includes("INVERSIÓN PERDIDA")) {
           style.font = { name: "Arial", sz: 11, bold: true, color: { rgb: "0F4C81" } };
           style.fill = { fgColor: { rgb: "DBEAFE" } };
         }
@@ -3369,7 +3369,7 @@ window.exportarExcel = function() {
     }
   }
 
-  // Rellenar todas las celdas vacÃ­as del Ã¡rea visible con fondo blanco para asegurar un lienzo inmaculado
+  // Rellenar todas las celdas vacías del área visible con fondo blanco para asegurar un lienzo inmaculado
   const maxRows = Math.max(range.e.r + 40, 100);
   const maxCols = 16; // Hasta la columna Q
   for (let R = 0; R <= maxRows; ++R) {
@@ -3388,7 +3388,7 @@ window.exportarExcel = function() {
   // Ampliar el rango si agregamos celdas nuevas
   ws['!ref'] = XLSX.utils.encode_range({ s: { c: 0, r: 0 }, e: { c: maxCols, r: maxRows } });
 
-  // Ocultar las lÃ­neas de cuadrÃ­cula y los encabezados de filas/columnas (A,B,C / 1,2,3) para que parezca una aplicaciÃ³n
+  // Ocultar las líneas de cuadrícula y los encabezados de filas/columnas (A,B,C / 1,2,3) para que parezca una aplicación
   if (!ws['!views']) ws['!views'] = [];
   ws['!views'].push({ showGridLines: false, showRowColHeaders: false });
 
@@ -3406,7 +3406,7 @@ window.exportarPDF = function() {
   const originalHtml = btn ? btn.innerHTML : '';
   if(btn) btn.innerHTML = '<i data-lucide="refresh-cw" class="spin"></i> Generando...';
 
-  // 1. Activar modo exportaciÃ³n e identificar contenedores
+  // 1. Activar modo exportación e identificar contenedores
   document.body.classList.add('exporting-pdf');
   const appContainer = document.querySelector('.app-container');
   const welcomeScreen = document.getElementById('welcome-screen');
@@ -3414,7 +3414,7 @@ window.exportarPDF = function() {
   if (appContainer) appContainer.style.display = 'none';
   if (welcomeScreen) welcomeScreen.style.display = 'none';
 
-  // Forzar redibujado de grÃ¡ficas con colores de alto contraste para PDF
+  // Forzar redibujado de gráficas con colores de alto contraste para PDF
   if (typeof updateResultados === 'function') {
     updateResultados();
   }
@@ -3423,7 +3423,7 @@ window.exportarPDF = function() {
     setTimeout(() => {
       let printContainer = null;
       try {
-        // 2. Crear contenedor para impresiÃ³n de todas las fases activas
+        // 2. Crear contenedor para impresión de todas las fases activas
         printContainer = document.createElement('div');
         printContainer.className = 'exporting-pdf';
         printContainer.style.background = '#020617';
@@ -3501,9 +3501,9 @@ window.exportarPDF = function() {
           pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
-        // Guardar usando el mÃ©todo estÃ¡ndar .save()
+        // Guardar usando el método estándar .save()
         html2pdf().set(opt).from(printContainer).save().then(() => {
-          // RestauraciÃ³n y limpieza
+          // Restauración y limpieza
           if (printContainer && printContainer.parentNode) {
             document.body.removeChild(printContainer);
           }
@@ -3531,7 +3531,7 @@ window.exportarPDF = function() {
           reject(err);
         });
       } catch (err) {
-        console.error("Error sÃ­ncrono al exportar PDF:", err);
+        console.error("Error síncrono al exportar PDF:", err);
         if (printContainer && printContainer.parentNode) {
           document.body.removeChild(printContainer);
         }
@@ -3568,9 +3568,9 @@ window.enviarWhatsApp = function() {
   let msg = isEn ? `*EXECUTIVE SUMMARY - IATF PRO BY SOLUGAN SG*\n\n` : `*RESUMEN EJECUTIVO - IATF PRO BY SOLUGAN SG*\n\n`;
   msg += `ðŸ“ *${isEn ? 'Farm' : 'Finca'}:* ${finca}\n`;
   msg += `ðŸ“‹ *${isEn ? 'Protocol' : 'Protocolo'}:* ${pName}${usuarioStr}${nitStr}\n\n`;
-  msg += `âœ… *${isEn ? 'Total Pregnancies' : 'PreÃ±eces Totales'}:* ${totP}\n`;
-  msg += `ðŸ’° *${isEn ? 'Total Investment' : 'InversiÃ³n Total'}:* ${inv}\n`;
-  msg += `ðŸ“‰ *${isEn ? 'Costo por PreÃ±ez' : 'Costo por PreÃ±ez'}:* ${cPrenez}\n`;
+  msg += `âœ… *${isEn ? 'Total Pregnancies' : 'Preñeces Totales'}:* ${totP}\n`;
+  msg += `ðŸ’° *${isEn ? 'Total Investment' : 'Inversión Total'}:* ${inv}\n`;
+  msg += `ðŸ“‰ *${isEn ? 'Costo por Preñez' : 'Costo por Preñez'}:* ${cPrenez}\n`;
 
   // Obtener cronogramas de trabajo
   const getCronogramaText = (tbodyId, title) => {
@@ -3581,21 +3581,21 @@ window.enviarWhatsApp = function() {
       const tds = tr.children;
       if (tds.length === 0) return;
       
-      // Caso 1: Fila de observaciÃ³n/notas
+      // Caso 1: Fila de observación/notas
       if (tr.innerText.includes('Obs')) {
         const cell = Array.from(tds).find(c => c.innerText.includes('Obs'));
         if (cell) {
-          text += `   âš ï¸ _${cell.innerText.trim()}_\n`;
+          text += `   ⚠️ _${cell.innerText.trim()}_\n`;
         }
         return;
       }
       
-      // Caso 2: Fila de InseminaciÃ³n (IA/TE)
+      // Caso 2: Fila de Inseminación (IA/TE)
       if (tr.innerText.includes('IA/TE') || tr.innerText.includes('I.A./T.E.')) {
         const dia = tds[0].innerText.replace(/IA\/TE/gi, '').replace(/\s+/g, ' ').trim();
         const fecha = tds[1].innerText.trim();
         const hora = tds[2].innerText.trim();
-        text += `â€¢ *DÃ­a ${dia}* (${fecha} - ${hora}): ðŸŒŸ *InseminaciÃ³n Artificial (IA/TE)*\n`;
+        text += `â€¢ *Día ${dia}* (${fecha} - ${hora}): ðŸŒŸ *Inseminación Artificial (IA/TE)*\n`;
         return;
       }
       
@@ -3606,7 +3606,7 @@ window.enviarWhatsApp = function() {
         const hora = tds[2].innerText.trim();
         const insumo = tds[3].innerText.trim();
         const dosis = tds[4].innerText.trim();
-        text += `â€¢ *DÃ­a ${dia}* (${fecha} - ${hora}): ${insumo} (${dosis})\n`;
+        text += `â€¢ *Día ${dia}* (${fecha} - ${hora}): ${insumo} (${dosis})\n`;
       }
     });
     return text;
@@ -3619,10 +3619,10 @@ window.enviarWhatsApp = function() {
   const includeR2 = document.getElementById('pi-check-resx2')?.checked;
   
   if (includeR1) {
-    cronoText += getCronogramaText('tc-resx1-body', isEn ? 'Resynchronization 1 Schedule' : 'Cronograma ResincronizaciÃ³n 1');
+    cronoText += getCronogramaText('tc-resx1-body', isEn ? 'Resynchronization 1 Schedule' : 'Cronograma Resincronización 1');
   }
   if (includeR2) {
-    cronoText += getCronogramaText('tc-resx2-body', isEn ? 'Resynchronization 2 Schedule' : 'Cronograma ResincronizaciÃ³n 2');
+    cronoText += getCronogramaText('tc-resx2-body', isEn ? 'Resynchronization 2 Schedule' : 'Cronograma Resincronización 2');
   }
 
   if (cronoText) {
@@ -3633,14 +3633,14 @@ window.enviarWhatsApp = function() {
 
   const encodedMsg = encodeURIComponent(msg);
   
-  // Preguntar por el nÃºmero del destinatario
+  // Preguntar por el número del destinatario
   let destNumber = prompt(isEn 
     ? "Enter the recipient's WhatsApp number (with country code, e.g. 573147084328).\nLeave BLANK to select from your WhatsApp contact list:" 
-    : "Ingresa el nÃºmero de WhatsApp del destinatario (con cÃ³digo de paÃ­s, ej: 573147084328).\nDeja en BLANCO para seleccionar de tu lista de contactos de WhatsApp:"
+    : "Ingresa el número de WhatsApp del destinatario (con código de país, ej: 573147084328).\nDeja en BLANCO para seleccionar de tu lista de contactos de WhatsApp:"
   );
   
   if (destNumber === null) return; // Cancelado por el usuario
-  destNumber = destNumber.trim().replace(/\D/g, ''); // Solo nÃºmeros
+  destNumber = destNumber.trim().replace(/\D/g, ''); // Solo números
   
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   let waUrl = '';
@@ -3662,23 +3662,23 @@ window.enviarWhatsApp = function() {
   window.open(waUrl, '_blank');
 }
 
-// --- SISTEMA DE HISTORIAL Y BÃšSQUEDA ---
+// --- SISTEMA DE HISTORIAL Y BÚSQUEDA ---
 window.guardarEnHistorial = function() {
   const ubicacion = document.getElementById('pi-ubicacion').value.trim();
   const finca = document.getElementById('pi-finca').value.trim();
   const perfilStr = localStorage.getItem('reprocost_perfil');
   let nitValue = perfilStr ? (JSON.parse(perfilStr).nit || 'N/A') : 'N/A';
   if (nitValue === 'N/A') {
-    nitValue = prompt("Para poder buscar este reporte despuÃ©s, por favor ingresa tu NIT:");
+    nitValue = prompt("Para poder buscar este reporte después, por favor ingresa tu NIT:");
     if (!nitValue || nitValue.trim() === '') {
-      alert("OperaciÃ³n cancelada. El NIT es necesario para guardar el reporte.");
+      alert("Operación cancelada. El NIT es necesario para guardar el reporte.");
       return;
     }
     nitValue = nitValue.trim();
   }
   
   if (!ubicacion || !finca) {
-    alert("âš ï¸ Se requiere completar los campos 'Finca' y 'UbicaciÃ³n' para guardar el reporte en el historial.");
+    alert("⚠️ Se requiere completar los campos 'Finca' y 'Ubicación' para guardar el reporte en el historial.");
     return;
   }
   
@@ -3713,7 +3713,7 @@ window.guardarEnHistorial = function() {
   historial.push(report);
   localStorage.setItem('reprocost_historial', JSON.stringify(historial));
   
-  alert("âœ… Â¡Ã‰xito! El reporte ha sido guardado en el historial. Ahora podrÃ¡s buscarlo por NIT cuando lo necesites.");
+  alert("âœ… ¡Éxito! El reporte ha sido guardado en el historial. Ahora podrás buscarlo por NIT cuando lo necesites.");
 };
 
 window.buscarPorNit = function() {
@@ -3789,18 +3789,18 @@ window.cargarDeHistorial = function(id) {
   const record = historial.find(r => r.id === id);
   if (!record) return;
 
-  if (confirm(`Â¿Deseas cargar el reporte de la finca "${record.finca}" realizado el ${record.fecha}?\n\nNota: Esto reemplazarÃ¡ los datos actuales en pantalla.`)) {
+  if (confirm(`¿Deseas cargar el reporte de la finca "${record.finca}" realizado el ${record.fecha}?\n\nNota: Esto reemplazará los datos actuales en pantalla.`)) {
     localStorage.setItem('reprocost_state', JSON.stringify(record.state));
     location.reload(); 
   }
 };
 
 window.eliminarDeHistorial = function(id) {
-  if (confirm("Â¿EstÃ¡s seguro de que deseas eliminar este registro del historial permanentemente?")) {
+  if (confirm("¿Estás seguro de que deseas eliminar este registro del historial permanentemente?")) {
     let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
     historial = historial.filter(r => r.id !== id);
     localStorage.setItem('reprocost_historial', JSON.stringify(historial));
-    // Refrescar la bÃºsqueda
+    // Refrescar la búsqueda
     buscarPorNit();
   }
 };
@@ -3880,7 +3880,7 @@ window.exportarPdfDesdeHistorial = function(id) {
   localStorage.setItem('reprocost_state', JSON.stringify(record.state));
   loadState();
 
-  // 3. Forzar el recÃ¡lculo completo incluyendo cronograma
+  // 3. Forzar el recálculo completo incluyendo cronograma
   if (typeof ejecutarProtocoloInicial === 'function') {
     const pv = document.getElementById('pi-protocolo')?.value;
     const fv = document.getElementById('pi-fecha')?.value;
@@ -3901,7 +3901,7 @@ window.exportarPdfDesdeHistorial = function(id) {
 };
 
 window.resetPantallaResx1 = function() {
-  if(!confirm("Â¿Reiniciar datos de ReSx1?")) return;
+  if(!confirm("¿Reiniciar datos de ReSx1?")) return;
   document.getElementById('resx1-prenadas').value = 0;
   document.getElementById('resx1-porcentaje').innerText = '0';
   ejecutarResx1();
@@ -3909,7 +3909,7 @@ window.resetPantallaResx1 = function() {
 }
 
 window.resetPantallaResx2 = function() {
-  if(!confirm("Â¿Reiniciar datos de ReSx2?")) return;
+  if(!confirm("¿Reiniciar datos de ReSx2?")) return;
   document.getElementById('resx2-prenadas').value = 0;
   document.getElementById('resx2-porcentaje').innerText = '0';
   ejecutarResx2();
@@ -3964,19 +3964,19 @@ try {
     });
   }
 
-  // 3. Ejecutar lÃ³gica si hay datos
+  // 3. Ejecutar lógica si hay datos
   if(document.getElementById('pi-protocolo').value && document.getElementById('pi-fecha').value) {
     ejecutarProtocoloInicial();
   }
   
-  // Forzar sincronizaciÃ³n de ReSx para asegurar protocolos REC 1/2
+  // Forzar sincronización de ReSx para asegurar protocolos REC 1/2
   syncFases();
 
 } catch(e) {
-  console.error("Error en inicializaciÃ³n:", e);
+  console.error("Error en inicialización:", e);
 }
 
-// NavegaciÃ³n por teclado en la matriz
+// Navegación por teclado en la matriz
 document.addEventListener('keydown', function(e) {
   if (!isMatrixUnlocked) return;
   if (!e.target.classList.contains('matrix-nav')) return;

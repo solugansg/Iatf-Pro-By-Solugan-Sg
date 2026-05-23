@@ -1,25 +1,25 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0ea5e9">
-  <meta name="description" content="AnÃ¡lisis de costos reproductivos para ganaderÃ­a bovina. By Solugan SG.">
+  <meta name="description" content="Análisis de costos reproductivos para ganadería bovina. By Solugan SG.">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Iatf Pro">
-  <title>Iatf Pro - AnÃ¡lisis de Costos</title>
+  <title>Iatf Pro - Análisis de Costos</title>
 
   <!-- Capturar errores globales -->
   <script>
     window.onerror = function(message, source, lineno, colno, error) {
-      alert("âš ï¸ Error en la App:\n" + message + "\n\nArchivo: " + source + "\nLÃ­nea: " + lineno + "\nColumna: " + colno + "\n\nPor favor reporta esto.");
+      alert("⚠️ Error en la App:\n" + message + "\n\nArchivo: " + source + "\nLínea: " + lineno + "\nColumna: " + colno + "\n\nPor favor reporta esto.");
       return false;
     };
     window.onunhandledrejection = function(event) {
-      alert("âš ï¸ Promesa fallida sin capturar:\n" + event.reason + "\n\nStack: " + (event.reason ? event.reason.stack : 'N/A'));
+      alert("⚠️ Promesa fallida sin capturar:\n" + event.reason + "\n\nStack: " + (event.reason ? event.reason.stack : 'N/A'));
     };
   </script>
 
@@ -38,7 +38,7 @@
     @font-face { font-family: 'Inter'; src: url('/fonts/inter-700.ttf'); font-weight: 700; font-display: swap; }
   </style>
 
-  <!-- LibrerÃ­as locales (offline) -->
+  <!-- Librerías locales (offline) -->
   <script src="lucide.min.js"></script>
   <script src="libs/chart.min.js"></script>
   <script src="libs/chartjs-plugin-datalabels.min.js"></script>
@@ -174,13 +174,13 @@
       <div class="sidebar-footer">
         <div class="sidebar-footer-content">
           
-          <!-- SECCIÃ“N DE CONTACTO / SOPORTE -->
+          <!-- SECCIÓN DE CONTACTO / SOPORTE -->
           <div class="input-group" style="width: 100%; margin-bottom: 0;">
             <button class="btn btn-whatsapp contact-btn" onclick="contactarWhatsApp()">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.37 5.028L2 22l5.135-1.348a9.926 9.926 0 0 0 4.877 1.28h.004c5.505 0 9.99-4.478 9.99-9.984C22.007 6.478 17.518 2 12.012 2zm6.09 13.985c-.25.707-1.447 1.3-1.983 1.385-.482.076-1.11.137-3.23-.742-2.707-1.12-4.436-3.882-4.57-4.06-.135-.178-1.101-1.464-1.101-2.793 0-1.328.697-1.983.947-2.247.25-.263.55-.329.734-.329.183 0 .367.002.525.01.163.008.384-.06.6-.06.22 0 .452.082.64.526.194.462.668 1.632.727 1.75.06.118.098.256.02.412-.08.156-.118.256-.237.395-.118.14-.25.312-.355.42-.11.11-.226.23-.097.45.128.22.57 1.012 1.218 1.588.838.745 1.543.976 1.763 1.085.22.11.35.093.48-.057.13-.15.556-.647.705-.87.15-.223.3-.186.505-.11.205.076 1.302.613 1.528.727.227.113.377.17.434.27.057.1.057.576-.192 1.285z"/>
               </svg>
-              <span data-i18n="btn_contact_wa">ContÃ¡ctenos</span>
+              <span data-i18n="btn_contact_wa">Contáctenos</span>
             </button>
           </div>
 
@@ -204,11 +204,11 @@
 
     <main class="main-content">
 
-      <!-- 1. TABLERO DE CONTROL (IdÃ©ntico al Excel) -->
+      <!-- 1. TABLERO DE CONTROL (Idéntico al Excel) -->
       <section id="tablero-control" class="tab-content active view-transition">
         <header class="section-header">
           <h1 data-i18n="tc_title">TABLERO DE CONTROL CARNE Y LECHE</h1>
-          <p data-i18n="tc_subtitle">MÃ©tricas productivas base y matriz de programaciÃ³n de protocolos</p>
+          <p data-i18n="tc_subtitle">Métricas productivas base y matriz de programación de protocolos</p>
         </header>
 
         <!-- TABLERO DE CONTROL CARNE Y LECHE (Formato Original Excel) -->
@@ -216,13 +216,13 @@
           <div style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
             <div class="grid-5" style="grid-template-columns: 1fr 1fr 1.5fr 1.5fr 1fr; align-items: end;">
               <div class="input-group" style="grid-column: span 2;">
-                <label data-i18n="tc_ganaderia" style="color: var(--accent); font-weight: 800;">TIPO DE GANADERÃA / MODELO PRODUCTIVO</label>
+                <label data-i18n="tc_ganaderia" style="color: var(--accent); font-weight: 800;">TIPO DE GANADERÍA / MODELO PRODUCTIVO</label>
                 <select id="pi-ganaderia" onchange="updateResultados();" style="font-size: 1.1rem; padding: 0.7rem; border-color: var(--accent); background: rgba(14, 165, 233, 0.05);">
                   <option value="">-- SELECCIONAR --</option>
-                  <option value="Lecheria Especializada">LecherÃ­a Especializada</option>
-                  <option value="Cria Comercial">CrÃ­a Comercial</option>
+                  <option value="Lecheria Especializada">Lechería Especializada</option>
+                  <option value="Cria Comercial">Cría Comercial</option>
                   <option value="Ganado Puro">Ganado Puro</option>
-                  <option value="Doble Proposito">Doble PropÃ³sito</option>
+                  <option value="Doble Proposito">Doble Propósito</option>
                 </select>
               </div>
               <div class="input-group" style="grid-column: span 2;">
@@ -230,7 +230,7 @@
                 <input type="text" id="pi-finca" placeholder="Nombre del predio" style="font-size: 1.1rem; padding: 0.7rem;" oninput="debouncedUpdateResultados()">
               </div>
               <div class="input-group" style="grid-column: span 1;">
-                <label style="color: var(--text-muted);">UbicaciÃ³n</label>
+                <label style="color: var(--text-muted);">Ubicación</label>
                 <input type="text" id="pi-ubicacion" placeholder="Municipio / Dpto" style="font-size: 1.1rem; padding: 0.7rem;" oninput="debouncedUpdateResultados()">
               </div>
             </div>
@@ -242,7 +242,7 @@
                   <th colspan="2"
                     style="background: rgba(14, 165, 233, 0.15); color: var(--accent); font-size: 1.1rem; padding: 0.5rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span><i data-lucide="droplet"></i> <span data-i18n="tc_leche_title">ProducciÃ³n de
+                      <span><i data-lucide="droplet"></i> <span data-i18n="tc_leche_title">Producción de
                           Leche</span></span>
                       <button class="btn"
                         style="padding: 0.2rem 0.5rem; font-size: 0.75rem; background: rgba(14, 165, 233, 0.1); color: var(--accent); border: 1px solid rgba(14, 165, 233, 0.3);"
@@ -254,7 +254,7 @@
                   <th colspan="2"
                     style="background: rgba(239, 68, 68, 0.15); color: #ef4444; font-size: 1.1rem; padding: 0.5rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span><i data-lucide="beef"></i> <span data-i18n="tc_carne_title">ProducciÃ³n de
+                      <span><i data-lucide="beef"></i> <span data-i18n="tc_carne_title">Producción de
                           Carne</span></span>
                       <button class="btn"
                         style="padding: 0.2rem 0.5rem; font-size: 0.75rem; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);"
@@ -285,7 +285,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td data-i18n="tc_duracion">DuraciÃ³n Lactancia</td>
+                  <td data-i18n="tc_duracion">Duración Lactancia</td>
                   <td>
                     <div class="spinner-wrap">
                       <button class="spin-btn minus"
@@ -296,7 +296,7 @@
                     </div>
                   </td>
                   <td style="border: none;"></td>
-                  <td data-i18n="tc_duracion_carne">DÃ­as a Destete</td>
+                  <td data-i18n="tc_duracion_carne">Días a Destete</td>
                   <td>
                     <div class="spinner-wrap">
                       <button class="spin-btn minus" onclick="spinVal('tc-duracion-carne', -10, false)">&#8722;</button>
@@ -375,7 +375,7 @@
             <div
               style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
               <p class="text-muted" style="font-size: 0.85rem; margin: 0;" id="lbl-matriz-instruccion">Modo Consulta.
-                Haz clic en "EdiciÃ³n Bloqueada" para modificar.</p>
+                Haz clic en "Edición Bloqueada" para modificar.</p>
               <div style="display: flex; gap: 0.5rem;" id="matriz-tools">
                 <button class="btn btn-primary" style="background: var(--accent); color: #fff; font-weight: 700;"
                   onclick="unlockMatriz()" id="btn-unlock"><i data-lucide="file-edit"></i> <span
@@ -399,24 +399,24 @@
                   style="position: sticky; top: 0; background: #0f172a; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
                   <tr>
                     <th style="text-align: left; background: #0f172a;">Protocolos / Hormonas</th>
-                    <th>DIB<br><small>DÃ­a</small></th>
-                    <th>B.E. 1<br><small>DÃ­a</small></th>
-                    <th>B.E. 2<br><small>DÃ­a</small></th>
-                    <th>GnRh 1<br><small>DÃ­a</small></th>
-                    <th>GnRh 2<br><small>DÃ­a</small></th>
-                    <th>Pgf2@ 1<br><small>DÃ­a</small></th>
-                    <th>Pgf2@ 2<br><small>DÃ­a</small></th>
-                    <th>Pgf2@ 3<br><small>DÃ­a</small></th>
-                    <th>eCG<br><small>DÃ­a</small></th>
-                    <th>C.E.<br><small>DÃ­a</small></th>
-                    <th>GenÃ©tica<br><small>DÃ­a</small></th>
-                    <th>Retiro<br><small>DÃ­a</small></th>
-                    <th>Asis. 1<br><small>DÃ­a</small></th>
-                    <th>Asis. 2<br><small>DÃ­a</small></th>
-                    <th style="padding: 4px; font-size: 0.75rem;">IA/TE<br><small>DÃ­a</small></th>
-                    <th>AspiraciÃ³n<br><small>Folicular</small></th>
-                    <th>Dx1<br><small>DÃ­a</small></th>
-                    <th>Dx2<br><small>DÃ­a</small></th>
+                    <th>DIB<br><small>Día</small></th>
+                    <th>B.E. 1<br><small>Día</small></th>
+                    <th>B.E. 2<br><small>Día</small></th>
+                    <th>GnRh 1<br><small>Día</small></th>
+                    <th>GnRh 2<br><small>Día</small></th>
+                    <th>Pgf2@ 1<br><small>Día</small></th>
+                    <th>Pgf2@ 2<br><small>Día</small></th>
+                    <th>Pgf2@ 3<br><small>Día</small></th>
+                    <th>eCG<br><small>Día</small></th>
+                    <th>C.E.<br><small>Día</small></th>
+                    <th>Genética<br><small>Día</small></th>
+                    <th>Retiro<br><small>Día</small></th>
+                    <th>Asis. 1<br><small>Día</small></th>
+                    <th>Asis. 2<br><small>Día</small></th>
+                    <th style="padding: 4px; font-size: 0.75rem;">IA/TE<br><small>Día</small></th>
+                    <th>Aspiración<br><small>Folicular</small></th>
+                    <th>Dx1<br><small>Día</small></th>
+                    <th>Dx2<br><small>Día</small></th>
                     <th style="padding: 4px; font-size: 0.75rem;">Observaciones</th>
                     <th id="th-acciones" style="display: none; background: #ef4444; color:#fff;">Acciones</th>
                   </tr>
@@ -429,18 +429,18 @@
           </div>
       </section>
 
-      <!-- RESTO DE PESTAÃ‘AS (VacÃ­as temporalmente para el scaffolding o con su contenido bÃ¡sico) -->
+      <!-- RESTO DE PESTAÑAS (Vacías temporalmente para el scaffolding o con su contenido básico) -->
       <!-- 2. PROTOCOLO INICIAL -->
       <section id="protocolo-inicial" class="tab-content view-transition">
         <div style="margin-bottom: 2rem;">
           <header class="section-header" style="margin-bottom: 0;">
             <h1 data-i18n="pi_title">Protocolo Inicial</h1>
-            <p data-i18n="pi_subtitle">GeneraciÃ³n de cronograma detallado comercial y aplicado.</p>
+            <p data-i18n="pi_subtitle">Generación de cronograma detallado comercial y aplicado.</p>
           </header>
         </div>
 
         <div class="glass-panel p-2 mb-2">
-          <!-- Fila 1: Datos de IdentificaciÃ³n y Tiempo -->
+          <!-- Fila 1: Datos de Identificación y Tiempo -->
           <div class="grid-2 mb-2" style="border-bottom: 1px solid var(--glass-border); padding-bottom: 1.5rem;">
             <div class="input-group">
               <label data-i18n="pi_date">Fecha de Inicio</label>
@@ -460,7 +460,7 @@
             </div>
           </div>
 
-          <!-- Fila 2: ProgramaciÃ³n y MÃ©tricas Principales -->
+          <!-- Fila 2: Programación y Métricas Principales -->
           <div class="grid-3 mb-2">
             <div class="input-group">
               <label data-i18n="pi_select_p">Protocolo a Sincronizar</label>
@@ -486,7 +486,7 @@
               </div>
             </div>
             <div class="input-group">
-              <label data-i18n="pi_preg">PreÃ±eces (Proyectado o Dx1 Real)</label>
+              <label data-i18n="pi_preg">Preñeces (Proyectado o Dx1 Real)</label>
               <div
                 style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
                 <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
@@ -518,18 +518,18 @@
             </div>
           </div>
 
-          <!-- Fila 3: Opciones de ResincronizaciÃ³n (Destacadas) -->
+          <!-- Fila 3: Opciones de Resincronización (Destacadas) -->
           <div
             style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid var(--glass-border); margin-top: 1rem;">
             <div style="display: flex; flex-direction: column;">
-              <span style="font-weight: 600; color: var(--text-main);" data-i18n="pi_include_resync">Â¿Deseas incluir
-                fases de resincronizaciÃ³n?</span>
+              <span style="font-weight: 600; color: var(--text-main);" data-i18n="pi_include_resync">¿Deseas incluir
+                fases de resincronización?</span>
             </div>
             <div style="display: flex; gap: 1.5rem;">
               <div id="wrapper-check-resx1"
                 style="display: flex; align-items: center; gap: 1rem; background: rgba(14, 165, 233, 0.1); padding: 12px 24px; border-radius: 12px; border: 1px solid var(--accent); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.1);">
                 <span id="label-check-resx1" class="text-accent" style="font-size: 1rem; font-weight: 800; white-space: nowrap;"
-                  data-i18n="pi_include_resx1">INCLUIR ResincronizaciÃ³n 1</span>
+                  data-i18n="pi_include_resx1">INCLUIR Resincronización 1</span>
                 <label class="switch" style="transform: scale(1.25);">
                   <input type="checkbox" id="pi-check-resx1" onchange="toggleFase('resincronizacion1', this.checked)">
                   <span class="slider round"></span>
@@ -538,7 +538,7 @@
               <div id="wrapper-check-resx2"
                 style="display: flex; align-items: center; gap: 1rem; background: rgba(168, 85, 247, 0.1); padding: 12px 24px; border-radius: 12px; border: 1px solid #a855f7; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.1);">
                 <span id="label-check-resx2" style="font-size: 1rem; font-weight: 800; white-space: nowrap; color: #a855f7;"
-                  data-i18n="pi_include_resx2">INCLUIR ResincronizaciÃ³n 2</span>
+                  data-i18n="pi_include_resx2">INCLUIR Resincronización 2</span>
                 <label class="switch" style="transform: scale(1.25);">
                   <input type="checkbox" id="pi-check-resx2" onchange="toggleFase('resincronizacion2', this.checked)">
                   <span class="slider round"></span>
@@ -552,7 +552,7 @@
           <div style="display: flex; gap: 1rem; margin-top: 1.5rem;" class="export-actions">
             <button class="btn btn-secondary" onclick="abrirModalPrecios('pi')"
               style="background: rgba(255,255,255,0.9); color: #000; font-weight: 600;">
-              <i data-lucide="package"></i> <span data-i18n="btn_config">ConfiguraciÃ³n precios y dosis</span>
+              <i data-lucide="package"></i> <span data-i18n="btn_config">Configuración precios y dosis</span>
             </button>
             <button class="btn btn-primary" onclick="toggleProtocolo('pi')" id="btn-toggle-pi">
               <i data-lucide="eye"></i> <span id="txt-toggle-pi" data-i18n="btn_show_p">MOSTRAR PROTOCOLO</span>
@@ -574,14 +574,14 @@
             <table class="data-table" style="font-size: 0.8rem;">
               <thead>
                 <tr>
-                  <th>DÃ­a</th>
+                  <th>Día</th>
                   <th>Fecha</th>
                   <th>Hora</th>
                   <th>Actividad / Insumo</th>
                   <th style="text-align: center;">Dosis</th>
                   <th style="text-align: center;">Und</th>
                   <th style="text-align: center; color: var(--accent);">VALOR UNITARIO</th>
-                  <th style="text-align: right; color: var(--success);">INVERSIÃ“N TOTAL</th>
+                  <th style="text-align: right; color: var(--success);">INVERSIÓN TOTAL</th>
                 </tr>
               </thead>
               <tbody id="tc-pi-body"></tbody>
@@ -595,7 +595,7 @@
                     </div>
                   </td>
                   <td colspan="3"
-                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);">INVERSIÃ“N
+                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);">INVERSIÓN
                     TOTAL APLICADA POR ANIMAL:</td>
                   <td id="pi-total-footer"
                     style="text-align: right; padding: 1rem; font-size: 1.1rem; font-weight: 800; color: var(--success);">
@@ -609,18 +609,18 @@
           <div style="margin-bottom: 1.5rem;">
             <h3 class="form-title"
               style="border:none; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">DESGLOSE DE
-              INVERSIÃ“N POR RUBROS</h3>
+              INVERSIÓN POR RUBROS</h3>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
               <div class="glass-panel p-1-5" style="border-left: 4px solid var(--accent);">
                 <span class="stat-label" style="font-size:0.65rem;">Hormonas</span>
                 <div id="pi-cat-hormonas" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #a855f7;">
-                <span class="stat-label" style="font-size:0.65rem;">GenÃ©tica (Semen/EmbriÃ³n)</span>
+                <span class="stat-label" style="font-size:0.65rem;">Genética (Semen/Embrión)</span>
                 <div id="pi-cat-genetica" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #f59e0b;">
-                <span class="stat-label" style="font-size:0.65rem;">ASISTENCIA TÃ‰CNICA</span>
+                <span class="stat-label" style="font-size:0.65rem;">ASISTENCIA TÉCNICA</span>
                 <div id="pi-cat-asistencia" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #ec4899;">
@@ -628,7 +628,7 @@
                 <div id="pi-cat-iate" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid var(--success);">
-                <span class="stat-label" style="font-size:0.65rem;">ConfirmaciÃ³n de PreÃ±ez</span>
+                <span class="stat-label" style="font-size:0.65rem;">Confirmación de Preñez</span>
                 <div id="pi-cat-diagnostico" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
             </div>
@@ -649,7 +649,7 @@
         <div class="glass-panel"
           style="padding: 2rem; width: 95%; max-width: 1400px; max-height: 90vh; overflow-y:auto; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
           <h2 class="form-title text-accent m-0" style="margin-bottom:0.5rem;" data-i18n="modal_title"><i
-              data-lucide="package"></i> ConfiguraciÃ³n precios y dosis</h2>
+              data-lucide="package"></i> Configuración precios y dosis</h2>
           <p class="text-muted" style="font-size:0.85rem; margin-bottom:1.5rem" data-i18n="modal_subtitle">Mostrando
             exclusivamente los insumos requeridos por el protocolo actualmente seleccionado.</p>
 
@@ -659,8 +659,8 @@
                 <tr>
                   <th style="text-align: left; padding-left: 2rem;" data-i18n="col_insumo">Insumo / Servicio</th>
                   <th style="text-align: center;"><span data-i18n="col_dosis">Dosis
-                      EstÃ¡ndar</span><br><small>(Und/ml)</small></th>
-                  <th style="text-align: center;" data-i18n="col_presentacion">PresentaciÃ³n Producto</th>
+                      Estándar</span><br><small>(Und/ml)</small></th>
+                  <th style="text-align: center;" data-i18n="col_presentacion">Presentación Producto</th>
                   <th style="text-align: center; vertical-align: middle;">
                     <div style="display: flex; flex-direction: column; align-items: center; line-height: 1.2;">
                       <span style="white-space: nowrap;" data-i18n="col_valor_c">VALOR DE COMPRA</span>
@@ -688,11 +688,11 @@
               <div id="mod-total-hormonas" style="font-weight:700; color: var(--accent);">$ 0</div>
             </div>
             <div class="glass-panel p-1" style="background: rgba(168, 85, 247, 0.05);">
-              <span class="stat-label" style="font-size:0.6rem;">VALOR COMPRA GENÃ‰TICA</span>
+              <span class="stat-label" style="font-size:0.6rem;">VALOR COMPRA GENÉTICA</span>
               <div id="mod-total-genetica" style="font-weight:700; color: #a855f7;">$ 0</div>
             </div>
             <div class="glass-panel p-1" style="background: rgba(245, 158, 11, 0.05);">
-              <span class="stat-label" style="font-size:0.6rem;">VALOR ASISTENCIA TÃ‰CNICA</span>
+              <span class="stat-label" style="font-size:0.6rem;">VALOR ASISTENCIA TÉCNICA</span>
               <div id="mod-total-asistencia" style="font-weight:700; color: #f59e0b;">$ 0</div>
             </div>
             <div class="glass-panel p-1" style="background: rgba(236, 72, 153, 0.05);">
@@ -700,7 +700,7 @@
               <div id="mod-total-iate" style="font-weight:700; color: #ec4899;">$ 0</div>
             </div>
             <div class="glass-panel p-1" style="background: rgba(16, 185, 129, 0.05);">
-              <span class="stat-label" style="font-size:0.6rem;">VALOR CONF. PREÃ‘EZ</span>
+              <span class="stat-label" style="font-size:0.6rem;">VALOR CONF. PREÑEZ</span>
               <div id="mod-total-diagnostico" style="font-weight:700; color: var(--success);">$ 0</div>
             </div>
           </div>
@@ -717,8 +717,8 @@
       <section id="resincronizacion1" class="tab-content view-transition">
         <header class="section-header">
           <div class="header-content">
-            <h1 data-i18n="resx1_title">ResincronizaciÃ³n 1 (ReSx1)</h1>
-            <p class="text-muted" data-i18n="resx1_subtitle">GestiÃ³n de animales vacÃ­os tras el primer diagnÃ³stico
+            <h1 data-i18n="resx1_title">Resincronización 1 (ReSx1)</h1>
+            <p class="text-muted" data-i18n="resx1_subtitle">Gestión de animales vacíos tras el primer diagnóstico
               (Dx1).</p>
           </div>
         </header>
@@ -729,12 +729,12 @@
               <label>Protocolo ReSx1</label>
               <div style="display: flex; gap: 0.5rem; align-items: center;">
                 <select id="resx1-protocolo" style="flex: 1; color: white !important; opacity: 1 !important; -webkit-text-fill-color: white !important;" disabled>
-                  <option value="REC 1" selected>RESINCRONIZACIÃ“N 1 (REC 1)</option>
+                  <option value="REC 1" selected>RESINCRONIZACIÓN 1 (REC 1)</option>
                 </select>
               </div>
             </div>
             <div class="input-group">
-              <label>Animales en ResincronizaciÃ³n (VacÃ­as Dx1)</label>
+              <label>Animales en Resincronización (Vacías Dx1)</label>
               <div id="resx1-lbl-animales" style="font-size: 2rem; font-weight: 800; color: var(--accent);">0</div>
               <input type="hidden" id="resx1-animales" value="0">
             </div>
@@ -756,7 +756,7 @@
               </div>
             </div>
             <div class="input-group">
-              <label>PreÃ±eces ReSx1 (Proyectado o Real)</label>
+              <label>Preñeces ReSx1 (Proyectado o Real)</label>
               <div style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
                 <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
                   <button class="spin-btn minus" onclick="spinVal('resx1-prenadas', -1, false); debouncedAutoCalcPrenResx1();">&#8722;</button>
@@ -798,7 +798,7 @@
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>DÃ­a</th>
+                  <th>Día</th>
                   <th>Fecha</th>
                   <th>Hora</th>
                   <th>Hormona / Insumo</th>
@@ -817,7 +817,7 @@
                     </div>
                   </td>
                   <td colspan="2"
-                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);">INVERSIÃ“N
+                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);">INVERSIÓN
                     TOTAL/VACA RESX1:</td>
                   <td id="resx1-total-footer"
                     style="text-align: center; padding: 1rem; font-size: 1.1rem; font-weight: 800; color: var(--success);">
@@ -831,18 +831,18 @@
           <div style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
             <h3 class="form-title"
               style="border:none; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">DESGLOSE DE
-              INVERSIÃ“N POR RUBROS (ReSx1)</h3>
+              INVERSIÓN POR RUBROS (ReSx1)</h3>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
               <div class="glass-panel p-1-5" style="border-left: 4px solid var(--accent);">
                 <span class="stat-label" style="font-size:0.65rem;">Hormonas</span>
                 <div id="resx1-cat-hormonas" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #a855f7;">
-                <span class="stat-label" style="font-size:0.65rem;">GenÃ©tica (Semen/EmbriÃ³n)</span>
+                <span class="stat-label" style="font-size:0.65rem;">Genética (Semen/Embrión)</span>
                 <div id="resx1-cat-genetica" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #f59e0b;">
-                <span class="stat-label" style="font-size:0.65rem;">ASISTENCIA TÃ‰CNICA</span>
+                <span class="stat-label" style="font-size:0.65rem;">ASISTENCIA TÉCNICA</span>
                 <div id="resx1-cat-asistencia" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #ec4899;">
@@ -850,7 +850,7 @@
                 <div id="resx1-cat-iate" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid var(--success);">
-                <span class="stat-label" style="font-size:0.65rem;">ConfirmaciÃ³n de PreÃ±ez</span>
+                <span class="stat-label" style="font-size:0.65rem;">Confirmación de Preñez</span>
                 <div id="resx1-cat-diagnostico" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
             </div>
@@ -861,8 +861,8 @@
       <section id="resincronizacion2" class="tab-content view-transition">
         <header class="section-header">
           <div class="header-content">
-            <h1 data-i18n="resx2_title">ResincronizaciÃ³n 2 (ReSx2)</h1>
-            <p class="text-muted" data-i18n="resx2_subtitle">GestiÃ³n de animales vacÃ­os tras el segundo diagnÃ³stico
+            <h1 data-i18n="resx2_title">Resincronización 2 (ReSx2)</h1>
+            <p class="text-muted" data-i18n="resx2_subtitle">Gestión de animales vacíos tras el segundo diagnóstico
               (Dx2).</p>
           </div>
         </header>
@@ -873,12 +873,12 @@
               <label>Protocolo ReSx2</label>
               <div style="display: flex; gap: 0.5rem; align-items: center;">
                 <select id="resx2-protocolo" style="flex: 1; color: white !important; opacity: 1 !important; -webkit-text-fill-color: white !important;" disabled>
-                  <option value="REC 2" selected>RESINCRONIZACIÃ“N 2 (REC 2)</option>
+                  <option value="REC 2" selected>RESINCRONIZACIÓN 2 (REC 2)</option>
                 </select>
               </div>
             </div>
             <div class="input-group">
-              <label>Animales en ResincronizaciÃ³n (VacÃ­as ReSx1)</label>
+              <label>Animales en Resincronización (Vacías ReSx1)</label>
               <div id="resx2-lbl-animales" style="font-size: 2rem; font-weight: 800; color: #a855f7;">0</div>
               <input type="hidden" id="resx2-animales" value="0">
             </div>
@@ -900,7 +900,7 @@
               </div>
             </div>
             <div class="input-group">
-              <label>PreÃ±eces ReSx2 (Proyectado o Real)</label>
+              <label>Preñeces ReSx2 (Proyectado o Real)</label>
               <div style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
                 <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
                   <button class="spin-btn minus" onclick="spinVal('resx2-prenadas', -1, false); debouncedAutoCalcPrenResx2();" style="color: #a855f7;">&#8722;</button>
@@ -942,7 +942,7 @@
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>DÃ­a</th>
+                  <th>Día</th>
                   <th>Fecha</th>
                   <th>Hora</th>
                   <th>Hormona / Insumo</th>
@@ -961,7 +961,7 @@
                     </div>
                   </td>
                   <td colspan="2"
-                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);">INVERSIÃ“N
+                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);">INVERSIÓN
                     TOTAL/VACA RESX2:</td>
                   <td id="resx2-total-footer"
                     style="text-align: center; padding: 1rem; font-size: 1.1rem; font-weight: 800; color: var(--success);">
@@ -975,18 +975,18 @@
           <div style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
             <h3 class="form-title"
               style="border:none; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">DESGLOSE DE
-              INVERSIÃ“N POR RUBROS (ReSx2)</h3>
+              INVERSIÓN POR RUBROS (ReSx2)</h3>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
               <div class="glass-panel p-1-5" style="border-left: 4px solid var(--accent);">
                 <span class="stat-label" style="font-size:0.65rem;">Hormonas</span>
                 <div id="resx2-cat-hormonas" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #a855f7;">
-                <span class="stat-label" style="font-size:0.65rem;">GenÃ©tica (Semen/EmbriÃ³n)</span>
+                <span class="stat-label" style="font-size:0.65rem;">Genética (Semen/Embrión)</span>
                 <div id="resx2-cat-genetica" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #f59e0b;">
-                <span class="stat-label" style="font-size:0.65rem;">ASISTENCIA TÃ‰CNICA</span>
+                <span class="stat-label" style="font-size:0.65rem;">ASISTENCIA TÉCNICA</span>
                 <div id="resx2-cat-asistencia" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #ec4899;">
@@ -994,7 +994,7 @@
                 <div id="resx2-cat-iate" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid var(--success);">
-                <span class="stat-label" style="font-size:0.65rem;">ConfirmaciÃ³n de PreÃ±ez</span>
+                <span class="stat-label" style="font-size:0.65rem;">Confirmación de Preñez</span>
                 <div id="resx2-cat-diagnostico" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
             </div>
@@ -1003,7 +1003,7 @@
       </section>
 
 
-      <!-- 6. DASHBOARD (DiseÃ±o Profesional Reporte) -->
+      <!-- 6. DASHBOARD (Diseño Profesional Reporte) -->
       <section id="dashboard" class="tab-content view-transition">
 
         <!-- Encabezado Estilo Reporte -->
@@ -1017,10 +1017,10 @@
             <div style="flex: 1;">
               <h1 data-i18n="dash_title"
                 style="font-size: 1.6rem; margin-bottom: 0.75rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
-                Reporte de SincronizaciÃ³n y ROI</h1>
+                Reporte de Sincronización y ROI</h1>
               
               <div style="display: flex; flex-direction: column; gap: 0.6rem;">
-                <!-- Fila 1: IdentificaciÃ³n del Predio -->
+                <!-- Fila 1: Identificación del Predio -->
                 <div style="display: flex; gap: 2rem; align-items: center; color: var(--accent); font-size: 1rem; font-weight: 700;">
                   <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="home" style="width: 18px; height: 18px;"></i> <span id="dash-finca">-</span></span>
                   <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="map-pin" style="width: 18px; height: 18px;"></i> <span id="dash-ubicacion">-</span></span>
@@ -1046,24 +1046,24 @@
         </div>
 
         <div class="stats-grid mb-2">
-          <!-- 1. InversiÃ³n Total -->
+          <!-- 1. Inversión Total -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: linear-gradient(180deg, rgba(239, 68, 68, 0.05) 0%, rgba(2, 6, 23, 0.5) 100%); border: 1px solid rgba(239, 68, 68, 0.2);">
-            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">InversiÃ³n Total Proyecto</span>
+            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Inversión Total Proyecto</span>
             <i data-lucide="banknote" style="color: var(--danger); margin-bottom: 0.4rem; width: 24px; height: 24px;"></i>
             <div id="dash-inversion" style="font-size: 1.1rem; font-weight: 800; color: var(--danger);">$ 0</div>
           </div>
-          <!-- 2. Costo / PreÃ±ez -->
+          <!-- 2. Costo / Preñez -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, rgba(2, 6, 23, 0.5) 100%); border: 1px solid rgba(16, 185, 129, 0.2);">
-            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Costo / PreÃ±ez Promedio</span>
+            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Costo / Preñez Promedio</span>
             <i data-lucide="coins" style="color: var(--success); margin-bottom: 0.4rem; width: 24px; height: 24px;"></i>
             <div id="dash-costo-prenez" style="font-size: 1.1rem; font-weight: 800; color: var(--success);">$ 0</div>
           </div>
           <!-- 3. ROI -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: linear-gradient(180deg, rgba(168, 85, 247, 0.05) 0%, rgba(2, 6, 23, 0.5) 100%); border: 1px solid rgba(168, 85, 247, 0.2);">
-            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">ROI (Retorno InversiÃ³n)</span>
+            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">ROI (Retorno Inversión)</span>
             <i data-lucide="trending-up" style="color: #a855f7; margin-bottom: 0.4rem; width: 24px; height: 24px;"></i>
             <div id="dash-roi-porc" style="font-size: 1.1rem; font-weight: 800; color: #a855f7;">0%</div>
           </div>
@@ -1075,17 +1075,17 @@
             <i data-lucide="syringe" style="color: var(--accent); margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
             <div id="dash-prot-animal" style="font-size: 1rem; font-weight: 700; color: var(--accent);">$ 0</div>
           </div>
-          <!-- 6. GenÃ©tica -->
+          <!-- 6. Genética -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(245, 158, 11, 0.03); border: 1px solid rgba(245, 158, 11, 0.15);">
-            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">GenÃ©tica / Vaca</span>
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Genética / Vaca</span>
             <i data-lucide="dna" style="color: #f59e0b; margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
             <div id="dash-gen-animal" style="font-size: 1rem; font-weight: 700; color: #f59e0b;">$ 0</div>
           </div>
           <!-- 7. Asistencia -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(236, 72, 153, 0.03); border: 1px solid rgba(236, 72, 153, 0.15);">
-            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Asistencia TÃ©cnica / Vaca</span>
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Asistencia Técnica / Vaca</span>
             <i data-lucide="briefcase" style="color: #ec4899; margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
             <div id="dash-asis-animal" style="font-size: 1rem; font-weight: 700; color: #ec4899;">$ 0</div>
           </div>
@@ -1096,22 +1096,22 @@
             <i data-lucide="target" style="color: #3b82f6; margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
             <div id="dash-iatf-animal" style="font-size: 1rem; font-weight: 700; color: #3b82f6;">$ 0</div>
           </div>
-          <!-- 8b. ConfirmaciÃ³n PreÃ±ez -->
+          <!-- 8b. Confirmación Preñez -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(20, 184, 166, 0.03); border: 1px solid rgba(20, 184, 166, 0.15);">
-            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">ConfirmaciÃ³n PreÃ±ez / Vaca</span>
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Confirmación Preñez / Vaca</span>
             <i data-lucide="stethoscope" style="color: #14b8a6; margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
             <div id="dash-diag-animal" style="font-size: 1rem; font-weight: 700; color: #14b8a6;">$ 0</div>
           </div>
         </div>
 
-        <!-- Fila 2: Ã‰xito Reproductivo y PreÃ±ez por Etapa -->
+        <!-- Fila 2: Éxito Reproductivo y Preñez por Etapa -->
         <div class="grid-2 mb-2" style="grid-template-columns: 1fr 2fr;">
           <div class="glass-panel premium-card"
             style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
             <h2
               style="font-size: 1.2rem; color: #ef4444; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase;">
-              Ã‰xito Reproductivo</h2>
+              Éxito Reproductivo</h2>
             <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 1rem;">
               <span id="dash-exito-num"
                 style="font-size: 3.5rem; font-weight: 900; color: #10b981; line-height: 1;">0</span>
@@ -1125,7 +1125,7 @@
           <div class="glass-panel p-2 premium-card">
             <h2
               style="font-size: 1.2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-main); font-style: italic;">
-              <i data-lucide="bar-chart-horizontal" style="color: #fde047;"></i> PreÃ±ez por Etapa</h2>
+              <i data-lucide="bar-chart-horizontal" style="color: #fde047;"></i> Preñez por Etapa</h2>
             <div style="position: relative; height: 350px;">
               <canvas id="chart-etapas"></canvas>
             </div>
@@ -1178,12 +1178,12 @@
           </div>
         </div>
 
-        <!-- Fila 4: Desglose de InversiÃ³n y Proyecciones Leche/Carne -->
+        <!-- Fila 4: Desglose de Inversión y Proyecciones Leche/Carne -->
         <div class="grid-2">
           <div class="glass-panel p-2 premium-card">
             <h2 style="font-size: 1.2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;"><i
                 data-lucide="pie-chart" style="color: var(--danger);"></i> <span
-                data-i18n="dash_investment_breakdown">Desglose de InversiÃ³n</span></h2>
+                data-i18n="dash_investment_breakdown">Desglose de Inversión</span></h2>
             <div style="position: relative; height: 400px;">
               <canvas id="chart-costos-horizontal"></canvas>
             </div>
@@ -1207,12 +1207,12 @@
 
       </section>
 
-      <!-- 8. BUSCADOR HISTÃ“RICO -->
+      <!-- 8. BUSCADOR HISTÓRICO -->
       <section id="buscador-historico" class="tab-content view-transition">
         <header class="section-header">
           <div class="header-content">
-            <h1>Buscador HistÃ³rico de Protocolos</h1>
-            <p class="text-muted">Consulta el histÃ³rico de trabajos realizados filtrando por NIT.</p>
+            <h1>Buscador Histórico de Protocolos</h1>
+            <p class="text-muted">Consulta el histórico de trabajos realizados filtrando por NIT.</p>
           </div>
         </header>
 
@@ -1241,13 +1241,13 @@
                     <th style="text-align: left;">Finca</th>
                     <th style="text-align: left;">Protocolo</th>
                     <th style="text-align: center;">Animales</th>
-                    <th style="text-align: center;">PreÃ±eces</th>
-                    <th style="text-align: right;">InversiÃ³n</th>
+                    <th style="text-align: center;">Preñeces</th>
+                    <th style="text-align: right;">Inversión</th>
                     <th style="text-align: center;">Acciones</th>
                   </tr>
                 </thead>
                 <tbody id="lista-historial">
-                  <!-- Se llena dinÃ¡micamente -->
+                  <!-- Se llena dinámicamente -->
                 </tbody>
               </table>
             </div>
@@ -1256,7 +1256,7 @@
           <div id="historial-vacio" class="text-muted"
             style="text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 12px; margin-top: 1rem; border: 1px dashed var(--glass-border);">
             <i data-lucide="info" style="width: 40px; height: 40px; margin-bottom: 1rem; opacity: 0.5;"></i>
-            <p>Ingresa un NIT para ver el histÃ³rico de protocolos realizados.</p>
+            <p>Ingresa un NIT para ver el histórico de protocolos realizados.</p>
           </div>
         </div>
       </section>
@@ -1330,12 +1330,12 @@
     }
   </style>
 
-  <!-- MODAL: ConfiguraciÃ³n de Precios e Insumos -->
+  <!-- MODAL: Configuración de Precios e Insumos -->
   <div id="modal-precios" class="modal" style="display: none;">
     <div class="modal-content glass-panel" style="max-width: 1000px; width: 95%;">
       <div class="modal-header">
         <div>
-          <h2 id="modal-title">ConfiguraciÃ³n de Precios e Insumos</h2>
+          <h2 id="modal-title">Configuración de Precios e Insumos</h2>
           <p id="modal-subtitle" class="text-muted" style="font-size: 0.85rem; margin-top: 2px;"></p>
         </div>
         <button class="btn-close" onclick="cerrarModalPrecios()"><i data-lucide="x"></i></button>
@@ -1347,15 +1347,15 @@
               <tr>
                 <th style="text-align: left; padding-left: 2rem;">Actividad / Insumo</th>
                 <th style="text-align: center;">Dosis</th>
-                <th style="text-align: center;">PresentaciÃ³n</th>
+                <th style="text-align: center;">Presentación</th>
                 <th style="text-align: center;">Valor Frasco/Und</th>
                 <th style="text-align: center;">Frascos</th>
-                <th style="text-align: center;">InversiÃ³n Total</th>
+                <th style="text-align: center;">Inversión Total</th>
                 <th style="text-align: center;">Costo/Dosis</th>
               </tr>
             </thead>
             <tbody id="tabla-modal-precios">
-              <!-- Se genera dinÃ¡micamente -->
+              <!-- Se genera dinámicamente -->
             </tbody>
           </table>
         </div>
@@ -1365,9 +1365,9 @@
           style="display: flex; gap: 2rem; align-items: center; background: rgba(255,255,255,0.03); padding: 0.75rem 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
           <div class="text-muted" style="font-size: 0.8rem;">TOTAL COMPRA: <strong id="mod-total-compra"
               style="color: var(--accent); font-size: 1rem; margin-left: 8px;">$ 0</strong></div>
-          <div class="text-muted" style="font-size: 0.8rem;">TOTAL APLICACIÃ“N: <strong id="mod-total-aplicacion"
+          <div class="text-muted" style="font-size: 0.8rem;">TOTAL APLICACIÓN: <strong id="mod-total-aplicacion"
               style="color: var(--success); font-size: 1rem; margin-left: 8px;">$ 0</strong></div>
-          <div class="text-muted" style="font-size: 0.8rem;">INVERSIÃ“N POR VACA: <strong id="mod-total-porvaca"
+          <div class="text-muted" style="font-size: 0.8rem;">INVERSIÓN POR VACA: <strong id="mod-total-porvaca"
               style="color: #f59e0b; font-size: 1.1rem; margin-left: 8px;">$ 0</strong></div>
         </div>
         <div style="display: flex; gap: 1rem;">
@@ -1381,7 +1381,7 @@
 
   <script src="app.js?v=2.8.2"></script>
 
-  <!-- Registro del Service Worker (PWA Offline) con actualizaciÃ³n automÃ¡tica -->
+  <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -1399,7 +1399,7 @@
               newWorker.addEventListener('statechange', () => {
                 if (newWorker.state === 'installed') {
                   if (navigator.serviceWorker.controller) {
-                    console.log('[Iatf Pro] Nueva versiÃ³n disponible. Forzando actualizaciÃ³n...');
+                    console.log('[Iatf Pro] Nueva versión disponible. Forzando actualización...');
                     newWorker.postMessage({ type: 'SKIP_WAITING' });
                   }
                 }
@@ -1408,12 +1408,12 @@
           })
           .catch(err => console.warn('[Iatf Pro] SW no registrado:', err));
 
-        // Recargar la pÃ¡gina automÃ¡ticamente cuando el nuevo Service Worker tome el control
+        // Recargar la página automáticamente cuando el nuevo Service Worker tome el control
         let refreshing = false;
         navigator.serviceWorker.addEventListener('controllerchange', () => {
           if (!refreshing) {
             refreshing = true;
-            console.log('[Iatf Pro] Service Worker actualizado. Recargando pÃ¡gina...');
+            console.log('[Iatf Pro] Service Worker actualizado. Recargando página...');
             window.location.reload();
           }
         });

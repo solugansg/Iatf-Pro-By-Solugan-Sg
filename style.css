@@ -1,4 +1,4 @@
-@font-face { font-family: 'Inter'; font-style: normal; font-weight: 300; font-display: swap; src: url('fonts/inter-300.ttf') format('truetype'); }
+﻿@font-face { font-family: 'Inter'; font-style: normal; font-weight: 300; font-display: swap; src: url('fonts/inter-300.ttf') format('truetype'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/inter-400.ttf') format('truetype'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/inter-500.ttf') format('truetype'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/inter-600.ttf') format('truetype'); }
@@ -89,7 +89,7 @@ body {
   display: flex;
   flex-direction: column;
   z-index: 10;
-  overflow-y: auto; /* Permite scroll vertical si la pantalla es muy pequeÃ±a */
+  overflow-y: auto; /* Permite scroll vertical si la pantalla es muy pequeña */
   height: 100vh;
 }
 
@@ -122,7 +122,7 @@ body {
   overflow: hidden;
 }
 
-/* Logo mÃ¡s compacto en el sidebar para ahorrar espacio vertical */
+/* Logo más compacto en el sidebar para ahorrar espacio vertical */
 .sidebar .logo-icon {
   width: 120px;
   height: 120px;
@@ -1249,7 +1249,7 @@ input:checked + .slider:before { transform: translateX(20px); }
   color: var(--text-muted);
 }
 
-/* --- RESPONSIVIDAD MÃ“VIL --- */
+/* --- RESPONSIVIDAD MÓVIL --- */
 @media (max-width: 900px) {
   body {
     overflow-y: auto !important;
