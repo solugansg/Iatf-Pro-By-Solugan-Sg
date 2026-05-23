@@ -276,6 +276,8 @@ body {
     width: 160px;
     height: 160px;
     border-radius: 26px;
+    background: transparent !important;
+    box-shadow: none !important;
   }
   .sidebar .logo-icon i, .sidebar .logo-icon svg {
     width: 80px !important;
@@ -329,6 +331,8 @@ body {
     width: 200px;
     height: 200px;
     border-radius: 32px;
+    background: transparent !important;
+    box-shadow: none !important;
   }
   .sidebar .logo-icon i, .sidebar .logo-icon svg {
     width: 100px !important;
