@@ -10,8 +10,38 @@ if (!fs.existsSync(distDir)) {
   fs.mkdirSync(distDir);
 }
 
-// Archivos que se copian tal cual
-const filesToCopy = ['index.html', 'style.css', 'lucide.min.js', 'sw.js', 'manifest.json', 'icon-192.png', 'icon-512.png'];
+// Función para copiar directorios de manera recursiva
+function copyFolderRecursiveSync(source, target) {
+  let files = [];
+  if (!fs.existsSync(target)) {
+    fs.mkdirSync(target);
+  }
+  if (fs.lstatSync(source).isDirectory()) {
+    files = fs.readdirSync(source);
+    files.forEach(file => {
+      const curSource = path.join(source, file);
+      const curTarget = path.join(target, file);
+      if (fs.lstatSync(curSource).isDirectory()) {
+        copyFolderRecursiveSync(curSource, curTarget);
+      } else {
+        fs.copyFileSync(curSource, curTarget);
+      }
+    });
+  }
+}
+
+// Archivos individuales que se copian tal cual
+const filesToCopy = [
+  'index.html', 
+  'style.css', 
+  'lucide.min.js', 
+  'service-worker.js', 
+  'manifest.json', 
+  'icon-192.png', 
+  'icon-512.png', 
+  'apple-touch-icon.png', 
+  'Logo Iatf Pro.png'
+];
 
 filesToCopy.forEach(file => {
   const srcPath = path.join(srcDir, file);
@@ -21,6 +51,19 @@ filesToCopy.forEach(file => {
     console.log(`Copiado: ${file}`);
   } else {
     console.warn(`Archivo no encontrado para copiar: ${file}`);
+  }
+});
+
+// Copiar directorios completos
+const dirsToCopy = ['libs', 'fonts'];
+dirsToCopy.forEach(dir => {
+  const srcPath = path.join(srcDir, dir);
+  const destPath = path.join(distDir, dir);
+  if (fs.existsSync(srcPath)) {
+    copyFolderRecursiveSync(srcPath, destPath);
+    console.log(`Directorio copiado recursivamente: ${dir}`);
+  } else {
+    console.warn(`Directorio no encontrado para copiar: ${dir}`);
   }
 });
 
