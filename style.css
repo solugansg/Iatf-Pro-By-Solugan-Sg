@@ -413,3 +413,135 @@ body {
   width: 100%;
 }
 
+/* ==========================================
+   DISEÑO RESPONSIVO MÓVIL (PWAs y Celulares)
+   ========================================== */
+@media (max-width: 900px) {
+  .app-container {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: var(--bg-panel);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    width: 100%;
+  }
+
+  .menu-toggle-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background 0.3s;
+  }
+
+  .menu-toggle-btn:active {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .mobile-app-title {
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #fff, var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    height: 100vh;
+    width: 280px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #020617; /* Fondo oscuro sólido para móviles */
+    border-right: 1px solid var(--glass-border);
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.8);
+    z-index: 999;
+  }
+
+  .sidebar.open {
+    transform: translateX(280px);
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 998;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .sidebar-overlay.open {
+    display: block;
+  }
+
+  .main-content {
+    padding: 1rem 1.25rem;
+    width: 100%;
+    overflow-y: visible;
+  }
+
+  .section-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .section-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .grid-2, .grid-3 {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+
+  /* Ajustar tablas para que no rompan la pantalla */
+  .table-responsive {
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 0.5rem;
+  }
+
+  .data-table th, .data-table td {
+    padding: 0.75rem 0.5rem;
+  }
+}
+
+/* Reglas de visualización de Cabecera Móvil en Escritorio */
+@media (min-width: 901px) {
+  .mobile-header {
+    display: none !important;
+  }
+  .sidebar-overlay {
+    display: none !important;
+  }
+}
+
+

@@ -743,3 +743,29 @@ if(document.getElementById('pi-fecha')) {
   document.getElementById('pi-fecha').value = todayDate;
 }
 
+// ==========================================
+// CONTROL DE MENÚ RESPONSIVO MÓVIL
+// ==========================================
+window.toggleSidebar = function() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (sidebar && overlay) {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+  }
+};
+
+// Auto-cerrar menú lateral al navegar entre pestañas en teléfonos
+const navButtonsMobile = document.querySelectorAll('.nav-btn');
+navButtonsMobile.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (sidebar && sidebar.classList.contains('open')) {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('open');
+    }
+  });
+});
+
+

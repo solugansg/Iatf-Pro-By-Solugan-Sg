@@ -70,6 +70,7 @@
   </div>
 
   <div class="app-container" id="app-main-layout" style="display: none;">
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
     <aside class="sidebar glass-panel">
       <div class="sidebar-header">
         <img src="icon-192.png" alt="Iatf Pro Logo" style="width: 55px; height: 55px; border-radius: 12px; object-fit: cover; box-shadow: 0 0 15px rgba(14, 165, 233, 0.25);">
@@ -109,6 +110,12 @@
     </aside>
 
     <main class="main-content">
+      <div class="mobile-header">
+        <button class="menu-toggle-btn" onclick="toggleSidebar()">
+          <i data-lucide="menu"></i>
+        </button>
+        <span class="mobile-app-title">Iatf Pro</span>
+      </div>
       
       <!-- 1. TABLERO DE CONTROL (Idéntico al Excel) -->
       <section id="tablero-control" class="tab-content active view-transition">
