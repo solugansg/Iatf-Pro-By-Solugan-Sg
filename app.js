@@ -1985,27 +1985,28 @@ window.loadState = function() {
       }
     }
     
-    const customMatrizSaved = localStorage.getItem('reprocost_custom_matriz');
-    let matrixToLoad = null;
-    if (customMatrizSaved) {
-      try {
-        const parsedCustom = JSON.parse(customMatrizSaved);
-        const expectedLen = state.colDefs.length;
-        if (Array.isArray(parsedCustom) && parsedCustom.every(p => p.days && p.days.length === expectedLen)) {
-          matrixToLoad = parsedCustom;
-        }
-      } catch(e) {}
-    }
-    
-    if (!matrixToLoad && parsed.matriz && Array.isArray(parsed.matriz)) {
-      const expectedLen = state.colDefs.length;
-      if (parsed.matriz.every(p => p.days && p.days.length === expectedLen)) {
-        matrixToLoad = parsed.matriz;
+    if ((parsed.matriz && Array.isArray(parsed.matriz)) || localStorage.getItem('reprocost_custom_matriz')) {
+      const customMatrizSaved = localStorage.getItem('reprocost_custom_matriz');
+      let matrixToLoad = null;
+      if (customMatrizSaved) {
+        try {
+          const parsedCustom = JSON.parse(customMatrizSaved);
+          const expectedLen = state.colDefs.length;
+          if (Array.isArray(parsedCustom) && parsedCustom.every(p => p.days && p.days.length === expectedLen)) {
+            matrixToLoad = parsedCustom;
+          }
+        } catch(e) {}
       }
-    }
-    
-    if (matrixToLoad) {
-      state.matriz = matrixToLoad;
+      
+      if (!matrixToLoad && parsed.matriz && Array.isArray(parsed.matriz)) {
+        const expectedLen = state.colDefs.length;
+        if (parsed.matriz.every(p => p.days && p.days.length === expectedLen)) {
+          matrixToLoad = parsed.matriz;
+        }
+      }
+      
+      if (matrixToLoad) {
+        state.matriz = matrixToLoad;
 
         // MIGRACIÓN: asignar campo role a protocolos que aún no lo tienen
         let resx1Count = 0, resx2Count = 0;
