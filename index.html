@@ -29,7 +29,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=2.8.7">
+  <link rel="stylesheet" href="style.css?v=2.8.8">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -143,7 +143,7 @@
         <div class="logo-icon">
           <i data-lucide="activity"></i>
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">v2.8.7</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">v2.8.8</span></span>
         <div id="sidebar-consultor" style="font-size: 0.75rem; color: var(--accent); opacity: 0.9; margin-top: 4px; font-weight: bold; text-align: center; display: none;"></div>
       </div>
 
@@ -209,7 +209,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">v2.8.7</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">v2.8.8</span></span>
         <div class="logo-icon" style="width: 32px; height: 32px; margin: 0; background: transparent; border: none; box-shadow: none;"><i data-lucide="activity" style="width:18px; height:18px;"></i></div>
       </div>
 
@@ -528,13 +528,13 @@
           </div>
 
           <!-- Fila 3: Opciones de Resincronización (Destacadas) -->
-          <div
+          <div class="resync-toggle-card"
             style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid var(--glass-border); margin-top: 1rem;">
             <div style="display: flex; flex-direction: column;">
               <span style="font-weight: 600; color: var(--text-main);" data-i18n="pi_include_resync">¿Deseas incluir
                 fases de resincronización?</span>
             </div>
-            <div style="display: flex; gap: 1.5rem;">
+            <div class="resync-toggle-options" style="display: flex; gap: 1.5rem;">
               <div id="wrapper-check-resx1"
                 style="display: flex; align-items: center; gap: 1rem; background: rgba(14, 165, 233, 0.1); padding: 12px 24px; border-radius: 12px; border: 1px solid var(--accent); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.1);">
                 <span id="label-check-resx1" class="text-accent" style="font-size: 1rem; font-weight: 800; white-space: nowrap;"
@@ -655,11 +655,11 @@
       <!-- MODAL DE PRECIOS E INVENTARIO -->
       <div id="modal-precios"
         style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.6); z-index:999; justify-content:center; align-items:center; backdrop-filter:blur(5px);">
-        <div class="glass-panel"
+        <div class="glass-panel modal-precios-content"
           style="padding: 2rem; width: 95%; max-width: 1400px; max-height: 90vh; overflow-y:auto; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
-          <h2 class="form-title text-accent m-0" style="margin-bottom:0.5rem;" data-i18n="modal_title"><i
+          <h2 class="form-title text-accent m-0" id="modal-title" style="margin-bottom:0.5rem;" data-i18n="modal_title"><i
               data-lucide="package"></i> Configuración precios y dosis</h2>
-          <p class="text-muted" style="font-size:0.85rem; margin-bottom:1.5rem" data-i18n="modal_subtitle">Mostrando
+          <p class="text-muted" id="modal-subtitle" style="font-size:0.85rem; margin-bottom:1.5rem" data-i18n="modal_subtitle">Mostrando
             exclusivamente los insumos requeridos por el protocolo actualmente seleccionado.</p>
 
           <div class="table-responsive">
@@ -690,7 +690,7 @@
             </table>
           </div>
 
-          <div id="modal-footer-summary"
+          <div id="modal-footer-summary" class="modal-summary-grid"
             style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border); display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem;">
             <div class="glass-panel p-1" style="background: rgba(14, 165, 233, 0.05);">
               <span class="stat-label" style="font-size:0.6rem;">VALOR HORMONA APLICADA</span>
@@ -1016,7 +1016,7 @@
       <section id="dashboard" class="tab-content view-transition">
 
         <!-- Encabezado Estilo Reporte -->
-        <div class="glass-panel mb-2"
+        <div class="glass-panel mb-2 dash-report-header"
           style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--accent); background: linear-gradient(90deg, rgba(14, 165, 233, 0.1) 0%, rgba(255,255,255,0.02) 100%);">
           <div style="display: flex; align-items: center; gap: 1.5rem;">
             <div id="dash-logo"
@@ -1028,15 +1028,15 @@
                 style="font-size: 1.6rem; margin-bottom: 0.75rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
                 Reporte de Sincronización y ROI</h1>
               
-              <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+              <div class="dash-meta-container" style="display: flex; flex-direction: column; gap: 0.6rem;">
                 <!-- Fila 1: Identificación del Predio -->
-                <div style="display: flex; gap: 2rem; align-items: center; color: var(--accent); font-size: 1rem; font-weight: 700;">
+                <div class="dash-meta-row" style="display: flex; gap: 2rem; align-items: center; color: var(--accent); font-size: 1rem; font-weight: 700;">
                   <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="home" style="width: 18px; height: 18px;"></i> <span id="dash-finca">-</span></span>
                   <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="map-pin" style="width: 18px; height: 18px;"></i> <span id="dash-ubicacion">-</span></span>
                 </div>
                 
                 <!-- Fila 2: Detalles del Protocolo -->
-                <div style="display: flex; gap: 2rem; align-items: center; color: var(--text-muted); font-size: 0.85rem;">
+                <div class="dash-meta-row" style="display: flex; gap: 2rem; align-items: center; color: var(--text-muted); font-size: 0.85rem;">
                   <span style="display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="award" style="width: 16px; height: 16px;"></i> <span data-i18n="dash_protocolo">Protocolo</span>: <strong style="color: #fff;" id="dash-protocolo">-</strong></span>
                   <span style="display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="calendar" style="width: 16px; height: 16px; color: #a855f7;"></i> <strong style="color: #fff;" id="dash-fecha">-</strong></span>
                   <span style="display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="info" style="width: 16px; height: 16px; color: var(--success);"></i> <strong style="color: #fff;" id="dash-animales">0</strong> <span data-i18n="dash_animales">Animales</span></span>
@@ -1044,7 +1044,7 @@
               </div>
             </div>
           </div>
-          <div style="text-align: right; display: flex; gap: 0.5rem; align-items: center;">
+          <div class="dash-header-actions" style="text-align: right; display: flex; gap: 0.5rem; align-items: center;">
             <button class="btn" onclick="guardarEnHistorial()"
               style="background: var(--success); color: #fff; font-weight: bold; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); border: none;">
               <i data-lucide="save"></i> <span data-i18n="btn_guardar">GUARDAR REPORTE</span>
@@ -1199,7 +1199,7 @@
           </div>
 
           <div class="glass-panel p-2 premium-card" style="display: flex; flex-direction: column; min-width: 0;">
-            <div style="display: flex; height: 100%; gap: 1rem; min-width: 0;">
+            <div class="chart-split-row" style="display: flex; height: 100%; gap: 1rem; min-width: 0;">
               <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
                 <h2 style="font-size: 1.1rem; text-align: center; color: var(--text-muted); margin-bottom: 1rem;"><i
                     data-lucide="droplet" style="color: #0ea5e9; width: 18px; height: 18px;"></i> Leche</h2>
@@ -1339,56 +1339,7 @@
     }
   </style>
 
-  <!-- MODAL: Configuración de Precios e Insumos -->
-  <div id="modal-precios" class="modal" style="display: none;">
-    <div class="modal-content glass-panel" style="max-width: 1000px; width: 95%;">
-      <div class="modal-header">
-        <div>
-          <h2 id="modal-title">Configuración de Precios e Insumos</h2>
-          <p id="modal-subtitle" class="text-muted" style="font-size: 0.85rem; margin-top: 2px;"></p>
-        </div>
-        <button class="btn-close" onclick="cerrarModalPrecios()"><i data-lucide="x"></i></button>
-      </div>
-      <div class="modal-body">
-        <div class="table-responsive">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th style="text-align: left; padding-left: 2rem;">Actividad / Insumo</th>
-                <th style="text-align: center;">Dosis</th>
-                <th style="text-align: center;">Presentación</th>
-                <th style="text-align: center;">Valor Frasco/Und</th>
-                <th style="text-align: center;">Frascos</th>
-                <th style="text-align: center;">Inversión Total</th>
-                <th style="text-align: center;">Costo/Dosis</th>
-              </tr>
-            </thead>
-            <tbody id="tabla-modal-precios">
-              <!-- Se genera dinámicamente -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div id="modal-totales"
-          style="display: flex; gap: 2rem; align-items: center; background: rgba(255,255,255,0.03); padding: 0.75rem 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
-          <div class="text-muted" style="font-size: 0.8rem;">TOTAL COMPRA: <strong id="mod-total-compra"
-              style="color: var(--accent); font-size: 1rem; margin-left: 8px;">$ 0</strong></div>
-          <div class="text-muted" style="font-size: 0.8rem;">TOTAL APLICACIÓN: <strong id="mod-total-aplicacion"
-              style="color: var(--success); font-size: 1rem; margin-left: 8px;">$ 0</strong></div>
-          <div class="text-muted" style="font-size: 0.8rem;">INVERSIÓN POR VACA: <strong id="mod-total-porvaca"
-              style="color: #f59e0b; font-size: 1.1rem; margin-left: 8px;">$ 0</strong></div>
-        </div>
-        <div style="display: flex; gap: 1rem;">
-          <button class="btn btn-secondary" onclick="cerrarModalPrecios()">Cancelar</button>
-          <button class="btn btn-primary" onclick="guardarPreciosModal()"><i data-lucide="save"></i> ACTUALIZAR
-            VALORES</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="app.js?v=2.8.7"></script>
+  <script src="app.js?v=2.8.8"></script>
 
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>
