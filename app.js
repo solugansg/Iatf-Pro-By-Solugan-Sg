@@ -27,6 +27,70 @@ db.enablePersistence()
 
 const ADMIN_EMAIL = "solugansg@gmail.com";
 
+function adaptarDiasProtocolo(days, iaVal) {
+  const currentLen = 18; // Longitud actual de colDefs
+  if (!Array.isArray(days)) {
+    return Array(currentLen).fill('-');
+  }
+  if (days.length === currentLen) {
+    return days;
+  }
+  let newDays = Array(currentLen).fill('-');
+  if (days.length === 17) {
+    for (let i = 0; i <= 14; i++) {
+      newDays[i] = days[i] !== undefined ? days[i] : '-';
+    }
+    newDays[15] = '-';
+    newDays[16] = days[15] !== undefined ? days[15] : '-';
+    newDays[17] = days[16] !== undefined ? days[16] : '-';
+  } else if (days.length === 16) {
+    for (let i = 0; i <= 13; i++) {
+      newDays[i] = days[i] !== undefined ? days[i] : '-';
+    }
+    newDays[14] = iaVal !== undefined ? String(iaVal) : '-';
+    newDays[15] = '-';
+    newDays[16] = days[14] !== undefined ? days[14] : '-';
+    newDays[17] = days[15] !== undefined ? days[15] : '-';
+  } else {
+    for (let i = 0; i < currentLen; i++) {
+      newDays[i] = days[i] !== undefined ? days[i] : '-';
+    }
+  }
+  return newDays;
+}
+
+function adaptarHorasProtocolo(hours) {
+  const currentLen = 18; // Longitud actual de colDefs
+  if (!Array.isArray(hours)) {
+    return Array(currentLen).fill('08:00');
+  }
+  if (hours.length === currentLen) {
+    return hours;
+  }
+  let newHours = Array(currentLen).fill('08:00');
+  if (hours.length === 17) {
+    for (let i = 0; i <= 14; i++) {
+      newHours[i] = hours[i] !== undefined ? hours[i] : '08:00';
+    }
+    newHours[15] = '08:00';
+    newHours[16] = hours[15] !== undefined ? hours[15] : '08:00';
+    newHours[17] = hours[16] !== undefined ? hours[16] : '08:00';
+  } else if (hours.length === 16) {
+    for (let i = 0; i <= 13; i++) {
+      newHours[i] = hours[i] !== undefined ? hours[i] : '08:00';
+    }
+    newHours[14] = '08:00';
+    newHours[15] = '08:00';
+    newHours[16] = hours[14] !== undefined ? hours[14] : '08:00';
+    newHours[17] = hours[15] !== undefined ? hours[15] : '08:00';
+  } else {
+    for (let i = 0; i < currentLen; i++) {
+      newHours[i] = hours[i] !== undefined ? hours[i] : '08:00';
+    }
+  }
+  return newHours;
+}
+
 // Escuchar cambios en el estado de autenticación
 auth.onAuthStateChanged(user => {
   const authContainer = document.getElementById('auth-container');
@@ -61,14 +125,14 @@ auth.onAuthStateChanged(user => {
             }
           }
           if (userData.matriz && Array.isArray(userData.matriz)) {
-            const expectedLen = state.colDefs.length;
-            const isValid = userData.matriz.every(p => p.days && p.days.length === expectedLen);
-            if (isValid) {
-              state.matriz = userData.matriz;
-              localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
-            } else {
-              console.warn("Detectada matriz de Firestore con estructura antigua. Ignorando para evitar desajustes.");
-            }
+            // Migrar y sanitizar la matriz de Firestore automáticamente
+            const migratedMatrix = userData.matriz.map(p => {
+              const newDays = adaptarDiasProtocolo(p.days, p.ia);
+              const newHours = adaptarHorasProtocolo(p.hours);
+              return Object.assign({}, p, { days: newDays, hours: newHours });
+            });
+            state.matriz = migratedMatrix;
+            localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
           }
           if (userData.logoEmpresa) {
             state.logoEmpresa = userData.logoEmpresa;
@@ -1995,26 +2059,23 @@ window.loadState = function() {
     
     if ((parsed.matriz && Array.isArray(parsed.matriz)) || localStorage.getItem('reprocost_custom_matriz')) {
       const customMatrizSaved = localStorage.getItem('reprocost_custom_matriz');
-      let matrixToLoad = null;
+      let rawMatrix = null;
       if (customMatrizSaved) {
         try {
-          const parsedCustom = JSON.parse(customMatrizSaved);
-          const expectedLen = state.colDefs.length;
-          if (Array.isArray(parsedCustom) && parsedCustom.every(p => p.days && p.days.length === expectedLen)) {
-            matrixToLoad = parsedCustom;
-          }
+          rawMatrix = JSON.parse(customMatrizSaved);
         } catch(e) {}
       }
-      
-      if (!matrixToLoad && parsed.matriz && Array.isArray(parsed.matriz)) {
-        const expectedLen = state.colDefs.length;
-        if (parsed.matriz.every(p => p.days && p.days.length === expectedLen)) {
-          matrixToLoad = parsed.matriz;
-        }
+      if (!rawMatrix && parsed.matriz && Array.isArray(parsed.matriz)) {
+        rawMatrix = parsed.matriz;
       }
       
-      if (matrixToLoad) {
-        state.matriz = matrixToLoad;
+      if (Array.isArray(rawMatrix)) {
+        // Migrar y sanitizar la matriz automáticamente
+        state.matriz = rawMatrix.map(p => {
+          const newDays = adaptarDiasProtocolo(p.days, p.ia);
+          const newHours = adaptarHorasProtocolo(p.hours);
+          return Object.assign({}, p, { days: newDays, hours: newHours });
+        });
 
         // MIGRACIÓN: asignar campo role a protocolos que aún no lo tienen
         let resx1Count = 0, resx2Count = 0;
@@ -2044,7 +2105,7 @@ window.loadState = function() {
         });
 
       } else {
-        console.warn("Detectada matriz con estructura antigua. Manteniendo matriz por defecto.");
+        console.warn("Detectada matriz con estructura antigua o no válida. Manteniendo matriz por defecto.");
       }
       
       // ASEGURAR que existan protocolos para ReSx (identificados por campo role, NO por nombre)
@@ -3856,9 +3917,12 @@ window.cargarDeHistorial = function(id) {
     if (latestMatrixStr) {
       try {
         const parsedMatrix = JSON.parse(latestMatrixStr);
-        const expectedLen = state.colDefs.length;
-        if (Array.isArray(parsedMatrix) && parsedMatrix.every(p => p.days && p.days.length === expectedLen)) {
-          newState.matriz = parsedMatrix;
+        if (Array.isArray(parsedMatrix)) {
+          newState.matriz = parsedMatrix.map(p => {
+            const newDays = adaptarDiasProtocolo(p.days, p.ia);
+            const newHours = adaptarHorasProtocolo(p.hours);
+            return Object.assign({}, p, { days: newDays, hours: newHours });
+          });
         }
       } catch(e) {}
     }
@@ -3907,9 +3971,12 @@ window.exportarExcelDesdeHistorial = function(id) {
   if (latestMatrixStr) {
     try {
       const parsedMatrix = JSON.parse(latestMatrixStr);
-      const expectedLen = state.colDefs.length;
-      if (Array.isArray(parsedMatrix) && parsedMatrix.every(p => p.days && p.days.length === expectedLen)) {
-        tempState.matriz = parsedMatrix;
+      if (Array.isArray(parsedMatrix)) {
+        tempState.matriz = parsedMatrix.map(p => {
+          const newDays = adaptarDiasProtocolo(p.days, p.ia);
+          const newHours = adaptarHorasProtocolo(p.hours);
+          return Object.assign({}, p, { days: newDays, hours: newHours });
+        });
       }
     } catch(e) {}
   }
@@ -3967,9 +4034,12 @@ window.exportarPdfDesdeHistorial = function(id) {
   if (latestMatrixStr) {
     try {
       const parsedMatrix = JSON.parse(latestMatrixStr);
-      const expectedLen = state.colDefs.length;
-      if (Array.isArray(parsedMatrix) && parsedMatrix.every(p => p.days && p.days.length === expectedLen)) {
-        tempState.matriz = parsedMatrix;
+      if (Array.isArray(parsedMatrix)) {
+        tempState.matriz = parsedMatrix.map(p => {
+          const newDays = adaptarDiasProtocolo(p.days, p.ia);
+          const newHours = adaptarHorasProtocolo(p.hours);
+          return Object.assign({}, p, { days: newDays, hours: newHours });
+        });
       }
     } catch(e) {}
   }
