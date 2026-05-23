@@ -127,11 +127,15 @@ body {
   width: 120px;
   height: 120px;
   border-radius: 20px;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .sidebar .logo-icon i, .sidebar .logo-icon svg {
   width: 60px !important;
   height: 60px !important;
+  color: var(--accent);
+  filter: drop-shadow(0 0 8px var(--accent-glow));
 }
 
 .logo-icon i {
