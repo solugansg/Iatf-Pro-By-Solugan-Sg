@@ -1,4 +1,4 @@
-﻿// ==========================================
+// ==========================================
 // CONFIGURACIÓN E INTEGRACIÓN DE FIREBASE
 // ==========================================
 const firebaseConfig = {
@@ -1780,7 +1780,7 @@ function reCalcTablaPI() {
             <td style="text-align:center;"><strong>${row.dayOffset}</strong></td>
             <td>${dDate.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' })}</td>
             <td style="text-align:center;"><strong>${rowHour}</strong></td>
-            <td colspan="5" style="text-align:left; padding-left: 1rem;"><i>âš¡ Obs: IATF 48-60 hs post PGF/eCG â€” GnRh opcional al momento de IA/TE</i></td>
+            <td colspan="5" style="text-align:left; padding-left: 1rem;"><i>⚡ Obs: IATF 48-60 hs post PGF/eCG – GnRh opcional al momento de IA/TE</i></td>
         </tr>`;
     }
   });
@@ -1873,7 +1873,6 @@ window.contactarWhatsApp = function() {
   }
   
   window.open(waUrl, '_blank');
-  if (msgEl) msgEl.value = '';
 };
 
 function saveState() { 
@@ -2121,7 +2120,7 @@ window.ejecutarResx1 = function() {
   const langCode = window.currentLang === 'en' ? 'en-US' : 'es-ES';
 
   resx1Rows.forEach(row => {
-    const dDate = new Date(fBase); dDate.setDate(dDate.getDate() + row.dayOffset);
+    const dDate = new Date(fBase); dDate.setDate(fBase.getDate() + row.dayOffset);
     const rowHour = row.hour || hBase;
     
     if (row.colId === 'ia_event') {
@@ -2297,7 +2296,7 @@ window.ejecutarResx2 = function() {
   const langCode = window.currentLang === 'en' ? 'en-US' : 'es-ES';
 
   resx2Rows.forEach(row => {
-    const dDate = new Date(fBase); dDate.setDate(dDate.getDate() + row.dayOffset);
+    const dDate = new Date(fBase); dDate.setDate(fBase.getDate() + row.dayOffset);
     const rowHour = row.hour || hBase;
     
     if (row.colId === 'ia_event') {
@@ -3561,22 +3560,22 @@ window.enviarWhatsApp = function() {
   const inv = document.getElementById('res-total-inversion')?.innerText || '$ 0';
   const cPrenez = document.getElementById('res-costo-prenez')?.innerText || '$ 0';
   
-  const usuarioStr = perfil.nombre ? `\nðŸ‘¤ *Usuario:* ${perfil.nombre}` : '';
-  const nitStr = perfil.nit ? `\nðŸ†” *NIT/CC:* ${perfil.nit}` : '';
+  const usuarioStr = perfil.nombre ? `\n👤 *Usuario:* ${perfil.nombre}` : '';
+  const nitStr = perfil.nit ? `\n🆔 *NIT/CC:* ${perfil.nit}` : '';
 
   const isEn = window.currentLang === 'en';
   let msg = isEn ? `*EXECUTIVE SUMMARY - IATF PRO BY SOLUGAN SG*\n\n` : `*RESUMEN EJECUTIVO - IATF PRO BY SOLUGAN SG*\n\n`;
-  msg += `ðŸ“ *${isEn ? 'Farm' : 'Finca'}:* ${finca}\n`;
-  msg += `ðŸ“‹ *${isEn ? 'Protocol' : 'Protocolo'}:* ${pName}${usuarioStr}${nitStr}\n\n`;
-  msg += `âœ… *${isEn ? 'Total Pregnancies' : 'Preñeces Totales'}:* ${totP}\n`;
-  msg += `ðŸ’° *${isEn ? 'Total Investment' : 'Inversión Total'}:* ${inv}\n`;
-  msg += `ðŸ“‰ *${isEn ? 'Costo por Preñez' : 'Costo por Preñez'}:* ${cPrenez}\n`;
+  msg += `📍 *${isEn ? 'Farm' : 'Finca'}:* ${finca}\n`;
+  msg += `📋 *${isEn ? 'Protocol' : 'Protocolo'}:* ${pName}${usuarioStr}${nitStr}\n\n`;
+  msg += `✅ *${isEn ? 'Total Pregnancies' : 'Preñeces Totales'}:* ${totP}\n`;
+  msg += `💰 *${isEn ? 'Total Investment' : 'Inversión Total'}:* ${inv}\n`;
+  msg += `📉 *${isEn ? 'Costo por Preñez' : 'Costo por Preñez'}:* ${cPrenez}\n`;
 
   // Obtener cronogramas de trabajo
   const getCronogramaText = (tbodyId, title) => {
     const tbody = document.getElementById(tbodyId);
     if (!tbody || tbody.children.length === 0) return '';
-    let text = `\nðŸ“… *${title.toUpperCase()}*\n`;
+    let text = `\n📅 *${title.toUpperCase()}*\n`;
     Array.from(tbody.children).forEach(tr => {
       const tds = tr.children;
       if (tds.length === 0) return;
@@ -3595,7 +3594,7 @@ window.enviarWhatsApp = function() {
         const dia = tds[0].innerText.replace(/IA\/TE/gi, '').replace(/\s+/g, ' ').trim();
         const fecha = tds[1].innerText.trim();
         const hora = tds[2].innerText.trim();
-        text += `â€¢ *Día ${dia}* (${fecha} - ${hora}): ðŸŒŸ *Inseminación Artificial (IA/TE)*\n`;
+        text += `• *Día ${dia}* (${fecha} - ${hora}): 🌟 *Inseminación Artificial (IA/TE)*\n`;
         return;
       }
       
@@ -3606,7 +3605,7 @@ window.enviarWhatsApp = function() {
         const hora = tds[2].innerText.trim();
         const insumo = tds[3].innerText.trim();
         const dosis = tds[4].innerText.trim();
-        text += `â€¢ *Día ${dia}* (${fecha} - ${hora}): ${insumo} (${dosis})\n`;
+        text += `• *Día ${dia}* (${fecha} - ${hora}): ${insumo} (${dosis})\n`;
       }
     });
     return text;
@@ -3713,7 +3712,7 @@ window.guardarEnHistorial = function() {
   historial.push(report);
   localStorage.setItem('reprocost_historial', JSON.stringify(historial));
   
-  alert("âœ… ¡Éxito! El reporte ha sido guardado en el historial. Ahora podrás buscarlo por NIT cuando lo necesites.");
+  alert("✅ ¡Éxito! El reporte ha sido guardado en el historial. Ahora podrás buscarlo por NIT cuando lo necesites.");
 };
 
 window.buscarPorNit = function() {
