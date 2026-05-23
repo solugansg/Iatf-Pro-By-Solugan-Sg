@@ -1,5 +1,5 @@
-// Iatf Pro by Solugan SG - Service Worker v2.8.9
-const CACHE_NAME = 'iatfpro-v2.8.9';
+// Iatf Pro by Solugan SG - Service Worker v2.8.10
+const CACHE_NAME = 'iatfpro-v2.8.10';
 
 // Todos los archivos que se guardan en caché para uso offline
 const ASSETS_TO_CACHE = [
@@ -65,52 +65,67 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// ─── FETCH: Servir desde caché, con red como respaldo ────────────────────────
+// ─── FETCH: Network First para HTML/CSS, Cache First para recursos estáticos ──
 self.addEventListener('fetch', (event) => {
   // Solo manejar solicitudes GET
   if (event.request.method !== 'GET') return;
 
-  // Ignorar extensiones de Chrome y solicitudes externas no cacheadas
+  // Ignorar extensiones de Chrome
   if (event.request.url.startsWith('chrome-extension://')) return;
 
-  event.respondWith(
-    caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
-      // Si está en caché → usar caché (funciona offline)
-      if (cachedResponse) {
-        // En segundo plano, intentar actualizar desde red
-        fetch(event.request)
-          .then(networkResponse => {
-            if (networkResponse && networkResponse.status === 200) {
-              caches.open(CACHE_NAME).then(cache => {
-                cache.put(event.request, networkResponse.clone());
-              });
-            }
-          })
-          .catch(() => {}); // Silenciar error si no hay internet
+  const url = new URL(event.request.url);
+  const isHTMLorCSS = url.pathname === '/' ||
+                      url.pathname.endsWith('.html') ||
+                      url.pathname.endsWith('.css');
 
-        return cachedResponse;
-      }
-
-      // Si NO está en caché → intentar red
-      return fetch(event.request)
+  if (isHTMLorCSS) {
+    // ── NETWORK FIRST: siempre traer la versión más nueva del servidor ──
+    event.respondWith(
+      fetch(event.request)
         .then(networkResponse => {
-          // Guardar en caché para la próxima vez
           if (networkResponse && networkResponse.status === 200) {
-            const responseClone = networkResponse.clone();
-            caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, responseClone);
-            });
+            const clone = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
           }
           return networkResponse;
         })
-        .catch(() => {
-          // Sin caché y sin internet → mostrar página offline básica
-          if (event.request.destination === 'document') {
-            return caches.match('/index.html');
-          }
-        });
-    })
-  );
+        .catch(() => caches.match(event.request)) // Offline: usar caché
+    );
+  } else {
+    // ── CACHE FIRST: fuentes, imágenes, librerías JS ──
+    event.respondWith(
+      caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
+        if (cachedResponse) {
+          // Actualizar en segundo plano
+          fetch(event.request)
+            .then(networkResponse => {
+              if (networkResponse && networkResponse.status === 200) {
+                caches.open(CACHE_NAME).then(cache => {
+                  cache.put(event.request, networkResponse.clone());
+                });
+              }
+            })
+            .catch(() => {});
+          return cachedResponse;
+        }
+        return fetch(event.request)
+          .then(networkResponse => {
+            if (networkResponse && networkResponse.status === 200) {
+              const responseClone = networkResponse.clone();
+              caches.open(CACHE_NAME).then(cache => {
+                cache.put(event.request, responseClone);
+              });
+            }
+            return networkResponse;
+          })
+          .catch(() => {
+            if (event.request.destination === 'document') {
+              return caches.match('/index.html');
+            }
+          });
+      })
+    );
+  }
 });
 
 // ─── MESSAGE: Forzar actualización desde la app ───────────────────────────────
