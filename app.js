@@ -61,7 +61,13 @@ auth.onAuthStateChanged(user => {
             }
           }
           if (userData.matriz && Array.isArray(userData.matriz)) {
-            state.matriz = userData.matriz;
+            const expectedLen = state.colDefs.length;
+            const isValid = userData.matriz.every(p => p.days && p.days.length === expectedLen);
+            if (isValid) {
+              state.matriz = userData.matriz;
+            } else {
+              console.warn("Detectada matriz de Firestore con estructura antigua. Ignorando para evitar desajustes.");
+            }
           }
           if (userData.logoEmpresa) {
             state.logoEmpresa = userData.logoEmpresa;
@@ -1096,6 +1102,7 @@ window.agregarNuevoProtocolo = function() {
 }
 
 window.eliminarProtocolo = function(idx) {
+  if (!isMatrixUnlocked) return;
   const pName = state.matriz[idx].name;
   const isResx = state.matriz.find(p => p.name === pName && (window.isResx1(p) || window.isResx2(p)));
   if (isResx) {
@@ -1144,14 +1151,30 @@ window.irAEditarMatriz = function() {
 }
 
 window.restaurarProtocolosBase = function() {
+  if (!isMatrixUnlocked) {
+    unlockMatriz();
+    if (!isMatrixUnlocked) return;
+  }
   if(confirm("¿Restaurar protocolos originales de Solugan SG? Se perderán los cambios actuales.")) {
     state.matriz = [
-      { name: 'TRADICIONAL(IATF)', days: ['0','0','-','10','-','8','-','-','8','8','10','8','0','8','-','28','58'], hours: Array(17).fill('08:00'), ia: '10', obs: 'Protocolo base.' },
-      { name: 'JSYNCH(IATF)', days: ['0','0','-','9','-','6','-','-','6','-','9','6','0','6','-','28','58'], hours: Array(17).fill('08:00'), ia: '9', obs: 'Proestro prolongado.' },
-      { name: 'NOVILLAS(IATF)', days: ['0','0','9','-','-','8','-','-','8','-','10','8','0','8','-','30','60'], hours: Array(17).fill('08:00'), ia: '10', obs: 'BE al retiro.' },
-      { name: 'OVSYNCH(IATF)', days: ['-','-','-','0','9','7','-','-','-','-','10','-','0','-','-','30','60'], hours: Array(17).fill('08:00'), ia: '10', obs: 'Basado en GnRh.' },
-      { name: 'REC 1', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','-','62','92'], hours: Array(17).fill('08:00'), ia: '42', obs: 'DIB día 32. Inseminar día 42.' },
-      { name: 'REC 2', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','-','94','124'], hours: Array(17).fill('08:00'), ia: '74', obs: 'Re-sincronización tras Dx2. Inseminar día 74.' }
+      { name: 'TRADICIONAL(IATF)', days: ['0','0','-','10','-','8','-','-','8','9','10','8','0','8','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'IATF 48-60 hs / GnRh Opcional' },
+      { name: 'JSYNCH(IATF)', days: ['0','0','-','9','-','6','-','-','6','-','9','6','0','6','9','-','28','58'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IATF 72 hs + GnRh' },
+      { name: 'NOVILLAS(IATF)', days: ['0','0','9','-','-','8','-','-','8','-','10','8','0','8','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'IATF 24-32 horas' },
+      { name: 'OVSYNCH(IATF)', days: ['-','-','-','0','9','7','-','-','-','-','10','-','0','-','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'IATF 12-24 horas post GnRh' },
+      { name: 'COSYNCH(IATF)', days: ['-','-','-','0','9','7','-','-','-','-','9','-','0','-','9','-','30','60'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IATF 48 horas + GnRh' },
+      { name: 'HEATSYNCH(IATF)', days: ['-','8','-','0','-','7','-','-','-','-','10','-','0','-','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'IATF 48-52 horas post' },
+      { name: 'PRESYNCH(IA)', days: ['-','-','-','0','9','-26','-12','0','-','-','10','-','0','-','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'Observar celo - IA 12 horas post celo estable' },
+      { name: 'SELECTSYNCH(IA)', days: ['-','-','-','0','-','7','-','-','-','-','10','-','0','-','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'Observar celo - IA 12 horas post celo estable' },
+      { name: 'DIBVACAS(IA)', days: ['0','-','-','0','8','7','-','-','-','-','8','-','0','7','8','-','28','58'], hours: Array(18).fill('08:00'), ia: '8', obs: 'IA celo detectado + GnRh' },
+      { name: 'DIBNOVILLAS(IA)', days: ['0','0','-','8','-','7','-','-','-','-','8','-','0','7','8','-','28','58'], hours: Array(18).fill('08:00'), ia: '8', obs: 'IA celo detectado + GnRh' },
+      { name: 'DOBLEPGF2@(IA)', days: ['-','-','-','-','-','0','11','-','-','-','2','-','0','-','2','-','20','50'], hours: Array(18).fill('08:00'), ia: '2', obs: 'Observar celo 1-5 días IA 12 horas post celo estable' },
+      { name: 'MM1(IA)', days: ['-','-','-','0','-','7','-','-','-','-','9','-','0','-','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
+      { name: 'MM2(IA)', days: ['-','8','-','0','-','7','-','-','-','-','9','-','0','-','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
+      { name: 'MMDIB(IA)', days: ['0','-','-','0','-','7','-','-','-','-','9','8','0','7','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
+      { name: 'REC 1', role: 'resx1', days: ['0','0','0','-','-','5','-','-','5','-','10','5','0','5','18','10','18','48'], hours: Array(18).fill('08:00'), ia: '18', obs: 'Transferencia de Embriones' },
+      { name: 'REC 2', role: 'resx2', days: ['0','0','-','-','-','8','-','-','8','9','9','8','0','8','17','9','17','47'], hours: Array(18).fill('08:00'), ia: '17', obs: 'Transferencia de Embriones' },
+      { name: 'REC 1', role: 'resx1b', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','42','-','62','92'], hours: Array(18).fill('08:00'), ia: '42', obs: 'DIB día 32. Inseminar día 42.' },
+      { name: 'REC 2', role: 'resx2b', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','74','-','94','124'], hours: Array(18).fill('08:00'), ia: '74', obs: 'Re-sincronización tras Dx2. Inseminar día 74.' }
     ];
     renderMatriz(); saveState(); alert("Protocolos base restaurados correctamente.");
   }
@@ -1169,10 +1192,12 @@ window.guardarMatrizProtocolos = function() {
 }
 
 window.updateRowName = function(r, val) { 
+  if (!isMatrixUnlocked) return;
   state.matriz[r].name = val; 
   debouncedSave();
 }
 window.updateCell = function(r, c, val, field = 'days') { 
+  if (!isMatrixUnlocked) return;
   if (!state.matriz[r][field]) state.matriz[r][field] = Array(18).fill(field === 'days' ? '-' : '08:00');
   state.matriz[r][field][c] = val; 
   // Sincronizar propiedad .ia si se edita la columna 15 (índice 14)
@@ -1183,6 +1208,7 @@ window.updateCell = function(r, c, val, field = 'days') {
   ejecutarProtocoloInicial(); // Refrescar cálculos si es el activo
 }
 window.updateRowIa = function(r, val, field = 'ia') { 
+  if (!isMatrixUnlocked) return;
   state.matriz[r][field] = val; 
   // Sincronizar también en el array de días (índice 14)
   if (state.matriz[r].days) state.matriz[r].days[14] = val;
@@ -1190,6 +1216,7 @@ window.updateRowIa = function(r, val, field = 'ia') {
   ejecutarProtocoloInicial();
 }
 window.updateRowObs = function(r, val) { 
+  if (!isMatrixUnlocked) return;
   state.matriz[r].obs = val; 
   debouncedSave();
 }
