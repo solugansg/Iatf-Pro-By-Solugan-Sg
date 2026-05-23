@@ -817,6 +817,14 @@ navBtns.forEach(btn => {
     const target = btn.getAttribute('data-target');
     document.getElementById(target).classList.add('active');
 
+    // Ocultar barra lateral en móvil al navegar
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (sidebar && sidebar.classList.contains('active')) {
+      sidebar.classList.remove('active');
+      if (overlay) overlay.style.display = 'none';
+    }
+
     // Auto-ejecutar cronograma de la fase activa al cambiar de pestaña
     setTimeout(() => {
       try {
@@ -4100,5 +4108,15 @@ document.addEventListener('keydown', function(e) {
     }
   }
 });
+
+
+window.toggleSidebar = function() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (sidebar && overlay) {
+    sidebar.classList.toggle('active');
+    overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+  }
+};
 
 

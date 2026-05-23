@@ -1,4 +1,4 @@
-﻿@font-face { font-family: 'Inter'; font-style: normal; font-weight: 300; font-display: swap; src: url('fonts/inter-300.ttf') format('truetype'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 300; font-display: swap; src: url('fonts/inter-300.ttf') format('truetype'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/inter-400.ttf') format('truetype'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/inter-500.ttf') format('truetype'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/inter-600.ttf') format('truetype'); }
@@ -1259,68 +1259,169 @@ input:checked + .slider:before { transform: translateX(20px); }
     flex-direction: column !important;
     height: auto !important;
   }
-  .sidebar {
-    width: 100% !important;
-    height: auto !important;
-    position: sticky !important;
+  
+  /* Mobile header at the top of content */
+  .mobile-header {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    position: sticky;
     top: 0;
-    left: 0;
-    border-right: none !important;
-    border-bottom: 1px solid var(--glass-border) !important;
-    backdrop-filter: blur(25px) !important;
-    background: rgba(15, 23, 42, 0.9) !important;
+    z-index: 90;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--glass-border);
+    border-radius: 0 !important;
+    margin-bottom: 1rem;
+  }
+  .mobile-menu-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+  .mobile-menu-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .mobile-logo-text {
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fff;
+    font-size: 1.05rem;
+  }
+
+  /* Sidebar transformed into a sliding drawer from the left */
+  .sidebar {
+    width: 280px !important;
+    height: 100vh !important;
+    position: fixed !important;
+    top: 0;
+    left: -290px; /* Hidden by default */
+    z-index: 100 !important;
+    border-right: 1px solid var(--glass-border) !important;
+    border-bottom: none !important;
+    border-radius: 0 !important;
+    backdrop-filter: blur(30px) !important;
+    -webkit-backdrop-filter: blur(30px) !important;
+    background: rgba(15, 23, 42, 0.95) !important;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .sidebar.active {
+    left: 0 !important;
   }
   .sidebar-header {
-    padding: 1rem !important;
+    padding: 1.5rem 1.25rem !important;
+    border-bottom: 1px solid var(--glass-border) !important;
   }
   .sidebar-nav {
     display: flex !important;
-    overflow-x: auto !important;
-    padding: 0.5rem !important;
-    gap: 0.5rem !important;
-    scrollbar-width: none; /* Firefox */
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 1rem 0.5rem !important;
+    gap: 0.25rem !important;
+    flex: 1 !important;
   }
-  .sidebar-nav::-webkit-scrollbar { display: none; } /* Chrome/Safari */
-  
   .nav-btn {
+    width: 100% !important;
     flex: 0 0 auto !important;
     white-space: nowrap !important;
     padding: 0.8rem 1.2rem !important;
     margin: 0 !important;
     border-radius: 12px !important;
+    justify-content: flex-start !important;
   }
+  
+  /* Footer visible inside drawer */
   .sidebar-footer {
-    display: none !important;
+    display: block !important;
+    border-top: 1px solid var(--glass-border) !important;
+    padding: 1rem !important;
+    background: rgba(15, 23, 42, 0.5);
   }
+  .sidebar-footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
   .main-content {
-    padding: 1.5rem 1rem !important;
+    padding: 0 0.75rem 1.5rem 0.75rem !important;
     height: auto !important;
   }
-  .grid-5, .grid-3, .grid-2 {
+  
+  /* Force all grid layouts to stack vertically and span 1 column */
+  .grid-5, .grid-4, .grid-3, .grid-2 {
     grid-template-columns: 1fr !important;
-    gap: 1rem !important;
-  }
-  .stats-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
     gap: 0.75rem !important;
+  }
+  .grid-5 > *, .grid-4 > *, .grid-3 > *, .grid-2 > *, .grid-1 > * {
+    grid-column: span 1 !important;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important;
+    gap: 0.5rem !important;
   }
   .welcome-card {
     padding: 1.5rem !important;
     margin: 1rem !important;
   }
   .spin-btn {
-    width: 48px !important;
-    height: 48px !important;
-    font-size: 1.5rem !important;
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 1.3rem !important;
   }
   .spinner-wrap input {
-    font-size: 1.2rem !important;
+    font-size: 1.1rem !important;
   }
   .data-table {
-    font-size: 0.8rem !important;
+    font-size: 0.78rem !important;
   }
   .modal-content {
     width: 98% !important;
+    padding: 1rem !important;
+  }
+  
+  /* Make the first column of the protocols matrix sticky on left for easy horizontal scrolling */
+  #tabla-matriz th:first-child,
+  #tabla-matriz td:first-child {
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 2 !important;
+    background: #0f172a !important;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.3) !important;
+  }
+  #tabla-matriz th:first-child {
+    z-index: 3 !important;
+  }
+}
+
+/* Extra adjustments for very small screens */
+@media (max-width: 480px) {
+  h1 { font-size: 1.35rem !important; }
+  .section-header p { font-size: 0.8rem !important; }
+  .glass-panel { padding: 0.75rem !important; }
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important; /* Stack stats in 2 columns on small mobile */
+  }
+  .welcome-card {
+    padding: 1rem !important;
+    border-radius: 16px !important;
+  }
+  .total-box {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
     padding: 1rem !important;
   }
 }
