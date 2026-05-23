@@ -38,6 +38,41 @@ auth.onAuthStateChanged(user => {
     authContainer.style.display = 'none';
     appMainLayout.style.display = 'flex';
     
+    // Cargar configuraciones del usuario desde Firestore
+    db.collection("users").doc(user.uid).get()
+      .then(docSnap => {
+        if (docSnap.exists) {
+          const userData = docSnap.data();
+          if (userData.matriz) {
+            state.matriz = userData.matriz;
+            renderMatriz();
+          }
+          if (userData.insumos) {
+            state.insumos = userData.insumos;
+          }
+          if (userData.tableroLeche) {
+            state.tableroLeche = userData.tableroLeche;
+            document.getElementById('tc-precio-leche').value = state.tableroLeche.precio;
+            document.getElementById('tc-duracion-lactancia').value = state.tableroLeche.duracion;
+            document.getElementById('tc-litros-lactancia').value = state.tableroLeche.litros;
+          }
+          if (userData.tableroCarne) {
+            state.tableroCarne = userData.tableroCarne;
+            document.getElementById('tc-precio-carne').value = state.tableroCarne.precio;
+            document.getElementById('tc-duracion-carne').value = state.tableroCarne.duracion;
+            document.getElementById('tc-peso-destete').value = state.tableroCarne.peso;
+          }
+        }
+        // Recalcular tablero e iconos después de cargar configuraciones
+        calcTableroControl();
+        lucide.createIcons();
+      })
+      .catch(err => {
+        console.error("Error al cargar configuración de Firestore:", err);
+        calcTableroControl();
+        lucide.createIcons();
+      });
+      
     // Si el usuario es el administrador, mostrar pestaña de administración
     if (user.email === ADMIN_EMAIL) {
       navBtnAdmin.style.display = 'inline-flex';
@@ -45,18 +80,14 @@ auth.onAuthStateChanged(user => {
     } else {
       navBtnAdmin.style.display = 'none';
     }
-    
-    // Recalcular tablero de control inicial
-    if (typeof calcTableroControl === 'function') {
-      calcTableroControl();
-    }
+
   } else {
     // Usuario no autenticado
     authContainer.style.display = 'flex';
     appMainLayout.style.display = 'none';
     navBtnAdmin.style.display = 'none';
+    lucide.createIcons();
   }
-  lucide.createIcons();
 });
 
 // Funciones para alternar formularios de autenticación
@@ -311,6 +342,14 @@ window.calcTableroControl = function() {
   
   document.getElementById('tc-promedio-carne').innerText = promCarne.toFixed(2);
   document.getElementById('tc-ingreso-carne').innerText = formatter.format(ingresoCarne);
+
+  // Guardar en Firestore de manera persistente
+  if (auth.currentUser) {
+    db.collection("users").doc(auth.currentUser.uid).update({
+      tableroLeche: state.tableroLeche,
+      tableroCarne: state.tableroCarne
+    }).catch(err => console.error("Error al guardar tablero en Firestore:", err));
+  }
 }
 
 // 2. MATRIZ Y BLOQUEO
@@ -388,6 +427,14 @@ window.guardarMatrizProtocolos = function() {
   document.getElementById('btn-save-matriz').style.display = 'none';
   document.getElementById('lbl-matriz-instruccion').innerText = "Modo Consulta Activo. Los protocolos están bloqueados para evitar alteraciones accidentales.";
   renderMatriz();
+  
+  // Guardar en Firestore
+  if (auth.currentUser) {
+    db.collection("users").doc(auth.currentUser.uid).update({
+      matriz: state.matriz
+    }).then(() => console.log("Matriz guardada en Firestore"))
+      .catch(err => console.error("Error al guardar la matriz en Firestore:", err));
+  }
   
   setTimeout(() => { 
     btn.style.background = 'var(--accent)'; btn.innerHTML = '<i data-lucide="save"></i> Guardar y Bloquear'; lucide.createIcons(); 
@@ -516,6 +563,15 @@ window.guardarPreciosModal = function() {
   });
 
   cerrarModalPrecios();
+  
+  // Guardar en Firestore
+  if (auth.currentUser) {
+    db.collection("users").doc(auth.currentUser.uid).update({
+      insumos: state.insumos
+    }).then(() => console.log("Precios e insumos guardados en Firestore"))
+      .catch(err => console.error("Error al guardar precios en Firestore:", err));
+  }
+
   // Recalc current protocol if gen is open
   if (state.activeList.length > 0) reCalcTablaPI();
 }
