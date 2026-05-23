@@ -65,6 +65,7 @@ auth.onAuthStateChanged(user => {
             const isValid = userData.matriz.every(p => p.days && p.days.length === expectedLen);
             if (isValid) {
               state.matriz = userData.matriz;
+              localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
             } else {
               console.warn("Detectada matriz de Firestore con estructura antigua. Ignorando para evitar desajustes.");
             }
@@ -239,6 +240,11 @@ window.handleLogout = function() {
   if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
     auth.signOut()
       .then(() => {
+        // Limpiar LocalStorage sensible para evitar que otro usuario herede datos
+        localStorage.removeItem('reprocost_state');
+        localStorage.removeItem('reprocost_perfil_consultor');
+        localStorage.removeItem('reprocost_custom_matriz');
+
         document.getElementById('login-email').value = '';
         document.getElementById('login-pass').value = '';
         document.getElementById('reg-nit').value = '';
@@ -247,7 +253,9 @@ window.handleLogout = function() {
         document.getElementById('reg-phone').value = '';
         document.getElementById('reg-finca').value = '';
         document.getElementById('reg-pass').value = '';
-        showRegisterForm();
+        
+        // Recargar la página para limpiar todo el estado en memoria
+        location.reload();
       })
       .catch(err => {
         console.error("Error al cerrar sesión:", err);
@@ -1936,6 +1944,9 @@ function saveState() {
     inputs: inputs
   })); 
   
+  // Guardar copia maestra separada de la matriz para evitar regresiones de versión al cargar historial
+  localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz)); 
+  
   if (typeof window.saveStateToFirestore === 'function') {
     window.saveStateToFirestore();
   }
@@ -1974,13 +1985,27 @@ window.loadState = function() {
       }
     }
     
-    if(parsed.matriz && Array.isArray(parsed.matriz)) {
-      // VALIDACIÓN: Solo cargar si la longitud de columnas coincide con colDefs
+    const customMatrizSaved = localStorage.getItem('reprocost_custom_matriz');
+    let matrixToLoad = null;
+    if (customMatrizSaved) {
+      try {
+        const parsedCustom = JSON.parse(customMatrizSaved);
+        const expectedLen = state.colDefs.length;
+        if (Array.isArray(parsedCustom) && parsedCustom.every(p => p.days && p.days.length === expectedLen)) {
+          matrixToLoad = parsedCustom;
+        }
+      } catch(e) {}
+    }
+    
+    if (!matrixToLoad && parsed.matriz && Array.isArray(parsed.matriz)) {
       const expectedLen = state.colDefs.length;
-      const isValid = parsed.matriz.every(p => p.days && p.days.length === expectedLen);
-      
-      if (isValid) {
-        state.matriz = parsed.matriz;
+      if (parsed.matriz.every(p => p.days && p.days.length === expectedLen)) {
+        matrixToLoad = parsed.matriz;
+      }
+    }
+    
+    if (matrixToLoad) {
+      state.matriz = matrixToLoad;
 
         // MIGRACIÓN: asignar campo role a protocolos que aún no lo tienen
         let resx1Count = 0, resx2Count = 0;
@@ -3816,7 +3841,19 @@ window.cargarDeHistorial = function(id) {
   if (!record) return;
 
   if (confirm(`¿Deseas cargar el reporte de la finca "${record.finca}" realizado el ${record.fecha}?\n\nNota: Esto reemplazará los datos actuales en pantalla.`)) {
-    localStorage.setItem('reprocost_state', JSON.stringify(record.state));
+    // Preservar la última versión de los protocolos al cargar un reporte antiguo
+    const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
+    const newState = Object.assign({}, record.state);
+    if (latestMatrixStr) {
+      try {
+        const parsedMatrix = JSON.parse(latestMatrixStr);
+        const expectedLen = state.colDefs.length;
+        if (Array.isArray(parsedMatrix) && parsedMatrix.every(p => p.days && p.days.length === expectedLen)) {
+          newState.matriz = parsedMatrix;
+        }
+      } catch(e) {}
+    }
+    localStorage.setItem('reprocost_state', JSON.stringify(newState));
     location.reload(); 
   }
 };
@@ -3855,7 +3892,20 @@ window.exportarExcelDesdeHistorial = function(id) {
     }
   };
 
-  localStorage.setItem('reprocost_state', JSON.stringify(record.state));
+  // Usar los protocolos más recientes del usuario al exportar reporte antiguo
+  const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
+  const tempState = Object.assign({}, record.state);
+  if (latestMatrixStr) {
+    try {
+      const parsedMatrix = JSON.parse(latestMatrixStr);
+      const expectedLen = state.colDefs.length;
+      if (Array.isArray(parsedMatrix) && parsedMatrix.every(p => p.days && p.days.length === expectedLen)) {
+        tempState.matriz = parsedMatrix;
+      }
+    } catch(e) {}
+  }
+
+  localStorage.setItem('reprocost_state', JSON.stringify(tempState));
   loadState();
 
   if (typeof ejecutarProtocoloInicial === 'function') {
@@ -3902,8 +3952,20 @@ window.exportarPdfDesdeHistorial = function(id) {
     }
   };
 
-  // 2. Aplicar el estado del registro seleccionado temporalmente
-  localStorage.setItem('reprocost_state', JSON.stringify(record.state));
+  // 2. Aplicar el estado del registro seleccionado temporalmente usando los protocolos más recientes
+  const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
+  const tempState = Object.assign({}, record.state);
+  if (latestMatrixStr) {
+    try {
+      const parsedMatrix = JSON.parse(latestMatrixStr);
+      const expectedLen = state.colDefs.length;
+      if (Array.isArray(parsedMatrix) && parsedMatrix.every(p => p.days && p.days.length === expectedLen)) {
+        tempState.matriz = parsedMatrix;
+      }
+    } catch(e) {}
+  }
+
+  localStorage.setItem('reprocost_state', JSON.stringify(tempState));
   loadState();
 
   // 3. Forzar el recálculo completo incluyendo cronograma
