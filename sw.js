@@ -1,4 +1,4 @@
-const CACHE_NAME = 'iatf-pro-cache-v4';
+const CACHE_NAME = 'iatf-pro-cache-v5';
 const ASSETS = [
   './',
   './index.html',
@@ -6,8 +6,8 @@ const ASSETS = [
   './lucide.min.js',
   './app.js',
   './manifest.json',
-  './icon-192.jpg',
-  './icon-512.jpg',
+  './icon-192.png',
+  './icon-512.png',
   'https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js',
   'https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js',
   'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js'
