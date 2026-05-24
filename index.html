@@ -245,130 +245,121 @@
               </div>
             </div>
           </div>
-          <div class="table-responsive">
-            <table class="data-table" style="font-size: 0.95rem;">
-              <thead>
-                <tr>
-                  <th colspan="2"
-                    style="background: rgba(14, 165, 233, 0.15); color: var(--accent); font-size: 1.1rem; padding: 0.5rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span><i data-lucide="droplet"></i> <span data-i18n="tc_leche_title">Producción de
-                          Leche</span></span>
-                      <button class="btn"
-                        style="padding: 0.2rem 0.5rem; font-size: 0.75rem; background: rgba(14, 165, 233, 0.1); color: var(--accent); border: 1px solid rgba(14, 165, 233, 0.3);"
-                        onclick="limpiarModuloLeche()" title="Limpiar datos de Leche"><i data-lucide="trash-2"
-                          style="width:14px;height:14px;"></i> <span data-i18n="btn_limpiar">Limpiar</span></button>
-                    </div>
-                  </th>
-                  <th style="width: 20px; background: transparent; border: none;"></th>
-                  <th colspan="2"
-                    style="background: rgba(239, 68, 68, 0.15); color: #ef4444; font-size: 1.1rem; padding: 0.5rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span><i data-lucide="beef"></i> <span data-i18n="tc_carne_title">Producción de
-                          Carne</span></span>
-                      <button class="btn"
-                        style="padding: 0.2rem 0.5rem; font-size: 0.75rem; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);"
-                        onclick="limpiarModuloCarne()" title="Limpiar datos de Carne"><i data-lucide="trash-2"
-                          style="width:14px;height:14px;"></i> <span data-i18n="btn_limpiar">Limpiar</span></button>
-                    </div>
-                  </th>
-                </tr>
-                            <tr>
-                  <td data-i18n="tc_precio_leche">Precio Venta Litro Leche</td>
-                  <td>
-                    <div class="spinner-wrap">
-                      <button class="spin-btn minus" onclick="spinVal('tc-precio-leche', -20, true)">&#8722;</button>
-                      <input type="text" id="tc-precio-leche" value="0" class="cell-input"
-                        oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
-                      <button class="spin-btn plus" onclick="spinVal('tc-precio-leche', 20, true)">&#43;</button>
-                    </div>
-                  </td>
-                  <td style="border: none;"></td>
-                  <td data-i18n="tc_precio_carne">Precio Venta Kilo Carne</td>
-                  <td>
-                    <div class="spinner-wrap">
-                      <button class="spin-btn minus" onclick="spinVal('tc-precio-carne', -20, true)">&#8722;</button>
-                      <input type="text" id="tc-precio-carne" value="0" class="cell-input"
-                        oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
-                      <button class="spin-btn plus" onclick="spinVal('tc-precio-carne', 20, true)">&#43;</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td data-i18n="tc_duracion">Duración Lactancia</td>
-                  <td>
-                    <div class="spinner-wrap">
-                      <button class="spin-btn minus"
-                        onclick="spinVal('tc-duracion-lactancia', -10, false)">&#8722;</button>
-                      <input type="number" id="tc-duracion-lactancia" value="0" class="cell-input"
-                        onchange="calcTableroControl()">
-                      <button class="spin-btn plus" onclick="spinVal('tc-duracion-lactancia', 10, false)">&#43;</button>
-                    </div>
-                  </td>
-                  <td style="border: none;"></td>
-                  <td data-i18n="tc_duracion_carne">Días a Destete</td>
-                  <td>
-                    <div class="spinner-wrap">
-                      <button class="spin-btn minus" onclick="spinVal('tc-duracion-carne', -10, false)">&#8722;</button>
-                      <input type="number" id="tc-duracion-carne" value="0" class="cell-input"
-                        onchange="calcTableroControl()">
-                      <button class="spin-btn plus" onclick="spinVal('tc-duracion-carne', 10, false)">&#43;</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td data-i18n="tc_litros">Litros Por Lactancia</td>
-                  <td>
-                    <div class="spinner-wrap">
-                      <button class="spin-btn minus"
-                        onclick="spinVal('tc-litros-lactancia', -50, true)">&#8722;</button>
-                      <input type="text" id="tc-litros-lactancia" value="0" class="cell-input"
-                        oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
-                      <button class="spin-btn plus" onclick="spinVal('tc-litros-lactancia', 50, true)">&#43;</button>
-                    </div>
-                  </td>
-                  <td style="border: none;"></td>
-                  <td data-i18n="tc_peso">Peso Destete</td>
-                  <td>
-                    <div class="spinner-wrap">
-                      <button class="spin-btn minus" onclick="spinVal('tc-peso-destete', -5, true)">&#8722;</button>
-                      <input type="text" id="tc-peso-destete" value="0" class="cell-input"
-                        oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
-                      <button class="spin-btn plus" onclick="spinVal('tc-peso-destete', 5, true)">&#43;</button>
-                    </div>
-                  </td>
-                </tr>          </td>
-                </tr>
-                <tr>
-                  <td class="text-muted" data-i18n="tc_promedio_lts">Promedio Lts/Animal</td>
-                  <td style="text-align: center;"><strong id="tc-promedio-leche">5.00</strong></td>
-                  <td style="border: none;"></td>
-                  <td class="text-muted" data-i18n="tc_promedio_kg">Promedio Kg/Animal</td>
-                  <td style="text-align: center;"><strong id="tc-promedio-carne">1.00</strong></td>
-                </tr>
-                <tr style="background: rgba(255, 255, 255, 0.05);">
-                  <td><strong data-i18n="tc_ingreso_leche">Ingreso Venta Leche/Animal</strong></td>
-                  <td style="text-align: center;"><strong class="text-success" style="font-size: 1.1rem;"
-                      id="tc-ingreso-leche">$ 1.650.000</strong></td>
-                  <td style="border: none;"></td>
-                  <td><strong data-i18n="tc_ingreso_carne">Ingreso Venta Carne/Animal</strong></td>
-                  <td style="text-align: center;"><strong class="text-success" style="font-size: 1.1rem;"
-                      id="tc-ingreso-carne">$ 2.400.000</strong></td>
-                </tr>
-                <tr style="border-top: 1px dashed var(--glass-border);">
-                  <td colspan="2"></td>
-                  <td style="border: none;"></td>
-                  <td style="color: #fbbf24;"><strong>Costo Sostenimiento Diario</strong></td>
-                  <td>
-                    <div class="spinner-wrap" style="border-color: #fbbf24; background: rgba(15, 23, 42, 0.5);">
-                      <button class="spin-btn minus" onclick="spinVal('pi-costo-sostenimiento', -20, true); debouncedUpdateResultados();" style="padding: 0 12px; font-size: 1rem; color: #fbbf24;">&#8722;</button>
-                      <input type="text" id="pi-costo-sostenimiento" value="0" class="cell-input" style="text-align:center; font-weight:700; color:#fbbf24; font-size: 1.1rem; min-width: 100px; background: transparent; border: none;" oninput="formatInputCurrency(this); debouncedUpdateResultados();">
-                      <button class="spin-btn plus" onclick="spinVal('pi-costo-sostenimiento', 20, true); debouncedUpdateResultados();" style="padding: 0 12px; font-size: 1rem; color: #fbbf24;">&#43;</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <!-- Módulos de Producción en Grid Responsivo -->
+          <div class="tablero-grid">
+            
+            <!-- Bloque de Leche -->
+            <div class="glass-panel tablero-card" style="border-top: 4px solid var(--accent); background: linear-gradient(180deg, rgba(14, 165, 233, 0.02) 0%, rgba(15, 23, 42, 0.4) 100%);">
+              <div class="tablero-card-header">
+                <span class="tablero-card-title" style="color: var(--accent);">
+                  <i data-lucide="droplet"></i> <span data-i18n="tc_leche_title">Producción de Leche</span>
+                </span>
+                <button class="btn"
+                  style="padding: 0.3rem 0.6rem; font-size: 0.75rem; background: rgba(14, 165, 233, 0.1); color: var(--accent); border: 1px solid rgba(14, 165, 233, 0.3);"
+                  onclick="limpiarModuloLeche()" title="Limpiar datos de Leche">
+                  <i data-lucide="trash-2" style="width:14px;height:14px;"></i> <span data-i18n="btn_limpiar">Limpiar</span>
+                </button>
+              </div>
+              <div class="tablero-card-body">
+                <div class="tablero-row">
+                  <label data-i18n="tc_precio_leche">Precio Venta Litro Leche</label>
+                  <div class="spinner-wrap">
+                    <button class="spin-btn minus" onclick="spinVal('tc-precio-leche', -20, true)">&#8722;</button>
+                    <input type="text" id="tc-precio-leche" value="0" class="cell-input" oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
+                    <button class="spin-btn plus" onclick="spinVal('tc-precio-leche', 20, true)">&#43;</button>
+                  </div>
+                </div>
+                <div class="tablero-row">
+                  <label data-i18n="tc_duracion">Duración Lactancia</label>
+                  <div class="spinner-wrap">
+                    <button class="spin-btn minus" onclick="spinVal('tc-duracion-lactancia', -10, false)">&#8722;</button>
+                    <input type="number" id="tc-duracion-lactancia" value="0" class="cell-input" onchange="calcTableroControl()">
+                    <button class="spin-btn plus" onclick="spinVal('tc-duracion-lactancia', 10, false)">&#43;</button>
+                  </div>
+                </div>
+                <div class="tablero-row">
+                  <label data-i18n="tc_litros">Litros Por Lactancia</label>
+                  <div class="spinner-wrap">
+                    <button class="spin-btn minus" onclick="spinVal('tc-litros-lactancia', -50, true)">&#8722;</button>
+                    <input type="text" id="tc-litros-lactancia" value="0" class="cell-input" oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
+                    <button class="spin-btn plus" onclick="spinVal('tc-litros-lactancia', 50, true)">&#43;</button>
+                  </div>
+                </div>
+                <div class="tablero-indicator">
+                  <span class="text-muted" data-i18n="tc_promedio_lts" style="font-weight: 500; font-size: 0.85rem;">Promedio Lts/Animal</span>
+                  <strong id="tc-promedio-leche" style="font-size: 1.1rem;">0.00</strong>
+                </div>
+                <div class="tablero-indicator tablero-indicator-success">
+                  <strong data-i18n="tc_ingreso_leche" style="font-size: 0.85rem;">Ingreso Venta Leche/Animal</strong>
+                  <span class="indicator-value" id="tc-ingreso-leche">$ 0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bloque de Carne -->
+            <div class="glass-panel tablero-card" style="border-top: 4px solid #ef4444; background: linear-gradient(180deg, rgba(239, 68, 68, 0.02) 0%, rgba(15, 23, 42, 0.4) 100%);">
+              <div class="tablero-card-header">
+                <span class="tablero-card-title" style="color: #ef4444;">
+                  <i data-lucide="beef"></i> <span data-i18n="tc_carne_title">Producción de Carne</span>
+                </span>
+                <button class="btn"
+                  style="padding: 0.3rem 0.6rem; font-size: 0.75rem; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);"
+                  onclick="limpiarModuloCarne()" title="Limpiar datos de Carne">
+                  <i data-lucide="trash-2" style="width:14px;height:14px;"></i> <span data-i18n="btn_limpiar">Limpiar</span>
+                </button>
+              </div>
+              <div class="tablero-card-body">
+                <div class="tablero-row">
+                  <label data-i18n="tc_precio_carne">Precio Venta Kilo Carne</label>
+                  <div class="spinner-wrap">
+                    <button class="spin-btn minus" onclick="spinVal('tc-precio-carne', -20, true)">&#8722;</button>
+                    <input type="text" id="tc-precio-carne" value="0" class="cell-input" oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
+                    <button class="spin-btn plus" onclick="spinVal('tc-precio-carne', 20, true)">&#43;</button>
+                  </div>
+                </div>
+                <div class="tablero-row">
+                  <label data-i18n="tc_duracion_carne">Días a Destete</label>
+                  <div class="spinner-wrap">
+                    <button class="spin-btn minus" onclick="spinVal('tc-duracion-carne', -10, false)">&#8722;</button>
+                    <input type="number" id="tc-duracion-carne" value="0" class="cell-input" onchange="calcTableroControl()">
+                    <button class="spin-btn plus" onclick="spinVal('tc-duracion-carne', 10, false)">&#43;</button>
+                  </div>
+                </div>
+                <div class="tablero-row">
+                  <label data-i18n="tc_peso">Peso Destete</label>
+                  <div class="spinner-wrap">
+                    <button class="spin-btn minus" onclick="spinVal('tc-peso-destete', -5, true)">&#8722;</button>
+                    <input type="text" id="tc-peso-destete" value="0" class="cell-input" oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
+                    <button class="spin-btn plus" onclick="spinVal('tc-peso-destete', 5, true)">&#43;</button>
+                  </div>
+                </div>
+                <div class="tablero-indicator">
+                  <span class="text-muted" data-i18n="tc_promedio_kg" style="font-weight: 500; font-size: 0.85rem;">Promedio Kg/Animal</span>
+                  <strong id="tc-promedio-carne" style="font-size: 1.1rem;">0.00</strong>
+                </div>
+                <div class="tablero-indicator tablero-indicator-success">
+                  <strong data-i18n="tc_ingreso_carne" style="font-size: 0.85rem;">Ingreso Venta Carne/Animal</strong>
+                  <span class="indicator-value" id="tc-ingreso-carne">$ 0</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Costo Sostenimiento Diario (Centrado al final) -->
+          <div class="glass-panel p-1-5 sostenimiento-card" style="border: 1px solid rgba(251, 191, 36, 0.3); border-left: 5px solid #fbbf24; background: rgba(251, 191, 36, 0.02); display: flex; justify-content: space-between; align-items: center; border-radius: 12px; margin-top: 1rem; flex-wrap: wrap; gap: 1rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 1.5rem;">💰</span>
+              <div>
+                <strong style="color: #fbbf24; font-size: 0.95rem; display: block;">Costo Sostenimiento Diario</strong>
+                <span class="text-muted" style="font-size: 0.75rem;">Costo de manutención diario por animal</span>
+              </div>
+            </div>
+            <div class="spinner-wrap" style="border-color: #fbbf24; background: rgba(15, 23, 42, 0.5);">
+              <button class="spin-btn minus" onclick="spinVal('pi-costo-sostenimiento', -20, true); debouncedUpdateResultados();" style="padding: 0 12px; font-size: 1rem; color: #fbbf24;">&#8722;</button>
+              <input type="text" id="pi-costo-sostenimiento" value="0" class="cell-input" style="text-align:center; font-weight:700; color:#fbbf24; font-size: 1.1rem; min-width: 120px; background: transparent; border: none;" oninput="formatInputCurrency(this); debouncedUpdateResultados();">
+              <button class="spin-btn plus" onclick="spinVal('pi-costo-sostenimiento', 20, true); debouncedUpdateResultados();" style="padding: 0 12px; font-size: 1rem; color: #fbbf24;">&#43;</button>
+            </div>
           </div>
         </div>
 
