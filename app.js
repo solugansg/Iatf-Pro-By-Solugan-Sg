@@ -113,6 +113,11 @@ auth.onAuthStateChanged(user => {
         if (docSnap.exists) {
           const userData = docSnap.data();
           
+          // Incrementar contador de accesos en Firestore
+          db.collection("users").doc(user.uid).update({
+            accessCount: firebase.firestore.FieldValue.increment(1)
+          }).catch(err => console.warn("Error incrementando accessCount:", err));
+          
           if (userData.name && sidebarConsultor) {
             sidebarConsultor.innerText = userData.name.toUpperCase();
           }
@@ -352,7 +357,7 @@ window.cargarUsuariosAdmin = function() {
   const totalUsersEl = document.getElementById('admin-total-users');
   if (!tbody) return;
 
-  tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;" class="text-muted">Cargando usuarios...</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;" class="text-muted">Cargando usuarios...</td></tr>';
 
   db.collection("users").orderBy("createdAt", "desc").get()
     .then(querySnapshot => {
@@ -360,7 +365,7 @@ window.cargarUsuariosAdmin = function() {
       if (totalUsersEl) totalUsersEl.innerText = querySnapshot.size;
 
       if (querySnapshot.empty) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;" class="text-muted">No hay usuarios registrados.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;" class="text-muted">No hay usuarios registrados.</td></tr>';
         return;
       }
 
@@ -383,6 +388,7 @@ window.cargarUsuariosAdmin = function() {
           </td>
           <td>${userData.finca || 'N/A'}</td>
           <td><code>${userData.nit || 'N/A'}</code></td>
+          <td style="text-align: center;"><span class="badge" style="background: rgba(14, 165, 233, 0.15); color: var(--accent); padding: 4px 8px; border-radius: 6px; font-weight: bold;">${userData.accessCount || 0}</span></td>
           <td>${fechaStr}</td>
         `;
         tbody.appendChild(tr);
@@ -390,7 +396,7 @@ window.cargarUsuariosAdmin = function() {
     })
     .catch(err => {
       console.error("Error al cargar usuarios de Firestore:", err);
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--danger);">Error al cargar datos. Asegúrate de tener permisos de administrador.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--danger);">Error al cargar datos. Asegúrate de tener permisos de administrador.</td></tr>`;
     });
 };
 
