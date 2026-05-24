@@ -1804,6 +1804,44 @@ input:checked + .slider:before { transform: translateX(20px); }
     min-width: 180px !important;
   }
   .table-responsive .data-table {
-    min-width: 780px !important;
+    min-width: 750px !important;
+  }
+  .modal-precios-content .data-table {
+    min-width: 680px !important;
+  }
+
+  /* Compact styling for prices modal inputs on mobile */
+  .modal-precios-content .spinner-wrap {
+    height: 32px !important;
+  }
+  .modal-precios-content .spin-btn {
+    width: 32px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    font-size: 1rem !important;
+  }
+  .modal-precios-content .spinner-wrap input,
+  .modal-precios-content .cell-input {
+    font-size: 0.9rem !important;
+    padding: 2px 4px !important;
+    height: 30px !important;
+  }
+  .modal-precios-content select.cell-input,
+  .modal-precios-content input.cell-input:not(.spinner-wrap *) {
+    width: 90px !important;
+  }
+  .modal-precios-content tr td:nth-child(2) .spinner-wrap,
+  .modal-precios-content tr td:nth-child(2) select {
+    width: 90px !important;
+  }
+  .modal-precios-content tr td:nth-child(3) .spinner-wrap {
+    width: 80px !important;
+  }
+  .modal-precios-content tr td:nth-child(3) > div {
+    grid-template-columns: 80px 30px !important;
+    gap: 4px !important;
+  }
+  .modal-precios-content tr td:nth-child(4) .spinner-wrap {
+    width: 100px !important;
   }
 }
