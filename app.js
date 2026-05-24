@@ -355,6 +355,7 @@ function traducirErrorFirebase(code) {
 window.cargarUsuariosAdmin = function() {
   const tbody = document.getElementById('admin-users-body');
   const totalUsersEl = document.getElementById('admin-total-users');
+  const totalAccessesEl = document.getElementById('admin-total-accesses');
   if (!tbody) return;
 
   tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;" class="text-muted">Cargando usuarios...</td></tr>';
@@ -364,13 +365,17 @@ window.cargarUsuariosAdmin = function() {
       tbody.innerHTML = '';
       if (totalUsersEl) totalUsersEl.innerText = querySnapshot.size;
 
+      let totalAccessesSum = 0;
+
       if (querySnapshot.empty) {
+        if (totalAccessesEl) totalAccessesEl.innerText = '0';
         tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;" class="text-muted">No hay usuarios registrados.</td></tr>';
         return;
       }
 
       querySnapshot.forEach(doc => {
         const userData = doc.data();
+        totalAccessesSum += (userData.accessCount || 0);
         let fechaStr = "N/A";
         if (userData.createdAt) {
           const d = userData.createdAt.toDate();
@@ -393,10 +398,13 @@ window.cargarUsuariosAdmin = function() {
         `;
         tbody.appendChild(tr);
       });
+
+      if (totalAccessesEl) totalAccessesEl.innerText = totalAccessesSum;
     })
     .catch(err => {
       console.error("Error al cargar usuarios de Firestore:", err);
       tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--danger);">Error al cargar datos. Asegúrate de tener permisos de administrador.</td></tr>`;
+      if (totalAccessesEl) totalAccessesEl.innerText = 'Error';
     });
 };
 
