@@ -1328,15 +1328,33 @@ input:checked + .slider:before { transform: translateX(20px); }
     left: 0 !important;
   }
   .sidebar-header {
-    padding: 1.5rem 1.25rem !important;
+    padding: 0.75rem !important;
+    gap: 0.25rem !important;
     border-bottom: 1px solid var(--glass-border) !important;
+  }
+  .sidebar .logo-icon {
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 12px !important;
+  }
+  .sidebar .logo-icon img {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  .sidebar-by-text {
+    font-size: 0.8rem !important;
+    margin-top: 2px !important;
+  }
+  #sidebar-consultor {
+    font-size: 0.7rem !important;
+    margin-top: 2px !important;
   }
   .sidebar-nav {
     display: flex !important;
     flex-direction: column !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    padding: 1rem 0.5rem !important;
+    padding: 0.5rem !important;
     gap: 0.25rem !important;
     flex: 1 !important;
   }
@@ -1344,23 +1362,48 @@ input:checked + .slider:before { transform: translateX(20px); }
     width: 100% !important;
     flex: 0 0 auto !important;
     white-space: nowrap !important;
-    padding: 0.8rem 1.2rem !important;
+    padding: 0.55rem 0.85rem !important;
     margin: 0 !important;
-    border-radius: 12px !important;
+    border-radius: 8px !important;
     justify-content: flex-start !important;
+    font-size: 0.95rem !important;
+  }
+  .nav-btn i, .nav-btn svg {
+    width: 18px !important;
+    height: 18px !important;
   }
   
   /* Footer visible inside drawer */
   .sidebar-footer {
     display: block !important;
     border-top: 1px solid var(--glass-border) !important;
-    padding: 1rem !important;
+    padding: 0.65rem !important;
     background: rgba(15, 23, 42, 0.5);
   }
   .sidebar-footer-content {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.4rem !important;
+  }
+  .contact-btn {
+    padding: 6px 12px !important;
+    font-size: 0.85rem !important;
+  }
+  .lang-group {
+    padding-top: 0.4rem !important;
+  }
+  .lang-label {
+    font-size: 0.65rem !important;
+    margin-bottom: 2px !important;
+  }
+  .lang-select {
+    padding: 4px 8px !important;
+    font-size: 0.85rem !important;
+  }
+  #btn-logout {
+    margin-top: 0.4rem !important;
+    padding: 0.4rem !important;
+    font-size: 0.75rem !important;
   }
 
   .main-content {
