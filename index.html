@@ -367,13 +367,13 @@
 
         <!-- MATRIZ DE PROTOCOLOS -->
         <div class="glass-panel p-2">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 1rem;">
+          <div class="matriz-header-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 1rem;">
              <h2 class="form-title text-accent" style="margin: 0; border: none; padding: 0;"><i data-lucide="table"></i> <span data-i18n="tc_matriz_title">MATRIZ DE PROTOCOLOS</span></h2>
              <button class="btn" onclick="toggleVerProtocolos()" id="btn-toggle-protocolos" style="background: var(--accent); border-color: rgba(14, 165, 233, 0.4); color: white;"><i data-lucide="eye"></i> <span data-i18n="btn_show_p">Mostrar Protocolos Base</span></button>
           </div>
 
           <div id="matriz-container" style="display: none; animation: fadeIn 0.3s ease;">
-            <div
+            <div class="matriz-tools-row"
               style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
               <p class="text-muted" style="font-size: 0.85rem; margin: 0;" id="lbl-matriz-instruccion">Modo Consulta.
                 Haz clic en "Edición Bloqueada" para modificar.</p>

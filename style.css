@@ -1716,4 +1716,40 @@ input:checked + .slider:before { transform: translateX(20px); }
     text-align: center !important;
     padding: 1rem !important;
   }
+  .matriz-header-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+    text-align: center !important;
+  }
+  .matriz-header-row h2 {
+    justify-content: center !important;
+  }
+  .matriz-header-row .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .matriz-tools-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1rem !important;
+  }
+  #lbl-matriz-instruccion {
+    text-align: center !important;
+  }
+  #matriz-tools {
+    width: 100% !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    justify-content: center !important;
+  }
+  #matriz-tools .btn {
+    flex: 1 1 calc(50% - 0.25rem) !important;
+    justify-content: center !important;
+    padding: 0.6rem 0.8rem !important;
+    font-size: 0.85rem !important;
+  }
+  #matriz-tools .btn:only-child {
+    flex: 1 1 100% !important;
+  }
 }
