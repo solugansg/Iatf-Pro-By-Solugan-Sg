@@ -91,6 +91,62 @@ function adaptarHorasProtocolo(hours) {
   return newHours;
 }
 
+window.migrarYSanitizarMatriz = function(rawMatrix) {
+  if (!Array.isArray(rawMatrix)) return [];
+  
+  // 1. Adaptar días y horas
+  let migrated = rawMatrix.map(p => {
+    const newDays = adaptarDiasProtocolo(p.days, p.ia);
+    const newHours = adaptarHorasProtocolo(p.hours);
+    return Object.assign({}, p, { days: newDays, hours: newHours });
+  });
+
+  // 2. MIGRACIÓN: asignar campo role y renombrar protocolos que aún no lo tienen o tienen nombres obsoletos
+  migrated.forEach(p => {
+    if (!p.role) {
+      const isSmallRec1 = p.ia === '18' && p.days[0] === '0' && p.days[14] === '18';
+      const isSmallRec2 = p.ia === '17' && p.days[0] === '0' && p.days[14] === '17';
+      const isBigRec1   = p.ia === '42' && p.days[0] === '32';
+      const isBigRec2   = p.ia === '74' && p.days[0] === '64';
+      if (isSmallRec1)        { p.role = 'resx1';  p.name = 'REC 1 (TE)'; }
+      else if (isSmallRec2)   { p.role = 'resx2';  p.name = 'REC 2 (TE)'; }
+      else if (isBigRec1)     { p.role = 'resx1b'; p.name = 'REC 1 (IATF)'; }
+      else if (isBigRec2)     { p.role = 'resx2b'; p.name = 'REC 2 (IATF)'; }
+    } else {
+      // Auto-renombrar si tienen nombres antiguos "REC 1" o "REC 2" para que sean distintos
+      if (p.role === 'resx1' && p.name === 'REC 1') p.name = 'REC 1 (TE)';
+      if (p.role === 'resx2' && p.name === 'REC 2') p.name = 'REC 2 (TE)';
+      if (p.role === 'resx1b' && p.name === 'REC 1') p.name = 'REC 1 (IATF)';
+      if (p.role === 'resx2b' && p.name === 'REC 2') p.name = 'REC 2 (IATF)';
+    }
+  });
+
+  // 3. DEDUPLICACIÓN: eliminar entradas duplicadas con el mismo role
+  const seenRoles = {};
+  migrated = migrated.filter(p => {
+    if (!p.role) return true;
+    if (seenRoles[p.role]) return false;
+    seenRoles[p.role] = true;
+    return true;
+  });
+
+  // 4. ASEGURAR que existan los 4 protocolos de resincronización obligatorios (role: resx1, resx2, resx1b, resx2b)
+  const defaultResx = {
+    resx1: { name: 'REC 1 (TE)', role: 'resx1', days: ['0','0','0','-','-','5','-','-','5','-','10','5','0','5','18','10','18','48'], hours: Array(18).fill('08:00'), ia: '18', obs: 'Transferencia de Embriones' },
+    resx2: { name: 'REC 2 (TE)', role: 'resx2', days: ['0','0','-','-','-','8','-','-','8','9','9','8','0','8','17','9','17','47'], hours: Array(18).fill('08:00'), ia: '17', obs: 'Transferencia de Embriones' },
+    resx1b: { name: 'REC 1 (IATF)', role: 'resx1b', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','42','-','62','92'], hours: Array(18).fill('08:00'), ia: '42', obs: 'DIB día 32. Inseminar día 42.' },
+    resx2b: { name: 'REC 2 (IATF)', role: 'resx2b', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','74','-','94','124'], hours: Array(18).fill('08:00'), ia: '74', obs: 'Re-sincronización tras Dx2. Inseminar día 74.' }
+  };
+
+  for (let role in defaultResx) {
+    if (!migrated.some(p => p.role === role)) {
+      migrated.push(Object.assign({}, defaultResx[role]));
+    }
+  }
+
+  return migrated;
+};
+
 // Escuchar cambios en el estado de autenticación
 auth.onAuthStateChanged(user => {
   const authContainer = document.getElementById('auth-container');
@@ -140,14 +196,14 @@ auth.onAuthStateChanged(user => {
             }
           }
           if (userData.matriz && Array.isArray(userData.matriz)) {
-            // Migrar y sanitizar la matriz de Firestore automáticamente
-            const migratedMatrix = userData.matriz.map(p => {
-              const newDays = adaptarDiasProtocolo(p.days, p.ia);
-              const newHours = adaptarHorasProtocolo(p.hours);
-              return Object.assign({}, p, { days: newDays, hours: newHours });
-            });
-            state.matriz = migratedMatrix;
+            // Migrar y sanitizar la matriz de Firestore automáticamente con deduplicación y roles de resincronización
+            state.matriz = window.migrarYSanitizarMatriz(userData.matriz);
             localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
+            
+            // Forzar autoguardado del estado ya sanitizado a Firestore para corregir permanentemente los datos corruptos del usuario
+            if (typeof saveStateToFirestore === 'function') {
+              saveStateToFirestore();
+            }
           }
           if (userData.logoEmpresa) {
             state.logoEmpresa = userData.logoEmpresa;
@@ -2107,61 +2163,7 @@ window.loadState = function() {
         rawMatrix = parsed.matriz;
       }
       
-      if (Array.isArray(rawMatrix)) {
-        // Migrar y sanitizar la matriz automáticamente
-        state.matriz = rawMatrix.map(p => {
-          const newDays = adaptarDiasProtocolo(p.days, p.ia);
-          const newHours = adaptarHorasProtocolo(p.hours);
-          return Object.assign({}, p, { days: newDays, hours: newHours });
-        });
-
-        // MIGRACIÓN: asignar campo role y renombrar protocolos que aún no lo tienen o tienen nombres obsoletos
-        let resx1Count = 0, resx2Count = 0;
-        state.matriz.forEach(p => {
-          if (!p.role) {
-            const isSmallRec1 = p.ia === '18' && p.days[0] === '0' && p.days[14] === '18';
-            const isSmallRec2 = p.ia === '17' && p.days[0] === '0' && p.days[14] === '17';
-            const isBigRec1   = p.ia === '42' && p.days[0] === '32';
-            const isBigRec2   = p.ia === '74' && p.days[0] === '64';
-            if (isSmallRec1)        { p.role = 'resx1';  p.name = 'REC 1 (TE)'; resx1Count++; }
-            else if (isSmallRec2)   { p.role = 'resx2';  p.name = 'REC 2 (TE)'; resx2Count++; }
-            else if (isBigRec1)     { p.role = 'resx1b'; p.name = 'REC 1 (IATF)'; }
-            else if (isBigRec2)     { p.role = 'resx2b'; p.name = 'REC 2 (IATF)'; }
-          } else {
-            // Auto-renombrar si tienen nombres antiguos "REC 1" o "REC 2" para que sean distintos
-            if (p.role === 'resx1' && p.name === 'REC 1') p.name = 'REC 1 (TE)';
-            if (p.role === 'resx2' && p.name === 'REC 2') p.name = 'REC 2 (TE)';
-            if (p.role === 'resx1b' && p.name === 'REC 1') p.name = 'REC 1 (IATF)';
-            if (p.role === 'resx2b' && p.name === 'REC 2') p.name = 'REC 2 (IATF)';
-
-            if (window.isResx1(p)) resx1Count++;
-            if (window.isResx2(p)) resx2Count++;
-          }
-        });
-
-        // DEDUPLICACIÓN: eliminar entradas duplicadas con el mismo role
-        const seenRoles = {};
-        state.matriz = state.matriz.filter(p => {
-          if (!p.role) return true;
-          if (seenRoles[p.role]) return false;
-          seenRoles[p.role] = true;
-          return true;
-        });
-
-      } else {
-        console.warn("Detectada matriz con estructura antigua o no válida. Manteniendo matriz por defecto.");
-      }
-      
-      // ASEGURAR que existan protocolos para ReSx (identificados por campo role, NO por nombre)
-      const hasResx1 = window.getResx1(state.matriz);
-      if (!hasResx1) {
-         state.matriz.push({ name: 'REC 1 (TE)', role: 'resx1', days: ['0','0','0','-','-','5','-','-','5','-','10','5','0','5','18','10','18','48'], hours: Array(18).fill('08:00'), ia: '18', obs: 'Transferencia de Embriones' });
-      }
-      const hasResx2 = window.getResx2(state.matriz);
-      if (!hasResx2) {
-         state.matriz.push({ name: 'REC 2 (TE)', role: 'resx2', days: ['0','0','-','-','-','8','-','-','8','9','9','8','0','8','17','9','17','47'], hours: Array(18).fill('08:00'), ia: '17', obs: 'Transferencia de Embriones' });
-      }
-
+      state.matriz = window.migrarYSanitizarMatriz(rawMatrix || state.matriz);
       renderMatriz();
       actualizarSelectProtocolos();
     }
@@ -3962,11 +3964,7 @@ window.cargarDeHistorial = function(id) {
       try {
         const parsedMatrix = JSON.parse(latestMatrixStr);
         if (Array.isArray(parsedMatrix)) {
-          newState.matriz = parsedMatrix.map(p => {
-            const newDays = adaptarDiasProtocolo(p.days, p.ia);
-            const newHours = adaptarHorasProtocolo(p.hours);
-            return Object.assign({}, p, { days: newDays, hours: newHours });
-          });
+          newState.matriz = window.migrarYSanitizarMatriz(parsedMatrix);
         }
       } catch(e) {}
     }
@@ -4016,11 +4014,7 @@ window.exportarExcelDesdeHistorial = function(id) {
     try {
       const parsedMatrix = JSON.parse(latestMatrixStr);
       if (Array.isArray(parsedMatrix)) {
-        tempState.matriz = parsedMatrix.map(p => {
-          const newDays = adaptarDiasProtocolo(p.days, p.ia);
-          const newHours = adaptarHorasProtocolo(p.hours);
-          return Object.assign({}, p, { days: newDays, hours: newHours });
-        });
+        tempState.matriz = window.migrarYSanitizarMatriz(parsedMatrix);
       }
     } catch(e) {}
   }
@@ -4079,11 +4073,7 @@ window.exportarPdfDesdeHistorial = function(id) {
     try {
       const parsedMatrix = JSON.parse(latestMatrixStr);
       if (Array.isArray(parsedMatrix)) {
-        tempState.matriz = parsedMatrix.map(p => {
-          const newDays = adaptarDiasProtocolo(p.days, p.ia);
-          const newHours = adaptarHorasProtocolo(p.hours);
-          return Object.assign({}, p, { days: newDays, hours: newHours });
-        });
+        tempState.matriz = window.migrarYSanitizarMatriz(parsedMatrix);
       }
     } catch(e) {}
   }
