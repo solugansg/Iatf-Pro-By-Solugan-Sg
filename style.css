@@ -1752,4 +1752,48 @@ input:checked + .slider:before { transform: translateX(20px); }
   #matriz-tools .btn:only-child {
     flex: 1 1 100% !important;
   }
+
+  /* Preñeces initial protocol row */
+  .pi-preg-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 0.75rem !important;
+    gap: 0.75rem !important;
+  }
+  .pi-preg-row .spinner-wrap {
+    width: 100% !important;
+    flex: 1 1 auto !important;
+  }
+  .pi-preg-divider {
+    display: none !important;
+  }
+  .pi-preg-percent-wrap {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  #pi-porcentaje {
+    width: 50px !important;
+    font-size: 1.4rem !important;
+  }
+
+  /* Resincronización Toggle text and switch optimizations */
+  .resync-toggle-options span {
+    white-space: normal !important;
+    font-size: 0.9rem !important;
+    line-height: 1.2 !important;
+  }
+  .resync-toggle-options .switch {
+    transform: scale(1.05) !important;
+  }
+
+  /* Export actions stacking */
+  .export-actions {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+  }
+  .export-actions .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
 }

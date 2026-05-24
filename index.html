@@ -488,7 +488,7 @@
             </div>
             <div class="input-group">
               <label data-i18n="pi_preg">Preñeces (Proyectado o Dx1 Real)</label>
-              <div
+              <div class="pi-preg-row"
                 style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
                 <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
                   <button class="spin-btn minus"
@@ -499,8 +499,8 @@
                   <button class="spin-btn plus"
                     onclick="spinVal('pi-prenadas', 1, false); debouncedAutoCalcPorcentaje();">&#43;</button>
                 </div>
-                <div style="width: 1px; height: 30px; background: var(--glass-border);"></div>
-                <div style="display: flex; align-items: center; flex: 1; justify-content: center;">
+                <div class="pi-preg-divider" style="width: 1px; height: 30px; background: var(--glass-border);"></div>
+                <div class="pi-preg-percent-wrap" style="display: flex; align-items: center; flex: 1; justify-content: center;">
                   <div class="spinner-wrap" style="border-radius: 8px; border-color: var(--accent);">
                     <button class="spin-btn minus"
                       onclick="spinVal('pi-porcentaje', -1, false); debouncedAutoCalcDesdePorcentaje();"
