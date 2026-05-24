@@ -466,22 +466,36 @@ window.dashCatCosts = { pi: { hormonas:0, genetica:0, asistencia:0, diagnostico:
 window.isResx1 = function(p) {
   if(!p || !p.name) return false;
   let n = p.name.toLowerCase();
-  return n.includes('resincronizacion 1') || n.includes('resincronización 1') || n.includes('resx 1') || n.includes('resx1') || n === 'rec 1' || p.role === 'resx1';
+  return n.includes('resincronizacion 1') || n.includes('resincronización 1') || n.includes('resx 1') || n.includes('resx1') || n.includes('rec 1') || p.role === 'resx1' || p.role === 'resx1b';
 };
 window.isResx2 = function(p) {
   if(!p || !p.name) return false;
   let n = p.name.toLowerCase();
-  return n.includes('resincronizacion 2') || n.includes('resincronización 2') || n.includes('resx 2') || n.includes('resx2') || n === 'rec 2' || p.role === 'resx2';
+  return n.includes('resincronizacion 2') || n.includes('resincronización 2') || n.includes('resx 2') || n.includes('resx2') || n.includes('rec 2') || p.role === 'resx2' || p.role === 'resx2b';
 };
 window.getResx1 = function(matriz) {
   if(!matriz) return null;
-  let p = matriz.find(x => { let n = (x.name||'').toLowerCase(); return n.includes('resincronizacion 1') || n.includes('resincronización 1') || n.includes('resx 1') || n.includes('resx1') || n === 'rec 1'; });
-  return p || matriz.find(x => x.role === 'resx1');
+  const piName = (document.getElementById('pi-protocolo')?.value || '').toLowerCase();
+  const piProtocol = matriz.find(x => (x.name || '').toLowerCase() === piName);
+  const isTE = piName.includes('te') || piName.includes('embrion') || piName.includes('embrión') || piName.includes('transferencia') || 
+               (piProtocol && (piProtocol.obs || '').toLowerCase().includes('transferencia'));
+  const targetRole = isTE ? 'resx1' : 'resx1b';
+  let p = matriz.find(x => x.role === targetRole);
+  if (p) return p;
+  p = matriz.find(x => { let n = (x.name||'').toLowerCase(); return n.includes('resincronizacion 1') || n.includes('resincronización 1') || n.includes('resx 1') || n.includes('resx1') || n.includes('rec 1'); });
+  return p || matriz.find(x => x.role === 'resx1' || x.role === 'resx1b');
 };
 window.getResx2 = function(matriz) {
   if(!matriz) return null;
-  let p = matriz.find(x => { let n = (x.name||'').toLowerCase(); return n.includes('resincronizacion 2') || n.includes('resincronización 2') || n.includes('resx 2') || n.includes('resx2') || n === 'rec 2'; });
-  return p || matriz.find(x => x.role === 'resx2');
+  const piName = (document.getElementById('pi-protocolo')?.value || '').toLowerCase();
+  const piProtocol = matriz.find(x => (x.name || '').toLowerCase() === piName);
+  const isTE = piName.includes('te') || piName.includes('embrion') || piName.includes('embrión') || piName.includes('transferencia') || 
+               (piProtocol && (piProtocol.obs || '').toLowerCase().includes('transferencia'));
+  const targetRole = isTE ? 'resx2' : 'resx2b';
+  let p = matriz.find(x => x.role === targetRole);
+  if (p) return p;
+  p = matriz.find(x => { let n = (x.name||'').toLowerCase(); return n.includes('resincronizacion 2') || n.includes('resincronización 2') || n.includes('resx 2') || n.includes('resx2') || n.includes('rec 2'); });
+  return p || matriz.find(x => x.role === 'resx2' || x.role === 'resx2b');
 };
 
 // --- i18n: DICCIONARIO DE TRADUCCIONES ---
@@ -980,10 +994,10 @@ const state = {
     { name: 'MM1(IA)', days: ['-','-','-','0','-','7','-','-','-','-','9','-','0','-','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
     { name: 'MM2(IA)', days: ['-','8','-','0','-','7','-','-','-','-','9','-','0','-','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
     { name: 'MMDIB(IA)', days: ['0','-','-','0','-','7','-','-','-','-','9','8','0','7','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
-    { name: 'REC 1', role: 'resx1', days: ['0','0','0','-','-','5','-','-','5','-','10','5','0','5','18','10','18','48'], hours: Array(18).fill('08:00'), ia: '18', obs: 'Transferencia de Embriones' },
-    { name: 'REC 2', role: 'resx2', days: ['0','0','-','-','-','8','-','-','8','9','9','8','0','8','17','9','17','47'], hours: Array(18).fill('08:00'), ia: '17', obs: 'Transferencia de Embriones' },
-    { name: 'REC 1', role: 'resx1b', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','42','-','62','92'], hours: Array(18).fill('08:00'), ia: '42', obs: 'DIB día 32. Inseminar día 42.' },
-    { name: 'REC 2', role: 'resx2b', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','74','-','94','124'], hours: Array(18).fill('08:00'), ia: '74', obs: 'Re-sincronización tras Dx2. Inseminar día 74.' }
+    { name: 'REC 1 (TE)', role: 'resx1', days: ['0','0','0','-','-','5','-','-','5','-','10','5','0','5','18','10','18','48'], hours: Array(18).fill('08:00'), ia: '18', obs: 'Transferencia de Embriones' },
+    { name: 'REC 2 (TE)', role: 'resx2', days: ['0','0','-','-','-','8','-','-','8','9','9','8','0','8','17','9','17','47'], hours: Array(18).fill('08:00'), ia: '17', obs: 'Transferencia de Embriones' },
+    { name: 'REC 1 (IATF)', role: 'resx1b', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','42','-','62','92'], hours: Array(18).fill('08:00'), ia: '42', obs: 'DIB día 32. Inseminar día 42.' },
+    { name: 'REC 2 (IATF)', role: 'resx2b', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','74','-','94','124'], hours: Array(18).fill('08:00'), ia: '74', obs: 'Re-sincronización tras Dx2. Inseminar día 74.' }
   ],
   logoEmpresa: 'Logo Iatf Pro.png',
   activeList: []
@@ -1275,10 +1289,10 @@ window.restaurarProtocolosBase = function() {
       { name: 'MM1(IA)', days: ['-','-','-','0','-','7','-','-','-','-','9','-','0','-','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
       { name: 'MM2(IA)', days: ['-','8','-','0','-','7','-','-','-','-','9','-','0','-','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
       { name: 'MMDIB(IA)', days: ['0','-','-','0','-','7','-','-','-','-','9','8','0','7','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
-      { name: 'REC 1', role: 'resx1', days: ['0','0','0','-','-','5','-','-','5','-','10','5','0','5','18','10','18','48'], hours: Array(18).fill('08:00'), ia: '18', obs: 'Transferencia de Embriones' },
-      { name: 'REC 2', role: 'resx2', days: ['0','0','-','-','-','8','-','-','8','9','9','8','0','8','17','9','17','47'], hours: Array(18).fill('08:00'), ia: '17', obs: 'Transferencia de Embriones' },
-      { name: 'REC 1', role: 'resx1b', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','42','-','62','92'], hours: Array(18).fill('08:00'), ia: '42', obs: 'DIB día 32. Inseminar día 42.' },
-      { name: 'REC 2', role: 'resx2b', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','74','-','94','124'], hours: Array(18).fill('08:00'), ia: '74', obs: 'Re-sincronización tras Dx2. Inseminar día 74.' }
+      { name: 'REC 1 (TE)', role: 'resx1', days: ['0','0','0','-','-','5','-','-','5','-','10','5','0','5','18','10','18','48'], hours: Array(18).fill('08:00'), ia: '18', obs: 'Transferencia de Embriones' },
+      { name: 'REC 2 (TE)', role: 'resx2', days: ['0','0','-','-','-','8','-','-','8','9','9','8','0','8','17','9','17','47'], hours: Array(18).fill('08:00'), ia: '17', obs: 'Transferencia de Embriones' },
+      { name: 'REC 1 (IATF)', role: 'resx1b', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','42','-','62','92'], hours: Array(18).fill('08:00'), ia: '42', obs: 'DIB día 32. Inseminar día 42.' },
+      { name: 'REC 2 (IATF)', role: 'resx2b', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','74','-','94','124'], hours: Array(18).fill('08:00'), ia: '74', obs: 'Re-sincronización tras Dx2. Inseminar día 74.' }
     ];
     renderMatriz(); saveState(); alert("Protocolos base restaurados correctamente.");
   }
@@ -2101,7 +2115,7 @@ window.loadState = function() {
           return Object.assign({}, p, { days: newDays, hours: newHours });
         });
 
-        // MIGRACIÓN: asignar campo role a protocolos que aún no lo tienen
+        // MIGRACIÓN: asignar campo role y renombrar protocolos que aún no lo tienen o tienen nombres obsoletos
         let resx1Count = 0, resx2Count = 0;
         state.matriz.forEach(p => {
           if (!p.role) {
@@ -2109,11 +2123,17 @@ window.loadState = function() {
             const isSmallRec2 = p.ia === '17' && p.days[0] === '0' && p.days[14] === '17';
             const isBigRec1   = p.ia === '42' && p.days[0] === '32';
             const isBigRec2   = p.ia === '74' && p.days[0] === '64';
-            if (isSmallRec1)        { p.role = 'resx1';  resx1Count++; }
-            else if (isSmallRec2)   { p.role = 'resx2';  resx2Count++; }
-            else if (isBigRec1)     { p.role = 'resx1b'; }
-            else if (isBigRec2)     { p.role = 'resx2b'; }
+            if (isSmallRec1)        { p.role = 'resx1';  p.name = 'REC 1 (TE)'; resx1Count++; }
+            else if (isSmallRec2)   { p.role = 'resx2';  p.name = 'REC 2 (TE)'; resx2Count++; }
+            else if (isBigRec1)     { p.role = 'resx1b'; p.name = 'REC 1 (IATF)'; }
+            else if (isBigRec2)     { p.role = 'resx2b'; p.name = 'REC 2 (IATF)'; }
           } else {
+            // Auto-renombrar si tienen nombres antiguos "REC 1" o "REC 2" para que sean distintos
+            if (p.role === 'resx1' && p.name === 'REC 1') p.name = 'REC 1 (TE)';
+            if (p.role === 'resx2' && p.name === 'REC 2') p.name = 'REC 2 (TE)';
+            if (p.role === 'resx1b' && p.name === 'REC 1') p.name = 'REC 1 (IATF)';
+            if (p.role === 'resx2b' && p.name === 'REC 2') p.name = 'REC 2 (IATF)';
+
             if (window.isResx1(p)) resx1Count++;
             if (window.isResx2(p)) resx2Count++;
           }
@@ -2135,11 +2155,11 @@ window.loadState = function() {
       // ASEGURAR que existan protocolos para ReSx (identificados por campo role, NO por nombre)
       const hasResx1 = window.getResx1(state.matriz);
       if (!hasResx1) {
-         state.matriz.push({ name: 'REC 1', role: 'resx1', days: ['0','0','0','-','-','5','-','-','5','-','10','5','0','5','18','10','18','48'], hours: Array(18).fill('08:00'), ia: '18', obs: 'Transferencia de Embriones' });
+         state.matriz.push({ name: 'REC 1 (TE)', role: 'resx1', days: ['0','0','0','-','-','5','-','-','5','-','10','5','0','5','18','10','18','48'], hours: Array(18).fill('08:00'), ia: '18', obs: 'Transferencia de Embriones' });
       }
       const hasResx2 = window.getResx2(state.matriz);
       if (!hasResx2) {
-         state.matriz.push({ name: 'REC 2', role: 'resx2', days: ['0','0','-','-','-','8','-','-','8','9','9','8','0','8','17','9','17','47'], hours: Array(18).fill('08:00'), ia: '17', obs: 'Transferencia de Embriones' });
+         state.matriz.push({ name: 'REC 2 (TE)', role: 'resx2', days: ['0','0','-','-','-','8','-','-','8','9','9','8','0','8','17','9','17','47'], hours: Array(18).fill('08:00'), ia: '17', obs: 'Transferencia de Embriones' });
       }
 
       renderMatriz();
