@@ -1796,4 +1796,14 @@ input:checked + .slider:before { transform: translateX(20px); }
     width: 100% !important;
     justify-content: center !important;
   }
+
+  /* Prices Modal and data tables responsive scrolling */
+  .modal-precios-content th:first-child,
+  .modal-precios-content td:first-child {
+    padding-left: 0.75rem !important;
+    min-width: 180px !important;
+  }
+  .table-responsive .data-table {
+    min-width: 780px !important;
+  }
 }
