@@ -107,6 +107,16 @@ auth.onAuthStateChanged(user => {
       sidebarConsultor.style.display = 'block';
     }
 
+    // Abrir barra lateral por defecto en móviles al iniciar
+    if (window.innerWidth <= 900) {
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (sidebar && overlay) {
+        sidebar.classList.add('active');
+        overlay.style.display = 'block';
+      }
+    }
+
     // Cargar configuraciones del usuario desde Firestore
     db.collection("users").doc(user.uid).get()
       .then(docSnap => {
