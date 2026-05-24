@@ -40,7 +40,8 @@ const filesToCopy = [
   'icon-192.png', 
   'icon-512.png', 
   'apple-touch-icon.png', 
-  'Logo Iatf Pro.png'
+  'Logo Iatf Pro.png',
+  'robots.txt'
 ];
 
 filesToCopy.forEach(file => {

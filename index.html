@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0ea5e9">
   <meta name="description" content="Análisis de costos reproductivos para ganadería bovina. By Solugan SG.">
+  <meta name="robots" content="noindex, nofollow">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -29,13 +30,13 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=2.8.10">
+  <link rel="stylesheet" href="style.css?v=2.8.11">
 
   <!-- Fuentes locales (offline) -->
   <style>
-    @font-face { font-family: 'Inter'; src: url('/fonts/inter-400.ttf'); font-weight: 400; font-display: swap; }
-    @font-face { font-family: 'Inter'; src: url('/fonts/inter-600.ttf'); font-weight: 600; font-display: swap; }
-    @font-face { font-family: 'Inter'; src: url('/fonts/inter-700.ttf'); font-weight: 700; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('/fonts/inter-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('/fonts/inter-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('/fonts/inter-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
   </style>
 
   <!-- Librerías locales (offline) -->
@@ -143,7 +144,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:60px;height:60px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">v2.8.10</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">v2.8.11</span></span>
         <div id="sidebar-consultor" style="font-size: 0.75rem; color: var(--accent); opacity: 0.9; margin-top: 4px; font-weight: bold; text-align: center; display: none;"></div>
       </div>
 
@@ -209,7 +210,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">v2.8.10</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">v2.8.11</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -1339,7 +1340,7 @@
     }
   </style>
 
-  <script src="app.js?v=2.8.10"></script>
+  <script src="app.js?v=2.8.11"></script>
 
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>

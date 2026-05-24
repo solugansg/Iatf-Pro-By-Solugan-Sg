@@ -1,5 +1,5 @@
-// Iatf Pro by Solugan SG - Service Worker v2.8.10
-const CACHE_NAME = 'iatfpro-v2.8.10';
+// Iatf Pro by Solugan SG - Service Worker v2.8.11
+const CACHE_NAME = 'iatfpro-v2.8.11';
 
 // Todos los archivos que se guardan en caché para uso offline
 const ASSETS_TO_CACHE = [
@@ -20,10 +20,9 @@ const ASSETS_TO_CACHE = [
   '/libs/html2pdf.min.js',
   '/libs/xlsx.full.min.js',
   // Fuentes locales
-  '/fonts/inter-400.ttf',
-  '/fonts/inter-600.ttf',
-  '/fonts/inter-700.ttf',
-  '/fonts/inter-800.ttf'
+  '/fonts/inter-400.woff2',
+  '/fonts/inter-600.woff2',
+  '/fonts/inter-700.woff2'
 ];
 
 // ─── INSTALL: Descargar y cachear todo al instalar ───────────────────────────
@@ -92,20 +91,11 @@ self.addEventListener('fetch', (event) => {
         .catch(() => caches.match(event.request)) // Offline: usar caché
     );
   } else {
-    // ── CACHE FIRST: fuentes, imágenes, librerías JS ──
+    // ── CACHE FIRST REAL: fuentes, imágenes, librerías JS ──
     event.respondWith(
       caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
         if (cachedResponse) {
-          // Actualizar en segundo plano
-          fetch(event.request)
-            .then(networkResponse => {
-              if (networkResponse && networkResponse.status === 200) {
-                caches.open(CACHE_NAME).then(cache => {
-                  cache.put(event.request, networkResponse.clone());
-                });
-              }
-            })
-            .catch(() => {});
+          // Retornar la versión en caché directamente (cero consumo del servidor)
           return cachedResponse;
         }
         return fetch(event.request)
