@@ -1812,19 +1812,24 @@ input:checked + .slider:before { transform: translateX(20px); }
 
   /* Compact styling for prices modal inputs on mobile */
   .modal-precios-content .spinner-wrap {
-    height: 32px !important;
+    height: 30px !important;
   }
   .modal-precios-content .spin-btn {
-    width: 32px !important;
-    height: 32px !important;
-    min-height: 32px !important;
-    font-size: 1rem !important;
-  }
-  .modal-precios-content .spinner-wrap input,
-  .modal-precios-content .cell-input {
-    font-size: 0.9rem !important;
-    padding: 2px 4px !important;
+    width: 24px !important;
     height: 30px !important;
+    min-height: 30px !important;
+    font-size: 0.95rem !important;
+  }
+  .modal-precios-content .spinner-wrap input {
+    font-size: 0.8rem !important;
+    padding: 0 !important;
+    height: 28px !important;
+    text-align: center !important;
+  }
+  .modal-precios-content .cell-input {
+    font-size: 0.8rem !important;
+    padding: 2px 4px !important;
+    height: 28px !important;
   }
   .modal-precios-content select.cell-input,
   .modal-precios-content input.cell-input:not(.spinner-wrap *) {
