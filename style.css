@@ -1821,15 +1821,17 @@ input:checked + .slider:before { transform: translateX(20px); }
     font-size: 0.95rem !important;
   }
   .modal-precios-content .spinner-wrap input {
-    font-size: 0.8rem !important;
+    font-size: 0.72rem !important;
     padding: 0 !important;
     height: 28px !important;
     text-align: center !important;
+    font-weight: 800 !important;
   }
   .modal-precios-content .cell-input {
-    font-size: 0.8rem !important;
+    font-size: 0.72rem !important;
     padding: 2px 4px !important;
     height: 28px !important;
+    font-weight: 800 !important;
   }
   .modal-precios-content select.cell-input,
   .modal-precios-content input.cell-input:not(.spinner-wrap *) {
@@ -1847,6 +1849,6 @@ input:checked + .slider:before { transform: translateX(20px); }
     gap: 4px !important;
   }
   .modal-precios-content tr td:nth-child(4) .spinner-wrap {
-    width: 100px !important;
+    width: 115px !important;
   }
 }
