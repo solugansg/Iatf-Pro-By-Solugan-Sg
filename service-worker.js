@@ -1,5 +1,5 @@
-// Iatf Pro by Solugan SG - Service Worker v2.8.54
-const CACHE_NAME = 'iatfpro-v2.8.54';
+// Iatf Pro by Solugan SG - Service Worker v2.8.55
+const CACHE_NAME = 'iatfpro-v2.8.55';
 
 // Todos los archivos que se guardan en caché para uso offline
 const ASSETS_TO_CACHE = [
@@ -71,6 +71,14 @@ self.addEventListener('fetch', (event) => {
 
   // Ignorar extensiones de Chrome
   if (event.request.url.startsWith('chrome-extension://')) return;
+
+  // Ignorar Firebase, APIs externas y gstatic (auth, firestore, etc.)
+  if (event.request.url.includes('firebaseapp.com') ||
+      event.request.url.includes('googleapis.com') ||
+      event.request.url.includes('gstatic.com') ||
+      event.request.url.includes('firestore.googleapis.com') ||
+      event.request.url.includes('identitytoolkit') ||
+      event.request.url.includes('securetoken')) return;
 
   const url = new URL(event.request.url);
   const isHTMLorCSS = url.pathname === '/' ||
