@@ -144,7 +144,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:60px;height:60px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">v2.8.40</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">v2.8.41</span></span>
         <div id="sidebar-consultor" style="font-size: 0.75rem; color: var(--accent); opacity: 0.9; margin-top: 4px; font-weight: bold; text-align: center; display: none;"></div>
       </div>
 
@@ -385,6 +385,14 @@
                   style="background: var(--success); color: #fff; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); font-weight: 800;"
                   onclick="agregarNuevoProtocolo()" id="btn-add-protocolo"><i data-lucide="plus"></i> <span
                     data-i18n="btn_new">NUEVO</span></button>
+                
+                <!-- IMPORTACION EXCEL -->
+                <input type="file" id="btn-importar-excel" accept=".xlsx, .xls" style="display: none;" onchange="handleImportarExcelFile(event)">
+                <button class="btn" id="btn-trigger-excel"
+                  style="background: #10b981; color: #fff; font-weight: 700; border-color: #10b981;"
+                  onclick="document.getElementById('btn-importar-excel').click()">
+                  <i data-lucide="upload-cloud"></i> Subir Excel
+                </button>
                 <button class="btn" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; display: none;"
                   onclick="restaurarProtocolosBase()" id="btn-reset-matriz"><i data-lucide="rotate-ccw"></i> <span
                     data-i18n="btn_reset">Restaurar Base</span></button>
@@ -1341,7 +1349,7 @@
     }
   </style>
 
-  <script src="app.js?v=2.8.40"></script>
+  <script src="app.js?v=2.8.41"></script>
 
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>

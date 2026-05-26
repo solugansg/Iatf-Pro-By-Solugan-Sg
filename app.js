@@ -173,43 +173,62 @@ auth.onAuthStateChanged(user => {
       }
     }
 
-    // Cargar configuraciones del usuario desde Firestore
-    db.collection("users").doc(user.uid).get()
-      .then(docSnap => {
-        if (docSnap.exists) {
-          const userData = docSnap.data();
-          
-          // Incrementar contador de accesos en Firestore
-          db.collection("users").doc(user.uid).update({
-            accessCount: firebase.firestore.FieldValue.increment(1)
-          }).catch(err => console.warn("Error incrementando accessCount:", err));
-          
-          if (userData.name && sidebarConsultor) {
-            sidebarConsultor.innerText = userData.name.toUpperCase();
-          }
+    // Cargar matriz global primero, luego configuraciones del usuario
+    db.collection("global").doc("protocols").get()
+      .then(globalDoc => {
+        let globalMatriz = null;
+        if (globalDoc.exists && globalDoc.data() && globalDoc.data().matriz && Array.isArray(globalDoc.data().matriz) && globalDoc.data().matriz.length > 0) {
+          globalMatriz = globalDoc.data().matriz;
+        }
 
-          // Guardar perfil en localStorage para que guardarEnHistorial() pueda leer el NIT
-          localStorage.setItem('reprocost_perfil', JSON.stringify({
-            nit: userData.nit || 'N/A',
-            name: userData.name || '',
-            email: userData.email || '',
-            finca: userData.finca || '',
-            phone: userData.phone || ''
-          }));
+        db.collection("users").doc(user.uid).get()
+          .then(docSnap => {
+            if (docSnap.exists) {
+              const userData = docSnap.data();
+              
+              // Incrementar contador de accesos en Firestore
+              db.collection("users").doc(user.uid).update({
+                accessCount: firebase.firestore.FieldValue.increment(1)
+              }).catch(err => console.warn("Error incrementando accessCount:", err));
+              
+              if (userData.name && sidebarConsultor) {
+                sidebarConsultor.innerText = userData.name.toUpperCase();
+              }
 
-          if (userData.tableroLeche) Object.assign(state.tableroLeche, userData.tableroLeche);
-          if (userData.tableroCarne) Object.assign(state.tableroCarne, userData.tableroCarne);
-          if (userData.insumos) {
-            for (let k in userData.insumos) {
-              if (state.insumos[k]) Object.assign(state.insumos[k], userData.insumos[k]);
-            }
-          }
-          if (userData.matriz && Array.isArray(userData.matriz)) {
-            // Migrar y sanitizar la matriz de Firestore (solo adapta longitud de arrays si cambió el esquema)
-            state.matriz = window.migrarYSanitizarMatriz(userData.matriz);
-            localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
-            // NOTA: No se hace autoguardado a Firestore aquí para no sobreescribir datos del usuario
-          }
+              // Guardar perfil en localStorage para que guardarEnHistorial() pueda leer el NIT
+              localStorage.setItem('reprocost_perfil', JSON.stringify({
+                nit: userData.nit || 'N/A',
+                name: userData.name || '',
+                email: userData.email || '',
+                finca: userData.finca || '',
+                phone: userData.phone || ''
+              }));
+
+              if (userData.tableroLeche) Object.assign(state.tableroLeche, userData.tableroLeche);
+              if (userData.tableroCarne) Object.assign(state.tableroCarne, userData.tableroCarne);
+              if (userData.insumos) {
+                for (let k in userData.insumos) {
+                  if (state.insumos[k]) Object.assign(state.insumos[k], userData.insumos[k]);
+                }
+              }
+              
+              // Determinar de dónde cargar la matriz
+              if (globalMatriz) {
+                state.matriz = window.migrarYSanitizarMatriz(globalMatriz);
+                localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
+              } else if (userData.matriz && Array.isArray(userData.matriz) && userData.matriz.length > 0) {
+                state.matriz = window.migrarYSanitizarMatriz(userData.matriz);
+                localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
+                // Auto-migración si es el admin y la tabla global estaba vacía
+                if (user.email === ADMIN_EMAIL) {
+                  db.collection("global").doc("protocols").set({ matriz: state.matriz })
+                    .then(() => console.log("Migración automática de protocolos del admin a global."))
+                    .catch(err => console.error("Error migrando a global:", err));
+                }
+              } else {
+                state.matriz = window.migrarYSanitizarMatriz([]);
+                localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
+              }
           if (userData.logoEmpresa) {
             state.logoEmpresa = userData.logoEmpresa;
             if (typeof actualizarVistaLogo === 'function') actualizarVistaLogo();
@@ -272,19 +291,29 @@ auth.onAuthStateChanged(user => {
       })
       .catch(err => {
         console.error("Error al cargar configuración de Firestore:", err);
-        syncFases();
-        renderMatriz();
-        actualizarSelectProtocolos();
-        window.calcTableroControl();
-        window.updateResultados();
-        lucide.createIcons();
-      });
+        if (typeof renderMatriz === 'function') renderMatriz();
+      })
+      .catch(err => console.error("Error cargando doc del usuario:", err));
+  })
+  .catch(err => console.error("Error obteniendo protocolos globales:", err));
 
     if (user.email === ADMIN_EMAIL) {
       if (navBtnAdmin) navBtnAdmin.style.display = 'inline-flex';
       cargarUsuariosAdmin();
+      // Mostrar botones de edición y Subir Excel de la matriz solo para el admin
+      const btnUnlock = document.getElementById('btn-unlock');
+      const btnAddProtocolo = document.getElementById('btn-add-protocolo');
+      const btnResetMatriz = document.getElementById('btn-reset-matriz');
+      const btnTriggerExcel = document.getElementById('btn-trigger-excel');
+      if (btnUnlock) btnUnlock.style.display = 'inline-flex';
+      if (btnAddProtocolo) btnAddProtocolo.style.display = 'inline-flex';
+      if (btnTriggerExcel) btnTriggerExcel.style.display = 'inline-flex';
+      // btnResetMatriz lo dejamos oculto por defecto hasta que se desbloquee la tabla
     } else {
       if (navBtnAdmin) navBtnAdmin.style.display = 'none';
+      // Asegurarnos de ocultar botones de matriz
+      const matrizTools = document.getElementById('matriz-tools');
+      if (matrizTools) matrizTools.style.display = 'none';
     }
 
   } else {
@@ -404,6 +433,118 @@ window.handleLogout = function() {
   }
 };
 
+// 5.5 IMPORTACIÓN DE PROTOCOLOS DESDE EXCEL
+window.cargarProtocolosDesdeExcelData = function(arrayBuffer) {
+  try {
+    const data = new Uint8Array(arrayBuffer);
+    const workbook = XLSX.read(data, {type: 'array'});
+    
+    let sheetName = workbook.SheetNames.find(n => n.toLowerCase().replace(/\s+/g, '') === 'tablerodecontrol');
+    if (!sheetName) {
+      sheetName = workbook.SheetNames.find(n => n.toLowerCase().includes('tablero') || n.toLowerCase().includes('control'));
+    }
+    if (!sheetName) {
+      sheetName = workbook.SheetNames[0];
+    }
+    
+    const sheet = workbook.Sheets[sheetName];
+    if (!sheet) {
+      throw new Error("No se pudo encontrar la hoja del Tablero de control en el archivo Excel.");
+    }
+    
+    const rawData = XLSX.utils.sheet_to_json(sheet, {header: 1, defval: '-'});
+    const nuevosProtocolos = [];
+    
+    for (let r = 9; r < rawData.length; r++) {
+      const row = rawData[r];
+      if (!row || row.length <= 1) continue;
+      
+      const pName = String(row[1] || '').trim();
+      if (!pName || pName === '-' || pName.toLowerCase() === 'vacio' || pName.toLowerCase().startsWith('vacio') || pName.toLowerCase() === 'seleccione protocolo') {
+        continue;
+      }
+      
+      const valStr = (val) => {
+        if (val === null || val === undefined) return '-';
+        let s = String(val).trim();
+        if (s === '' || s === '0' || s === '0.00' || s === '0.0') {
+          return s === '' ? '-' : s;
+        }
+        return s;
+      };
+      
+      const dib = valStr(row[2]);
+      const be1 = valStr(row[3]);
+      const be2 = valStr(row[4]);
+      const gnrh1 = valStr(row[5]);
+      const gnrh2 = valStr(row[6]);
+      const pgf1 = valStr(row[7]);
+      const pgf2 = valStr(row[8]);
+      const pgf3 = valStr(row[9]);
+      const ecg = valStr(row[10]);
+      const ce = valStr(row[11]);
+      const gen = valStr(row[12]);
+      const retdib = valStr(row[13]);
+      const mo1 = valStr(row[14]);
+      const mo2 = valStr(row[15]);
+      const opu = valStr(row[16]);  // Col Q (index 16) -> opu (days[15])
+      const iate = valStr(row[17]); // Col R (index 17) -> iate (days[14])
+      const dx1 = valStr(row[19]);  // Col T (index 19) -> dx1 (days[16])
+      const dx2 = valStr(row[20]);  // Col U (index 20) -> dx2 (days[17])
+      const obs = valStr(row[21]);  // Col V (index 21) -> obs
+      
+      const days = [
+        dib, be1, be2, gnrh1, gnrh2, pgf1, pgf2, pgf3, ecg, ce, gen, retdib, mo1, mo2, iate, opu, dx1, dx2
+      ];
+      
+      const iaVal = iate !== '-' ? iate : '10';
+      
+      nuevosProtocolos.push({
+        name: pName,
+        days: days,
+        hours: Array(18).fill('08:00'),
+        ia: iaVal,
+        obs: obs !== '-' ? obs : ''
+      });
+    }
+    
+    if (nuevosProtocolos.length === 0) {
+      throw new Error("No se encontraron protocolos válidos en el rango esperado (B10 en adelante) de la hoja.");
+    }
+    
+    state.matriz = window.migrarYSanitizarMatriz(nuevosProtocolos);
+    if (typeof renderMatriz === 'function') renderMatriz();
+    actualizarSelectProtocolos();
+    // Guardar a nivel global y local
+    guardarMatrizProtocolos(); 
+    return true;
+  } catch (error) {
+    console.error("Error al procesar Excel:", error);
+    alert("Error al procesar el Excel: " + error.message);
+    return false;
+  }
+};
+
+window.handleImportarExcelFile = function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const data = e.target.result;
+    const success = window.cargarProtocolosDesdeExcelData(data);
+    if (success) {
+      alert("¡Protocolos importados exitosamente desde el archivo Excel y guardados para todos los usuarios!");
+    }
+    event.target.value = '';
+  };
+  reader.onerror = function() {
+    alert("Error al leer el archivo Excel.");
+    event.target.value = '';
+  };
+  reader.readAsArrayBuffer(file);
+};
+
 // Traducir códigos de error de Firebase
 function traducirErrorFirebase(code) {
   switch (code) {
@@ -516,7 +657,15 @@ window.saveStateToFirestore = function() {
       inputs: inputs,
       lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
     }, { merge: true })
-    .then(() => console.log("Estado sincronizado en Firestore"))
+    .then(() => {
+      console.log("Estado sincronizado en Firestore");
+      // Si es el admin, guardamos también en la colección global
+      if (auth.currentUser && auth.currentUser.email === ADMIN_EMAIL) {
+        db.collection("global").doc("protocols").set({ matriz: state.matriz }, { merge: true })
+          .then(() => console.log("Protocolos globales actualizados exitosamente."))
+          .catch(err => console.error("Error guardando en global:", err));
+      }
+    })
     .catch(err => console.error("Error al sincronizar con Firestore:", err));
   }
 };
@@ -1043,26 +1192,7 @@ const state = {
     iate: { name: 'Ia/Te', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 15000, def: 0, resx1: 1, resx2: 1, cat: 'iate', obs: 'Solugan SG' }
   },
   
-  matriz: [
-    { name: 'TRADICIONAL(IATF)', days: ['0','0','-','10','-','8','-','-','8','9','10','8','0','8','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'IATF 48-60 hs / GnRh Opcional' },
-    { name: 'JSYNCH(IATF)', days: ['0','0','-','9','-','6','-','-','6','-','9','6','0','6','9','-','28','58'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IATF 72 hs + GnRh' },
-    { name: 'NOVILLAS(IATF)', days: ['0','0','9','-','-','8','-','-','8','-','10','8','0','8','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'IATF 24-32 horas' },
-    { name: 'OVSYNCH(IATF)', days: ['-','-','-','0','9','7','-','-','-','-','10','-','0','-','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'IATF 12-24 horas post GnRh' },
-    { name: 'COSYNCH(IATF)', days: ['-','-','-','0','9','7','-','-','-','-','9','-','0','-','9','-','30','60'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IATF 48 horas + GnRh' },
-    { name: 'HEATSYNCH(IATF)', days: ['-','8','-','0','-','7','-','-','-','-','10','-','0','-','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'IATF 48-52 horas post' },
-    { name: 'PRESYNCH(IA)', days: ['-','-','-','0','9','-26','-12','0','-','-','10','-','0','-','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'Observar celo - IA 12 horas post celo estable' },
-    { name: 'SELECTSYNCH(IA)', days: ['-','-','-','0','-','7','-','-','-','-','10','-','0','-','10','-','30','60'], hours: Array(18).fill('08:00'), ia: '10', obs: 'Observar celo - IA 12 horas post celo estable' },
-    { name: 'DIBVACAS(IA)', days: ['0','-','-','0','8','7','-','-','-','-','8','-','0','7','8','-','28','58'], hours: Array(18).fill('08:00'), ia: '8', obs: 'IA celo detectado + GnRh' },
-    { name: 'DIBNOVILLAS(IA)', days: ['0','0','-','8','-','7','-','-','-','-','8','-','0','7','8','-','28','58'], hours: Array(18).fill('08:00'), ia: '8', obs: 'IA celo detectado + GnRh' },
-    { name: 'DOBLEPGF2@(IA)', days: ['-','-','-','-','-','0','11','-','-','-','2','-','0','-','2','-','20','50'], hours: Array(18).fill('08:00'), ia: '2', obs: 'Observar celo 1-5 días IA 12 horas post celo estable' },
-    { name: 'MM1(IA)', days: ['-','-','-','0','-','7','-','-','-','-','9','-','0','-','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
-    { name: 'MM2(IA)', days: ['-','8','-','0','-','7','-','-','-','-','9','-','0','-','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
-    { name: 'MMDIB(IA)', days: ['0','-','-','0','-','7','-','-','-','-','9','8','0','7','9','-','29','59'], hours: Array(18).fill('08:00'), ia: '9', obs: 'IA celo detectado 6 am a 5 pm' },
-    { name: 'REC 1 (TE)', role: 'resx1', days: ['0','0','0','-','-','5','-','-','5','-','10','5','0','5','18','10','18','48'], hours: Array(18).fill('08:00'), ia: '18', obs: 'Transferencia de Embriones' },
-    { name: 'REC 2 (TE)', role: 'resx2', days: ['0','0','-','-','-','8','-','-','8','9','9','8','0','8','17','9','17','47'], hours: Array(18).fill('08:00'), ia: '17', obs: 'Transferencia de Embriones' },
-    { name: 'REC 1 (IATF)', role: 'resx1b', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','42','-','62','92'], hours: Array(18).fill('08:00'), ia: '42', obs: 'DIB día 32. Inseminar día 42.' },
-    { name: 'REC 2 (IATF)', role: 'resx2b', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','74','-','94','124'], hours: Array(18).fill('08:00'), ia: '74', obs: 'Re-sincronización tras Dx2. Inseminar día 74.' }
-  ],
+  matriz: [],
   logoEmpresa: 'Logo Iatf Pro.png',
   activeList: []
 };
