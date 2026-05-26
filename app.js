@@ -417,20 +417,37 @@ window.cargarProtocolosDesdeExcelData = function(arrayBuffer) {
     const rawData = XLSX.utils.sheet_to_json(sheet, {header: 1, defval: '-'});
     const nuevosProtocolos = [];
     
-    // Detectar el offset de las columnas buscando dónde está el encabezado "Protocolo" o "Hormonas" en la fila 9 (index 8)
-    let headerRow = rawData[8] || [];
-    let nameColIndex = 1; // Por defecto Col B (index 1)
-    let dataStartIndex = 2; // Por defecto Col C (index 2)
-    
-    if (String(headerRow[0] || '').toLowerCase().includes('protocolo') || String(headerRow[0] || '').toLowerCase().includes('hormona')) {
-      nameColIndex = 0; // Col A
-      dataStartIndex = 1; // Col B
-    } else if (String(headerRow[1] || '').toLowerCase().includes('protocolo') || String(headerRow[1] || '').toLowerCase().includes('hormona')) {
-      nameColIndex = 1; // Col B
-      dataStartIndex = 2; // Col C
+    // BÚSQUEDA DINÁMICA DE ENCABEZADOS Y COLUMNAS
+    let headerRowIndex = -1;
+    for (let i = 0; i < rawData.length && i < 30; i++) {
+      const row = rawData[i] || [];
+      const rowStr = row.join(' ').toLowerCase();
+      if (rowStr.includes('dib') && (rowStr.includes('gnrh') || rowStr.includes('pgf'))) {
+        headerRowIndex = i;
+        break;
+      }
     }
     
-    for (let r = 9; r < rawData.length; r++) {
+    if (headerRowIndex === -1) {
+      throw new Error("No se encontraron los encabezados (DIB, GnRH, etc) en las primeras 30 filas.");
+    }
+    
+    let headerRow = rawData[headerRowIndex] || [];
+    let nameColIndex = 1; 
+    let dataStartIndex = 2; 
+    
+    for (let c = 0; c < headerRow.length; c++) {
+      const val = String(headerRow[c] || '').toLowerCase();
+      if (val.includes('protocolo') || val.includes('hormona')) {
+        nameColIndex = c;
+      }
+      if (val === 'dib' || val.includes('dib día') || val.includes('dib dia')) {
+        dataStartIndex = c;
+        break; // DIB es la primera columna de datos
+      }
+    }
+    
+    for (let r = headerRowIndex + 1; r < rawData.length; r++) {
       const row = rawData[r];
       if (!row || row.length <= 1) continue;
       
