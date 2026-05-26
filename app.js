@@ -418,42 +418,49 @@ window.cargarProtocolosDesdeExcelData = function(arrayBuffer) {
     const nuevosProtocolos = [];
     
     // BÚSQUEDA DINÁMICA DE ENCABEZADOS Y COLUMNAS
-    let headerRowIndex = -1;
+    let headerRowIndex = 0; // Por defecto la primera fila
     for (let i = 0; i < rawData.length && i < 30; i++) {
       const row = rawData[i] || [];
-      // Verificar si hay alguna celda que contenga exactamente "dib" o "gnrh"
-      let hasDib = false;
-      let hasGnrhOrPgf = false;
+      let hasNameCandidate = false;
+      let hasDataCandidate = false;
       
       for (let cell of row) {
         const cleanStr = String(cell || '').toLowerCase().replace(/\s+/g, ' ').trim();
-        if (cleanStr.includes('dib') && cleanStr.length <= 12) hasDib = true;
-        if ((cleanStr.includes('gnrh') || cleanStr.includes('pgf')) && cleanStr.length <= 15) hasGnrhOrPgf = true;
+        if (cleanStr.includes('nombre') || cleanStr.includes('protocolo') || cleanStr.includes('hormona')) hasNameCandidate = true;
+        if (cleanStr.includes('dib') || cleanStr.includes('dispositivo') || cleanStr.includes('gnrh') || cleanStr.includes('b.e')) hasDataCandidate = true;
       }
       
-      if (hasDib && hasGnrhOrPgf) {
+      if (hasNameCandidate && hasDataCandidate) {
         headerRowIndex = i;
         break;
       }
     }
     
-    if (headerRowIndex === -1) {
-      throw new Error("No se encontraron los encabezados (DIB, GnRH, etc) en las primeras 30 filas.");
-    }
-    
     let headerRow = rawData[headerRowIndex] || [];
-    let nameColIndex = 1; 
-    let dataStartIndex = 2; 
+    let nameColIndex = 0; 
+    let dataStartIndex = 1; 
     
     for (let c = 0; c < headerRow.length; c++) {
       const cleanVal = String(headerRow[c] || '').toLowerCase().replace(/\s+/g, ' ').trim();
-      if (cleanVal.includes('protocolo') || cleanVal.includes('hormona')) {
+      
+      // Si la columna dice "Nº" la ignoramos como nombre
+      if (cleanVal === 'nº' || cleanVal.includes('nº prot') || cleanVal === 'n' || cleanVal === 'id') {
+         continue;
+      }
+      
+      if (cleanVal.includes('nombre') || cleanVal.includes('protocolos') || cleanVal === 'protocolo' || cleanVal.includes('hormona')) {
         nameColIndex = c;
       }
-      if (cleanVal.includes('dib') && cleanVal.length <= 12) {
+      
+      if (cleanVal.includes('dib') || cleanVal.includes('dispositivo') || cleanVal.includes('b.e.') || cleanVal.includes('be 1') || cleanVal.includes('gnrh')) {
         dataStartIndex = c;
-        break; // DIB es la primera columna de datos
+        break; // La primera columna de datos encontrada marca el inicio
       }
+    }
+    
+    // Salvaguarda: los datos siempre deben ir después del nombre
+    if (dataStartIndex <= nameColIndex) {
+        dataStartIndex = nameColIndex + 1;
     }
     
     for (let r = headerRowIndex + 1; r < rawData.length; r++) {
