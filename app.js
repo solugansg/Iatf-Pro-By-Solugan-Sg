@@ -495,18 +495,11 @@ window.cargarProtocolosDesdeExcelData = function(arrayBuffer) {
       const retdib = valStr(row[dataStartIndex + 11]);
       const mo1    = valStr(row[dataStartIndex + 12]);
       const mo2    = valStr(row[dataStartIndex + 13]);
-      const opu    = valStr(row[dataStartIndex + 14]); 
-      const iate   = valStr(row[dataStartIndex + 15]); 
-      
-      // Saltar una columna para Dx1 y Dx2? En el código original:
-      // index 16 -> opu
-      // index 17 -> iate
-      // index 19 -> dx1 (salta 18)
-      // index 20 -> dx2
-      // index 21 -> obs
-      const dx1    = valStr(row[dataStartIndex + 17]);
-      const dx2    = valStr(row[dataStartIndex + 18]);
-      const obs    = valStr(row[dataStartIndex + 19]);
+      const iate   = valStr(row[dataStartIndex + 14]); 
+      const opu    = valStr(row[dataStartIndex + 15]); 
+      const dx1    = valStr(row[dataStartIndex + 16]);
+      const dx2    = valStr(row[dataStartIndex + 17]);
+      const obs    = valStr(row[dataStartIndex + 18]);
       
       const days = [
         dib, be1, be2, gnrh1, gnrh2, pgf1, pgf2, pgf3, ecg, ce, gen, retdib, mo1, mo2, iate, opu, dx1, dx2
