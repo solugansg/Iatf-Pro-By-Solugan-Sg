@@ -92,7 +92,10 @@ function adaptarHorasProtocolo(hours) {
 }
 
 window.migrarYSanitizarMatriz = function(rawMatrix) {
-  if (!Array.isArray(rawMatrix)) return [];
+  if (!Array.isArray(rawMatrix) || rawMatrix.length === 0) {
+    console.warn("Matriz corrupta o vacía detectada, restaurando desde default.");
+    rawMatrix = (typeof state !== 'undefined' && Array.isArray(state.matriz)) ? state.matriz : [];
+  }
 
   // 1. Solo adaptar longitud de arrays si cambiaron las columnas — NO tocar datos existentes
   let migrated = rawMatrix.map(p => {
