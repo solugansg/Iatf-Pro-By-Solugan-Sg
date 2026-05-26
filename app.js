@@ -426,9 +426,9 @@ window.cargarProtocolosDesdeExcelData = function(arrayBuffer) {
       let hasGnrhOrPgf = false;
       
       for (let cell of row) {
-        const str = String(cell || '').toLowerCase().trim();
-        if (str === 'dib' || str === 'dib día' || str === 'dib dia') hasDib = true;
-        if (str === 'gnrh 1' || str === 'gnrh' || str.includes('gnrh 1') || str.includes('pgf2@')) hasGnrhOrPgf = true;
+        const cleanStr = String(cell || '').toLowerCase().replace(/\s+/g, ' ').trim();
+        if (cleanStr.includes('dib') && cleanStr.length <= 12) hasDib = true;
+        if ((cleanStr.includes('gnrh') || cleanStr.includes('pgf')) && cleanStr.length <= 15) hasGnrhOrPgf = true;
       }
       
       if (hasDib && hasGnrhOrPgf) {
@@ -446,11 +446,11 @@ window.cargarProtocolosDesdeExcelData = function(arrayBuffer) {
     let dataStartIndex = 2; 
     
     for (let c = 0; c < headerRow.length; c++) {
-      const val = String(headerRow[c] || '').toLowerCase();
-      if (val.includes('protocolo') || val.includes('hormona')) {
+      const cleanVal = String(headerRow[c] || '').toLowerCase().replace(/\s+/g, ' ').trim();
+      if (cleanVal.includes('protocolo') || cleanVal.includes('hormona')) {
         nameColIndex = c;
       }
-      if (val === 'dib' || val.includes('dib día') || val.includes('dib dia')) {
+      if (cleanVal.includes('dib') && cleanVal.length <= 12) {
         dataStartIndex = c;
         break; // DIB es la primera columna de datos
       }
