@@ -93,8 +93,7 @@ function adaptarHorasProtocolo(hours) {
 
 window.migrarYSanitizarMatriz = function(rawMatrix) {
   if (!Array.isArray(rawMatrix) || rawMatrix.length === 0) {
-    console.warn("Matriz corrupta o vacía detectada, restaurando desde default.");
-    rawMatrix = (typeof state !== 'undefined' && Array.isArray(state.matriz)) ? state.matriz : [];
+    rawMatrix = [];
   }
 
   // 1. Solo adaptar longitud de arrays si cambiaron las columnas — NO tocar datos existentes
@@ -104,45 +103,8 @@ window.migrarYSanitizarMatriz = function(rawMatrix) {
     return Object.assign({}, p, { days: newDays, hours: newHours });
   });
 
-  // 2. SOLO para protocolos que NO tienen role asignado todavía,
-  //    intentar detectarlos por sus datos para asignarles role.
-  //    Si ya tienen role → NO tocar nombre ni datos (el usuario pudo haberlos editado).
-  migrated.forEach(p => {
-    if (!p.role) {
-      const isSmallRec1 = p.ia === '18' && p.days[0] === '0' && p.days[14] === '18';
-      const isSmallRec2 = p.ia === '17' && p.days[0] === '0' && p.days[14] === '17';
-      const isBigRec1   = p.ia === '42' && p.days[0] === '32';
-      const isBigRec2   = p.ia === '74' && p.days[0] === '64';
-      if      (isSmallRec1) { p.role = 'resx1';  p.name = 'REC 1'; }
-      else if (isSmallRec2) { p.role = 'resx2';  p.name = 'REC 2'; }
-      else if (isBigRec1)   { p.role = 'resx1b'; p.name = 'REC 1'; }
-      else if (isBigRec2)   { p.role = 'resx2b'; p.name = 'REC 2'; }
-    }
-    // Protocolos con role existente: no se toca nombre ni datos
-  });
-
-  // 3. DEDUPLICACIÓN: si hay duplicados con el mismo role, conservar el primero
-  const seenRoles = {};
-  migrated = migrated.filter(p => {
-    if (!p.role) return true;
-    if (seenRoles[p.role]) return false;
-    seenRoles[p.role] = true;
-    return true;
-  });
-
-  // 4. ASEGURAR que existan los 4 protocolos obligatorios.
-  //    Solo se agregan si NO existen — NUNCA sobreescribir los existentes.
-  const defaultResx = {
-    resx1:  { name: 'REC 1', role: 'resx1',  days: ['0','0','0','-','-','5','-','-','5','-','10','5','0','5','18','10','18','48'],           hours: Array(18).fill('08:00'), ia: '18', obs: 'Transferencia de Embriones' },
-    resx2:  { name: 'REC 2', role: 'resx2',  days: ['0','0','-','-','-','8','-','-','8','9','9','8','0','8','17','9','17','47'],             hours: Array(18).fill('08:00'), ia: '17', obs: 'Transferencia de Embriones' },
-    resx1b: { name: 'REC 1', role: 'resx1b', days: ['32','32','-','42','-','40','-','-','40','41','42','40','32','40','42','-','62','92'],    hours: Array(18).fill('08:00'), ia: '42', obs: 'DIB día 32. Inseminar día 42.' },
-    resx2b: { name: 'REC 2', role: 'resx2b', days: ['64','64','-','74','-','72','-','-','72','73','74','72','64','72','74','-','94','124'],   hours: Array(18).fill('08:00'), ia: '74', obs: 'Re-sincronización tras Dx2. Inseminar día 74.' }
-  };
-  for (let role in defaultResx) {
-    if (!migrated.some(p => p.role === role)) {
-      migrated.push(Object.assign({}, defaultResx[role]));
-    }
-  }
+  // Hemos eliminado la "auto-inyección" de protocolos.
+  // La matriz que cargue el administrador será exactamente la que se muestre, sin alteraciones ni agregados.
 
   return migrated;
 };
