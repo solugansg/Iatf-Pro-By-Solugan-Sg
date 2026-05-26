@@ -127,9 +127,7 @@ auth.onAuthStateChanged(user => {
     if (authContainer) authContainer.style.display = 'none';
     if (appMainLayout) appMainLayout.style.display = 'flex';
 
-    if (sidebarConsultor) {
-      sidebarConsultor.style.display = 'block';
-    }
+    // El nombre se mostrará cuando cargue Firestore (ver abajo)
 
     // Abrir barra lateral por defecto en móviles al iniciar
     if (window.innerWidth <= 900) {
@@ -159,8 +157,10 @@ auth.onAuthStateChanged(user => {
                 accessCount: firebase.firestore.FieldValue.increment(1)
               }).catch(err => console.warn("Error incrementando accessCount:", err));
               
-              if (userData.name && sidebarConsultor) {
-                sidebarConsultor.innerText = userData.name.toUpperCase();
+              if (sidebarConsultor) {
+                const displayName = userData.name || userData.email || user.email || '';
+                sidebarConsultor.innerText = displayName.toUpperCase();
+                sidebarConsultor.style.display = 'block';
               }
 
               // Guardar perfil en localStorage para que guardarEnHistorial() pueda leer el NIT
@@ -1407,7 +1407,7 @@ function renderMatriz() {
     }
 
     // 3. Observaciones (Col 20)
-    tr.innerHTML += `<td><input type="text" class="cell-input matrix-nav" data-row="${rowIdx}" data-col="19" style="width:200px; text-align:left;" value="${protocol.obs || ''}" ${isMatrixUnlocked ? '' : 'disabled style="border-color:transparent; background:transparent; opacity:1;"'} onchange="updateRowObs(${rowIdx}, this.value)"></td>`;
+    tr.innerHTML += `<td><input type="text" class="cell-input matrix-nav" data-row="${rowIdx}" data-col="19" style="width:280px; text-align:left;" value="${protocol.obs || ''}" ${isMatrixUnlocked ? '' : 'disabled style="border-color:transparent; background:transparent; opacity:1;"'} onchange="updateRowObs(${rowIdx}, this.value)"></td>`;
     
     if(isMatrixUnlocked) {
       tr.innerHTML += `<td><button class="btn" style="background:rgba(239, 68, 68, 0.2); color:#ef4444; padding:5px 10px;" onclick="eliminarProtocolo(${rowIdx})"><i data-lucide="trash-2" style="width:14px; height:14px;"></i></button></td>`;
