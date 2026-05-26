@@ -1447,10 +1447,20 @@ window.unlockMatriz = function() {
   const pass = prompt("Acceso Restringido. Ingresa la contraseña de administrador:");
   if (pass === "jan5362") {
     isMatrixUnlocked = true;
-    document.getElementById('btn-unlock').style.display = 'none';
-    document.getElementById('btn-reset-matriz').style.display = 'inline-flex';
-    document.getElementById('btn-save-matriz').style.display = 'inline-flex';
-    document.getElementById('lbl-matriz-instruccion').innerText = "Modo Edición Activo. Puedes añadir, modificar o eliminar protocolos.";
+    const btnUnlock = document.getElementById('btn-unlock');
+    if (btnUnlock) {
+      btnUnlock.style.display = 'none';
+    }
+    const btnAdd = document.getElementById('btn-add-protocolo');
+    if (btnAdd) btnAdd.style.display = 'inline-flex';
+    const btnExcel = document.getElementById('btn-trigger-excel');
+    if (btnExcel) btnExcel.style.display = 'inline-flex';
+    const btnReset = document.getElementById('btn-reset-matriz');
+    if (btnReset) btnReset.style.display = 'inline-flex';
+    const btnSave = document.getElementById('btn-save-matriz');
+    if (btnSave) btnSave.style.display = 'inline-flex';
+    const lbl = document.getElementById('lbl-matriz-instruccion');
+    if (lbl) lbl.innerText = "Modo Edición Activo. Puedes añadir, modificar o eliminar protocolos.";
     renderMatriz();
   } else {
     if(pass !== null) alert("Contraseña incorrecta.");
@@ -1489,10 +1499,18 @@ window.restaurarProtocolosBase = function() {
 
 window.guardarMatrizProtocolos = function() {
   isMatrixUnlocked = false;
-  document.getElementById('btn-unlock').style.display = 'inline-flex';
-  document.getElementById('btn-reset-matriz').style.display = 'none';
-  document.getElementById('btn-save-matriz').style.display = 'none';
-  document.getElementById('lbl-matriz-instruccion').innerText = "Modo Consulta. Haz clic en \"EDITAR\" para modificar.";
+  const btnUnlock = document.getElementById('btn-unlock');
+  if (btnUnlock) btnUnlock.style.display = 'inline-flex';
+  const btnAdd = document.getElementById('btn-add-protocolo');
+  if (btnAdd) btnAdd.style.display = 'none';
+  const btnExcel = document.getElementById('btn-trigger-excel');
+  if (btnExcel) btnExcel.style.display = 'none';
+  const btnReset = document.getElementById('btn-reset-matriz');
+  if (btnReset) btnReset.style.display = 'none';
+  const btnSave = document.getElementById('btn-save-matriz');
+  if (btnSave) btnSave.style.display = 'none';
+  const lbl = document.getElementById('lbl-matriz-instruccion');
+  if (lbl) lbl.innerText = "Modo Consulta. Haz clic en \"Edición Bloqueada\" para modificar.";
   renderMatriz(); 
   saveState();
   alert("Cambios guardados con éxito.");
