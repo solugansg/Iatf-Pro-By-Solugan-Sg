@@ -3,26 +3,26 @@ const CACHE_NAME = 'iatfpro-v2.8.56';
 
 // Todos los archivos que se guardan en caché para uso offline
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js',
-  '/app.min.js',
-  '/lucide.min.js',
-  '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png',
-  '/apple-touch-icon.png',
-  '/Logo Iatf Pro.png',
+  './',
+  'index.html',
+  'style.css',
+  'app.js',
+  'app.min.js',
+  'lucide.min.js',
+  'manifest.json',
+  'icon-192.png',
+  'icon-512.png',
+  'apple-touch-icon.png',
+  'Logo Iatf Pro.png',
   // Librerías locales
-  '/libs/chart.min.js',
-  '/libs/chartjs-plugin-datalabels.min.js',
-  '/libs/html2pdf.min.js',
-  '/libs/xlsx.full.min.js',
+  'libs/chart.min.js',
+  'libs/chartjs-plugin-datalabels.min.js',
+  'libs/html2pdf.min.js',
+  'libs/xlsx.full.min.js',
   // Fuentes locales
-  '/fonts/inter-400.woff2',
-  '/fonts/inter-600.woff2',
-  '/fonts/inter-700.woff2'
+  'fonts/inter-400.woff2',
+  'fonts/inter-600.woff2',
+  'fonts/inter-700.woff2'
 ];
 
 // ─── INSTALL: Descargar y cachear todo al instalar ───────────────────────────
@@ -81,7 +81,7 @@ self.addEventListener('fetch', (event) => {
       event.request.url.includes('securetoken')) return;
 
   const url = new URL(event.request.url);
-  const isHTMLorCSS = url.pathname === '/' ||
+  const isHTMLorCSS = url.pathname.endsWith('/') ||
                       url.pathname.endsWith('.html') ||
                       url.pathname.endsWith('.css');
 
@@ -118,7 +118,7 @@ self.addEventListener('fetch', (event) => {
           })
           .catch(() => {
             if (event.request.destination === 'document') {
-              return caches.match('/index.html');
+              return caches.match('index.html');
             }
           });
       })

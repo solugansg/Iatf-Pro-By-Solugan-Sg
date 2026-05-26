@@ -169,13 +169,24 @@ auth.onAuthStateChanged(user => {
                 sidebarConsultor.style.display = 'block';
               }
 
-              // Guardar perfil en localStorage para que guardarEnHistorial() pueda leer el NIT
-              localStorage.setItem('reprocost_perfil', JSON.stringify({
+              const perfilObj = {
                 nit: userData.nit || 'N/A',
                 name: userData.name || '',
-                email: userData.email || '',
+                email: userData.email || user.email || '',
                 finca: userData.finca || '',
                 phone: userData.phone || ''
+              };
+
+              // Guardar perfil en localStorage para que guardarEnHistorial() pueda leer el NIT
+              localStorage.setItem('reprocost_perfil', JSON.stringify(perfilObj));
+              
+              // Sincronizar también con la vieja clave de perfil para compatibilidad con plugins/WhatsApp
+              localStorage.setItem('reprocost_perfil_consultor', JSON.stringify({
+                nit: perfilObj.nit,
+                nombre: perfilObj.name || perfilObj.email,
+                email: perfilObj.email,
+                movil: perfilObj.phone,
+                pais: 'Colombia'
               }));
 
               if (userData.tableroLeche) Object.assign(state.tableroLeche, userData.tableroLeche);
@@ -2240,9 +2251,24 @@ window.contactarWhatsApp = function() {
   const msgEl = document.getElementById('contact-message');
   const userText = msgEl ? msgEl.value.trim() : '';
   
-  let message = "Hola, soy usuario de Iatf Pro.";
+  // Obtener perfil del usuario autenticado (intentar ambas claves)
+  const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+  const userName = perfil.name || perfil.nombre || (auth.currentUser ? (auth.currentUser.displayName || auth.currentUser.email) : 'Usuario de Iatf Pro');
+  const userEmail = perfil.email || (auth.currentUser ? auth.currentUser.email : '');
+  const userNit = perfil.nit || '';
+  const userFinca = perfil.finca || '';
+  const userPhone = perfil.phone || perfil.movil || '';
+  
+  let message = `Hola, soy el usuario *${userName}*.\n`;
+  if (userEmail) message += `📧 *Email:* ${userEmail}\n`;
+  if (userNit && userNit !== 'N/A') message += `🆔 *NIT/CC:* ${userNit}\n`;
+  if (userFinca) message += `🏡 *Finca:* ${userFinca}\n`;
+  if (userPhone) message += `📞 *Tel:* ${userPhone}\n`;
+  
   if (userText) {
-    message += " " + userText;
+    message += `\n💬 *Mensaje:* ${userText}`;
+  } else {
+    message += `\n💬 Necesito soporte técnico con la aplicación Iatf Pro.`;
   }
   
   const encodedMsg = encodeURIComponent(message);
@@ -3902,18 +3928,19 @@ window.enviarWhatsApp = function() {
   const pName = document.getElementById('pi-protocolo')?.value || 'Protocolo';
   const finca = document.getElementById('pi-finca')?.value || 'Sin Nombre';
   
-  // Obtener datos del consultor
-  const perfil = JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+  // Obtener datos del consultor (intentar reprocost_perfil primero, luego reprocost_perfil_consultor)
+  const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+  
   const nit = perfil.nit || 'N/A';
-  const pais = perfil.pais || '';
-  const movil = (perfil.movil || '').replace(/\s+/g, '');
+  const name = perfil.name || perfil.nombre || (auth.currentUser ? (auth.currentUser.displayName || auth.currentUser.email) : '');
+  const movil = (perfil.phone || perfil.movil || '').replace(/\s+/g, '');
   
   const totP = document.getElementById('res-total-preneces')?.innerText || '0';
   const inv = document.getElementById('res-total-inversion')?.innerText || '$ 0';
   const cPrenez = document.getElementById('res-costo-prenez')?.innerText || '$ 0';
   
-  const usuarioStr = perfil.nombre ? `\n👤 *Usuario:* ${perfil.nombre}` : '';
-  const nitStr = perfil.nit ? `\n🆔 *NIT/CC:* ${perfil.nit}` : '';
+  const usuarioStr = name ? `\n👤 *Usuario:* ${name}` : '';
+  const nitStr = nit && nit !== 'N/A' ? `\n🆔 *NIT/CC:* ${nit}` : '';
 
   const isEn = window.currentLang === 'en';
   let msg = isEn ? `*EXECUTIVE SUMMARY - IATF PRO BY SOLUGAN SG*\n\n` : `*RESUMEN EJECUTIVO - IATF PRO BY SOLUGAN SG*\n\n`;
