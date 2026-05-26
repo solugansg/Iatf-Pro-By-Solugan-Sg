@@ -242,6 +242,7 @@ auth.onAuthStateChanged(user => {
         if (document.getElementById('tc-duracion-carne') && state.tableroCarne.duracion) document.getElementById('tc-duracion-carne').value = state.tableroCarne.duracion;
         if (document.getElementById('tc-peso-destete') && state.tableroCarne.peso) document.getElementById('tc-peso-destete').value = state.tableroCarne.peso;
 
+
         // Recalcular
         syncFases();
         renderMatriz();
@@ -259,29 +260,47 @@ auth.onAuthStateChanged(user => {
       })
       .catch(err => {
         console.error("Error al cargar configuración de Firestore:", err);
+        // Cargar matriz por defecto si hay error de permisos
+        if (!state.matriz || state.matriz.length === 0) {
+          state.matriz = window.migrarYSanitizarMatriz(window.DEFAULT_MATRIZ);
+        }
         if (typeof renderMatriz === 'function') renderMatriz();
+        if (typeof actualizarSelectProtocolos === 'function') actualizarSelectProtocolos();
+        lucide.createIcons();
       })
       .catch(err => console.error("Error cargando doc del usuario:", err));
   })
-  .catch(err => console.error("Error obteniendo protocolos globales:", err));
+  .catch(err => {
+    console.error("Error obteniendo protocolos globales:", err);
+    // Incluso si Firestore falla, cargar la matriz por defecto
+    if (!state.matriz || state.matriz.length === 0) {
+      state.matriz = window.migrarYSanitizarMatriz(window.DEFAULT_MATRIZ);
+      if (typeof renderMatriz === 'function') renderMatriz();
+      if (typeof actualizarSelectProtocolos === 'function') actualizarSelectProtocolos();
+    }
+    lucide.createIcons();
+  });
 
     if (user.email === ADMIN_EMAIL) {
       if (navBtnAdmin) navBtnAdmin.style.display = 'inline-flex';
       cargarUsuariosAdmin();
-      // Mostrar botones de edición y Subir Excel de la matriz solo para el admin
+      // Admin: mostrar el botón "Edición Bloqueada" solamente (los de edición aparecen tras la contraseña)
       const btnUnlock = document.getElementById('btn-unlock');
-      const btnAddProtocolo = document.getElementById('btn-add-protocolo');
-      const btnResetMatriz = document.getElementById('btn-reset-matriz');
-      const btnTriggerExcel = document.getElementById('btn-trigger-excel');
       if (btnUnlock) btnUnlock.style.display = 'inline-flex';
-      if (btnAddProtocolo) btnAddProtocolo.style.display = 'inline-flex';
-      if (btnTriggerExcel) btnTriggerExcel.style.display = 'inline-flex';
-      // btnResetMatriz lo dejamos oculto por defecto hasta que se desbloquee la tabla
     } else {
       if (navBtnAdmin) navBtnAdmin.style.display = 'none';
-      // Asegurarnos de ocultar botones de matriz
-      const matrizTools = document.getElementById('matriz-tools');
-      if (matrizTools) matrizTools.style.display = 'none';
+      // Usuarios normales: solo ven el botón bloqueado, sin poder editar
+      const btnUnlock = document.getElementById('btn-unlock');
+      if (btnUnlock) btnUnlock.style.display = 'inline-flex';
+      // Asegurar que los botones de edición estén ocultos
+      const btnAdd = document.getElementById('btn-add-protocolo');
+      const btnExcel = document.getElementById('btn-trigger-excel');
+      const btnReset = document.getElementById('btn-reset-matriz');
+      const btnSave = document.getElementById('btn-save-matriz');
+      if (btnAdd) btnAdd.style.display = 'none';
+      if (btnExcel) btnExcel.style.display = 'none';
+      if (btnReset) btnReset.style.display = 'none';
+      if (btnSave) btnSave.style.display = 'none';
     }
 
   } else {
@@ -292,6 +311,7 @@ auth.onAuthStateChanged(user => {
     lucide.createIcons();
   }
 });
+
 
 // Alternar pantallas de login/registro
 window.showLoginForm = function() {
@@ -1206,7 +1226,7 @@ const state = {
     iate: { name: 'Ia/Te', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 15000, def: 0, resx1: 1, resx2: 1, cat: 'iate', obs: 'Solugan SG' }
   },
   
-  matriz: [],
+  matriz: window.DEFAULT_MATRIZ,
   logoEmpresa: 'Logo Iatf Pro.png',
   activeList: []
 };
