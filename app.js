@@ -162,19 +162,29 @@ auth.onAuthStateChanged(user => {
                 accessCount: firebase.firestore.FieldValue.increment(1)
               }).catch(err => console.warn("Error incrementando accessCount:", err));
               
+              const localPerfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+              const localName = localPerfil.name || localPerfil.nombre || '';
+              
               if (sidebarConsultor) {
-                const displayName = userData.name || userData.email || user.email || '';
+                const displayName = userData.name || userData.nombre || localName || user.displayName || user.email || '';
                 const nameEl = document.getElementById('sidebar-consultor-name');
                 if (nameEl) nameEl.innerText = displayName.toUpperCase();
                 sidebarConsultor.style.display = 'block';
               }
 
+              // Auto-sincronizar nombre a Firestore si falta en la base de datos pero existe localmente
+              if (!userData.name && localName && localName !== user.email) {
+                db.collection("users").doc(user.uid).set({
+                  name: localName
+                }, { merge: true }).catch(err => console.warn("Error auto-syncing local name to Firestore:", err));
+              }
+
               const perfilObj = {
-                nit: userData.nit || 'N/A',
-                name: userData.name || '',
+                nit: userData.nit || localPerfil.nit || 'N/A',
+                name: userData.name || userData.nombre || localName || '',
                 email: userData.email || user.email || '',
-                finca: userData.finca || '',
-                phone: userData.phone || ''
+                finca: userData.finca || localPerfil.finca || '',
+                phone: userData.phone || localPerfil.phone || localPerfil.movil || ''
               };
 
               // Guardar perfil en localStorage para que guardarEnHistorial() pueda leer el NIT
@@ -699,7 +709,14 @@ window.saveStateToFirestore = function() {
       }
     };
 
+    const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+
     db.collection("users").doc(auth.currentUser.uid).set({
+      name: perfil.name || perfil.nombre || '',
+      email: auth.currentUser.email || perfil.email || '',
+      nit: perfil.nit || '',
+      phone: perfil.phone || perfil.movil || '',
+      finca: perfil.finca || '',
       tableroLeche: state.tableroLeche,
       tableroCarne: state.tableroCarne,
       insumos: state.insumos,
@@ -2284,6 +2301,46 @@ window.contactarWhatsApp = function() {
   }
   
   window.open(waUrl, '_blank');
+};
+
+// 6.1 EDITAR NOMBRE DE USUARIO
+window.editarNombreUsuario = function() {
+  const currentName = document.getElementById('sidebar-consultor-name')?.innerText || '';
+  const nuevoNombre = prompt("Ingresa tu nombre completo / razón social (se guardará para reportes y soporte):", currentName);
+  if (nuevoNombre === null) return; // Cancelado
+  
+  const nameClean = nuevoNombre.trim();
+  if (nameClean === '') {
+    alert("El nombre no puede estar vacío.");
+    return;
+  }
+  
+  // Guardar localmente en ambas claves
+  const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || {};
+  perfil.name = nameClean;
+  localStorage.setItem('reprocost_perfil', JSON.stringify(perfil));
+
+  const perfilConsultor = JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+  perfilConsultor.nombre = nameClean;
+  localStorage.setItem('reprocost_perfil_consultor', JSON.stringify(perfilConsultor));
+
+  // Actualizar en pantalla
+  const nameEl = document.getElementById('sidebar-consultor-name');
+  if (nameEl) nameEl.innerText = nameClean.toUpperCase();
+
+  // Actualizar en Firestore
+  if (auth.currentUser) {
+    db.collection("users").doc(auth.currentUser.uid).set({
+      name: nameClean
+    }, { merge: true })
+    .then(() => {
+      console.log("Nombre de usuario actualizado en Firestore con éxito");
+    })
+    .catch(err => {
+      console.error("Error al guardar nombre en Firestore:", err);
+      alert("Error al guardar en el servidor, pero se guardó localmente.");
+    });
+  }
 };
 
 function saveState() { 
