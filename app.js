@@ -130,9 +130,12 @@ auth.onAuthStateChanged(user => {
     // Mostrar nombre o email inmediatamente como fallback mientras carga Firestore
     if (sidebarConsultor) {
       const localPerfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
-      const localName = localPerfil.name || localPerfil.nombre || user.displayName || user.email || '';
+      let localName = localPerfil.name || localPerfil.nombre || user.displayName || '';
+      if (localName.includes('@')) localName = ''; // Ignorar si es un correo electrónico
+      
+      const displayName = localName || user.email || '';
       const nameEl = document.getElementById('sidebar-consultor-name');
-      if (nameEl) nameEl.innerText = localName.toUpperCase();
+      if (nameEl) nameEl.innerText = displayName.toUpperCase();
       sidebarConsultor.style.display = 'block';
     }
 
@@ -165,18 +168,26 @@ auth.onAuthStateChanged(user => {
               }).catch(err => console.warn("Error incrementando accessCount:", err));
               
               const localPerfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
-              const localName = localPerfil.name || localPerfil.nombre || '';
-              const fallbackName = localName || user.displayName || '';
+              let localName = localPerfil.name || localPerfil.nombre || '';
+              if (localName.includes('@')) localName = '';
+              
+              let authDisplayName = user.displayName || '';
+              if (authDisplayName.includes('@')) authDisplayName = '';
+              
+              const fallbackName = localName || authDisplayName || '';
+              
+              let dbName = userData.name || userData.nombre || '';
+              if (dbName.includes('@')) dbName = '';
               
               if (sidebarConsultor) {
-                const displayName = userData.name || userData.nombre || fallbackName || user.email || '';
+                const displayName = dbName || fallbackName || user.email || '';
                 const nameEl = document.getElementById('sidebar-consultor-name');
                 if (nameEl) nameEl.innerText = displayName.toUpperCase();
                 sidebarConsultor.style.display = 'block';
               }
 
               // Auto-sincronizar nombre a Firestore si falta en la base de datos pero existe localmente o en Auth
-              if (!userData.name && fallbackName && fallbackName !== user.email) {
+              if (!dbName && fallbackName) {
                 db.collection("users").doc(user.uid).set({
                   name: fallbackName
                 }, { merge: true }).catch(err => console.warn("Error auto-syncing local/Auth name to Firestore:", err));
@@ -184,7 +195,7 @@ auth.onAuthStateChanged(user => {
 
               const perfilObj = {
                 nit: userData.nit || localPerfil.nit || 'N/A',
-                name: userData.name || userData.nombre || localName || '',
+                name: dbName || fallbackName || '',
                 email: userData.email || user.email || '',
                 finca: userData.finca || localPerfil.finca || '',
                 phone: userData.phone || localPerfil.phone || localPerfil.movil || ''
@@ -414,10 +425,40 @@ window.handleRegister = function(event) {
       console.log("Registro completado con éxito en Auth y Firestore");
     })
     .catch(err => {
-      btn.disabled = false;
-      btn.innerText = origText;
-      console.error("Error en registro:", err);
-      alert("Error al registrarse: " + traducirErrorFirebase(err.code));
+      if (err.code === 'auth/email-already-in-use') {
+        // Auto-recuperación y actualización de perfil si la contraseña coincide
+        console.log("El correo ya existe. Intentando inicio de sesión de recuperación para actualizar perfil...");
+        return auth.signInWithEmailAndPassword(email, pass)
+          .then(cred => {
+            return cred.user.updateProfile({ displayName: name })
+              .catch(e => console.warn("Error actualizando displayName en Auth (login recuperación):", e))
+              .then(() => {
+                return db.collection("users").doc(cred.user.uid).set({
+                  uid: cred.user.uid,
+                  nit: nit,
+                  name: name,
+                  email: email,
+                  phone: phone,
+                  finca: finca,
+                  lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+              });
+          })
+          .then(() => {
+            console.log("Perfil de usuario existente actualizado con éxito en Firestore");
+          })
+          .catch(loginErr => {
+            btn.disabled = false;
+            btn.innerText = origText;
+            console.error("Error en login de recuperación:", loginErr);
+            alert("El correo electrónico ya está registrado. Si es tu cuenta, verifica la contraseña ingresada.");
+          });
+      } else {
+        btn.disabled = false;
+        btn.innerText = origText;
+        console.error("Error en registro:", err);
+        alert("Error al registrarse: " + traducirErrorFirebase(err.code));
+      }
     });
 };
 
