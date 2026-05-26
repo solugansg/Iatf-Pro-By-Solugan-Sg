@@ -127,7 +127,12 @@ auth.onAuthStateChanged(user => {
     if (authContainer) authContainer.style.display = 'none';
     if (appMainLayout) appMainLayout.style.display = 'flex';
 
-    // El nombre se mostrará cuando cargue Firestore (ver abajo)
+    // Mostrar email inmediatamente como fallback mientras carga Firestore
+    if (sidebarConsultor) {
+      const nameEl = document.getElementById('sidebar-consultor-name');
+      if (nameEl) nameEl.innerText = user.email.toUpperCase();
+      sidebarConsultor.style.display = 'block';
+    }
 
     // Abrir barra lateral por defecto en móviles al iniciar
     if (window.innerWidth <= 900) {
@@ -159,7 +164,8 @@ auth.onAuthStateChanged(user => {
               
               if (sidebarConsultor) {
                 const displayName = userData.name || userData.email || user.email || '';
-                sidebarConsultor.innerText = displayName.toUpperCase();
+                const nameEl = document.getElementById('sidebar-consultor-name');
+                if (nameEl) nameEl.innerText = displayName.toUpperCase();
                 sidebarConsultor.style.display = 'block';
               }
 
