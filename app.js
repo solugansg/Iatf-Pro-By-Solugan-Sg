@@ -421,8 +421,17 @@ window.cargarProtocolosDesdeExcelData = function(arrayBuffer) {
     let headerRowIndex = -1;
     for (let i = 0; i < rawData.length && i < 30; i++) {
       const row = rawData[i] || [];
-      const rowStr = row.join(' ').toLowerCase();
-      if (rowStr.includes('dib') && (rowStr.includes('gnrh') || rowStr.includes('pgf'))) {
+      // Verificar si hay alguna celda que contenga exactamente "dib" o "gnrh"
+      let hasDib = false;
+      let hasGnrhOrPgf = false;
+      
+      for (let cell of row) {
+        const str = String(cell || '').toLowerCase().trim();
+        if (str === 'dib' || str === 'dib día' || str === 'dib dia') hasDib = true;
+        if (str === 'gnrh 1' || str === 'gnrh' || str.includes('gnrh 1') || str.includes('pgf2@')) hasGnrhOrPgf = true;
+      }
+      
+      if (hasDib && hasGnrhOrPgf) {
         headerRowIndex = i;
         break;
       }
