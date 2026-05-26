@@ -127,10 +127,12 @@ auth.onAuthStateChanged(user => {
     if (authContainer) authContainer.style.display = 'none';
     if (appMainLayout) appMainLayout.style.display = 'flex';
 
-    // Mostrar email inmediatamente como fallback mientras carga Firestore
+    // Mostrar nombre o email inmediatamente como fallback mientras carga Firestore
     if (sidebarConsultor) {
+      const localPerfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+      const localName = localPerfil.name || localPerfil.nombre || user.displayName || user.email || '';
       const nameEl = document.getElementById('sidebar-consultor-name');
-      if (nameEl) nameEl.innerText = user.email.toUpperCase();
+      if (nameEl) nameEl.innerText = localName.toUpperCase();
       sidebarConsultor.style.display = 'block';
     }
 
@@ -164,19 +166,20 @@ auth.onAuthStateChanged(user => {
               
               const localPerfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
               const localName = localPerfil.name || localPerfil.nombre || '';
+              const fallbackName = localName || user.displayName || '';
               
               if (sidebarConsultor) {
-                const displayName = userData.name || userData.nombre || localName || user.displayName || user.email || '';
+                const displayName = userData.name || userData.nombre || fallbackName || user.email || '';
                 const nameEl = document.getElementById('sidebar-consultor-name');
                 if (nameEl) nameEl.innerText = displayName.toUpperCase();
                 sidebarConsultor.style.display = 'block';
               }
 
-              // Auto-sincronizar nombre a Firestore si falta en la base de datos pero existe localmente
-              if (!userData.name && localName && localName !== user.email) {
+              // Auto-sincronizar nombre a Firestore si falta en la base de datos pero existe localmente o en Auth
+              if (!userData.name && fallbackName && fallbackName !== user.email) {
                 db.collection("users").doc(user.uid).set({
-                  name: localName
-                }, { merge: true }).catch(err => console.warn("Error auto-syncing local name to Firestore:", err));
+                  name: fallbackName
+                }, { merge: true }).catch(err => console.warn("Error auto-syncing local/Auth name to Firestore:", err));
               }
 
               const perfilObj = {
@@ -373,17 +376,39 @@ window.handleRegister = function(event) {
   btn.disabled = true;
   btn.innerText = "Registrando...";
 
+  // Guardar perfil localmente de inmediato para evitar condiciones de carrera en onAuthStateChanged
+  const perfilObj = {
+    nit: nit,
+    name: name,
+    email: email,
+    finca: finca,
+    phone: phone
+  };
+  localStorage.setItem('reprocost_perfil', JSON.stringify(perfilObj));
+  localStorage.setItem('reprocost_perfil_consultor', JSON.stringify({
+    nit: nit,
+    nombre: name,
+    email: email,
+    movil: phone,
+    pais: 'Colombia'
+  }));
+
   auth.createUserWithEmailAndPassword(email, pass)
     .then(cred => {
-      return db.collection("users").doc(cred.user.uid).set({
-        uid: cred.user.uid,
-        nit: nit,
-        name: name,
-        email: email,
-        phone: phone,
-        finca: finca,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+      // Actualizar displayName en Firebase Auth para mayor robustez
+      return cred.user.updateProfile({ displayName: name })
+        .catch(err => console.warn("Error actualizando displayName en Auth:", err))
+        .then(() => {
+          return db.collection("users").doc(cred.user.uid).set({
+            uid: cred.user.uid,
+            nit: nit,
+            name: name,
+            email: email,
+            phone: phone,
+            finca: finca,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        });
     })
     .then(() => {
       console.log("Registro completado con éxito en Auth y Firestore");
@@ -712,7 +737,7 @@ window.saveStateToFirestore = function() {
     const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
 
     db.collection("users").doc(auth.currentUser.uid).set({
-      name: perfil.name || perfil.nombre || '',
+      name: perfil.name || perfil.nombre || auth.currentUser.displayName || '',
       email: auth.currentUser.email || perfil.email || '',
       nit: perfil.nit || '',
       phone: perfil.phone || perfil.movil || '',
@@ -2303,45 +2328,7 @@ window.contactarWhatsApp = function() {
   window.open(waUrl, '_blank');
 };
 
-// 6.1 EDITAR NOMBRE DE USUARIO
-window.editarNombreUsuario = function() {
-  const currentName = document.getElementById('sidebar-consultor-name')?.innerText || '';
-  const nuevoNombre = prompt("Ingresa tu nombre completo / razón social (se guardará para reportes y soporte):", currentName);
-  if (nuevoNombre === null) return; // Cancelado
-  
-  const nameClean = nuevoNombre.trim();
-  if (nameClean === '') {
-    alert("El nombre no puede estar vacío.");
-    return;
-  }
-  
-  // Guardar localmente en ambas claves
-  const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || {};
-  perfil.name = nameClean;
-  localStorage.setItem('reprocost_perfil', JSON.stringify(perfil));
-
-  const perfilConsultor = JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
-  perfilConsultor.nombre = nameClean;
-  localStorage.setItem('reprocost_perfil_consultor', JSON.stringify(perfilConsultor));
-
-  // Actualizar en pantalla
-  const nameEl = document.getElementById('sidebar-consultor-name');
-  if (nameEl) nameEl.innerText = nameClean.toUpperCase();
-
-  // Actualizar en Firestore
-  if (auth.currentUser) {
-    db.collection("users").doc(auth.currentUser.uid).set({
-      name: nameClean
-    }, { merge: true })
-    .then(() => {
-      console.log("Nombre de usuario actualizado en Firestore con éxito");
-    })
-    .catch(err => {
-      console.error("Error al guardar nombre en Firestore:", err);
-      alert("Error al guardar en el servidor, pero se guardó localmente.");
-    });
-  }
-};
+// El botón de edición manual del nombre de usuario ha sido removido
 
 function saveState() { 
   const inputs = {
@@ -3121,10 +3108,13 @@ window.buscarPerfilPorNit = function() {
 
   if (perfilEncontrado) {
     console.log("Perfil encontrado en directorio:", perfilEncontrado.nombre);
-    document.getElementById('reg-nombre').value = perfilEncontrado.nombre || "";
-    document.getElementById('reg-pais').value = perfilEncontrado.pais || "Colombia";
-    document.getElementById('reg-movil').value = perfilEncontrado.movil || "";
-    document.getElementById('reg-email').value = perfilEncontrado.email || "";
+    if (document.getElementById('reg-nombre')) document.getElementById('reg-nombre').value = perfilEncontrado.nombre || "";
+    if (document.getElementById('reg-name')) document.getElementById('reg-name').value = perfilEncontrado.nombre || "";
+    if (document.getElementById('reg-pais')) document.getElementById('reg-pais').value = perfilEncontrado.pais || "Colombia";
+    if (document.getElementById('reg-movil')) document.getElementById('reg-movil').value = perfilEncontrado.movil || "";
+    if (document.getElementById('reg-phone')) document.getElementById('reg-phone').value = perfilEncontrado.movil || "";
+    if (document.getElementById('reg-email')) document.getElementById('reg-email').value = perfilEncontrado.email || "";
+    if (document.getElementById('reg-finca')) document.getElementById('reg-finca').value = perfilEncontrado.finca || "";
     
     // Feedback visual sutil
     document.getElementById('reg-nit').style.borderColor = "var(--success)";
@@ -3150,14 +3140,22 @@ function verificarRegistro() {
       console.log("Perfil detectado para pre-llenado:", perfil.nombre);
       
       // Pre-llenar campos para que el usuario solo tenga que dar clic en continuar
-      if(document.getElementById('reg-nit')) document.getElementById('reg-nit').value = perfil.nit || "";
-      if(document.getElementById('reg-nombre')) document.getElementById('reg-nombre').value = perfil.nombre || "";
-      if(document.getElementById('reg-pais')) document.getElementById('reg-pais').value = perfil.pais || "Colombia";
-      if(document.getElementById('reg-movil')) document.getElementById('reg-movil').value = perfil.movil || "";
-      if(document.getElementById('reg-email')) document.getElementById('reg-email').value = perfil.email || "";
+      if (document.getElementById('reg-nit')) document.getElementById('reg-nit').value = perfil.nit || "";
+      if (document.getElementById('reg-nombre')) document.getElementById('reg-nombre').value = perfil.nombre || "";
+      if (document.getElementById('reg-name')) document.getElementById('reg-name').value = perfil.nombre || "";
+      if (document.getElementById('reg-pais')) document.getElementById('reg-pais').value = perfil.pais || "Colombia";
+      if (document.getElementById('reg-movil')) document.getElementById('reg-movil').value = perfil.movil || "";
+      if (document.getElementById('reg-phone')) document.getElementById('reg-phone').value = perfil.movil || "";
+      if (document.getElementById('reg-email')) document.getElementById('reg-email').value = perfil.email || "";
+      if (document.getElementById('reg-finca')) document.getElementById('reg-finca').value = perfil.finca || "";
 
-      if(sidebarConsultor) {
-        sidebarConsultor.innerText = perfil.nombre.toUpperCase();
+      if (sidebarConsultor) {
+        const nameEl = document.getElementById('sidebar-consultor-name');
+        if (nameEl) {
+          nameEl.innerText = perfil.nombre.toUpperCase();
+        } else {
+          sidebarConsultor.innerText = perfil.nombre.toUpperCase();
+        }
         sidebarConsultor.style.display = 'block';
       }
     } catch(e) {
