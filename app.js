@@ -349,6 +349,17 @@ auth.onAuthStateChanged(user => {
     if (authContainer) authContainer.style.display = 'flex';
     if (appMainLayout) appMainLayout.style.display = 'none';
     if (navBtnAdmin) navBtnAdmin.style.display = 'none';
+    
+    // Limpiar campos de registro para evitar que el navegador aplique autocompletado erróneo
+    setTimeout(() => {
+      if (!auth.currentUser) {
+        ['reg-nit', 'reg-name', 'reg-phone', 'reg-finca', 'reg-email', 'reg-pass'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = '';
+        });
+      }
+    }, 200);
+
     lucide.createIcons();
   }
 });
