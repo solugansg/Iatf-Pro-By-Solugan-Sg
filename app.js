@@ -417,11 +417,24 @@ window.cargarProtocolosDesdeExcelData = function(arrayBuffer) {
     const rawData = XLSX.utils.sheet_to_json(sheet, {header: 1, defval: '-'});
     const nuevosProtocolos = [];
     
+    // Detectar el offset de las columnas buscando dónde está el encabezado "Protocolo" o "Hormonas" en la fila 9 (index 8)
+    let headerRow = rawData[8] || [];
+    let nameColIndex = 1; // Por defecto Col B (index 1)
+    let dataStartIndex = 2; // Por defecto Col C (index 2)
+    
+    if (String(headerRow[0] || '').toLowerCase().includes('protocolo') || String(headerRow[0] || '').toLowerCase().includes('hormona')) {
+      nameColIndex = 0; // Col A
+      dataStartIndex = 1; // Col B
+    } else if (String(headerRow[1] || '').toLowerCase().includes('protocolo') || String(headerRow[1] || '').toLowerCase().includes('hormona')) {
+      nameColIndex = 1; // Col B
+      dataStartIndex = 2; // Col C
+    }
+    
     for (let r = 9; r < rawData.length; r++) {
       const row = rawData[r];
       if (!row || row.length <= 1) continue;
       
-      const pName = String(row[1] || '').trim();
+      const pName = String(row[nameColIndex] || '').trim();
       if (!pName || pName === '-' || pName.toLowerCase() === 'vacio' || pName.toLowerCase().startsWith('vacio') || pName.toLowerCase() === 'seleccione protocolo') {
         continue;
       }
@@ -435,25 +448,32 @@ window.cargarProtocolosDesdeExcelData = function(arrayBuffer) {
         return s;
       };
       
-      const dib = valStr(row[2]);
-      const be1 = valStr(row[3]);
-      const be2 = valStr(row[4]);
-      const gnrh1 = valStr(row[5]);
-      const gnrh2 = valStr(row[6]);
-      const pgf1 = valStr(row[7]);
-      const pgf2 = valStr(row[8]);
-      const pgf3 = valStr(row[9]);
-      const ecg = valStr(row[10]);
-      const ce = valStr(row[11]);
-      const gen = valStr(row[12]);
-      const retdib = valStr(row[13]);
-      const mo1 = valStr(row[14]);
-      const mo2 = valStr(row[15]);
-      const opu = valStr(row[16]);  // Col Q (index 16) -> opu (days[15])
-      const iate = valStr(row[17]); // Col R (index 17) -> iate (days[14])
-      const dx1 = valStr(row[19]);  // Col T (index 19) -> dx1 (days[16])
-      const dx2 = valStr(row[20]);  // Col U (index 20) -> dx2 (days[17])
-      const obs = valStr(row[21]);  // Col V (index 21) -> obs
+      const dib    = valStr(row[dataStartIndex]);
+      const be1    = valStr(row[dataStartIndex + 1]);
+      const be2    = valStr(row[dataStartIndex + 2]);
+      const gnrh1  = valStr(row[dataStartIndex + 3]);
+      const gnrh2  = valStr(row[dataStartIndex + 4]);
+      const pgf1   = valStr(row[dataStartIndex + 5]);
+      const pgf2   = valStr(row[dataStartIndex + 6]);
+      const pgf3   = valStr(row[dataStartIndex + 7]);
+      const ecg    = valStr(row[dataStartIndex + 8]);
+      const ce     = valStr(row[dataStartIndex + 9]);
+      const gen    = valStr(row[dataStartIndex + 10]);
+      const retdib = valStr(row[dataStartIndex + 11]);
+      const mo1    = valStr(row[dataStartIndex + 12]);
+      const mo2    = valStr(row[dataStartIndex + 13]);
+      const opu    = valStr(row[dataStartIndex + 14]); 
+      const iate   = valStr(row[dataStartIndex + 15]); 
+      
+      // Saltar una columna para Dx1 y Dx2? En el código original:
+      // index 16 -> opu
+      // index 17 -> iate
+      // index 19 -> dx1 (salta 18)
+      // index 20 -> dx2
+      // index 21 -> obs
+      const dx1    = valStr(row[dataStartIndex + 17]);
+      const dx2    = valStr(row[dataStartIndex + 18]);
+      const obs    = valStr(row[dataStartIndex + 19]);
       
       const days = [
         dib, be1, be2, gnrh1, gnrh2, pgf1, pgf2, pgf3, ecg, ce, gen, retdib, mo1, mo2, iate, opu, dx1, dx2
