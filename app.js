@@ -678,7 +678,8 @@ window.translations = {
     r2_hormones_ref: "Hormonas/Vaca",
     r2_iate_ref: "IA/TE/Vaca",
     btn_contact_wa: "Contáctenos",
-    contact_placeholder: "Escribe tu mensaje aquí..."
+    contact_placeholder: "Escribe tu mensaje aquí...",
+    msg_select_pf: "Por favor selecciona un Protocolo y una Fecha de Inicio antes de continuar."
   },
   en: {
     sidebar_dashboard: "Control Dashboard",
@@ -799,7 +800,8 @@ window.translations = {
     r2_hormones_ref: "Hormones/Cow",
     r2_iate_ref: "AI/ET/Cow",
     btn_contact_wa: "Contact Us",
-    contact_placeholder: "Type your message here..."
+    contact_placeholder: "Type your message here...",
+    msg_select_pf: "Please select a Protocol and a Start Date before continuing."
   }
 };
 
