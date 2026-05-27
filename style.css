@@ -1317,7 +1317,7 @@ input:checked + .slider:before { transform: translateX(20px); }
     transform: translateY(-50%);
     width: 24px;
     height: 80px;
-    background: var(--accent);
+    background: #25d366;
     color: #fff;
     border-radius: 0 10px 10px 0;
     align-items: center;
