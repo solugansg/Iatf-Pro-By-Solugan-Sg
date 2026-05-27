@@ -80,7 +80,10 @@ body {
   height: 100vh;
 }
 
-/* Sidebar */
+/* Sidebar - CONFIGURACIÓN PROTEGIDA Y CRÍTICA:
+   No incrementar padding, gaps, logo-icon o font-sizes sin verificar que quepa todo el pie de página
+   (WhatsApp, idioma, cerrar sesión) en una resolución de pantalla de 100vh de altura sin mostrar scrollbar.
+*/
 .sidebar {
   width: 280px;
   backdrop-filter: blur(16px);
