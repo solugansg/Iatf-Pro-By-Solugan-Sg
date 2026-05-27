@@ -217,6 +217,26 @@ window.calcularVentanaIA = function(protocol, hBase) {
   }
 };
 
+window.getInsumoPrice = function(ins, context) {
+  if (context === 'resx1') {
+    return ins.valorFrascoResx1 !== undefined ? ins.valorFrascoResx1 : ins.valorFrasco;
+  }
+  if (context === 'resx2') {
+    return ins.valorFrascoResx2 !== undefined ? ins.valorFrascoResx2 : ins.valorFrasco;
+  }
+  return ins.valorFrasco;
+};
+
+window.getInsumoTamano = function(ins, context) {
+  if (context === 'resx1') {
+    return ins.tamanoResx1 !== undefined ? ins.tamanoResx1 : ins.tamano;
+  }
+  if (context === 'resx2') {
+    return ins.tamanoResx2 !== undefined ? ins.tamanoResx2 : ins.tamano;
+  }
+  return ins.tamano;
+};
+
 window.migrarYSanitizarMatriz = function(rawMatrix) {
   if (!Array.isArray(rawMatrix) || rawMatrix.length === 0) {
     rawMatrix = window.DEFAULT_MATRIZ;
@@ -1945,10 +1965,13 @@ window.abrirModalPrecios = function(context = 'pi') {
            postIaValue = parseInt(dayStr);
         }
 
+        const currentPrice = window.getInsumoPrice(ins, context);
+        const currentTamano = window.getInsumoTamano(ins, context);
+
         let unidadesUtilizar = currentDef * animalesNum;
-        let frascosComprar = isService ? unidadesUtilizar : Math.ceil(unidadesUtilizar / (ins.tamano || 1));
+        let frascosComprar = isService ? unidadesUtilizar : Math.ceil(unidadesUtilizar / (currentTamano || 1));
         
-        const valorUnitario = id === 'opu' ? 0 : ins.valorFrasco;
+        const valorUnitario = id === 'opu' ? 0 : currentPrice;
         let costoTotalComercial = frascosComprar * valorUnitario;
 
         const extraAttr = (id === 'dib' || id === 'opu') ? 'readonly style="opacity:0.7; background:rgba(255,255,255,0.05);"' : (id === 'gen' ? 'min="0" max="3"' : 'min="0"');
@@ -2006,7 +2029,7 @@ window.abrirModalPrecios = function(context = 'pi') {
                 : `<div style="display:grid; grid-template-columns: 110px 40px; align-items:center; justify-content:center; gap:8px;">
                      <div class="spinner-wrap" style="width:110px; grid-column:1;">
                        <button class="spin-btn minus" onclick="spinVal('mod-tamano-${id}', -1, false); recalcFilaModal('${id}', false);">&#8722;</button>
-                       <input type="number" id="mod-tamano-${id}" value="${ins.tamano}" class="cell-input" style="text-align:center; padding:5px;" onchange="recalcFilaModal('${id}', false)">
+                       <input type="number" id="mod-tamano-${id}" value="${currentTamano}" class="cell-input" style="text-align:center; padding:5px;" onchange="recalcFilaModal('${id}', false)">
                        <button class="spin-btn plus" onclick="spinVal('mod-tamano-${id}', 1, false); recalcFilaModal('${id}', false);">&#43;</button>
                      </div>
                      <span class="text-muted" style="font-size:0.75rem; grid-column:2; text-align:left;">${ins.tipo}</span>
@@ -2026,7 +2049,7 @@ window.abrirModalPrecios = function(context = 'pi') {
             </td>
             <td id="mod-lbl-frascos-${id}" style="text-align: center;"><strong>${frascosComprar}</strong></td>
             <td id="mod-lbl-costo-${id}" style="text-align: center;"><strong class="text-success">${formatter.format(costoTotalComercial)}</strong></td>
-            <td id="mod-lbl-costodosis-${id}" style="text-align: center; color: #f59e0b; font-weight: bold;">${formatter.format(isService ? (ins.valorFrasco / (id === 'dib' ? (state.insumos.dib.usos || 1) : 1)) : ((ins.valorFrasco / (ins.tamano || 1) * currentDef) / (id === 'dib' ? (state.insumos.dib.usos || 1) : 1)))}</td>
+            <td id="mod-lbl-costodosis-${id}" style="text-align: center; color: #f59e0b; font-weight: bold;">${formatter.format(isService ? (currentPrice / (id === 'dib' ? (state.insumos.dib.usos || 1) : 1)) : ((currentPrice / (currentTamano || 1) * currentDef) / (id === 'dib' ? (state.insumos.dib.usos || 1) : 1)))}</td>
           </tr>
         `;
       });
@@ -2086,7 +2109,8 @@ window.recalcModalTotals = function() {
       
       // La inversión de COMPRA (Cash out) solo aplica si no es DIB reutilizado
       let isReusedDIB = (id === 'dib' && (modalContext === 'resx1' || modalContext === 'resx2'));
-      let tamano = (state.insumos[id].tamano || 1);
+      const tEl = document.getElementById(`mod-tamano-${id}`);
+      let tamano = tEl ? (parseFloat(tEl.value) || 1) : (window.getInsumoTamano(state.insumos[id], modalContext) || 1);
       let costoCompraEfectiva = isReusedDIB ? 0 : (isService ? (unitsToBuy * valor) : (Math.ceil(unitsToBuy / tamano) * valor));
       
       if (state.insumos[id].cat === 'hormonas') {
@@ -2162,9 +2186,19 @@ window.guardarPreciosModal = function() {
     const vEl = document.getElementById(`mod-valor-${id}`);
     const dEl = document.getElementById(`mod-def-${id}`);
     if(vEl) {
-      state.insumos[id].valorFrasco = unformatNumber(vEl.value);
-      const tEl = document.getElementById(`mod-tamano-${id}`);
-      if (tEl) state.insumos[id].tamano = parseFloat(tEl.value) || 1;
+      if (modalContext === 'resx1') {
+        state.insumos[id].valorFrascoResx1 = unformatNumber(vEl.value);
+        const tEl = document.getElementById(`mod-tamano-${id}`);
+        if (tEl) state.insumos[id].tamanoResx1 = parseFloat(tEl.value) || 1;
+      } else if (modalContext === 'resx2') {
+        state.insumos[id].valorFrascoResx2 = unformatNumber(vEl.value);
+        const tEl = document.getElementById(`mod-tamano-${id}`);
+        if (tEl) state.insumos[id].tamanoResx2 = parseFloat(tEl.value) || 1;
+      } else {
+        state.insumos[id].valorFrasco = unformatNumber(vEl.value);
+        const tEl = document.getElementById(`mod-tamano-${id}`);
+        if (tEl) state.insumos[id].tamano = parseFloat(tEl.value) || 1;
+      }
       
       if (id === 'dib') {
         state.insumos[id].usos = parseInt(document.getElementById('mod-usos-dib')?.value) || 1;
@@ -2756,9 +2790,12 @@ window.ejecutarResx1 = function() {
     const divisorDIB = getDIBDivisor();
     const factorUsos = (row.colId === 'dib') ? divisorDIB : 1;
 
-    let aplic = (isServ ? (units * ins.valorFrasco) : units * (ins.valorFrasco / (ins.tamano || 1))) / factorUsos;
+    const rPrice = window.getInsumoPrice(ins, 'resx1');
+    const rTamano = window.getInsumoTamano(ins, 'resx1');
 
-    let costoDosis = (isServ ? ins.valorFrasco : (ins.valorFrasco / (ins.tamano || 1) * dose)) / factorUsos;
+    let aplic = (isServ ? (units * rPrice) : units * (rPrice / (rTamano || 1))) / factorUsos;
+
+    let costoDosis = (isServ ? rPrice : (rPrice / (rTamano || 1) * dose)) / factorUsos;
     gTotalPorVaca += costoDosis;
     if(ins.cat) {
       tCat[ins.cat] += aplic;
@@ -2934,9 +2971,12 @@ window.ejecutarResx2 = function() {
     const divisorDIB = getDIBDivisor();
     const factorUsos = (row.colId === 'dib') ? divisorDIB : 1;
 
-    let aplic = (isServ ? (units * ins.valorFrasco) : units * (ins.valorFrasco / (ins.tamano || 1))) / factorUsos;
+    const rPrice = window.getInsumoPrice(ins, 'resx2');
+    const rTamano = window.getInsumoTamano(ins, 'resx2');
 
-    let costoDosis = (isServ ? ins.valorFrasco : (ins.valorFrasco / (ins.tamano || 1) * dose)) / factorUsos;
+    let aplic = (isServ ? (units * rPrice) : units * (rPrice / (rTamano || 1))) / factorUsos;
+
+    let costoDosis = (isServ ? rPrice : (rPrice / (rTamano || 1) * dose)) / factorUsos;
     gTotalPorVaca += costoDosis;
     if(ins.cat) {
       tCat[ins.cat] += aplic;
