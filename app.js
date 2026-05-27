@@ -350,10 +350,10 @@ auth.onAuthStateChanged(user => {
     if (appMainLayout) appMainLayout.style.display = 'none';
     if (navBtnAdmin) navBtnAdmin.style.display = 'none';
     
-    // Limpiar campos de registro para evitar que el navegador aplique autocompletado erróneo
+    // Limpiar campos para evitar que el navegador aplique autocompletado erróneo
     setTimeout(() => {
       if (!auth.currentUser) {
-        ['reg-nit', 'reg-name', 'reg-phone', 'reg-finca', 'reg-email', 'reg-pass'].forEach(id => {
+        ['reg-nit', 'reg-name', 'reg-phone', 'reg-finca', 'reg-email', 'reg-pass', 'login-email', 'login-pass'].forEach(id => {
           const el = document.getElementById(id);
           if (el) el.value = '';
         });
@@ -370,12 +370,24 @@ window.showLoginForm = function() {
   document.getElementById('register-form').style.display = 'none';
   document.getElementById('login-form').style.display = 'block';
   document.getElementById('auth-subtitle').innerText = "Inicia sesión para continuar";
+  
+  // Limpiar campos para evitar autocompletado indeseado al cambiar
+  ['login-email', 'login-pass', 'reg-nit', 'reg-name', 'reg-phone', 'reg-finca', 'reg-email', 'reg-pass'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
 };
 
 window.showRegisterForm = function() {
   document.getElementById('register-form').style.display = 'block';
   document.getElementById('login-form').style.display = 'none';
   document.getElementById('auth-subtitle').innerText = "Crea tu cuenta para comenzar a usar la app";
+  
+  // Limpiar campos al cambiar de pantalla
+  ['login-email', 'login-pass', 'reg-nit', 'reg-name', 'reg-phone', 'reg-finca', 'reg-email', 'reg-pass'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
 };
 
 // Registro de usuarios
