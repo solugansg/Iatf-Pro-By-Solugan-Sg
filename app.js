@@ -293,8 +293,16 @@ auth.onAuthStateChanged(user => {
     db.collection("global").doc("protocols").get()
       .then(globalDoc => {
         let globalMatriz = null;
-        if (globalDoc.exists && globalDoc.data() && globalDoc.data().matriz && Array.isArray(globalDoc.data().matriz) && globalDoc.data().matriz.length > 0) {
-          globalMatriz = globalDoc.data().matriz;
+        if (globalDoc.exists && globalDoc.data()) {
+          const gData = globalDoc.data();
+          if (gData.matriz && Array.isArray(gData.matriz) && gData.matriz.length > 0) {
+            globalMatriz = gData.matriz;
+          }
+          if (gData.insumos) {
+            for (let k in gData.insumos) {
+              if (state.insumos[k]) Object.assign(state.insumos[k], gData.insumos[k]);
+            }
+          }
         }
 
         db.collection("users").doc(user.uid).get()
@@ -370,7 +378,7 @@ auth.onAuthStateChanged(user => {
                 localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
                 // Auto-migración si es el admin y la tabla global estaba vacía
                 if (user.email === ADMIN_EMAIL) {
-                  db.collection("global").doc("protocols").set({ matriz: state.matriz })
+                  db.collection("global").doc("protocols").set({ matriz: state.matriz, insumos: state.insumos })
                     .then(() => console.log("Migración automática de protocolos del admin a global."))
                     .catch(err => console.error("Error migrando a global:", err));
                 }
@@ -958,7 +966,7 @@ window.saveStateToFirestore = function() {
       console.log("Estado sincronizado en Firestore");
       // Si es el admin (por email o contraseña), guardamos también en la colección global
       if (window.hasAdminPassword || (auth.currentUser && auth.currentUser.email === ADMIN_EMAIL)) {
-        db.collection("global").doc("protocols").set({ matriz: state.matriz }, { merge: true })
+        db.collection("global").doc("protocols").set({ matriz: state.matriz, insumos: state.insumos }, { merge: true })
           .then(() => console.log("Protocolos globales actualizados exitosamente."))
           .catch(err => console.error("Error guardando en global:", err));
       }
