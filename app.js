@@ -3810,7 +3810,7 @@ window.exportarExcel = function() {
   const ws = XLSX.utils.aoa_to_sheet(data);
 
   // Asignar el logo en A1 usando la fórmula IMAGE (requiere prefijo _xlfn. en Excel 365+ para traducción automática a IMAGEN)
-  ws['A1'] = { t: 's', f: `_xlfn.IMAGE("${logoUrl}")`, v: '' };
+  ws['A1'] = { t: 's', f: `_xlfn.IMAGE("${logoUrl}")` };
 
   // Fusión de celdas para el título principal (B1 a H1, es decir, columnas 1 a 7)
   if (!ws['!merges']) ws['!merges'] = [];
