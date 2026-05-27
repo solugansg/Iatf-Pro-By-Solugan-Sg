@@ -4090,6 +4090,7 @@ window.enviarWhatsApp = function() {
   const totP = document.getElementById('res-total-preneces')?.innerText || '0';
   const inv = document.getElementById('res-total-inversion')?.innerText || '$ 0';
   const cPrenez = document.getElementById('res-costo-prenez')?.innerText || '$ 0';
+  const animales = document.getElementById('pi-animales')?.value || '0';
   
   const usuarioStr = name ? `\n👤 *Usuario:* ${name}` : '';
   const nitStr = nit && nit !== 'N/A' ? `\n🆔 *NIT/CC:* ${nit}` : '';
@@ -4106,7 +4107,8 @@ window.enviarWhatsApp = function() {
   let msg = isEn ? `*EXECUTIVE SUMMARY - IATF PRO BY SOLUGAN SG*\n\n` : `*RESUMEN EJECUTIVO - IATF PRO BY SOLUGAN SG*\n\n`;
   msg += `📍 *${isEn ? 'Farm' : 'Finca'}:* ${finca}\n`;
   msg += `📋 *${isEn ? 'Protocol' : 'Protocolo'}:* ${pName}${usuarioStr}${nitStr}\n`;
-  msg += `📅 *${isEn ? 'Protocol Start Date' : 'Fecha Inicio Protocolo'}:* ${fechaInicioFormateada}\n\n`;
+  msg += `📅 *${isEn ? 'Protocol Start Date' : 'Fecha Inicio Protocolo'}:* ${fechaInicioFormateada}\n`;
+  msg += `🐂 *${isEn ? 'Animals to Synchronize' : 'Animales a Sincronizar'}:* ${animales}\n\n`;
   msg += `✅ *${isEn ? 'Total Pregnancies' : 'Preñeces Totales'}:* ${totP}\n`;
   msg += `💰 *${isEn ? 'Total Investment' : 'Inversión Total'}:* ${inv}\n`;
   msg += `📉 *${isEn ? 'Costo por Preñez' : 'Costo por Preñez'}:* ${cPrenez}\n`;
@@ -4168,7 +4170,7 @@ window.enviarWhatsApp = function() {
     msg += `\n*---------------------------------------*\n${cronoText}\n*---------------------------------------*\n\n`;
   }
 
-  msg += `_Generated automatically by Solugan SG._`;
+  msg += `_Generated automatically by IATF Pro by Solugan SG._\n\n🔗 *App URL:* https://iatf-pro-by-solugan-sg.vercel.app/`;
 
   const encodedMsg = encodeURIComponent(msg);
   
