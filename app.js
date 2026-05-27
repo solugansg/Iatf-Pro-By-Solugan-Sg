@@ -3702,7 +3702,7 @@ function renderNewDashboardCharts(aPI, pPI, aR1, pR1, aR2, pR2, cHormonas, cGene
   }
 }
 
-window.exportarExcel = function() {
+window.exportarExcel = async function() {
   const pName = document.getElementById('pi-protocolo').value;
   const fIni = document.getElementById('pi-fecha').value;
   if (!pName || !fIni) {
@@ -3710,16 +3710,10 @@ window.exportarExcel = function() {
     return;
   }
 
-  // Array de arrays para SheetJS
+  // Array de arrays para cargar datos
   let data = [];
   
-  // Configurar la URL del logo
-  let logoUrl = "https://iatf-pro-by-solugan-sg.vercel.app/Logo%20Iatf%20Pro.png";
-  if (window.location.origin && window.location.origin.startsWith('http')) {
-    logoUrl = `${window.location.origin}/Logo%20Iatf%20Pro.png`;
-  }
-
-  // Título Principal (Espacio para el Logo en A1 y título en B1:H1)
+  // Título Principal (Espacio en blanco en A1 y título en B1:H1)
   data.push(["", "REPORTE INTEGRAL DE INVERSIÓN - IATF PRO BY SOLUGAN SG", "", "", "", "", "", ""]);
   
   let fechaInicioFormateada = fIni;
@@ -3805,126 +3799,184 @@ window.exportarExcel = function() {
     data.push([]);
   }
 
-  // Crear libro y hoja
-  const wb = XLSX.utils.book_new();
-  const ws = XLSX.utils.aoa_to_sheet(data);
+  // CREAR LIBRO Y HOJA CON EXCELJS
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Reporte Integral');
 
-  // Asignar el logo en A1 usando la fórmula IMAGE (requiere prefijo _xlfn. en Excel 365+ para traducción automática a IMAGEN)
-  ws['A1'] = { t: 's', f: `_xlfn.IMAGE("${logoUrl}")` };
+  // Agregar los datos
+  worksheet.addRows(data);
 
-  // Fusión de celdas para el título principal (B1 a H1, es decir, columnas 1 a 7)
-  if (!ws['!merges']) ws['!merges'] = [];
-  ws['!merges'].push({ s: {r:0, c:1}, e: {r:0, c:7} });
+  // Combinar celdas del título principal (B1:H1)
+  worksheet.mergeCells(1, 2, 1, 8);
   
   // Ajustar anchos de columna básicos
-  ws['!cols'] = [{wch: 28}, {wch: 18}, {wch: 12}, {wch: 38}, {wch: 12}, {wch: 12}, {wch: 22}, {wch: 22}];
+  const wchs = [28, 18, 12, 38, 12, 12, 22, 22];
+  wchs.forEach((wch, idx) => {
+    worksheet.getColumn(idx + 1).width = wch;
+  });
 
-  // Ajustar alto de la primera fila (index 0) para el título y el logo
-  ws['!rows'] = [];
-  ws['!rows'][0] = { hpt: 70 };
+  // Ajustar alto de la primera fila para el título y el logo
+  worksheet.getRow(1).height = 70;
 
-  // -------------------------------------------------------------
-  // APLICAR ESTILOS PROFESIONALES USANDO xlsx-js-style
-  // -------------------------------------------------------------
-  const range = XLSX.utils.decode_range(ws['!ref']);
-  for (let R = range.s.r; R <= range.e.r; ++R) {
-    for (let C = range.s.c; C <= range.e.c; ++C) {
-      const cellAddress = {c:C, r:R};
-      const cellRef = XLSX.utils.encode_cell(cellAddress);
-      if (!ws[cellRef]) continue;
-      
-      const val = ws[cellRef].v;
+  // Intentar descargar y añadir la imagen del logo directamente en A1
+  try {
+    const response = await fetch('Logo Iatf Pro.png');
+    if (response.ok) {
+      const arrayBuffer = await response.arrayBuffer();
+      const imageId = workbook.addImage({
+        buffer: arrayBuffer,
+        extension: 'png',
+      });
+      worksheet.addImage(imageId, {
+        tl: { col: 0.1, row: 0.1 },
+        ext: { width: 130, height: 75 }
+      });
+    }
+  } catch (err) {
+    console.error("Error al incrustar la imagen del logo en Excel:", err);
+  }
+
+  // Recorrer todas las celdas cargadas y aplicar estilos
+  worksheet.eachRow((row, rowNumber) => {
+    const R = rowNumber - 1;
+    row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+      const C = colNumber - 1;
+      let val = cell.value;
+      if (val && typeof val === 'object' && val.richText) {
+        val = val.richText.map(t => t.text).join('');
+      }
+      val = (val || '').toString().trim();
       
       // Estilo por defecto
-      let style = {
-        font: { name: "Arial", sz: 10, color: { rgb: "333333" } },
-        alignment: { vertical: "center", wrapText: true },
-        border: {
-          top: {style: "thin", color: {rgb: "E2E8F0"}},
-          bottom: {style: "thin", color: {rgb: "E2E8F0"}},
-          left: {style: "thin", color: {rgb: "E2E8F0"}},
-          right: {style: "thin", color: {rgb: "E2E8F0"}}
-        }
+      let font = { name: "Arial", size: 10, color: { argb: "FF333333" } };
+      let alignment = { vertical: "middle", horizontal: "left", wrapText: true };
+      let fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: "FFFFFFFF" } }; // Fondo blanco por defecto
+      let border = {
+        top: { style: "thin", color: { argb: "FFE2E8F0" } },
+        bottom: { style: "thin", color: { argb: "FFE2E8F0" } },
+        left: { style: "thin", color: { argb: "FFE2E8F0" } },
+        right: { style: "thin", color: { argb: "FFE2E8F0" } }
       };
+      let numFmt = undefined;
 
-      // Fila 0: Título principal y Logo
+      // Fila 0: Título principal
       if (R === 0) {
-        style.fill = { fgColor: { rgb: "0F4C81" } };
-        style.alignment = { horizontal: "center", vertical: "center" };
+        fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: "FF0F4C81" } };
+        alignment = { horizontal: "center", vertical: "middle" };
         if (C === 0) {
-          style.font = { name: "Arial", sz: 10 };
+          font = { name: "Arial", size: 10, color: { argb: "FF0F4C81" } }; // Mismo color de fondo para ocultar texto residual debajo del logo
         } else {
-          style.font = { name: "Arial", sz: 14, bold: true, color: { rgb: "FFFFFF" } };
+          font = { name: "Arial", size: 14, bold: true, color: { argb: "FFFFFFFF" } };
         }
       }
       else if (R === 1 || R === 2) {
-        style.font = { name: "Arial", sz: 10, bold: true, color: { rgb: "0F4C81" } };
-        style.fill = { fgColor: { rgb: "F1F5F9" } };
-      }
-      else if (typeof val === 'string') {
-        const v = val.toUpperCase().trim();
-        if (v.includes("RESUMEN DE RESULTADOS") || v.includes("TABLA DE RETORNO") || v.includes("DETALLE: ")) {
-          style.font = { name: "Arial", sz: 12, bold: true, color: { rgb: "FFFFFF" } };
-          style.fill = { fgColor: { rgb: "10B981" } }; // Verde
-          if(!ws['!merges']) ws['!merges'] = [];
-          ws['!merges'].push({ s: {r:R, c:0}, e: {r:R, c:7} });
-        }
-        else if (v === "CATEGORÍA" || v === "DÍA" || v === "FECHA" || v === "HORA" || v === "ACTIVIDAD / INSUMO" || v === "DOSIS" || v === "UNIDAD" || v === "VALOR UNITARIO" || v === "INVERSIÓN TOTAL" || v === "HORMONA / INSUMO" || v === "PROTOCOLO INICIAL" || v === "RESX1" || v === "RESX2" || (v === "TOTAL PROYECTO" && C > 0)) {
-          style.font = { name: "Arial", sz: 10, bold: true, color: { rgb: "FFFFFF" } };
-          style.fill = { fgColor: { rgb: "475569" } };
-          style.alignment = { horizontal: "center", vertical: "center" };
-        }
-        else if (v.includes("TOTAL PI") || v.includes("TOTAL RESX1") || v.includes("TOTAL RESX2") || (v === "TOTAL PROYECTO" && C === 0) || v.includes("RETORNO TOTAL PROYECTADO") || v.includes("INVERSIÓN TOTAL PROYECTO:") || v.includes("COSTO PROMEDIO") || v.includes("INVERSIÓN PERDIDA")) {
-          style.font = { name: "Arial", sz: 11, bold: true, color: { rgb: "0F4C81" } };
-          style.fill = { fgColor: { rgb: "DBEAFE" } };
-        }
-        else if (v.includes('$')) {
-          style.alignment = { horizontal: "right", vertical: "center" };
-          style.font.bold = true;
-        }
-      }
-
-      if (typeof val === 'number') {
-        if (C >= 5) {
-          style.numFmt = '"$"#,##0.00';
-          style.alignment = { horizontal: "right", vertical: "center" };
+        font = { name: "Arial", size: 10, bold: true, color: { argb: "FF0F4C81" } };
+        fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: "FFF1F5F9" } };
+        if (C === 0 || C === 2) {
+          alignment = { horizontal: "right", vertical: "middle" };
         } else {
-          style.alignment = { horizontal: "center", vertical: "center" };
+          alignment = { horizontal: "left", vertical: "middle" };
+        }
+      }
+      // Secciones de título
+      else if (val === "RESUMEN DE RESULTADOS (DASHBOARD)" || 
+               val === "TABLA DE RETORNO DE INVERSIÓN (ROI)" || 
+               val === "DETALLE: PROTOCOLO INICIAL" || 
+               val === "DETALLE: RESINCRONIZACIÓN 1 (ReSx1)" || 
+               val === "DETALLE: RESINCRONIZACIÓN 2 (ReSx2)") {
+        font = { name: "Arial", size: 11, bold: true, color: { argb: "FFFFFFFF" } };
+        fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: "FF0F4C81" } };
+        alignment = { horizontal: "left", vertical: "middle" };
+        
+        try {
+          worksheet.mergeCells(rowNumber, 1, rowNumber, 8);
+        } catch(e){}
+      }
+      // Encabezados de tabla
+      else if (val === "Categoría" || val === "Protocolo Inicial" || val === "ReSx1" || val === "ReSx2" || val === "Total Proyecto" ||
+               val === "Día" || val === "Fecha" || val === "Hora" || val === "Actividad / Insumo" || val === "Hormona / Insumo" ||
+               val === "Dosis" || val === "Unidad" || val === "Valor Unitario" || val === "Inversión Total") {
+        font = { name: "Arial", size: 10, bold: true, color: { argb: "FF334155" } };
+        fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: "FFE2E8F0" } };
+        alignment = { horizontal: "center", vertical: "middle" };
+      }
+      // Totales
+      else if (val === "TOTAL PI:" || val === "TOTAL RESX1:" || val === "TOTAL RESX2:") {
+        font = { name: "Arial", size: 10, bold: true, color: { argb: "FF0F4C81" } };
+        fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: "FFF1F5F9" } };
+        alignment = { horizontal: "right", vertical: "middle" };
+      }
+      // Fila total valores
+      else if (R > 0 && row.getCell(colNumber - 1).value === "TOTAL PI:" ||
+               R > 0 && row.getCell(colNumber - 1).value === "TOTAL RESX1:" ||
+               R > 0 && row.getCell(colNumber - 1).value === "TOTAL RESX2:") {
+        font = { name: "Arial", size: 10, bold: true, color: { argb: "FF0F4C81" } };
+        fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: "FFF1F5F9" } };
+        alignment = { horizontal: "right", vertical: "middle" };
+      }
+      else if (R > 0 && row.getCell(colNumber - 2).value === "TOTAL PI:") {
+        font = { name: "Arial", size: 10, bold: true, color: { argb: "FF0F4C81" } };
+        fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: "FFF1F5F9" } };
+        alignment = { horizontal: "right", vertical: "middle" };
+      }
+      
+      // Alinear a la derecha para valores con signo pesos
+      if (val.startsWith('$')) {
+        alignment = { horizontal: "right", vertical: "middle" };
+      }
+
+      // Detectar si el valor es numérico y formatear
+      const numVal = Number(cell.value);
+      if (!isNaN(numVal) && cell.value !== '' && cell.value !== null) {
+        if (C >= 5) {
+          numFmt = '"$"#,##0.00';
+          alignment = { horizontal: "right", vertical: "middle" };
+        } else {
+          alignment = { horizontal: "center", vertical: "middle" };
         }
       }
 
-      ws[cellRef].s = style;
-    }
-  }
+      cell.font = font;
+      cell.alignment = alignment;
+      cell.fill = fill;
+      cell.border = border;
+      if (numFmt) cell.numFmt = numFmt;
+    });
+  });
 
   // Rellenar todas las celdas vacías del área visible con fondo blanco para asegurar un lienzo inmaculado
-  const maxRows = Math.max(range.e.r + 40, 100);
-  const maxCols = 16; // Hasta la columna Q
-  for (let R = 0; R <= maxRows; ++R) {
-    for (let C = 0; C <= maxCols; ++C) {
-      const cellRef = XLSX.utils.encode_cell({c:C, r:R});
-      if (!ws[cellRef]) {
-        ws[cellRef] = { v: "", t: 's', s: { fill: { fgColor: { rgb: "FFFFFF" } } } };
-      } else if (!ws[cellRef].s) {
-        ws[cellRef].s = { fill: { fgColor: { rgb: "FFFFFF" } } };
-      } else if (!ws[cellRef].s.fill) {
-        ws[cellRef].s.fill = { fgColor: { rgb: "FFFFFF" } };
+  const maxRows = Math.max(worksheet.rowCount + 40, 100);
+  const maxCols = 17; // Hasta la columna Q
+  for (let R = 1; R <= maxRows; ++R) {
+    const row = worksheet.getRow(R);
+    for (let C = 1; C <= maxCols; ++C) {
+      const cell = row.getCell(C);
+      if (cell.value === null || cell.value === undefined) {
+        cell.value = "";
+      }
+      if (!cell.fill || cell.fill.fgColor?.argb === undefined) {
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: "FFFFFFFF" } };
       }
     }
   }
 
-  // Ampliar el rango si agregamos celdas nuevas
-  ws['!ref'] = XLSX.utils.encode_range({ s: { c: 0, r: 0 }, e: { c: maxCols, r: maxRows } });
+  // Ocultar líneas de cuadrícula y encabezados de fila/columna en la vista
+  worksheet.views = [
+    { showGridLines: false, showRowColHeaders: false }
+  ];
 
-  // Ocultar las líneas de cuadrícula y los encabezados de filas/columnas (A,B,C / 1,2,3) para que parezca una aplicación
-  if (!ws['!views']) ws['!views'] = [];
-  ws['!views'].push({ showGridLines: false, showRowColHeaders: false });
-
-  XLSX.utils.book_append_sheet(wb, ws, "Reporte Integral");
-  
-  // Guardar archivo
+  // Guardar archivo con ExcelJS
   const fileName = `IatfPro_Reporte_Integral_${pName.replace(/\s+/g, '_')}.xlsx`;
-  XLSX.writeFile(wb, fileName);
+  const buffer = await workbook.xlsx.writeBuffer();
+  const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
+  document.body.removeChild(a);
 }
 
 window.exportarPDF = function() {

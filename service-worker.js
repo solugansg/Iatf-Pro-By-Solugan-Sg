@@ -1,5 +1,5 @@
-// Iatf Pro by Solugan SG - Service Worker v2.8.69
-const CACHE_NAME = 'iatfpro-v2.8.69';
+// Iatf Pro by Solugan SG - Service Worker v2.8.70
+const CACHE_NAME = 'iatfpro-v2.8.70';
 
 
 
@@ -23,6 +23,8 @@ const ASSETS_TO_CACHE = [
   'libs/chartjs-plugin-datalabels.min.js',
   'libs/html2pdf.min.js',
   'libs/xlsx.full.min.js',
+  'libs/xlsx-js-style.min.js',
+  'libs/exceljs.min.js',
   // Fuentes locales
   'fonts/inter-400.woff2',
   'fonts/inter-600.woff2',
