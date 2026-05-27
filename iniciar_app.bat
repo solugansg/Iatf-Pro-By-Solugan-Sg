@@ -18,7 +18,11 @@ if "!CHANGES!"=="" (
     call npm run bump-version
     
     echo.
-    echo 2. Subiendo nueva version a GitHub y Vercel...
+    echo 2. Construyendo la aplicacion Minificando...
+    call npm run build
+    
+    echo.
+    echo 3. Subiendo nueva version a GitHub y Vercel...
     git add .
     git commit -m "Actualizacion autonoma de version y cambios"
     git push

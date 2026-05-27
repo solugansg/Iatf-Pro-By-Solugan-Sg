@@ -956,8 +956,8 @@ window.saveStateToFirestore = function() {
     }, { merge: true })
     .then(() => {
       console.log("Estado sincronizado en Firestore");
-      // Si es el admin, guardamos también en la colección global
-      if (auth.currentUser && auth.currentUser.email === ADMIN_EMAIL) {
+      // Si es el admin (por email o contraseña), guardamos también en la colección global
+      if (window.hasAdminPassword || (auth.currentUser && auth.currentUser.email === ADMIN_EMAIL)) {
         db.collection("global").doc("protocols").set({ matriz: state.matriz }, { merge: true })
           .then(() => console.log("Protocolos globales actualizados exitosamente."))
           .catch(err => console.error("Error guardando en global:", err));
@@ -1735,6 +1735,7 @@ window.unlockMatriz = function() {
   const pass = prompt("Acceso Restringido. Ingresa la contraseña de administrador:");
   if (pass === "jan5362") {
     isMatrixUnlocked = true;
+    window.hasAdminPassword = true;
     const btnUnlock = document.getElementById('btn-unlock');
     if (btnUnlock) {
       btnUnlock.style.display = 'none';
