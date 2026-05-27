@@ -3713,9 +3713,24 @@ window.exportarExcel = function() {
   // Array de arrays para SheetJS
   let data = [];
   
-  // Título Principal
-  data.push(["REPORTE INTEGRAL DE INVERSIÓN - IATF PRO BY SOLUGAN SG"]);
-  data.push(["Fecha Reporte:", new Date().toLocaleDateString()]);
+  // Configurar la fórmula del logo
+  let logoUrl = "https://iatf-pro-by-solugan-sg.web.app/Logo%20Iatf%20Pro.png";
+  if (window.location.origin && window.location.origin.startsWith('http')) {
+    logoUrl = `${window.location.origin}/Logo%20Iatf%20Pro.png`;
+  }
+  const logoFormula = { f: `IMAGE("${logoUrl}")` };
+
+  // Título Principal (Logo en A1 y título en B1:H1)
+  data.push([logoFormula, "REPORTE INTEGRAL DE INVERSIÓN - IATF PRO BY SOLUGAN SG", "", "", "", "", "", ""]);
+  
+  let fechaInicioFormateada = fIni;
+  if (fIni) {
+    const parts = fIni.split('-');
+    if (parts.length === 3) {
+      fechaInicioFormateada = `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+  }
+  data.push(["Fecha Inicio Protocolo:", fechaInicioFormateada]);
   data.push(["Finca:", document.getElementById('pi-finca')?.value || '-', "Ubicación:", document.getElementById('pi-ubicacion')?.value || '-']);
   data.push([]); // Fila vacía
 
@@ -3794,9 +3809,17 @@ window.exportarExcel = function() {
   // Crear libro y hoja
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(data);
+
+  // Fusión de celdas para el título principal (B1 a H1, es decir, columnas 1 a 7)
+  if (!ws['!merges']) ws['!merges'] = [];
+  ws['!merges'].push({ s: {r:0, c:1}, e: {r:0, c:7} });
   
   // Ajustar anchos de columna básicos
   ws['!cols'] = [{wch: 28}, {wch: 18}, {wch: 12}, {wch: 38}, {wch: 12}, {wch: 12}, {wch: 22}, {wch: 22}];
+
+  // Ajustar alto de la primera fila (index 0) para el título y el logo
+  ws['!rows'] = [];
+  ws['!rows'][0] = { hpt: 70 };
 
   // -------------------------------------------------------------
   // APLICAR ESTILOS PROFESIONALES USANDO xlsx-js-style
@@ -3822,13 +3845,15 @@ window.exportarExcel = function() {
         }
       };
 
-      // Fila 0: Título principal
+      // Fila 0: Título principal y Logo
       if (R === 0) {
-        style.font = { name: "Arial", sz: 14, bold: true, color: { rgb: "FFFFFF" } };
         style.fill = { fgColor: { rgb: "0F4C81" } };
         style.alignment = { horizontal: "center", vertical: "center" };
-        if(!ws['!merges']) ws['!merges'] = [];
-        ws['!merges'].push({ s: {r:0, c:0}, e: {r:0, c:7} });
+        if (C === 0) {
+          style.font = { name: "Arial", sz: 10 };
+        } else {
+          style.font = { name: "Arial", sz: 14, bold: true, color: { rgb: "FFFFFF" } };
+        }
       }
       else if (R === 1 || R === 2) {
         style.font = { name: "Arial", sz: 10, bold: true, color: { rgb: "0F4C81" } };
@@ -4051,6 +4076,7 @@ window.exportarPDF = function() {
 window.enviarWhatsApp = function() { 
   const pName = document.getElementById('pi-protocolo')?.value || 'Protocolo';
   const finca = document.getElementById('pi-finca')?.value || 'Sin Nombre';
+  const fIni = document.getElementById('pi-fecha')?.value || '';
   
   // Obtener datos del consultor (intentar reprocost_perfil primero, luego reprocost_perfil_consultor)
   const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
@@ -4066,10 +4092,19 @@ window.enviarWhatsApp = function() {
   const usuarioStr = name ? `\n👤 *Usuario:* ${name}` : '';
   const nitStr = nit && nit !== 'N/A' ? `\n🆔 *NIT/CC:* ${nit}` : '';
 
+  let fechaInicioFormateada = fIni;
+  if (fIni) {
+    const parts = fIni.split('-');
+    if (parts.length === 3) {
+      fechaInicioFormateada = `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+  }
+
   const isEn = window.currentLang === 'en';
   let msg = isEn ? `*EXECUTIVE SUMMARY - IATF PRO BY SOLUGAN SG*\n\n` : `*RESUMEN EJECUTIVO - IATF PRO BY SOLUGAN SG*\n\n`;
   msg += `📍 *${isEn ? 'Farm' : 'Finca'}:* ${finca}\n`;
-  msg += `📋 *${isEn ? 'Protocol' : 'Protocolo'}:* ${pName}${usuarioStr}${nitStr}\n\n`;
+  msg += `📋 *${isEn ? 'Protocol' : 'Protocolo'}:* ${pName}${usuarioStr}${nitStr}\n`;
+  msg += `📅 *${isEn ? 'Protocol Start Date' : 'Fecha Inicio Protocolo'}:* ${fechaInicioFormateada}\n\n`;
   msg += `✅ *${isEn ? 'Total Pregnancies' : 'Preñeces Totales'}:* ${totP}\n`;
   msg += `💰 *${isEn ? 'Total Investment' : 'Inversión Total'}:* ${inv}\n`;
   msg += `📉 *${isEn ? 'Costo por Preñez' : 'Costo por Preñez'}:* ${cPrenez}\n`;
