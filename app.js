@@ -4805,9 +4805,15 @@ document.addEventListener('keydown', function(e) {
 window.toggleSidebar = function() {
   const sidebar = document.querySelector('.sidebar');
   const overlay = document.getElementById('sidebar-overlay');
+  const handleIcon = document.querySelector('.sidebar-toggle-handle i');
   if (sidebar && overlay) {
     sidebar.classList.toggle('active');
-    overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+    const isActive = sidebar.classList.contains('active');
+    overlay.style.display = isActive ? 'block' : 'none';
+    if (handleIcon) {
+      handleIcon.setAttribute('data-lucide', isActive ? 'chevron-left' : 'chevron-right');
+      if (window.lucide) window.lucide.createIcons();
+    }
   }
 };
 
