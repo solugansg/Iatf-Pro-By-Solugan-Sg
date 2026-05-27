@@ -1,5 +1,5 @@
-// Iatf Pro by Solugan SG - Service Worker v2.8.72
-const CACHE_NAME = 'iatfpro-v2.8.72';
+// Iatf Pro by Solugan SG - Service Worker v2.8.73
+const CACHE_NAME = 'iatfpro-v2.8.73';
 
 
 
