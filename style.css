@@ -1309,6 +1309,24 @@ input:checked + .slider:before { transform: translateX(20px); }
     font-size: 1.05rem;
   }
 
+  .sidebar-toggle-handle {
+    display: flex !important;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 80px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px 0 0 8px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+    z-index: 101;
+  }
+
   /* Sidebar transformed into a sliding drawer from the left */
   .sidebar {
     width: 280px !important;

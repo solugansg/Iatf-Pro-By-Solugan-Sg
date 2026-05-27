@@ -144,6 +144,10 @@
   <div class="app-container" id="app-main-layout" style="display: none;">
     <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 99; backdrop-filter: blur(4px);"></div>
     <aside class="sidebar glass-panel">
+      <!-- Handle lateral para móviles -->
+      <div class="sidebar-toggle-handle" onclick="toggleSidebar()" aria-label="Cerrar/Abrir Menú" style="display: none;">
+        <i data-lucide="chevron-left"></i>
+      </div>
       <div class="sidebar-header">
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:60px;height:60px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
