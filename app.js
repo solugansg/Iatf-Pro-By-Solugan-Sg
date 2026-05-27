@@ -1530,7 +1530,12 @@ function renderMatriz() {
     }
 
     // 3. Observaciones (Col 20)
-    tr.innerHTML += `<td><input type="text" class="cell-input matrix-nav" data-row="${rowIdx}" data-col="19" style="width:280px; text-align:left;" value="${protocol.obs || ''}" ${isMatrixUnlocked ? '' : 'disabled style="border-color:transparent; background:transparent; opacity:1;"'} onchange="updateRowObs(${rowIdx}, this.value)"></td>`;
+    tr.innerHTML += `<td>
+      <textarea class="cell-input matrix-nav" data-row="${rowIdx}" data-col="19" 
+        style="width:190px; height:44px; min-height:44px; text-align:left; resize:none; line-height:1.25; padding:6px; font-size:0.8rem; font-family:inherit; display:block; box-sizing:border-box; word-break:break-word; white-space:pre-wrap;" 
+        ${isMatrixUnlocked ? '' : 'disabled style="border-color:transparent; background:transparent; opacity:1; resize:none;"'} 
+        onchange="updateRowObs(${rowIdx}, this.value)">${protocol.obs || ''}</textarea>
+    </td>`;
     
     if(isMatrixUnlocked) {
       tr.innerHTML += `<td><button class="btn" style="background:rgba(239, 68, 68, 0.2); color:#ef4444; padding:5px 10px;" onclick="eliminarProtocolo(${rowIdx})"><i data-lucide="trash-2" style="width:14px; height:14px;"></i></button></td>`;
