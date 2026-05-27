@@ -3907,14 +3907,14 @@ window.exportarExcel = async function() {
         alignment = { horizontal: "right", vertical: "middle" };
       }
       // Fila total valores
-      else if (R > 0 && row.getCell(colNumber - 1).value === "TOTAL PI:" ||
-               R > 0 && row.getCell(colNumber - 1).value === "TOTAL RESX1:" ||
-               R > 0 && row.getCell(colNumber - 1).value === "TOTAL RESX2:") {
+      else if (R > 0 && colNumber > 1 && (row.getCell(colNumber - 1).value === "TOTAL PI:" ||
+               row.getCell(colNumber - 1).value === "TOTAL RESX1:" ||
+               row.getCell(colNumber - 1).value === "TOTAL RESX2:")) {
         font = { name: "Arial", size: 10, bold: true, color: { argb: "FF0F4C81" } };
         fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: "FFF1F5F9" } };
         alignment = { horizontal: "right", vertical: "middle" };
       }
-      else if (R > 0 && row.getCell(colNumber - 2).value === "TOTAL PI:") {
+      else if (R > 0 && colNumber > 2 && row.getCell(colNumber - 2).value === "TOTAL PI:") {
         font = { name: "Arial", size: 10, bold: true, color: { argb: "FF0F4C81" } };
         fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: "FFF1F5F9" } };
         alignment = { horizontal: "right", vertical: "middle" };
