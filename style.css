@@ -92,7 +92,7 @@ body {
   display: flex;
   flex-direction: column;
   z-index: 10;
-  overflow-y: auto; /* Permite scroll vertical si la pantalla es muy pequeña */
+  overflow: visible; /* Changed from auto to allow absolute elements to stick out */
   height: 100vh;
 }
 
