@@ -97,6 +97,126 @@ function adaptarHorasProtocolo(hours) {
   return newHours;
 }
 
+window.calcularVentanaIA = function(protocol, hBase) {
+  // 1. Determinar el evento de referencia (día y hora)
+  let refDay = null;
+  let refHour = '08:00';
+  let refFound = false;
+
+  const obs = (protocol.obs || "").toLowerCase();
+
+  // Verificar si la observación indica un evento de referencia específico
+  if (obs.includes("post gnrh")) {
+    // Buscar el último GnRH activo (gnrh2 o gnrh1)
+    if (protocol.days[4] !== '-' && protocol.days[4] !== '') {
+      refDay = parseInt(protocol.days[4]);
+      refHour = protocol.hours[4] || '08:00';
+      refFound = true;
+    } else if (protocol.days[3] !== '-' && protocol.days[3] !== '') {
+      refDay = parseInt(protocol.days[3]);
+      refHour = protocol.hours[3] || '08:00';
+      refFound = true;
+    }
+  } else if (obs.includes("post pgf") || obs.includes("post pfg")) {
+    // Buscar el último PGF activo (pgf3, pgf2, o pgf1)
+    if (protocol.days[7] !== '-' && protocol.days[7] !== '') {
+      refDay = parseInt(protocol.days[7]);
+      refHour = protocol.hours[7] || '08:00';
+      refFound = true;
+    } else if (protocol.days[6] !== '-' && protocol.days[6] !== '') {
+      refDay = parseInt(protocol.days[6]);
+      refHour = protocol.hours[6] || '08:00';
+      refFound = true;
+    } else if (protocol.days[5] !== '-' && protocol.days[5] !== '') {
+      refDay = parseInt(protocol.days[5]);
+      refHour = protocol.hours[5] || '08:00';
+      refFound = true;
+    }
+  }
+
+  // Si no se ha encontrado referencia específica o no aplica:
+  if (!refFound) {
+    const retdibIdx = 11;
+    if (protocol.days && protocol.days[retdibIdx] !== '-' && protocol.days[retdibIdx] !== '') {
+      refDay = parseInt(protocol.days[retdibIdx]);
+      refHour = protocol.hours[retdibIdx] || '08:00';
+      refFound = true;
+    } else {
+      // Seguridad: Si hay DIB pero no hay Retiro, ver si se fuerza
+      const hasDIB = protocol.days && protocol.days[0] !== '-' && protocol.days[0] !== '';
+      if (hasDIB) {
+        if (protocol.days[5] !== '-' && protocol.days[5] !== '') {
+          refDay = parseInt(protocol.days[5]);
+          refHour = protocol.hours[5] || '08:00';
+          refFound = true;
+        } else if (protocol.days[8] !== '-' && protocol.days[8] !== '') {
+          refDay = parseInt(protocol.days[8]);
+          refHour = protocol.hours[8] || '08:00';
+          refFound = true;
+        } else {
+          refDay = 8;
+          refHour = '08:00';
+          refFound = true;
+        }
+      }
+    }
+  }
+
+  // Si no encontramos ningún día de referencia, usar el día de la IA menos 2 días como fallback
+  if (refDay === null) {
+    refDay = (parseInt(protocol.ia) || 10) - 2;
+    refHour = hBase || '08:00';
+  }
+
+  // 2. Extraer el rango de horas de la observación
+  // Buscamos patrones como "48-56", "48-60", "24-32", "17-24", "48-52", "48 a 56", etc.
+  let startHs = null;
+  let endHs = null;
+
+  // Intentar buscar un rango de números "XX-YY" o "XX a YY" o "XX y YY"
+  const rangeMatch = obs.match(/(\d+)\s*(?:-|a|y)\s*(\d+)/);
+  if (rangeMatch) {
+    startHs = parseInt(rangeMatch[1]);
+    endHs = parseInt(rangeMatch[2]);
+  } else {
+    // Si no es un rango, buscar un número individual seguido de hs/horas/h
+    const singleMatch = obs.match(/(\d+)\s*(?:hs|horas|hours|h\b)/);
+    if (singleMatch) {
+      startHs = parseInt(singleMatch[1]);
+      endHs = startHs;
+    }
+  }
+
+  // Si no se pudo parsear ninguna hora de la observación, devolvemos el valor por defecto o ia_hour
+  if (startHs === null) {
+    return protocol.ia_hour || '16:00';
+  }
+
+  // 3. Calcular la ventana
+  const [refHStr, refMStr] = refHour.split(':');
+  const refH = parseInt(refHStr) || 8;
+  const refM = parseInt(refMStr) || 0;
+  const refTotalMin = refH * 60 + refM;
+
+  const startMinOfDay = (refTotalMin + startHs * 60) % (24 * 60);
+  const endMinOfDay = (refTotalMin + endHs * 60) % (24 * 60);
+
+  const formatTime = (totalMin) => {
+    const h = Math.floor(totalMin / 60);
+    const m = totalMin % 60;
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  };
+
+  const startHourStr = formatTime(startMinOfDay);
+  const endHourStr = formatTime(endMinOfDay);
+
+  if (startHourStr === endHourStr) {
+    return startHourStr;
+  } else {
+    return `${startHourStr} - ${endHourStr}`;
+  }
+};
+
 window.migrarYSanitizarMatriz = function(rawMatrix) {
   if (!Array.isArray(rawMatrix) || rawMatrix.length === 0) {
     rawMatrix = window.DEFAULT_MATRIZ;
@@ -2165,7 +2285,9 @@ window.ejecutarProtocoloInicial = function() {
   }
   // HITO DE INSEMINACIÓN ARTIFICIAL: ia_event se mantiene para la lógica de visualización de hitos
   if (protocol.ia !== '' && protocol.ia !== '-') {
-    state.activeList.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: protocol.ia_hour || '16:00' });
+    const hBase = document.getElementById('pi-hora')?.value || '08:00';
+    const iaHourWindow = window.calcularVentanaIA(protocol, hBase);
+    state.activeList.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: iaHourWindow });
   }
 
   state.activeList.sort((a,b) => {
@@ -2600,7 +2722,9 @@ window.ejecutarResx1 = function() {
   });
   
   if (protocol.ia !== '' && protocol.ia !== '-') {
-    resx1Rows.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: protocol.ia_hour || '16:00' });
+    const hBase = document.getElementById('resx1-hora')?.value || '08:00';
+    const iaHourWindow = window.calcularVentanaIA(protocol, hBase);
+    resx1Rows.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: iaHourWindow });
   }
   
   resx1Rows.sort((a,b) => {
@@ -2776,7 +2900,9 @@ window.ejecutarResx2 = function() {
   });
   
   if (protocol.ia !== '' && protocol.ia !== '-') {
-    resx2Rows.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: protocol.ia_hour || '16:00' });
+    const hBase = document.getElementById('resx2-hora')?.value || '08:00';
+    const iaHourWindow = window.calcularVentanaIA(protocol, hBase);
+    resx2Rows.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: iaHourWindow });
   }
   
   resx2Rows.sort((a,b) => {

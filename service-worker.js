@@ -1,5 +1,5 @@
-// Iatf Pro by Solugan SG - Service Worker v2.8.71
-const CACHE_NAME = 'iatfpro-v2.8.71';
+// Iatf Pro by Solugan SG - Service Worker v2.8.72
+const CACHE_NAME = 'iatfpro-v2.8.72';
 
 
 
@@ -12,7 +12,6 @@ const ASSETS_TO_CACHE = [
   'index.html',
   'style.css',
   'app.js',
-  'app.min.js',
   'lucide.min.js',
   'manifest.json',
   'icon-192.png',
