@@ -3713,15 +3713,14 @@ window.exportarExcel = function() {
   // Array de arrays para SheetJS
   let data = [];
   
-  // Configurar la fórmula del logo
-  let logoUrl = "https://iatf-pro-by-solugan-sg.web.app/Logo%20Iatf%20Pro.png";
+  // Configurar la URL del logo
+  let logoUrl = "https://iatf-pro-by-solugan-sg.vercel.app/Logo%20Iatf%20Pro.png";
   if (window.location.origin && window.location.origin.startsWith('http')) {
     logoUrl = `${window.location.origin}/Logo%20Iatf%20Pro.png`;
   }
-  const logoFormula = { f: `IMAGE("${logoUrl}")` };
 
-  // Título Principal (Logo en A1 y título en B1:H1)
-  data.push([logoFormula, "REPORTE INTEGRAL DE INVERSIÓN - IATF PRO BY SOLUGAN SG", "", "", "", "", "", ""]);
+  // Título Principal (Espacio para el Logo en A1 y título en B1:H1)
+  data.push(["", "REPORTE INTEGRAL DE INVERSIÓN - IATF PRO BY SOLUGAN SG", "", "", "", "", "", ""]);
   
   let fechaInicioFormateada = fIni;
   if (fIni) {
@@ -3809,6 +3808,9 @@ window.exportarExcel = function() {
   // Crear libro y hoja
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(data);
+
+  // Asignar el logo en A1 usando la fórmula IMAGE compatible con Excel/Sheets
+  ws['A1'] = { t: 's', f: `IMAGE("${logoUrl}")`, v: '' };
 
   // Fusión de celdas para el título principal (B1 a H1, es decir, columnas 1 a 7)
   if (!ws['!merges']) ws['!merges'] = [];
@@ -4179,24 +4181,19 @@ window.enviarWhatsApp = function() {
   if (destNumber === null) return; // Cancelado por el usuario
   destNumber = destNumber.trim().replace(/\D/g, ''); // Solo números
   
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  // Usar la API oficial de WhatsApp que es universal y compatible con redirecciones HTTPS
   let waUrl = '';
-  
-  if (isMobile) {
-    if (destNumber) {
-      waUrl = `whatsapp://send?phone=${destNumber}&text=${encodedMsg}`;
-    } else {
-      waUrl = `whatsapp://send?text=${encodedMsg}`;
-    }
+  if (destNumber) {
+    waUrl = `https://api.whatsapp.com/send?phone=${destNumber}&text=${encodedMsg}`;
   } else {
-    if (destNumber) {
-      waUrl = `https://web.whatsapp.com/send?phone=${destNumber}&text=${encodedMsg}`;
-    } else {
-      waUrl = `https://web.whatsapp.com/send?text=${encodedMsg}`;
-    }
+    waUrl = `https://api.whatsapp.com/send?text=${encodedMsg}`;
   }
   
-  window.open(waUrl, '_blank');
+  const newWindow = window.open(waUrl, '_blank');
+  if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+    // Si fue bloqueado por el bloqueador de popups, abrir en la misma pestaña como fallback
+    window.location.href = waUrl;
+  }
 }
 
 // --- SISTEMA DE HISTORIAL Y BÚSQUEDA ---
