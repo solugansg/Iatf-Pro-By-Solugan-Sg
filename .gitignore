@@ -11,3 +11,14 @@ desktop.ini
 *.njsproj
 *.sln
 *.sw?
+
+# Temp files
+temp_excel/
+temp_excel_2/
+temp.zip
+Iatf Pro Protocolos.zip
+temp_read_ls.py
+test_nit.js
+scratch.html
+iniciar_app.bat
+publicar_actualizacion.bat
