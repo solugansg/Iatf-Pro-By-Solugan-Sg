@@ -46,9 +46,18 @@ function bumpVersion() {
     html = html.replace(/src="app\.js\?v=[^"]+"/g, `src="app.js?v=${newVersion}"`);
     // Replace in sidebar
     html = html.replace(/By Solugan Sg <span([^>]*)>[^<]+<\/span>/g, `By Solugan Sg <span$1>${newVersion}</span>`);
-    // Replace in mobile header
     html = html.replace(/<span class="mobile-logo-text">IATF PRO <span([^>]*)>[^<]+<\/span><\/span>/gi, `<span class="mobile-logo-text">IATF PRO <span$1>${newVersion}</span></span>`);
     fs.writeFileSync(htmlPath, html, 'utf8');
+  }
+
+  // Update service-worker.js cache name
+  const swPath = path.resolve(__dirname, '..', 'service-worker.js');
+  if (fs.existsSync(swPath)) {
+    let sw = fs.readFileSync(swPath, 'utf8');
+    // Replace cache name e.g. const CACHE_NAME = 'iatfpro-v2.8.74';
+    sw = sw.replace(/const CACHE_NAME = '[^']+';/, `const CACHE_NAME = 'iatfpro-${newVersion.replace(/ /g, '')}';`);
+    sw = sw.replace(/\/\/ Iatf Pro by Solugan SG - Service Worker v.*/, `// Iatf Pro by Solugan SG - Service Worker ${newVersion}`);
+    fs.writeFileSync(swPath, sw, 'utf8');
   }
 
   console.log(`Version updated to ${newVersion}`);
