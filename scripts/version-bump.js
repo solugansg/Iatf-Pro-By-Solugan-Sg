@@ -43,7 +43,7 @@ function bumpVersion() {
     let html = fs.readFileSync(htmlPath, 'utf8');
     // Replace cache-buster in style.css
     html = html.replace(/href="style\.css\?v=[^"]+"/g, `href="style.css?v=${newVersion}"`);
-    html = html.replace(/src="app\.js\?v=[^"]+"/g, `src="app.js?v=${newVersion}"`);
+    html = html.replace(/src="app\.js\?v=[^"]+"/g, `src="app_core.js?v=${newVersion}"`);
     // Replace in sidebar
     html = html.replace(/By Solugan Sg <span([^>]*)>[^<]+<\/span>/g, `By Solugan Sg <span$1>${newVersion}</span>`);
     html = html.replace(/<span class="mobile-logo-text">IATF PRO <span([^>]*)>[^<]+<\/span><\/span>/gi, `<span class="mobile-logo-text">IATF PRO <span$1>${newVersion}</span></span>`);

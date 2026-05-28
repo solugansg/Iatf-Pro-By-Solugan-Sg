@@ -1,5 +1,5 @@
 // Iatf Pro by Solugan SG - Service Worker V 260528.15
-const CACHE_NAME = 'iatfpro-V260528.18';
+const CACHE_NAME = 'iatfpro-V260528.20';
 
 
 
@@ -11,7 +11,7 @@ const ASSETS_TO_CACHE = [
   './',
   'index.html',
   'style.css',
-  'app.js',
+  'app_core.js',
   'lucide.min.js',
   'manifest.json',
   'icon-192.png',
