@@ -1829,7 +1829,6 @@ window.restaurarProtocolosBase = function() {
   }
   if(confirm("¿Restaurar protocolos originales? Se perderán los cambios actuales.")) {
     state.matriz = JSON.parse(JSON.stringify(window.DEFAULT_MATRIZ));
-    renderMatriz(); saveState(); alert("Protocolos base restaurados correctamente.");00","08:00","08:00","08:00","08:00","08:00"],"ia":"74","obs":"Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional"}];
     renderMatriz(); saveState(); alert("Protocolos base restaurados correctamente.");
   }
 }
