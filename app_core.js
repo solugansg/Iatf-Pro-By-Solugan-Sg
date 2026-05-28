@@ -2685,6 +2685,19 @@ window.loadState = function() {
       }
     }
     
+    // HARD RESET ABSOLUTO: Limpiar caché corrupta 1 sola vez
+    if (!localStorage.getItem('reprocost_hard_reset_v26')) {
+      for (let k in state.insumos) {
+        state.insumos[k].def = 0;
+        state.insumos[k].resx1 = 0;
+        state.insumos[k].resx2 = 0;
+        if (['gen','retdib','mo1','mo2','opu','dx1','dx2','iate'].includes(k)) {
+          state.insumos[k].valorFrasco = 0;
+        }
+      }
+      localStorage.setItem('reprocost_hard_reset_v26', 'true');
+    }
+    
     if ((parsed.matriz && Array.isArray(parsed.matriz)) || localStorage.getItem('reprocost_custom_matriz')) {
       const customMatrizSaved = localStorage.getItem('reprocost_custom_matriz');
       let rawMatrix = null;
