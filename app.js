@@ -4426,18 +4426,32 @@ window.enviarWhatsApp = function() {
 }
 
 // --- SISTEMA DE HISTORIAL Y BÚSQUEDA ---
-window.guardarEnHistorial = function() {
+window.guardarEnHistorial = async function() {
   const ubicacion = document.getElementById('pi-ubicacion').value.trim();
   const finca = document.getElementById('pi-finca').value.trim();
-  const perfilStr = localStorage.getItem('reprocost_perfil');
-  let nitValue = perfilStr ? (JSON.parse(perfilStr).nit || 'N/A') : 'N/A';
-  if (nitValue === 'N/A') {
+  let perfilObj = {};
+  try {
+    perfilObj = JSON.parse(localStorage.getItem('reprocost_perfil')) || {};
+  } catch(e) {}
+  
+  let nitValue = perfilObj.nit || 'N/A';
+  if (nitValue === 'N/A' || nitValue === '') {
     nitValue = prompt("Para poder buscar este reporte después, por favor ingresa tu NIT:");
     if (!nitValue || nitValue.trim() === '') {
       alert("Operación cancelada. El NIT es necesario para guardar el reporte.");
       return;
     }
     nitValue = nitValue.trim();
+    
+    // Guardar el NIT ingresado para no volver a preguntarlo
+    perfilObj.nit = nitValue;
+    localStorage.setItem('reprocost_perfil', JSON.stringify(perfilObj));
+    
+    // Si hay usuario logueado, actualizar en Firestore
+    if (typeof auth !== 'undefined' && auth.currentUser) {
+      db.collection('users').doc(auth.currentUser.uid).set({ nit: nitValue }, { merge: true })
+        .catch(err => console.warn('Error guardando NIT en Firebase:', err));
+    }
   }
   
   if (!ubicacion || !finca) {
@@ -4445,21 +4459,25 @@ window.guardarEnHistorial = function() {
     return;
   }
   
+  // Mostrar feedback de carga
+  const btnGuardar = document.querySelector('button[onclick="guardarEnHistorial()"]');
+  const btnOriginalText = btnGuardar ? btnGuardar.innerHTML : '';
+  if (btnGuardar) btnGuardar.innerHTML = '<i data-lucide="refresh-cw" class="spin"></i> Guardando...';
+  
   let fullStateObj = {};
   try {
     const localSaved = localStorage.getItem('reprocost_state');
-    if (localSaved) {
-      fullStateObj = JSON.parse(localSaved);
-    } else {
-      fullStateObj = JSON.parse(JSON.stringify(state));
-    }
+    if (localSaved) fullStateObj = JSON.parse(localSaved);
+    else fullStateObj = JSON.parse(JSON.stringify(state));
   } catch (e) {
     fullStateObj = JSON.parse(JSON.stringify(state));
   }
 
+  const reportId = Date.now();
   const report = {
-    id: Date.now(),
+    id: reportId,
     nit: nitValue,
+    nitLower: nitValue.toLowerCase(),
     finca: finca,
     protocolo: document.getElementById('dash-protocolo').innerText,
     fechaProtocolo: document.getElementById('pi-fecha')?.value
@@ -4469,36 +4487,100 @@ window.guardarEnHistorial = function() {
     animales: document.getElementById('dash-animales').innerText,
     preneces: document.getElementById('res-total-preneces').innerText,
     inversion: document.getElementById('res-total-inversion').innerText,
-    state: fullStateObj 
+    state: fullStateObj,
+    uid: (typeof auth !== 'undefined' && auth.currentUser) ? auth.currentUser.uid : null,
+    createdAt: typeof firebase !== 'undefined' ? firebase.firestore.FieldValue.serverTimestamp() : new Date()
   };
 
-  let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
-  historial.push(report);
-  localStorage.setItem('reprocost_historial', JSON.stringify(historial));
-  
-  alert("✅ ¡Éxito! El reporte ha sido guardado en el historial. Ahora podrás buscarlo por NIT cuando lo necesites.");
+  try {
+    // 1. Guardar en Firestore
+    if (typeof db !== 'undefined') {
+      await db.collection('history').doc(reportId.toString()).set(report);
+    }
+    
+    // 2. Guardar en localStorage como respaldo local
+    const localReport = Object.assign({}, report, { createdAt: reportId });
+    let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    historial.push(localReport);
+    localStorage.setItem('reprocost_historial', JSON.stringify(historial));
+    
+    alert("✅ ¡Éxito! El reporte ha sido guardado en el historial (nube y local). Ahora podrás buscarlo por NIT cuando lo necesites.");
+  } catch (error) {
+    console.error("Error guardando en Firestore:", error);
+    // Fallback: solo local
+    const localReport = Object.assign({}, report, { createdAt: reportId });
+    let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    historial.push(localReport);
+    localStorage.setItem('reprocost_historial', JSON.stringify(historial));
+    alert("⚠️ El reporte se guardó de forma local (offline). Se sincronizará cuando haya conexión.");
+  } finally {
+    if (btnGuardar) {
+      btnGuardar.innerHTML = btnOriginalText;
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+  }
 };
 
-window.buscarPorNit = function() {
+window.buscarPorNit = async function() {
   const term = document.getElementById('search-nit').value.trim();
   if (!term) {
     alert("Por favor ingresa un NIT para buscar.");
     return;
   }
 
-  const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
-  const filtrados = historial.filter(r => String(r.nit || '').includes(term));
+  const btnBuscar = document.querySelector('button[onclick="buscarPorNit()"]');
+  const origBtnHTML = btnBuscar ? btnBuscar.innerHTML : '';
+  if (btnBuscar) btnBuscar.innerHTML = '<i data-lucide="refresh-cw" class="spin"></i> Buscando...';
 
   const container = document.getElementById('historial-resultados');
   const empty = document.getElementById('historial-vacio');
   const tbody = document.getElementById('lista-historial');
-  
   tbody.innerHTML = '';
+
+  let filtrados = [];
+  const termLower = term.toLowerCase();
+
+  try {
+    if (typeof db !== 'undefined') {
+      // 1. Buscar en Firestore
+      const snapshot = await db.collection('history')
+        .where('nitLower', '==', termLower)
+        .get();
+        
+      snapshot.forEach(doc => {
+        filtrados.push(doc.data());
+      });
+      
+      // Si la búsqueda por 'nitLower' no retorna, buscamos por 'nit' normal para retrocompatibilidad
+      if (filtrados.length === 0) {
+        const snap2 = await db.collection('history')
+          .where('nit', '==', term)
+          .get();
+        snap2.forEach(doc => {
+          filtrados.push(doc.data());
+        });
+      }
+    }
+  } catch (err) {
+    console.warn("Error buscando en Firestore, usando fallback local:", err);
+  }
+
+  // 2. Combinar con localStorage y deduplicar por 'id'
+  const historialLocal = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+  const filtradosLocal = historialLocal.filter(r => String(r.nit || '').toLowerCase().includes(termLower));
+  
+  filtradosLocal.forEach(localReq => {
+    if (!filtrados.some(f => f.id === localReq.id)) {
+      filtrados.push(localReq);
+    }
+  });
+
+  // Ordenar descendente por ID (que actúa como timestamp)
+  filtrados.sort((a, b) => b.id - a.id);
 
   if (filtrados.length > 0) {
     filtrados.forEach((r) => {
-      // Obtener fecha de inicio del protocolo desde el estado guardado
-      let fechaMostrar = r.fecha; // fallback: fecha de registro
+      let fechaMostrar = r.fecha;
       try {
         const piDate = r.state?.inputs?.pi?.fecha;
         if (piDate) {
@@ -4509,7 +4591,7 @@ window.buscarPorNit = function() {
         } else if (r.fechaProtocolo) {
           fechaMostrar = r.fechaProtocolo;
         }
-      } catch(e) { /* usar fallback */ }
+      } catch(e) {}
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
@@ -4535,7 +4617,7 @@ window.buscarPorNit = function() {
     });
     container.style.display = 'block';
     empty.style.display = 'none';
-    lucide.createIcons();
+    if(typeof lucide !== 'undefined') lucide.createIcons();
   } else {
     container.style.display = 'none';
     empty.style.display = 'block';
@@ -4543,17 +4625,33 @@ window.buscarPorNit = function() {
       <i data-lucide="search-x" style="width: 40px; height: 40px; margin-bottom: 1rem; color: var(--danger);"></i>
       <p>No se encontraron registros para el NIT: <strong>${term}</strong></p>
     `;
-    lucide.createIcons();
+    if(typeof lucide !== 'undefined') lucide.createIcons();
   }
+  
+  if (btnBuscar) btnBuscar.innerHTML = origBtnHTML;
 };
 
-window.cargarDeHistorial = function(id) {
-  const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
-  const record = historial.find(r => r.id === id);
+window.cargarDeHistorial = async function(id) {
+  let record = null;
+  // 1. Intentar Firestore
+  try {
+    if (typeof db !== 'undefined') {
+      const doc = await db.collection('history').doc(id.toString()).get();
+      if (doc.exists) {
+        record = doc.data();
+      }
+    }
+  } catch(e) {}
+  
+  // 2. Fallback localStorage
+  if (!record) {
+    const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    record = historial.find(r => r.id === id);
+  }
+  
   if (!record) return;
 
   if (confirm(`¿Deseas cargar el reporte de la finca "${record.finca}" realizado el ${record.fecha}?\n\nNota: Esto reemplazará los datos actuales en pantalla.`)) {
-    // Preservar la última versión de los protocolos al cargar un reporte antiguo
     const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
     const newState = Object.assign({}, record.state);
     if (latestMatrixStr) {
@@ -4569,8 +4667,16 @@ window.cargarDeHistorial = function(id) {
   }
 };
 
-window.eliminarDeHistorial = function(id) {
+window.eliminarDeHistorial = async function(id) {
   if (confirm("¿Estás seguro de que deseas eliminar este registro del historial permanentemente?")) {
+    try {
+      if (typeof db !== 'undefined') {
+        await db.collection('history').doc(id.toString()).delete();
+      }
+    } catch(e) {
+      console.warn("Error borrando de Firestore:", e);
+    }
+    
     let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
     historial = historial.filter(r => r.id !== id);
     localStorage.setItem('reprocost_historial', JSON.stringify(historial));
@@ -4579,9 +4685,18 @@ window.eliminarDeHistorial = function(id) {
   }
 };
 
-window.exportarExcelDesdeHistorial = function(id) {
-  const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
-  const record = historial.find(r => r.id === id);
+window.exportarExcelDesdeHistorial = async function(id) {
+  let record = null;
+  try {
+    if (typeof db !== 'undefined') {
+      const doc = await db.collection('history').doc(id.toString()).get();
+      if (doc.exists) record = doc.data();
+    }
+  } catch(e) {}
+  if (!record) {
+    const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    record = historial.find(r => r.id === id);
+  }
   if (!record) return;
 
   const originalStateStr = localStorage.getItem('reprocost_state');
@@ -4603,7 +4718,6 @@ window.exportarExcelDesdeHistorial = function(id) {
     }
   };
 
-  // Usar los protocolos más recientes del usuario al exportar reporte antiguo
   const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
   const tempState = Object.assign({}, record.state);
   if (latestMatrixStr) {
@@ -4626,9 +4740,9 @@ window.exportarExcelDesdeHistorial = function(id) {
   if (typeof updateResultados === 'function') updateResultados();
   if (typeof calcTableroControl === 'function') calcTableroControl();
 
-  setTimeout(() => {
+  setTimeout(async () => {
     try {
-      window.exportarExcel();
+      await window.exportarExcel();
     } catch (err) {
       console.error("Error al exportar Excel desde el historial:", err);
     } finally {
@@ -4637,12 +4751,20 @@ window.exportarExcelDesdeHistorial = function(id) {
   }, 150);
 };
 
-window.exportarPdfDesdeHistorial = function(id) {
-  const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
-  const record = historial.find(r => r.id === id);
+window.exportarPdfDesdeHistorial = async function(id) {
+  let record = null;
+  try {
+    if (typeof db !== 'undefined') {
+      const doc = await db.collection('history').doc(id.toString()).get();
+      if (doc.exists) record = doc.data();
+    }
+  } catch(e) {}
+  if (!record) {
+    const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    record = historial.find(r => r.id === id);
+  }
   if (!record) return;
 
-  // 1. Guardar el estado actual de la pantalla para poder restaurarlo al finalizar
   const originalStateStr = localStorage.getItem('reprocost_state');
 
   const restaurarEstado = () => {
@@ -4662,7 +4784,6 @@ window.exportarPdfDesdeHistorial = function(id) {
     }
   };
 
-  // 2. Aplicar el estado del registro seleccionado temporalmente usando los protocolos más recientes
   const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
   const tempState = Object.assign({}, record.state);
   if (latestMatrixStr) {
@@ -4677,7 +4798,6 @@ window.exportarPdfDesdeHistorial = function(id) {
   localStorage.setItem('reprocost_state', JSON.stringify(tempState));
   loadState();
 
-  // 3. Forzar el recálculo completo incluyendo cronograma
   if (typeof ejecutarProtocoloInicial === 'function') {
     const pv = document.getElementById('pi-protocolo')?.value;
     const fv = document.getElementById('pi-fecha')?.value;
@@ -4686,7 +4806,6 @@ window.exportarPdfDesdeHistorial = function(id) {
   if (typeof updateResultados === 'function') updateResultados();
   if (typeof calcTableroControl === 'function') calcTableroControl();
 
-  // 4. Esperar que el DOM termine de renderizar completamente antes de exportar
   setTimeout(() => {
     window.exportarPDF().then(() => {
       restaurarEstado();
