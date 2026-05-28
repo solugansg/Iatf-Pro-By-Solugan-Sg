@@ -300,7 +300,9 @@ auth.onAuthStateChanged(user => {
           }
           if (gData.insumos) {
             for (let k in gData.insumos) {
-              if (state.insumos[k]) Object.assign(state.insumos[k], gData.insumos[k]);
+              if (state.insumos[k]) {
+                Object.assign(state.insumos[k], gData.insumos[k]);
+              }
             }
           }
         }
@@ -1469,7 +1471,7 @@ navBtns.forEach(btn => {
   });
 });
 
-// INITIAL STATE// INITIAL STATE
+// INITIAL STATE// INITIAL STATE
 const state = {
   tableroLeche: { precio: 1100, duracion: 300, litros: 1500 },
   tableroCarne: { precio: 10000, duracion: 240, peso: 240 },
@@ -1477,24 +1479,24 @@ const state = {
   
   // Inventory
   insumos: {
-    dib: { name: 'Dispositivo Intravaginal Bovino', tipo: 'Und', tamano: 10, valorFrasco: 160000, def: 0, resx1: 1, resx2: 1, cat: 'hormonas', obs: 'P4', usos: 1 },
-    be1: { name: 'Benzoato de Estradiol (1a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 69000, def: 0, resx1: 0.5, resx2: 0.5, cat: 'hormonas', obs: 'B.E 1a Dosis' },
-    be2: { name: 'Benzoato de Estradiol (2a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 69000, def: 0, resx1: 0.5, resx2: 0.5, cat: 'hormonas', obs: 'B.E 2a Dosis' },
-    gnrh1: { name: 'GnRh (1a Dosis)', tipo: 'ml', tamano: 50, valorFrasco: 94000, def: 0, resx1: 2.5, resx2: 2.5, cat: 'hormonas', obs: 'GnRh 1a Dosis' },
-    gnrh2: { name: 'GnRh (2a Dosis)', tipo: 'ml', tamano: 50, valorFrasco: 94000, def: 0, resx1: 2.5, resx2: 2.5, cat: 'hormonas', obs: 'GnRh 2a Dosis' },
-    pgf1: { name: 'Prostaglandina (1a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 100000, def: 0, resx1: 2, resx2: 2, cat: 'hormonas', obs: 'Pgf2@ 1a Dosis' },
-    pgf2: { name: 'Prostaglandina (2a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 100000, def: 0, resx1: 2, resx2: 2, cat: 'hormonas', obs: 'Pgf2@ 2a Dosis' },
-    pgf3: { name: 'Prostaglandina (3a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 100000, def: 0, resx1: 2, resx2: 2, cat: 'hormonas', obs: 'Pgf2@ 3a Dosis' },
-    ecg: { name: 'Gonadotropina Coriónica Equina (eCG)', tipo: 'ml', tamano: 30, valorFrasco: 190000, def: 0, resx1: 1, resx2: 1, cat: 'hormonas', obs: 'eCG' },
-    ce: { name: 'Cipionato de Estradiol (C.E)', tipo: 'ml', tamano: 100, valorFrasco: 87000, def: 0, resx1: 1, resx2: 1, cat: 'hormonas', obs: 'C.E' },
-    gen: { name: 'Genética (Semen / Embrión)', tipo: 'Semen', tamano: 1, valorFrasco: 40000, def: 0, resx1: 0, resx2: 0, cat: 'genetica', obs: 'Solugan SG' },
+    dib: { name: 'Dispositivo Intravaginal Bovino', tipo: 'Und', tamano: 10, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'hormonas', obs: 'P4', usos: 1 },
+    be1: { name: 'Benzoato de Estradiol (1a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'hormonas', obs: 'B.E 1a Dosis' },
+    be2: { name: 'Benzoato de Estradiol (2a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'hormonas', obs: 'B.E 2a Dosis' },
+    gnrh1: { name: 'GnRh (1a Dosis)', tipo: 'ml', tamano: 50, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'hormonas', obs: 'GnRh 1a Dosis' },
+    gnrh2: { name: 'GnRh (2a Dosis)', tipo: 'ml', tamano: 50, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'hormonas', obs: 'GnRh 2a Dosis' },
+    pgf1: { name: 'Prostaglandina (1a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'hormonas', obs: 'Pgf2@ 1a Dosis' },
+    pgf2: { name: 'Prostaglandina (2a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'hormonas', obs: 'Pgf2@ 2a Dosis' },
+    pgf3: { name: 'Prostaglandina (3a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'hormonas', obs: 'Pgf2@ 3a Dosis' },
+    ecg: { name: 'Gonadotropina Coriónica Equina (eCG)', tipo: 'ml', tamano: 30, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'hormonas', obs: 'eCG' },
+    ce: { name: 'Cipionato de Estradiol (C.E)', tipo: 'ml', tamano: 100, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'hormonas', obs: 'C.E' },
+    gen: { name: 'Genética (Semen / Embrión)', tipo: 'Semen', tamano: 1, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'genetica', obs: 'Solugan SG' },
     retdib: { name: 'Retiro DIB', tipo: 'M.O', tamano: 1, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'asistencia', obs: 'R.Dib' },
-    mo1: { name: 'Asistencia Técnica 1', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 40000, def: 0, resx1: 1, resx2: 1, cat: 'asistencia', obs: 'Solugan SG' },
-    mo2: { name: 'Asistencia Técnica 2', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 0, def: 0, resx1: 1, resx2: 1, cat: 'asistencia', obs: 'Solugan SG' },
+    mo1: { name: 'Asistencia Técnica 1', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'asistencia', obs: 'Solugan SG' },
+    mo2: { name: 'Asistencia Técnica 2', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'asistencia', obs: 'Solugan SG' },
     opu: { name: 'Aspiración Folicular (OPU)', tipo: 'Proc', tamano: 1, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'asistencia', obs: 'OPU' },
-    dx1: { name: 'Confirmación preñez Dx1', tipo: 'Dx1', tamano: 1, valorFrasco: 10000, def: 0, resx1: 0, resx2: 0, cat: 'diagnostico', obs: 'Solugan SG' },
-    dx2: { name: 'Confirmación preñez Dx2', tipo: 'Dx2', tamano: 1, valorFrasco: 10000, def: 0, resx1: 0, resx2: 0, cat: 'diagnostico', obs: 'Solugan SG' },
-    iate: { name: 'Ia/Te', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 15000, def: 0, resx1: 1, resx2: 1, cat: 'iate', obs: 'Solugan SG' }
+    dx1: { name: 'Confirmación preñez Dx1', tipo: 'Dx1', tamano: 1, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'diagnostico', obs: 'Solugan SG' },
+    dx2: { name: 'Confirmación preñez Dx2', tipo: 'Dx2', tamano: 1, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'diagnostico', obs: 'Solugan SG' },
+    iate: { name: 'Ia/Te', tipo: 'Asis.Tec', tamano: 1, valorFrasco: 0, def: 0, resx1: 0, resx2: 0, cat: 'iate', obs: 'Solugan SG' }
   },
   
   matriz: window.DEFAULT_MATRIZ,
@@ -1957,10 +1959,6 @@ window.abrirModalPrecios = function(context = 'pi') {
            } else {
               // Si la dosis guardada es 0, intentar usar el default configurado en el estado
               currentDef = ins[context] || 0;
-              if (currentDef === 0) {
-                const defaults = { dib: 1, be1: 0.5, be2: 0.5, gnrh1: 2.5, gnrh2: 2.5, pgf1: 2, pgf2: 2, pgf3: 2, ecg: 1, ce: 1, mo1: 1, mo2: 1 };
-                if (defaults[id]) currentDef = defaults[id];
-              }
            }
         }
         
@@ -2430,9 +2428,11 @@ function reCalcTablaPI() {
     let aplic = (isServ ? comp : units * (ins.valorFrasco / (ins.tamano || 1))) / factorUsos;
     let costoDosis = (isServ ? ins.valorFrasco : (ins.valorFrasco / (ins.tamano || 1) * ins.def)) / factorUsos;
     
-    gComp += comp; gAplic += aplic; gTotalPorVaca += costoDosis;
-    tCat[ins.cat] += aplic;
-    tCatPerCow[ins.cat] += costoDosis;
+    gTotalPorVaca += costoDosis;
+    if(ins.cat) {
+      tCat[ins.cat] += aplic;
+      tCatPerCow[ins.cat] += costoDosis;
+    }
 
     htmlRows += `
       <tr>
@@ -2625,16 +2625,10 @@ window.loadState = function() {
       if(document.getElementById('tc-peso-destete') && state.tableroCarne.peso) document.getElementById('tc-peso-destete').value = state.tableroCarne.peso;
     }
     
-    // Defaults protocolarios para ReSx - se aplican si el valor guardado es 0
-    const resx_defaults = { dib: 1, be1: 0.5, be2: 0.5, gnrh1: 2.5, gnrh2: 2.5, pgf1: 2, pgf2: 2, pgf3: 2, ecg: 1, ce: 1, mo1: 1, mo2: 1 };
-    
     if(parsed.insumos) {
       for(let k in parsed.insumos) {
         if(state.insumos[k]) {
           Object.assign(state.insumos[k], parsed.insumos[k]);
-          // Aplicar defaults si los valores de resx están en 0 (datos de versión antigua)
-          if (state.insumos[k].resx1 === 0 && resx_defaults[k]) state.insumos[k].resx1 = resx_defaults[k];
-          if (state.insumos[k].resx2 === 0 && resx_defaults[k]) state.insumos[k].resx2 = resx_defaults[k];
         }
       }
     }
