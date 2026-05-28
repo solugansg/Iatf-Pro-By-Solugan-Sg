@@ -1,5 +1,5 @@
 // Iatf Pro by Solugan SG - Service Worker V 260528.15
-const CACHE_NAME = 'iatfpro-V260528.41';
+const CACHE_NAME = 'iatfpro-V260528.43';
 
 
 
@@ -11,7 +11,7 @@ const ASSETS_TO_CACHE = [
   './',
   'index.html',
   'style.css',
-  'app_master.js',
+  'app_v42.js',
   'lucide.min.js',
   'manifest.json',
   'icon-192.png',
@@ -89,7 +89,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   const isHTMLorCSS = url.pathname.endsWith('/') ||
                       url.pathname.endsWith('.html') ||
-                      url.pathname.endsWith('.css') || url.pathname.endsWith('app_core.js');
+                      url.pathname.endsWith('.css') || url.pathname.endsWith('app_v42.js') || url.pathname.endsWith('app_core.js');
 
   if (isHTMLorCSS) {
     // ── NETWORK FIRST: siempre traer la versión más nueva del servidor ──

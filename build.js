@@ -68,11 +68,11 @@ dirsToCopy.forEach(dir => {
   }
 });
 
-// Leer y ofuscar app_master.js
-const appJsPath = path.join(srcDir, 'app_master.js');
+// Leer y ofuscar app_v42.js
+const appJsPath = path.join(srcDir, 'app_v42.js');
 if (fs.existsSync(appJsPath)) {
   const appJsCode = fs.readFileSync(appJsPath, 'utf8');
-  console.log('Ofuscando app_master.js para proteger fórmulas...');
+  console.log('Ofuscando app_v42.js para proteger fórmulas...');
   
   const obfuscationResult = JavaScriptObfuscator.obfuscate(appJsCode, {
     compact: true,
@@ -91,10 +91,10 @@ if (fs.existsSync(appJsPath)) {
     unicodeEscapeSequence: true // Convierte caracteres a hexadecimal unicode (\x61)
   });
   
-  fs.writeFileSync(path.join(distDir, 'app_master.js'), obfuscationResult.getObfuscatedCode(), 'utf8');
-  console.log('app_master.js ofuscado exitosamente en dist/app_master.js');
+  fs.writeFileSync(path.join(distDir, 'app_v42.js'), obfuscationResult.getObfuscatedCode(), 'utf8');
+  console.log('app_v42.js ofuscado exitosamente en dist/app_v42.js');
 } else {
-  console.error('Error: No se encontró app_master.js');
+  console.error('Error: No se encontró app_v42.js');
   process.exit(1);
 }
 
