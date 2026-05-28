@@ -379,8 +379,8 @@ auth.onAuthStateChanged(user => {
                 }
               }
               
-              // MIGRACION UNICA FIREBASE USER DATA: Limpiar datos cacheados de usuarios de la versión vieja
-              if (!localStorage.getItem('reprocost_user_migrated_v260528_13')) {
+              // MIGRACION UNICA FIREBASE USER DATA: Limpiar datos cacheados por usuario
+              if (!localStorage.getItem('reprocost_user_migrated_v22_' + user.uid)) {
                 for (let k in state.insumos) {
                   state.insumos[k].def = 0;
                   state.insumos[k].resx1 = 0;
@@ -390,7 +390,7 @@ auth.onAuthStateChanged(user => {
                   }
                 }
 
-                localStorage.setItem('reprocost_user_migrated_v260528_13', 'true');
+                localStorage.setItem('reprocost_user_migrated_v22_' + user.uid, 'true');
                 if (typeof window.saveStateToFirestore === 'function') {
                   window.saveStateToFirestore();
                 }
