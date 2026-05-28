@@ -219,11 +219,11 @@ window.calcularVentanaIA = function(protocol, hBase) {
 
 window.getInsumoPrice = function(ins, context) {
   if (context === 'resx1') {
-    if (ins.valorFrascoResx1 === undefined || ins.valorFrascoResx1 === null || ins.valorFrascoResx1 === 0) return ins.valorFrasco || 0;
+    if (ins.valorFrascoResx1 === undefined || ins.valorFrascoResx1 === null || Number(ins.valorFrascoResx1) === 0) return ins.valorFrasco || 0;
     return ins.valorFrascoResx1;
   }
   if (context === 'resx2') {
-    if (ins.valorFrascoResx2 === undefined || ins.valorFrascoResx2 === null || ins.valorFrascoResx2 === 0) return ins.valorFrasco || 0;
+    if (ins.valorFrascoResx2 === undefined || ins.valorFrascoResx2 === null || Number(ins.valorFrascoResx2) === 0) return ins.valorFrasco || 0;
     return ins.valorFrascoResx2;
   }
   return ins.valorFrasco || 0;
@@ -231,11 +231,11 @@ window.getInsumoPrice = function(ins, context) {
 
 window.getInsumoTamano = function(ins, context) {
   if (context === 'resx1') {
-    if (ins.tamanoResx1 === undefined || ins.tamanoResx1 === null || ins.tamanoResx1 === 0) return ins.tamano || 1;
+    if (ins.tamanoResx1 === undefined || ins.tamanoResx1 === null || Number(ins.tamanoResx1) === 0) return ins.tamano || 1;
     return ins.tamanoResx1;
   }
   if (context === 'resx2') {
-    if (ins.tamanoResx2 === undefined || ins.tamanoResx2 === null || ins.tamanoResx2 === 0) return ins.tamano || 1;
+    if (ins.tamanoResx2 === undefined || ins.tamanoResx2 === null || Number(ins.tamanoResx2) === 0) return ins.tamano || 1;
     return ins.tamanoResx2;
   }
   return ins.tamano || 1;
