@@ -389,13 +389,7 @@ auth.onAuthStateChanged(user => {
                     state.insumos[k].valorFrasco = 0;
                   }
                 }
-                if (state.matriz) {
-                  state.matriz.forEach(protocol => {
-                    if (protocol.days) protocol.days = protocol.days.map(() => '-');
-                    if (protocol.hours) protocol.hours = protocol.hours.map(() => '--:--');
-                    if (protocol.ia) protocol.ia = '-';
-                  });
-                }
+
                 localStorage.setItem('reprocost_user_migrated_v260528_13', 'true');
                 if (typeof window.saveStateToFirestore === 'function') {
                   window.saveStateToFirestore();
@@ -404,12 +398,7 @@ auth.onAuthStateChanged(user => {
               
               // Determinar de dónde cargar la matriz
               if (globalMatriz) {
-                // FORCE '-' FOR GLOBAL FIREBASE MATRIX TO PREVENT INFECTION
-                globalMatriz.forEach(protocol => {
-                  if (protocol.days) protocol.days = protocol.days.map(() => '-');
-                  if (protocol.hours) protocol.hours = protocol.hours.map(() => '--:--');
-                  if (protocol.ia) protocol.ia = '-';
-                });
+
                 state.matriz = window.migrarYSanitizarMatriz(globalMatriz);
                 localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
               } else if (userData.matriz && Array.isArray(userData.matriz) && userData.matriz.length > 0) {
