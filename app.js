@@ -302,6 +302,14 @@ auth.onAuthStateChanged(user => {
             for (let k in gData.insumos) {
               if (state.insumos[k]) {
                 Object.assign(state.insumos[k], gData.insumos[k]);
+                
+                // FORCE 0 FOR GLOBAL FIREBASE LOAD TO PREVENT INFECTION
+                state.insumos[k].def = 0;
+                state.insumos[k].resx1 = 0;
+                state.insumos[k].resx2 = 0;
+                if (['gen','retdib','mo1','mo2','opu','dx1','dx2','iate'].includes(k)) {
+                  state.insumos[k].valorFrasco = 0;
+                }
               }
             }
           }
@@ -373,6 +381,12 @@ auth.onAuthStateChanged(user => {
               
               // Determinar de dónde cargar la matriz
               if (globalMatriz) {
+                // FORCE '-' FOR GLOBAL FIREBASE MATRIX TO PREVENT INFECTION
+                globalMatriz.forEach(protocol => {
+                  if (protocol.days) protocol.days = protocol.days.map(() => '-');
+                  if (protocol.hours) protocol.hours = protocol.hours.map(() => '--:--');
+                  if (protocol.ia) protocol.ia = '-';
+                });
                 state.matriz = window.migrarYSanitizarMatriz(globalMatriz);
                 localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
               } else if (userData.matriz && Array.isArray(userData.matriz) && userData.matriz.length > 0) {
