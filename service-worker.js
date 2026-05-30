@@ -1,5 +1,5 @@
 // Iatf Pro by Solugan SG - Service Worker V 260530.1
-const CACHE_NAME = 'iatfpro-V260530.7';
+const CACHE_NAME = 'iatfpro-V260530.11';
 
 // Todos los archivos que se guardan en caché para uso offline
 const ASSETS_TO_CACHE = [
@@ -101,7 +101,7 @@ self.addEventListener('fetch', (event) => {
   } else {
     // ── CACHE FIRST REAL: fuentes, imágenes, librerías JS ──
     event.respondWith(
-      caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
+      caches.match(event.request, { ignoreSearch: false }).then((cachedResponse) => {
         if (cachedResponse) {
           // Retornar la versión en caché directamente (cero consumo del servidor)
           return cachedResponse;
