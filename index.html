@@ -30,7 +30,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260530.51">
+  <link rel="stylesheet" href="style.css?v=V 260530.54">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -157,7 +157,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260530.51</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260530.54</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -232,7 +232,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260530.51</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260530.54</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -1338,6 +1338,41 @@
               <tbody id="admin-users-body">
                 <tr>
                   <td colspan="7" style="text-align: center;" class="text-muted">Cargando datos...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <!-- 6. ALIADOS COMERCIALES -->
+      <section id="aliados-comerciales" class="tab-content view-transition">
+        <header class="section-header">
+          <h1 data-i18n="aliados_title">Aliados Comerciales</h1>
+          <p data-i18n="aliados_subtitle">Directorio de aliados y socios estratégicos.</p>
+        </header>
+
+        <div class="glass-panel p-2">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 class="form-title" style="margin: 0; border: none; padding: 0;"><i data-lucide="users"></i> Directorio</h2>
+            <div style="display: flex; gap: 0.5rem;">
+              <input type="file" id="btn-importar-aliados" accept=".xlsx, .xls" style="display: none;" onchange="handleImportarAliados(event)">
+              <button class="btn" style="background: #10b981; color: #fff; font-weight: 700; border-color: #10b981;" onclick="document.getElementById('btn-importar-aliados').click()">
+                <i data-lucide="upload-cloud"></i> Cargar Excel
+              </button>
+            </div>
+          </div>
+          
+          <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+            <table class="data-table" id="tabla-aliados" style="font-size: 0.9rem; text-align: left;">
+              <thead style="position: sticky; top: 0; background: #0f172a; z-index: 10;">
+                <tr id="aliados-thead-tr">
+                  <th>No hay datos cargados</th>
+                </tr>
+              </thead>
+              <tbody id="aliados-tbody">
+                <tr>
+                  <td style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                    Usa el botón "Cargar Excel" para visualizar el directorio de aliados comerciales.
+                  </td>
                 </tr>
               </tbody>
             </table>

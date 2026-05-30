@@ -691,6 +691,69 @@ window.handleImportarExcelFile = function(event) {
   reader.onerror = function() {
     alert("Error al leer el archivo Excel.");
     event.target.value = '';
+  reader.readAsArrayBuffer(file);
+};
+
+window.handleImportarAliados = function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, {type: 'array'});
+      const firstSheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[firstSheetName];
+      const rawData = XLSX.utils.sheet_to_json(sheet, {header: 1, defval: ''});
+      
+      if (rawData.length === 0) throw new Error("El archivo está vacío.");
+      
+      const headers = rawData[0];
+      const theadTr = document.getElementById('aliados-thead-tr');
+      if (theadTr) {
+        theadTr.innerHTML = '';
+        headers.forEach(h => {
+          const th = document.createElement('th');
+          th.textContent = h || 'Columna';
+          theadTr.appendChild(th);
+        });
+      }
+      
+      const tbody = document.getElementById('aliados-tbody');
+      if (tbody) {
+        tbody.innerHTML = '';
+        let hasData = false;
+        
+        for (let i = 1; i < rawData.length; i++) {
+          const row = rawData[i];
+          if (row.every(cell => cell === '')) continue;
+          
+          hasData = true;
+          const tr = document.createElement('tr');
+          for (let j = 0; j < headers.length; j++) {
+            const td = document.createElement('td');
+            td.textContent = row[j] !== undefined ? row[j] : '';
+            tr.appendChild(td);
+          }
+          tbody.appendChild(tr);
+        }
+        
+        if (!hasData) {
+          tbody.innerHTML = '<tr><td colspan="100%" style="text-align: center; color: var(--text-muted); padding: 2rem;">No se encontraron datos en el Excel.</td></tr>';
+        }
+      }
+      
+      alert("¡Directorio de aliados importado exitosamente!");
+    } catch (error) {
+      console.error("Error al procesar Excel:", error);
+      alert("Error al procesar el Excel: " + error.message);
+    }
+    event.target.value = '';
+  };
+  reader.onerror = function() {
+    alert("Error al leer el archivo Excel.");
+    event.target.value = '';
   };
   reader.readAsArrayBuffer(file);
 };
@@ -1407,7 +1470,8 @@ navBtns.forEach(btn => {
     tabContents.forEach(tc => tc.classList.remove('active'));
     btn.classList.add('active');
     const target = btn.getAttribute('data-target');
-    document.getElementById(target).classList.add('active');
+    const targetEl = document.getElementById(target);
+    if (targetEl) targetEl.classList.add('active');
 
     // Ocultar barra lateral en móvil al navegar
     const sidebar = document.querySelector('.sidebar');
