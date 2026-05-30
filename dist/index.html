@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0ea5e9">
+  <meta name="description" content="Análisis de costos reproductivos para ganadería bovina. By Solugan SG.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Iatf Pro">
+  <title>Iatf Pro - Análisis de Costos</title>
+
+  <!-- Capturar errores globales -->
+  <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      alert("⚠️ Error en la App:\n" + message + "\n\nArchivo: " + source + "\nLínea: " + lineno + "\nColumna: " + colno + "\n\nPor favor reporta esto.");
+      return false;
+    };
+    window.onunhandledrejection = function(event) {
+      alert("⚠️ Promesa fallida sin capturar:\n" + event.reason + "\n\nStack: " + (event.reason ? event.reason.stack : 'N/A'));
+    };
+  </script>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css?v=V 260530.7">
+
+  <!-- Fuentes locales (offline) -->
+  <style>
+    @font-face { font-family: 'Inter'; src: url('/fonts/inter-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('/fonts/inter-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('/fonts/inter-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+  </style>
+
+  <!-- Librerías locales (offline) -->
+  <script src="lucide.min.js"></script>
+  <script src="libs/chart.min.js"></script>
+  <script src="libs/chartjs-plugin-datalabels.min.js"></script>
+  <script src="libs/html2pdf.min.js"></script>
+  <script src="libs/xlsx-js-style.min.js"></script>
+  <!-- <script src="libs/xlsx.full.min.js"></script> -->
+  
+  <!-- Firebase Compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <!-- PANTALLA DE REGISTRO / INICIO DE SESIÓN DE FIREBASE -->
+  <div id="auth-container" class="auth-wrapper" style="display: flex; flex-direction: column; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: flex-start; align-items: center; padding: 1rem; overflow-y: auto; -webkit-overflow-scrolling: touch; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
+    <div class="welcome-card glass-panel" style="margin: auto 0; width: 100%; max-width: 600px; box-sizing: border-box;">
+      <div class="auth-header">
+        <div class="sidebar-header" style="justify-content: center; margin-bottom: 0.8rem;">
+          <div style="display:inline-flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:90px;height:90px;object-fit:contain;border-radius:16px;" alt="IATF Pro Logo"></div>
+          <span style="font-size: 1.1rem; color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg</span>
+        </div>
+        <h3 id="auth-subtitle" style="text-align: center; margin-bottom: 0.5rem; color: var(--accent); letter-spacing: 1px; font-size: 1.15rem;">REGISTRO DE USUARIO</h3>
+      </div>
+
+      <form id="register-form" onsubmit="handleRegister(event)" autocomplete="off">
+        <div class="grid-1" style="gap: 0.75rem;">
+          <div class="input-group" style="margin-bottom: 0;">
+            <label style="color: var(--accent); font-weight: 800;">NIT / C.C. (Llave de acceso)</label>
+            <input type="text" id="reg-nit" required placeholder="Ingresa tu identificación para buscar tu perfil" class="welcome-input" oninput="debouncedBuscarPerfilPorNit()" autocomplete="off">
+          </div>
+          <div class="input-group" style="margin-bottom: 0;">
+            <label>Nombre Completo / Razón Social</label>
+            <input type="text" id="reg-name" required placeholder="Nombre completo" class="welcome-input" autocomplete="name">
+          </div>
+          <div class="grid-2" style="gap: 0.75rem;">
+            <div class="input-group" style="margin-bottom: 0;">
+              <label>País</label>
+              <select id="reg-pais" class="welcome-input" autocomplete="off">
+                <option value="Colombia" selected>Colombia (+57)</option>
+                <option value="México">México (+52)</option>
+                <option value="Ecuador">Ecuador (+593)</option>
+                <option value="Panamá">Panamá (+507)</option>
+                <option value="Venezuela">Venezuela (+58)</option>
+                <option value="Argentina">Argentina (+54)</option>
+                <option value="Bolivia">Bolivia (+591)</option>
+                <option value="Brasil">Brasil (+55)</option>
+                <option value="Chile">Chile (+56)</option>
+                <option value="Costa Rica">Costa Rica (+506)</option>
+                <option value="El Salvador">El Salvador (+503)</option>
+                <option value="Guatemala">Guatemala (+502)</option>
+                <option value="Honduras">Honduras (+504)</option>
+                <option value="Nicaragua">Nicaragua (+505)</option>
+                <option value="Paraguay">Paraguay (+595)</option>
+                <option value="Perú">Perú (+51)</option>
+                <option value="Uruguay">Uruguay (+598)</option>
+                <option value="República Dominicana">República Dominicana (+1)</option>
+                <option value="España">España (+34)</option>
+                <option value="Estados Unidos">Estados Unidos (+1)</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+            <div class="input-group" style="margin-bottom: 0;">
+              <label>Teléfono / WhatsApp</label>
+              <input type="tel" id="reg-phone" required placeholder="Ej: 3147084328" class="welcome-input" autocomplete="tel">
+            </div>
+          </div>
+          <div class="input-group" style="margin-bottom: 0;">
+            <label>Finca o Empresa</label>
+            <input type="text" id="reg-finca" required placeholder="Nombre de tu finca" class="welcome-input" autocomplete="organization">
+          </div>
+          <div class="input-group" style="margin-bottom: 0;">
+            <label>Correo Electrónico</label>
+            <input type="email" id="reg-email" required placeholder="usuario@ejemplo.com" class="welcome-input" autocomplete="off">
+          </div>
+          <div class="input-group" style="margin-bottom: 0;">
+            <label>Contraseña</label>
+            <input type="password" id="reg-pass" required placeholder="Mínimo 6 caracteres" class="welcome-input" autocomplete="new-password">
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem; padding: 0.9rem; font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);">
+          <i data-lucide="play"></i> REGISTRARSE Y EMPEZAR
+        </button>
+        
+        <p class="auth-toggle" style="text-align: center; margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted);">
+          ¿Ya tienes cuenta? <span onclick="showLoginForm()" style="color: var(--accent); cursor: pointer; font-weight: bold; text-decoration: underline;">Inicia Sesión</span>
+        </p>
+      </form>
+
+      <form id="login-form" onsubmit="handleLogin(event)" style="display: none;" autocomplete="off">
+        <div class="grid-1" style="gap: 0.75rem;">
+          <div class="input-group" style="margin-bottom: 0;">
+            <label>Correo Electrónico</label>
+            <input type="email" id="login-email" required placeholder="usuario@ejemplo.com" class="welcome-input" autocomplete="off">
+          </div>
+          <div class="input-group" style="margin-bottom: 0;">
+            <label>Contraseña</label>
+            <input type="password" id="login-pass" required placeholder="Ingresa tu contraseña" class="welcome-input" autocomplete="new-password">
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem; padding: 0.9rem; font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);">
+          <i data-lucide="log-in"></i> INICIAR SESIÓN
+        </button>
+        
+        <p class="auth-toggle" style="text-align: center; margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted);">
+          ¿No tienes cuenta? <span onclick="showRegisterForm()" style="color: var(--accent); cursor: pointer; font-weight: bold; text-decoration: underline;">Regístrate</span>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <div class="app-container" id="app-main-layout" style="display: none;">
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 99; backdrop-filter: blur(4px);"></div>
+    <aside class="sidebar glass-panel">
+      <div class="sidebar-header">
+        <div class="logo-icon">
+          <img src="Logo Iatf Pro.png" style="width:60px;height:60px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
+        </div>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260530.7</span></span>
+        <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 6px 10px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
+          <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <div id="sidebar-consultor-name" style="font-size: 0.85rem; color: var(--accent); font-weight: 800; letter-spacing: 0.5px; word-break: break-all;"></div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-target="tablero-control">
+          <i data-lucide="settings"></i> <span data-i18n="sidebar_dashboard">Tablero de Control</span>
+        </button>
+        <button class="nav-btn" data-target="protocolo-inicial">
+          <i data-lucide="calendar"></i> <span data-i18n="sidebar_pi">Protocolo Inicial</span>
+        </button>
+        <button class="nav-btn" data-target="resincronizacion1">
+          <i data-lucide="refresh-cw"></i> <span data-i18n="sidebar_resx1">ReSx1</span>
+        </button>
+        <button class="nav-btn" data-target="resincronizacion2">
+          <i data-lucide="refresh-cw"></i> <span data-i18n="sidebar_resx2">ReSx2</span>
+        </button>
+        <button class="nav-btn" data-target="dashboard">
+          <i data-lucide="layout-dashboard"></i> <span data-i18n="sidebar_dash_roi">Dashboard y ROI</span>
+        </button>
+        <button class="nav-btn" data-target="buscador-historico">
+          <i data-lucide="search"></i> <span data-i18n="sidebar_history">Buscador Histórico</span>
+        </button>
+        <button class="nav-btn" data-target="admin-users" id="nav-btn-admin" style="display: none; border-left: 3px solid #f59e0b; color: #f59e0b; background: rgba(245, 158, 11, 0.03);">
+          <i data-lucide="users"></i> <span data-i18n="sidebar_admin">Usuarios (Admin)</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-content">
+          
+          <!-- SECCIÓN DE CONTACTO / SOPORTE -->
+          <div class="input-group" style="width: 100%; margin-bottom: 0;">
+            <button class="btn btn-whatsapp contact-btn" onclick="contactarWhatsApp()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.37 5.028L2 22l5.135-1.348a9.926 9.926 0 0 0 4.877 1.28h.004c5.505 0 9.99-4.478 9.99-9.984C22.007 6.478 17.518 2 12.012 2zm6.09 13.985c-.25.707-1.447 1.3-1.983 1.385-.482.076-1.11.137-3.23-.742-2.707-1.12-4.436-3.882-4.57-4.06-.135-.178-1.101-1.464-1.101-2.793 0-1.328.697-1.983.947-2.247.25-.263.55-.329.734-.329.183 0 .367.002.525.01.163.008.384-.06.6-.06.22 0 .452.082.64.526.194.462.668 1.632.727 1.75.06.118.098.256.02.412-.08.156-.118.256-.237.395-.118.14-.25.312-.355.42-.11.11-.226.23-.097.45.128.22.57 1.012 1.218 1.588.838.745 1.543.976 1.763 1.085.22.11.35.093.48-.057.13-.15.556-.647.705-.87.15-.223.3-.186.505-.11.205.076 1.302.613 1.528.727.227.113.377.17.434.27.057.1.057.576-.192 1.285z"/>
+              </svg>
+              <span data-i18n="btn_contact_wa">Contáctenos</span>
+            </button>
+          </div>
+
+          <div class="lang-group">
+            <label class="lang-label">LANGUAGE / IDIOMA</label>
+            <select id="language-selector" onchange="changeLanguage(this.value)" class="lang-select">
+              <option value="es" style="background: #0f172a; color: #fff;">Español (ES)</option>
+              <option value="en" style="background: #0f172a; color: #fff;">English (EN)</option>
+              <option value="pt" style="background: #0f172a; color: #fff;">Português (PT)</option>
+            </select>
+          </div>
+
+          <!-- SECCIÓN DE CERRAR SESIÓN -->
+          <div class="input-group" style="width: 100%; margin-top: 1rem; margin-bottom: 0;">
+            <button class="btn" id="btn-logout" onclick="handleLogout()" style="padding: 0.5rem; font-size: 0.75rem; background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); width: 100%; justify-content: center; border-radius: 8px; font-weight: bold;">
+              <i data-lucide="log-out" style="width: 12px; height: 12px; margin-right: 4px;"></i> <span data-i18n="btn_logout">Cerrar Sesión</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+
+      <!-- Cabecera Móvil (Hamburguesa) -->
+      <div class="mobile-header" style="display: none;">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
+          <i data-lucide="menu"></i>
+        </button>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260530.7</span></span>
+        <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
+      </div>
+
+      <!-- 1. TABLERO DE CONTROL (Idéntico al Excel) -->
+      <section id="tablero-control" class="tab-content active view-transition">
+        <header class="section-header">
+          <h1 data-i18n="tc_title">TABLERO DE CONTROL CARNE Y LECHE</h1>
+          <p data-i18n="tc_subtitle">Métricas productivas base y matriz de programación de protocolos</p>
+        </header>
+
+        <!-- TABLERO DE CONTROL CARNE Y LECHE (Formato Original Excel) -->
+        <div class="glass-panel p-2 mb-2">
+          <div style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
+            <!-- CONFIGURACIÓN PROTEGIDA: Finca (span 1, 1.5fr) y Ubicación (span 2, 2fr) optimizados para evitar scrollbars y mostrar textos completos. NO CAMBIAR. -->
+            <div class="grid-5" style="grid-template-columns: 1fr 1fr 1.5fr 1fr 1fr; align-items: end;">
+              <div class="input-group" style="grid-column: span 2;">
+                <label data-i18n="tc_ganaderia" style="color: var(--accent); font-weight: 800;">TIPO DE GANADERÍA / MODELO PRODUCTIVO</label>
+                <select id="pi-ganaderia" onchange="updateResultados();" style="font-size: 1.1rem; padding: 0.7rem; border-color: var(--accent); background: rgba(14, 165, 233, 0.05);">
+                  <option value="">-- SELECCIONAR --</option>
+                  <option value="Lecheria Especializada">Lechería Especializada</option>
+                  <option value="Cria Comercial">Cría Comercial</option>
+                  <option value="Ganado Puro">Ganado Puro</option>
+                  <option value="Doble Proposito">Doble Propósito</option>
+                </select>
+              </div>
+              <div class="input-group" style="grid-column: span 1;">
+                <label style="color: var(--text-muted);">Nombre de la Finca / Proyecto</label>
+                <input type="text" id="pi-finca" placeholder="Nombre del predio" style="font-size: 1.1rem; padding: 0.7rem;" oninput="debouncedUpdateResultados()">
+              </div>
+              <div class="input-group" style="grid-column: span 2;">
+                <label style="color: var(--text-muted);">Ubicación</label>
+                <input type="text" id="pi-ubicacion" placeholder="Municipio / Dpto" style="font-size: 1.1rem; padding: 0.7rem;" oninput="debouncedUpdateResultados()">
+              </div>
+            </div>
+          </div>
+          <!-- Módulos de Producción en Grid Responsivo -->
+          <div class="tablero-grid">
+            
+            <!-- Bloque de Leche -->
+            <div class="glass-panel tablero-card" style="border-top: 4px solid var(--accent); background: linear-gradient(180deg, rgba(14, 165, 233, 0.02) 0%, rgba(15, 23, 42, 0.4) 100%);">
+              <div class="tablero-card-header">
+                <span class="tablero-card-title" style="color: var(--accent);">
+                  <i data-lucide="droplet"></i> <span data-i18n="tc_leche_title">Producción de Leche</span>
+                </span>
+                <button class="btn"
+                  style="padding: 0.3rem 0.6rem; font-size: 0.75rem; background: rgba(14, 165, 233, 0.1); color: var(--accent); border: 1px solid rgba(14, 165, 233, 0.3);"
+                  onclick="limpiarModuloLeche()" title="Limpiar datos de Leche">
+                  <i data-lucide="trash-2" style="width:14px;height:14px;"></i> <span data-i18n="btn_limpiar">Limpiar</span>
+                </button>
+              </div>
+              <div class="tablero-card-body">
+                <div class="tablero-row">
+                  <label data-i18n="tc_precio_leche">Precio Venta Litro Leche</label>
+                  <div class="spinner-wrap">
+                    <button class="spin-btn minus" onclick="spinVal('tc-precio-leche', -20, true)">&#8722;</button>
+                    <input type="text" id="tc-precio-leche" value="0" class="cell-input" oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
+                    <button class="spin-btn plus" onclick="spinVal('tc-precio-leche', 20, true)">&#43;</button>
+                  </div>
+                </div>
+                <div class="tablero-row">
+                  <label data-i18n="tc_duracion">Duración Lactancia</label>
+                  <div class="spinner-wrap">
+                    <button class="spin-btn minus" onclick="spinVal('tc-duracion-lactancia', -10, false)">&#8722;</button>
+                    <input type="number" id="tc-duracion-lactancia" value="0" class="cell-input" onchange="calcTableroControl()">
+                    <button class="spin-btn plus" onclick="spinVal('tc-duracion-lactancia', 10, false)">&#43;</button>
+                  </div>
+                </div>
+                <div class="tablero-row">
+                  <label data-i18n="tc_litros">Litros Por Lactancia</label>
+                  <div class="spinner-wrap">
+                    <button class="spin-btn minus" onclick="spinVal('tc-litros-lactancia', -50, true)">&#8722;</button>
+                    <input type="text" id="tc-litros-lactancia" value="0" class="cell-input" oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
+                    <button class="spin-btn plus" onclick="spinVal('tc-litros-lactancia', 50, true)">&#43;</button>
+                  </div>
+                </div>
+                <div class="tablero-indicator">
+                  <span class="text-muted" data-i18n="tc_promedio_lts" style="font-weight: 500; font-size: 0.85rem;">Promedio Lts/Animal</span>
+                  <strong id="tc-promedio-leche" style="font-size: 1.1rem;">0.00</strong>
+                </div>
+                <div class="tablero-indicator tablero-indicator-success">
+                  <strong data-i18n="tc_ingreso_leche" style="font-size: 0.85rem;">Ingreso Venta Leche/Animal</strong>
+                  <span class="indicator-value" id="tc-ingreso-leche">$ 0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bloque de Carne -->
+            <div class="glass-panel tablero-card" style="border-top: 4px solid #ef4444; background: linear-gradient(180deg, rgba(239, 68, 68, 0.02) 0%, rgba(15, 23, 42, 0.4) 100%);">
+              <div class="tablero-card-header">
+                <span class="tablero-card-title" style="color: #ef4444;">
+                  <i data-lucide="beef"></i> <span data-i18n="tc_carne_title">Producción de Carne</span>
+                </span>
+                <button class="btn"
+                  style="padding: 0.3rem 0.6rem; font-size: 0.75rem; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);"
+                  onclick="limpiarModuloCarne()" title="Limpiar datos de Carne">
+                  <i data-lucide="trash-2" style="width:14px;height:14px;"></i> <span data-i18n="btn_limpiar">Limpiar</span>
+                </button>
+              </div>
+              <div class="tablero-card-body">
+                <div class="tablero-row">
+                  <label data-i18n="tc_precio_carne">Precio Venta Kilo Carne</label>
+                  <div class="spinner-wrap">
+                    <button class="spin-btn minus" onclick="spinVal('tc-precio-carne', -20, true)">&#8722;</button>
+                    <input type="text" id="tc-precio-carne" value="0" class="cell-input" oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
+                    <button class="spin-btn plus" onclick="spinVal('tc-precio-carne', 20, true)">&#43;</button>
+                  </div>
+                </div>
+                <div class="tablero-row">
+                  <label data-i18n="tc_duracion_carne">Días a Destete</label>
+                  <div class="spinner-wrap">
+                    <button class="spin-btn minus" onclick="spinVal('tc-duracion-carne', -10, false)">&#8722;</button>
+                    <input type="number" id="tc-duracion-carne" value="0" class="cell-input" onchange="calcTableroControl()">
+                    <button class="spin-btn plus" onclick="spinVal('tc-duracion-carne', 10, false)">&#43;</button>
+                  </div>
+                </div>
+                <div class="tablero-row">
+                  <label data-i18n="tc_peso">Peso Destete</label>
+                  <div class="spinner-wrap">
+                    <button class="spin-btn minus" onclick="spinVal('tc-peso-destete', -5, true)">&#8722;</button>
+                    <input type="text" id="tc-peso-destete" value="0" class="cell-input" oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
+                    <button class="spin-btn plus" onclick="spinVal('tc-peso-destete', 5, true)">&#43;</button>
+                  </div>
+                </div>
+                <div class="tablero-indicator">
+                  <span class="text-muted" data-i18n="tc_promedio_kg" style="font-weight: 500; font-size: 0.85rem;">Promedio Kg/Animal</span>
+                  <strong id="tc-promedio-carne" style="font-size: 1.1rem;">0.00</strong>
+                </div>
+                <div class="tablero-indicator tablero-indicator-success">
+                  <strong data-i18n="tc_ingreso_carne" style="font-size: 0.85rem;">Ingreso Venta Carne/Animal</strong>
+                  <span class="indicator-value" id="tc-ingreso-carne">$ 0</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Costo Sostenimiento Diario (Centrado al final) -->
+          <div class="glass-panel p-1-5 sostenimiento-card" style="border: 1px solid rgba(251, 191, 36, 0.3); border-left: 5px solid #fbbf24; background: rgba(251, 191, 36, 0.02); display: flex; justify-content: space-between; align-items: center; border-radius: 12px; margin-top: 1rem; flex-wrap: wrap; gap: 1rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 1.5rem;">💰</span>
+              <div>
+                <strong style="color: #fbbf24; font-size: 0.95rem; display: block;">Costo Sostenimiento Diario</strong>
+                <span class="text-muted" style="font-size: 0.75rem;">Costo de manutención diario por animal</span>
+              </div>
+            </div>
+            <div class="spinner-wrap" style="border-color: #fbbf24; background: rgba(15, 23, 42, 0.5);">
+              <button class="spin-btn minus" onclick="spinVal('pi-costo-sostenimiento', -20, true); debouncedUpdateResultados();" style="padding: 0 12px; font-size: 1rem; color: #fbbf24;">&#8722;</button>
+              <input type="text" id="pi-costo-sostenimiento" value="0" class="cell-input" style="text-align:center; font-weight:700; color:#fbbf24; font-size: 1.1rem; min-width: 120px; background: transparent; border: none;" oninput="formatInputCurrency(this); debouncedUpdateResultados();">
+              <button class="spin-btn plus" onclick="spinVal('pi-costo-sostenimiento', 20, true); debouncedUpdateResultados();" style="padding: 0 12px; font-size: 1rem; color: #fbbf24;">&#43;</button>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- MATRIZ DE PROTOCOLOS -->
+        <div class="glass-panel p-2">
+          <div class="matriz-header-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 1rem;">
+             <h2 class="form-title text-accent" style="margin: 0; border: none; padding: 0;"><i data-lucide="table"></i> <span data-i18n="tc_matriz_title">MATRIZ DE PROTOCOLOS</span></h2>
+             <button class="btn" onclick="toggleVerProtocolos()" id="btn-toggle-protocolos" style="background: var(--accent); border-color: rgba(14, 165, 233, 0.4); color: white;"><i data-lucide="eye"></i> <span data-i18n="btn_show_p">Mostrar Protocolos Base</span></button>
+          </div>
+
+          <div id="matriz-container" style="display: none; animation: fadeIn 0.3s ease;">
+            <div class="matriz-tools-row"
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
+              <p class="text-muted" style="font-size: 0.85rem; margin: 0;" id="lbl-matriz-instruccion">Modo Consulta.
+                Haz clic en "Edición Bloqueada" para modificar.</p>
+              <div style="display: flex; gap: 0.5rem;" id="matriz-tools">
+                <button class="btn btn-primary" style="background: var(--accent); color: #fff; font-weight: 700;"
+                  onclick="unlockMatriz()" id="btn-unlock"><i data-lucide="lock"></i> <span
+                    data-i18n="btn_edit">Edición Bloqueada</span></button>
+                <button class="btn"
+                  style="background: var(--success); color: #fff; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); font-weight: 800; display: none;"
+                  onclick="agregarNuevoProtocolo()" id="btn-add-protocolo"><i data-lucide="plus"></i> <span
+                    data-i18n="btn_new">NUEVO</span></button>
+                
+                <!-- IMPORTACION EXCEL (solo admin en modo edición) -->
+                <input type="file" id="btn-importar-excel" accept=".xlsx, .xls" style="display: none;" onchange="handleImportarExcelFile(event)">
+                <button class="btn" id="btn-trigger-excel"
+                  style="background: #10b981; color: #fff; font-weight: 700; border-color: #10b981; display: none;"
+                  onclick="document.getElementById('btn-importar-excel').click()">
+                  <i data-lucide="upload-cloud"></i> Subir Excel
+                </button>
+                <button class="btn" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; display: none;"
+                  onclick="restaurarProtocolosBase()" id="btn-reset-matriz"><i data-lucide="rotate-ccw"></i> <span
+                    data-i18n="btn_reset">Restaurar Base</span></button>
+                <button class="btn btn-primary" onclick="guardarMatrizProtocolos()" id="btn-save-matriz"
+                  style="display: none;"><i data-lucide="save"></i> <span data-i18n="btn_save">Guardar y
+                    Bloquear</span></button>
+              </div>
+            </div>
+
+            <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+              <table class="data-table" id="tabla-matriz" style="font-size: 0.8rem; text-align: center;">
+                <thead
+                  style="position: sticky; top: 0; background: #0f172a; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+                  <tr>
+                    <th style="text-align: left; background: #0f172a;">Protocolos / Hormonas</th>
+                    <th>DIB<br><small>Día</small></th>
+                    <th>B.E. 1<br><small>Día</small></th>
+                    <th>B.E. 2<br><small>Día</small></th>
+                    <th>GnRh 1<br><small>Día</small></th>
+                    <th>GnRh 2<br><small>Día</small></th>
+                    <th>Pgf2@ 1<br><small>Día</small></th>
+                    <th>Pgf2@ 2<br><small>Día</small></th>
+                    <th>Pgf2@ 3<br><small>Día</small></th>
+                    <th>eCG<br><small>Día</small></th>
+                    <th>C.E.<br><small>Día</small></th>
+                    <th>Genética<br><small>Día</small></th>
+                    <th>Retiro<br><small>Día</small></th>
+                    <th>Asis. 1<br><small>Día</small></th>
+                    <th>Asis. 2<br><small>Día</small></th>
+                    <th style="padding: 4px; font-size: 0.75rem;">IA/TE<br><small>Día</small></th>
+                    <th>Aspiración<br><small>Folicular</small></th>
+                    <th>Dx1<br><small>Día</small></th>
+                    <th>Dx2<br><small>Día</small></th>
+                    <th style="padding: 4px; font-size: 0.75rem; min-width: 280px;">Observaciones</th>
+                    <th id="th-acciones" style="display: none; background: #ef4444; color:#fff;">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tc-matriz-body">
+                  <!-- Generado por app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+      </section>
+
+      <!-- RESTO DE PESTAÑAS (Vacías temporalmente para el scaffolding o con su contenido básico) -->
+      <!-- 2. PROTOCOLO INICIAL -->
+      <section id="protocolo-inicial" class="tab-content view-transition">
+        <div style="margin-bottom: 2rem;">
+          <header class="section-header" style="margin-bottom: 0;">
+            <h1 data-i18n="pi_title">Protocolo Inicial</h1>
+            <p data-i18n="pi_subtitle">Generación de cronograma detallado comercial y aplicado.</p>
+          </header>
+        </div>
+
+        <div class="glass-panel p-2 mb-2">
+          <!-- Fila 1: Datos de Identificación y Tiempo -->
+          <div class="grid-2 mb-2" style="border-bottom: 1px solid var(--glass-border); padding-bottom: 1.5rem;">
+            <div class="input-group">
+              <label data-i18n="pi_date">Fecha de Inicio</label>
+              <input type="date" id="pi-fecha" onchange="syncFases(); ejecutarProtocoloInicial();">
+            </div>
+            <div class="input-group">
+              <label data-i18n="pi_time">Hora de Inicio</label>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <input type="time" id="pi-hora" value="08:00" class="cell-input"
+                  style="flex: 1; font-weight: 800; font-size: 1.1rem; color: var(--warning);"
+                  onchange="ejecutarProtocoloInicial()">
+                <button class="btn btn-highlight-time" title="Configurar Hora"
+                  onclick="document.getElementById('pi-hora').focus(); document.getElementById('pi-hora').showPicker();">
+                  <i data-lucide="clock" style="width: 24px; height: 24px;"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fila 2: Programación y Métricas Principales -->
+          <div class="grid-3 mb-2">
+            <div class="input-group">
+              <label data-i18n="pi_select_p">Protocolo a Sincronizar</label>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <select id="pi-protocolo" style="flex: 1;" onchange="onProtocoloChange(event)">
+                  <option value="">-- SELECCIONAR PROTOCOLO --</option>
+                </select>
+                <button class="btn btn-secondary" onclick="irAEditarMatriz()" title="Editar Protocolos"
+                  style="padding: 0.5rem; background: rgba(255,255,255,0.1);">
+                  <i data-lucide="edit-3" style="width: 16px; height: 16px;"></i>
+                </button>
+              </div>
+            </div>
+            <div class="input-group">
+              <label data-i18n="pi_animals">Animales a Sincronizar</label>
+              <div class="spinner-wrap" style="border-radius: 10px;">
+                <button class="spin-btn minus" onclick="spinVal('pi-animales', -1, false); debouncedAutoCalcPrenez();"
+                  style="min-height: 52px; font-size: 1.4rem;">&#8722;</button>
+                <input type="number" id="pi-animales" value="0" min="0" oninput="debouncedAutoCalcPrenez()"
+                  style="font-size: 1.5rem; font-weight: 800; padding: 0.8rem; text-align: center;">
+                <button class="spin-btn plus" onclick="spinVal('pi-animales', 1, false); debouncedAutoCalcPrenez();"
+                  style="min-height: 52px; font-size: 1.4rem;">&#43;</button>
+              </div>
+            </div>
+            <div class="input-group">
+              <label data-i18n="pi_preg">Preñeces (Proyectado o Dx1 Real)</label>
+              <div class="pi-preg-row"
+                style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
+                  <button class="spin-btn minus"
+                    onclick="spinVal('pi-prenadas', -1, false); debouncedAutoCalcPorcentaje();">&#8722;</button>
+                  <input type="number" id="pi-prenadas" value="0" min="0" oninput="debouncedAutoCalcPorcentaje()"
+                    onchange="autoCalcPorcentaje()"
+                    style="font-size: 1.5rem; font-weight: 800; background: transparent; border: none; text-align: center;">
+                  <button class="spin-btn plus"
+                    onclick="spinVal('pi-prenadas', 1, false); debouncedAutoCalcPorcentaje();">&#43;</button>
+                </div>
+                <div class="pi-preg-divider" style="width: 1px; height: 30px; background: var(--glass-border);"></div>
+                <div class="pi-preg-percent-wrap" style="display: flex; align-items: center; flex: 1; justify-content: center;">
+                  <div class="spinner-wrap" style="border-radius: 8px; border-color: var(--accent);">
+                    <button class="spin-btn minus"
+                      onclick="spinVal('pi-porcentaje', -1, false); debouncedAutoCalcDesdePorcentaje();"
+                      style="color: var(--accent);">&#8722;</button>
+                    <input type="number" id="pi-porcentaje" value="0" min="0" max="100"
+                      oninput="debouncedAutoCalcDesdePorcentaje()" onchange="autoCalcDesdePorcentaje()" class="text-accent"
+                      style="width: 55px; font-size: 2rem; font-weight: 800; background: transparent; border: none; padding: 0 4px; text-align: center; outline: none;">
+                    <span class="text-accent"
+                      style="font-size: 1.25rem; font-weight: bold; padding-right: 4px;">%</span>
+                    <button class="spin-btn plus"
+                      onclick="spinVal('pi-porcentaje', 1, false); debouncedAutoCalcDesdePorcentaje();"
+                      style="color: var(--accent);">&#43;</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fila 3: Opciones de Resincronización (Destacadas) -->
+          <div class="resync-toggle-card"
+            style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid var(--glass-border); margin-top: 1rem;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-weight: 600; color: var(--text-main);" data-i18n="pi_include_resync">¿Deseas incluir
+                fases de resincronización?</span>
+            </div>
+            <div class="resync-toggle-options" style="display: flex; gap: 1.5rem;">
+              <div id="wrapper-check-resx1"
+                style="display: flex; align-items: center; gap: 1rem; background: rgba(14, 165, 233, 0.1); padding: 12px 24px; border-radius: 12px; border: 1px solid var(--accent); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.1);">
+                <span id="label-check-resx1" class="text-accent" style="font-size: 1rem; font-weight: 800; white-space: nowrap;"
+                  data-i18n="pi_include_resx1">INCLUIR Resincronización 1</span>
+                <label class="switch" style="transform: scale(1.25);">
+                  <input type="checkbox" id="pi-check-resx1" onchange="toggleFase('resincronizacion1', this.checked)">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <div id="wrapper-check-resx2"
+                style="display: flex; align-items: center; gap: 1rem; background: rgba(168, 85, 247, 0.1); padding: 12px 24px; border-radius: 12px; border: 1px solid #a855f7; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.1);">
+                <span id="label-check-resx2" style="font-size: 1rem; font-weight: 800; white-space: nowrap; color: #a855f7;"
+                  data-i18n="pi_include_resx2">INCLUIR Resincronización 2</span>
+                <label class="switch" style="transform: scale(1.25);">
+                  <input type="checkbox" id="pi-check-resx2" onchange="toggleFase('resincronizacion2', this.checked)">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;" class="export-actions">
+            <button class="btn btn-secondary" onclick="abrirModalPrecios('pi')"
+              style="background: rgba(255,255,255,0.9); color: #000; font-weight: 600;">
+              <i data-lucide="package"></i> <span data-i18n="btn_config">Configuración precios y dosis</span>
+            </button>
+            <button class="btn btn-primary" onclick="toggleProtocolo('pi')" id="btn-toggle-pi">
+              <i data-lucide="eye"></i> <span id="txt-toggle-pi" data-i18n="btn_show_p">MOSTRAR PROTOCOLO</span>
+            </button>
+            <button class="btn"
+              style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);"
+              onclick="borrarDatosFase('pi')">
+              <i data-lucide="trash-2"></i> <span data-i18n="btn_delete">BORRAR DATOS</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="pi-resultados" style="display: none; animation: fadeIn 0.3s ease;">
+          <div id="pi-ia-info"
+            style="margin-bottom: 1rem; padding: 1.5rem; background: rgba(14, 165, 233, 0.05); border: 1px solid rgba(14, 165, 233, 0.2); border-left: 5px solid var(--accent); border-radius: 8px; display: none; align-items: center; gap: 1rem;">
+          </div>
+
+          <div class="table-responsive glass-panel p-1 mb-2">
+            <table class="data-table" style="font-size: 0.8rem;">
+              <thead>
+                <tr>
+                  <th>Día</th>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Actividad / Insumo</th>
+                  <th style="text-align: center;">Dosis</th>
+                  <th style="text-align: center;">Und</th>
+                  <th style="text-align: center; color: var(--accent);">VALOR UNITARIO</th>
+                  <th style="text-align: right; color: var(--success);">INVERSIÓN TOTAL</th>
+                </tr>
+              </thead>
+              <tbody id="tc-pi-body"></tbody>
+              <tfoot style="background: rgba(255,255,255,0.05); border-top: 2px solid var(--accent);">
+                <tr>
+                  <td colspan="4" style="text-align: left; padding: 1rem 0.5rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                      <span>🧪 <span data-i18n="pi_hormones_ref">Hormonas/Vaca</span>: <strong id="pi-hormonas-footer" style="color: #fbbf24; font-size: 0.95rem;">$ 0</strong></span>
+                      <span style="opacity: 0.3;">|</span>
+                      <span>🐂 <span data-i18n="pi_iate_ref">IA/TE/Vaca</span>: <strong id="pi-iate-footer" style="color: #60a5fa; font-size: 0.95rem;">$ 0</strong></span>
+                    </div>
+                  </td>
+                  <td colspan="3"
+                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);">INVERSIÓN
+                    TOTAL APLICADA POR ANIMAL:</td>
+                  <td id="pi-total-footer"
+                    style="text-align: right; padding: 1rem; font-size: 1.1rem; font-weight: 800; color: var(--success);">
+                    $ 0</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <!-- Desglose por Rubros -->
+          <div style="margin-bottom: 1.5rem;">
+            <h3 class="form-title"
+              style="border:none; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">DESGLOSE DE
+              INVERSIÓN POR RUBROS</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+              <div class="glass-panel p-1-5" style="border-left: 4px solid var(--accent);">
+                <span class="stat-label" style="font-size:0.65rem;">Hormonas</span>
+                <div id="pi-cat-hormonas" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+              <div class="glass-panel p-1-5" style="border-left: 4px solid #a855f7;">
+                <span class="stat-label" style="font-size:0.65rem;">Genética (Semen/Embrión)</span>
+                <div id="pi-cat-genetica" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+              <div class="glass-panel p-1-5" style="border-left: 4px solid #f59e0b;">
+                <span class="stat-label" style="font-size:0.65rem;">ASISTENCIA TÉCNICA</span>
+                <div id="pi-cat-asistencia" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+              <div class="glass-panel p-1-5" style="border-left: 4px solid #ec4899;">
+                <span class="stat-label" style="font-size:0.65rem;">HONORARIOS IA / TE</span>
+                <div id="pi-cat-iate" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+              <div class="glass-panel p-1-5" style="border-left: 4px solid var(--success);">
+                <span class="stat-label" style="font-size:0.65rem;">Confirmación de Preñez</span>
+                <div id="pi-cat-diagnostico" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;" class="export-actions">
+            <button class="btn btn-secondary" onclick="exportarExcel()"><i data-lucide="file-spreadsheet"></i> <span
+                data-i18n="btn_excel">Excel</span></button>
+            <button class="btn" style="background:#25D366; color:#fff; border-color:#25D366;"
+              onclick="enviarWhatsApp()"><i data-lucide="send"></i> <span data-i18n="btn_wa">WhatsApp</span></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODAL DE PRECIOS E INVENTARIO -->
+      <div id="modal-precios"
+        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.6); z-index:999; justify-content:center; align-items:center; backdrop-filter:blur(5px);">
+        <div class="glass-panel modal-precios-content"
+          style="padding: 2rem; width: 95%; max-width: 1400px; max-height: 90vh; overflow-y:auto; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+          <h2 class="form-title text-accent m-0" id="modal-title" style="margin-bottom:0.5rem;" data-i18n="modal_title"><i
+              data-lucide="package"></i> Configuración precios y dosis</h2>
+          <p class="text-muted" id="modal-subtitle" style="font-size:0.85rem; margin-bottom:1.5rem" data-i18n="modal_subtitle">Mostrando
+            exclusivamente los insumos requeridos por el protocolo actualmente seleccionado.</p>
+
+          <div class="table-responsive">
+            <table class="data-table" style="font-size: 0.85rem;">
+              <thead>
+                <tr>
+                  <th style="text-align: left; padding-left: 2rem;" data-i18n="col_insumo">Insumo / Servicio</th>
+                  <th style="text-align: center;"><span data-i18n="col_dosis">Dosis
+                      Estándar</span><br><small>(Und/ml)</small></th>
+                  <th style="text-align: center;" data-i18n="col_presentacion">Presentación Producto</th>
+                  <th style="text-align: center; vertical-align: middle;">
+                    <div style="display: flex; flex-direction: column; align-items: center; line-height: 1.2;">
+                      <span style="white-space: nowrap;" data-i18n="col_valor_c">VALOR DE COMPRA</span>
+                      <span
+                        style="color: var(--accent); font-size: 0.7rem; display: flex; align-items: center; gap: 4px;">
+                        ($)
+                      </span>
+                    </div>
+                  </th>
+                  <th style="text-align: center;" data-i18n="col_cant">Cant. a comprar</th>
+                  <th style="text-align: center;" data-i18n="col_costo_total">Costo Consolidado ($)</th>
+                  <th style="text-align: center; color: #f59e0b;" data-i18n="col_valor_d">VALOR DOSIS ($)</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-modal-precios">
+                <!-- Renderizado por js -->
+              </tbody>
+            </table>
+          </div>
+
+          <div id="modal-footer-summary" class="modal-summary-grid"
+            style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border); display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem;">
+            <div class="glass-panel p-1" style="background: rgba(14, 165, 233, 0.05);">
+              <span class="stat-label" style="font-size:0.6rem;">VALOR HORMONA APLICADA</span>
+              <div id="mod-total-hormonas" style="font-weight:700; color: var(--accent);">$ 0</div>
+            </div>
+            <div class="glass-panel p-1" style="background: rgba(168, 85, 247, 0.05);">
+              <span class="stat-label" style="font-size:0.6rem;">VALOR COMPRA GENÉTICA</span>
+              <div id="mod-total-genetica" style="font-weight:700; color: #a855f7;">$ 0</div>
+            </div>
+            <div class="glass-panel p-1" style="background: rgba(245, 158, 11, 0.05);">
+              <span class="stat-label" style="font-size:0.6rem;">VALOR ASISTENCIA TÉCNICA</span>
+              <div id="mod-total-asistencia" style="font-weight:700; color: #f59e0b;">$ 0</div>
+            </div>
+            <div class="glass-panel p-1" style="background: rgba(236, 72, 153, 0.05);">
+              <span class="stat-label" style="font-size:0.6rem;">VALOR IA / TE</span>
+              <div id="mod-total-iate" style="font-weight:700; color: #ec4899;">$ 0</div>
+            </div>
+            <div class="glass-panel p-1" style="background: rgba(16, 185, 129, 0.05);">
+              <span class="stat-label" style="font-size:0.6rem;">VALOR CONF. PREÑEZ</span>
+              <div id="mod-total-diagnostico" style="font-weight:700; color: var(--success);">$ 0</div>
+            </div>
+          </div>
+
+          <div style="text-align: right; margin-top: 2rem;">
+            <button class="btn btn-secondary" onclick="cerrarModalPrecios()"
+              style="margin-right:0.5rem">Cancelar</button>
+            <button class="btn btn-primary" onclick="guardarPreciosModal()"><i data-lucide="check"></i> Actualizar
+              Sistema</button>
+          </div>
+        </div>
+      </div>
+
+      <section id="resincronizacion1" class="tab-content view-transition">
+        <header class="section-header">
+          <div class="header-content">
+            <h1 data-i18n="resx1_title">Resincronización 1 (ReSx1)</h1>
+            <p class="text-muted" data-i18n="resx1_subtitle">Gestión de animales vacíos tras el primer diagnóstico
+              (Dx1).</p>
+          </div>
+        </header>
+
+        <div class="glass-panel p-2 mb-2" style="background: rgba(14, 165, 233, 0.02);">
+          <div class="grid-4 mb-2" style="align-items: center;">
+            <div class="input-group">
+              <label>Protocolo ReSx1</label>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <select id="resx1-protocolo" style="flex: 1; color: white !important; opacity: 1 !important; -webkit-text-fill-color: white !important;" disabled>
+                  <option value="REC 1" selected>RESINCRONIZACIÓN 1 (REC 1)</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Animales en Resincronización (Vacías Dx1)</label>
+              <div id="resx1-lbl-animales" style="font-size: 2rem; font-weight: 800; color: var(--accent);">0</div>
+              <input type="hidden" id="resx1-animales" value="0">
+            </div>
+            <div class="input-group" style="text-align: center;">
+              <label>Fecha Inicio (Auto)</label>
+              <div id="resx1-lbl-fecha" class="text-muted" style="font-size: 1.1rem; font-weight: 600;">-- -- --</div>
+              <input type="hidden" id="resx1-fecha">
+            </div>
+            <div class="input-group">
+              <label>Hora de Inicio</label>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <input type="time" id="resx1-hora" value="08:00" class="cell-input"
+                  style="flex: 1; font-weight: 800; font-size: 1.1rem; color: var(--warning);"
+                  onchange="ejecutarResx1()">
+                <button class="btn btn-highlight-time" title="Configurar Hora"
+                  onclick="document.getElementById('resx1-hora').focus(); document.getElementById('resx1-hora').showPicker();">
+                  <i data-lucide="clock" style="width: 24px; height: 24px;"></i>
+                </button>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Preñeces ReSx1 (Proyectado o Real)</label>
+              <div style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
+                  <button class="spin-btn minus" onclick="spinVal('resx1-prenadas', -1, false); debouncedAutoCalcPrenResx1();">&#8722;</button>
+                  <input type="number" id="resx1-prenadas" value="0" min="0" oninput="debouncedAutoCalcPrenResx1()" onchange="autoCalcPrenResx1()" style="font-size: 1.5rem; font-weight: 800; background: transparent; border: none; text-align: center;">
+                  <button class="spin-btn plus" onclick="spinVal('resx1-prenadas', 1, false); debouncedAutoCalcPrenResx1();">&#43;</button>
+                </div>
+                <div style="width: 1px; height: 30px; background: var(--glass-border);"></div>
+                <div style="display: flex; align-items: baseline; flex: 1; justify-content: center;">
+                  <span id="resx1-porcentaje" class="text-accent" style="font-size: 2rem; font-weight: 800;">0</span>
+                  <span class="text-accent" style="font-size: 1.25rem; font-weight: bold; padding-left: 2px;">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1.5rem; justify-content: flex-end;">
+            <button class="btn btn-secondary" onclick="abrirModalPrecios('resx1')">
+              <i data-lucide="package"></i> Ver/Ajustar Precios Fase
+            </button>
+            <button id="btn-toggle-resx1" class="btn btn-primary" onclick="toggleProtocolo('resx1')">
+              <i data-lucide="eye"></i> <span id="txt-toggle-resx1" data-i18n="btn_show_p">MOSTRAR PROTOCOLO</span>
+            </button>
+            <button class="btn"
+              style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);"
+              onclick="resetPantallaResx1()">
+              <i data-lucide="trash-2"></i> REINICIAR FASE
+            </button>
+          </div>
+        </div>
+
+        <div id="resx1-resultados" style="display: none; animation: fadeIn 0.3s ease;">
+          <div id="resx1-ia-info"
+            style="margin-bottom: 1rem; padding: 1.5rem; background: rgba(14, 165, 233, 0.05); border: 1px solid rgba(14, 165, 233, 0.2); border-left: 5px solid var(--accent); border-radius: 8px; display: none; align-items: center; gap: 1rem;">
+          </div>
+          <div id="resx1-ia-info" class="glass-panel mb-2"
+            style="display:none; align-items:center; gap:1rem; padding: 1rem; border-left: 4px solid var(--accent); background: rgba(59, 130, 246, 0.05); color: var(--text);">
+          </div>
+          <div class="table-responsive glass-panel p-1">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Día</th>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Hormona / Insumo</th>
+                  <th style="text-align:center;">Dosis</th>
+                  <th style="text-align:center;">VALOR UNITARIO</th>
+                </tr>
+              </thead>
+              <tbody id="tc-resx1-body"></tbody>
+              <tfoot style="background: rgba(255,255,255,0.05); border-top: 2px solid var(--accent);">
+                <tr>
+                  <td colspan="3" style="text-align: left; padding: 1rem 0.5rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                      <span>🧪 <span data-i18n="r1_hormones_ref">Hormonas/Vaca</span>: <strong id="resx1-hormonas-footer" style="color: #fbbf24; font-size: 0.95rem;">$ 0</strong></span>
+                      <span style="opacity: 0.3;">|</span>
+                      <span>🐂 <span data-i18n="r1_iate_ref">IA/TE/Vaca</span>: <strong id="resx1-iate-footer" style="color: #60a5fa; font-size: 0.95rem;">$ 0</strong></span>
+                    </div>
+                  </td>
+                  <td colspan="2"
+                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);">INVERSIÓN
+                    TOTAL/VACA RESX1:</td>
+                  <td id="resx1-total-footer"
+                    style="text-align: center; padding: 1rem; font-size: 1.1rem; font-weight: 800; color: var(--success);">
+                    $ 0</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <!-- Desglose por Rubros ReSx1 -->
+          <div style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+            <h3 class="form-title"
+              style="border:none; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">DESGLOSE DE
+              INVERSIÓN POR RUBROS (ReSx1)</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+              <div class="glass-panel p-1-5" style="border-left: 4px solid var(--accent);">
+                <span class="stat-label" style="font-size:0.65rem;">Hormonas</span>
+                <div id="resx1-cat-hormonas" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+              <div class="glass-panel p-1-5" style="border-left: 4px solid #a855f7;">
+                <span class="stat-label" style="font-size:0.65rem;">Genética (Semen/Embrión)</span>
+                <div id="resx1-cat-genetica" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+              <div class="glass-panel p-1-5" style="border-left: 4px solid #f59e0b;">
+                <span class="stat-label" style="font-size:0.65rem;">ASISTENCIA TÉCNICA</span>
+                <div id="resx1-cat-asistencia" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+              <div class="glass-panel p-1-5" style="border-left: 4px solid #ec4899;">
+                <span class="stat-label" style="font-size:0.65rem;">HONORARIOS IA / TE</span>
+                <div id="resx1-cat-iate" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+              <div class="glass-panel p-1-5" style="border-left: 4px solid var(--success);">
+                <span class="stat-label" style="font-size:0.65rem;">Confirmación de Preñez</span>
+                <div id="resx1-cat-diagnostico" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="resincronizacion2" class="tab-content view-transition">
+        <header class="section-header">
+          <div class="header-content">
+            <h1 data-i18n="resx2_title">Resincronización 2 (ReSx2)</h1>
+            <p class="text-muted" data-i18n="resx2_subtitle">Gestión de animales vacíos tras el segundo diagnóstico
+              (Dx2).</p>
+          </div>
+        </header>
+
+        <div class="glass-panel p-2 mb-2" style="background: rgba(168, 85, 247, 0.02);">
+          <div class="grid-4 mb-2" style="align-items: center;">
+            <div class="input-group">
+              <label>Protocolo ReSx2</label>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <select id="resx2-protocolo" style="flex: 1; color: white !important; opacity: 1 !important; -webkit-text-fill-color: white !important;" disabled>
+                  <option value="REC 2" selected>RESINCRONIZACIÓN 2 (REC 2)</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Animales en Resincronización (Vacías ReSx1)</label>
+              <div id="resx2-lbl-animales" style="font-size: 2rem; font-weight: 800; color: #a855f7;">0</div>
+              <input type="hidden" id="resx2-animales" value="0">
+            </div>
+            <div class="input-group" style="text-align: center;">
+              <label>Fecha Inicio (Auto)</label>
+              <div id="resx2-lbl-fecha" class="text-muted" style="font-size: 1.1rem; font-weight: 600;">-- -- --</div>
+              <input type="hidden" id="resx2-fecha">
+            </div>
+            <div class="input-group">
+              <label>Hora de Inicio</label>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <input type="time" id="resx2-hora" value="08:00" class="cell-input"
+                  style="flex: 1; font-weight: 800; font-size: 1.1rem; color: var(--warning);"
+                  onchange="ejecutarResx2()">
+                <button class="btn btn-highlight-time" title="Configurar Hora"
+                  onclick="document.getElementById('resx2-hora').focus(); document.getElementById('resx2-hora').showPicker();">
+                  <i data-lucide="clock" style="width: 24px; height: 24px;"></i>
+                </button>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Preñeces ReSx2 (Proyectado o Real)</label>
+              <div style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
+                  <button class="spin-btn minus" onclick="spinVal('resx2-prenadas', -1, false); debouncedAutoCalcPrenResx2();" style="color: #a855f7;">&#8722;</button>
+                  <input type="number" id="resx2-prenadas" value="0" min="0" oninput="debouncedAutoCalcPrenResx2()" onchange="autoCalcPrenResx2()" style="font-size: 1.5rem; font-weight: 800; background: transparent; border: none; text-align: center; color: #a855f7;">
+                  <button class="spin-btn plus" onclick="spinVal('resx2-prenadas', 1, false); debouncedAutoCalcPrenResx2();" style="color: #a855f7;">&#43;</button>
+                </div>
+                <div style="width: 1px; height: 30px; background: var(--glass-border);"></div>
+                <div style="display: flex; align-items: baseline; flex: 1; justify-content: center;">
+                  <span id="resx2-porcentaje" style="font-size: 2rem; font-weight: 800; color: #a855f7;">0</span>
+                  <span style="font-size: 1.25rem; font-weight: bold; padding-left: 2px; color: #a855f7;">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1.5rem; justify-content: flex-end;">
+            <button class="btn btn-secondary" onclick="abrirModalPrecios('resx2')">
+              <i data-lucide="package"></i> Ver/Ajustar Precios Fase
+            </button>
+            <button id="btn-toggle-resx2" class="btn btn-primary" onclick="toggleProtocolo('resx2')">
+              <i data-lucide="eye"></i> <span id="txt-toggle-resx2" data-i18n="btn_show_p">MOSTRAR PROTOCOLO</span>
+            </button>
+            <button class="btn"
+              style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);"
+              onclick="resetPantallaResx2()">
+              <i data-lucide="trash-2"></i> REINICIAR FASE
+            </button>
+          </div>
+        </div>
+
+        <div id="resx2-resultados" style="display: none; animation: fadeIn 0.3s ease;">
+          <div id="resx2-ia-info"
+            style="margin-bottom: 1rem; padding: 1.5rem; background: rgba(168, 85, 247, 0.05); border: 1px solid rgba(168, 85, 247, 0.2); border-left: 5px solid #a855f7; border-radius: 8px; display: none; align-items: center; gap: 1rem;">
+          </div>
+          <div id="resx2-ia-info" class="glass-panel mb-2"
+            style="display:none; align-items:center; gap:1rem; padding: 1rem; border-left: 4px solid #a855f7; background: rgba(168, 85, 247, 0.05); color: var(--text);">
+          </div>
+          <div class="table-responsive glass-panel p-1">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Día</th>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Hormona / Insumo</th>
+                  <th style="text-align:center;">Dosis</th>
+                  <th style="text-align:center;">VALOR UNITARIO</th>
+                </tr>
+              </thead>
+              <tbody id="tc-resx2-body"></tbody>
+              <tfoot style="background: rgba(255,255,255,0.05); border-top: 2px solid #a855f7;">
+                <tr>
+                  <td colspan="3" style="text-align: left; padding: 1rem 0.5rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                      <span>🧪 <span data-i18n="r2_hormones_ref">Hormonas/Vaca</span>: <strong id="resx2-hormonas-footer" style="color: #fbbf24; font-size: 0.95rem;">$ 0</strong></span>
+                      <span style="opacity: 0.3;">|</span>
+                      <span>🐂 <span data-i18n="r2_iate_ref">IA/TE/Vaca</span>: <strong id="resx2-iate-footer" style="color: #60a5fa; font-size: 0.95rem;">$ 0</strong></span>
+                    </div>
+                  </td>
+                  <td colspan="2"
+                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);">INVERSIÓN
+                    TOTAL/VACA RESX2:</td>
+                  <td id="resx2-total-footer"
+                    style="text-align: center; padding: 1rem; font-size: 1.1rem; font-weight: 800; color: var(--success);">
+                    $ 0</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <!-- Desglose por Rubros ReSx2 -->
+          <div style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+            <h3 class="form-title"
+              style="border:none; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">DESGLOSE DE
+              INVERSIÓN POR RUBROS (ReSx2)</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+              <div class="glass-panel p-1-5" style="border-left: 4px solid var(--accent);">
+                <span class="stat-label" style="font-size:0.65rem;">Hormonas</span>
+                <div id="resx2-cat-hormonas" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+              <div class="glass-panel p-1-5" style="border-left: 4px solid #a855f7;">
+                <span class="stat-label" style="font-size:0.65rem;">Genética (Semen/Embrión)</span>
+                <div id="resx2-cat-genetica" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+              <div class="glass-panel p-1-5" style="border-left: 4px solid #f59e0b;">
+                <span class="stat-label" style="font-size:0.65rem;">ASISTENCIA TÉCNICA</span>
+                <div id="resx2-cat-asistencia" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+              <div class="glass-panel p-1-5" style="border-left: 4px solid #ec4899;">
+                <span class="stat-label" style="font-size:0.65rem;">HONORARIOS IA / TE</span>
+                <div id="resx2-cat-iate" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+              <div class="glass-panel p-1-5" style="border-left: 4px solid var(--success);">
+                <span class="stat-label" style="font-size:0.65rem;">Confirmación de Preñez</span>
+                <div id="resx2-cat-diagnostico" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- 6. DASHBOARD (Diseño Profesional Reporte) -->
+      <section id="dashboard" class="tab-content view-transition">
+
+        <!-- Encabezado Estilo Reporte -->
+        <div class="glass-panel mb-2 dash-report-header"
+          style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--accent); background: linear-gradient(90deg, rgba(14, 165, 233, 0.1) 0%, rgba(255,255,255,0.02) 100%);">
+          <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <div id="dash-logo"
+              style="width: 70px; height: 70px; background: white; border-radius: 8px; padding: 4px; display: none;">
+              <img src="" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <div style="flex: 1;">
+              <h1 data-i18n="dash_title"
+                style="font-size: 1.6rem; margin-bottom: 0.75rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+                Reporte de Sincronización y ROI</h1>
+              
+              <div class="dash-meta-container" style="display: flex; flex-direction: column; gap: 0.6rem;">
+                <!-- Fila 1: Identificación del Predio -->
+                <div class="dash-meta-row" style="display: flex; gap: 2rem; align-items: center; color: var(--accent); font-size: 1rem; font-weight: 700;">
+                  <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="home" style="width: 18px; height: 18px;"></i> <span id="dash-finca">-</span></span>
+                  <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="map-pin" style="width: 18px; height: 18px;"></i> <span id="dash-ubicacion">-</span></span>
+                </div>
+                
+                <!-- Fila 2: Detalles del Protocolo -->
+                <div class="dash-meta-row" style="display: flex; gap: 2rem; align-items: center; color: var(--text-muted); font-size: 0.85rem;">
+                  <span style="display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="award" style="width: 16px; height: 16px;"></i> <span data-i18n="dash_protocolo">Protocolo</span>: <strong style="color: #fff;" id="dash-protocolo">-</strong></span>
+                  <span style="display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="calendar" style="width: 16px; height: 16px; color: #a855f7;"></i> <strong style="color: #fff;" id="dash-fecha">-</strong></span>
+                  <span style="display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="info" style="width: 16px; height: 16px; color: var(--success);"></i> <strong style="color: #fff;" id="dash-animales">0</strong> <span data-i18n="dash_animales">Animales</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dash-header-actions" style="text-align: right; display: flex; gap: 0.5rem; align-items: center;">
+            <button class="btn" onclick="guardarEnHistorial()"
+              style="background: var(--success); color: #fff; font-weight: bold; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); border: none;">
+              <i data-lucide="save"></i> <span data-i18n="btn_guardar">GUARDAR REPORTE</span>
+            </button>
+            <button class="btn btn-secondary" onclick="exportarExcel()"><i data-lucide="file-spreadsheet"></i>
+              EXCEL</button>
+          </div>
+        </div>
+
+        <div class="stats-grid mb-2">
+          <!-- 1. Inversión Total -->
+          <div class="stat-card glass-panel"
+            style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: linear-gradient(180deg, rgba(239, 68, 68, 0.05) 0%, rgba(2, 6, 23, 0.5) 100%); border: 1px solid rgba(239, 68, 68, 0.2);">
+            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Inversión Total Proyecto</span>
+            <i data-lucide="banknote" style="color: var(--danger); margin-bottom: 0.4rem; width: 24px; height: 24px;"></i>
+            <div id="dash-inversion" style="font-size: 1.1rem; font-weight: 800; color: var(--danger);">$ 0</div>
+          </div>
+          <!-- 2. Costo / Preñez -->
+          <div class="stat-card glass-panel"
+            style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, rgba(2, 6, 23, 0.5) 100%); border: 1px solid rgba(16, 185, 129, 0.2);">
+            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Costo / Preñez Promedio</span>
+            <i data-lucide="coins" style="color: var(--success); margin-bottom: 0.4rem; width: 24px; height: 24px;"></i>
+            <div id="dash-costo-prenez" style="font-size: 1.1rem; font-weight: 800; color: var(--success);">$ 0</div>
+          </div>
+          <!-- 3. ROI -->
+          <div class="stat-card glass-panel"
+            style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: linear-gradient(180deg, rgba(168, 85, 247, 0.05) 0%, rgba(2, 6, 23, 0.5) 100%); border: 1px solid rgba(168, 85, 247, 0.2);">
+            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">ROI (Retorno Inversión)</span>
+            <i data-lucide="trending-up" style="color: #a855f7; margin-bottom: 0.4rem; width: 24px; height: 24px;"></i>
+            <div id="dash-roi-porc" style="font-size: 1.1rem; font-weight: 800; color: #a855f7;">0%</div>
+          </div>
+
+          <!-- 5. Hormonas -->
+          <div class="stat-card glass-panel"
+            style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(14, 165, 233, 0.03); border: 1px solid rgba(14, 165, 233, 0.15);">
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Protocolo Hormonal</span>
+            <i data-lucide="syringe" style="color: var(--accent); margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
+            <div id="dash-prot-animal" style="font-size: 1rem; font-weight: 700; color: var(--accent);">$ 0</div>
+          </div>
+          <!-- 6. Genética -->
+          <div class="stat-card glass-panel"
+            style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(245, 158, 11, 0.03); border: 1px solid rgba(245, 158, 11, 0.15);">
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Genética / Vaca</span>
+            <i data-lucide="dna" style="color: #f59e0b; margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
+            <div id="dash-gen-animal" style="font-size: 1rem; font-weight: 700; color: #f59e0b;">$ 0</div>
+          </div>
+          <!-- 7. Asistencia -->
+          <div class="stat-card glass-panel"
+            style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(236, 72, 153, 0.03); border: 1px solid rgba(236, 72, 153, 0.15);">
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Asistencia Técnica / Vaca</span>
+            <i data-lucide="briefcase" style="color: #ec4899; margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
+            <div id="dash-asis-animal" style="font-size: 1rem; font-weight: 700; color: #ec4899;">$ 0</div>
+          </div>
+          <!-- 8. IA/TE Fees -->
+          <div class="stat-card glass-panel"
+            style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(59, 130, 246, 0.03); border: 1px solid rgba(59, 130, 246, 0.15);">
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Honorarios IA-TE / Vaca</span>
+            <i data-lucide="target" style="color: #3b82f6; margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
+            <div id="dash-iatf-animal" style="font-size: 1rem; font-weight: 700; color: #3b82f6;">$ 0</div>
+          </div>
+          <!-- 8b. Confirmación Preñez -->
+          <div class="stat-card glass-panel"
+            style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(20, 184, 166, 0.03); border: 1px solid rgba(20, 184, 166, 0.15);">
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Confirmación Preñez / Vaca</span>
+            <i data-lucide="stethoscope" style="color: #14b8a6; margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
+            <div id="dash-diag-animal" style="font-size: 1rem; font-weight: 700; color: #14b8a6;">$ 0</div>
+          </div>
+        </div>
+
+        <!-- Fila 2: Éxito Reproductivo y Preñez por Etapa -->
+        <div class="grid-2 mb-2" style="grid-template-columns: 1fr 2fr;">
+          <div class="glass-panel premium-card"
+            style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
+            <h2
+              style="font-size: 1.2rem; color: #ef4444; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase;">
+              Éxito Reproductivo</h2>
+            <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 1rem;">
+              <span id="dash-exito-num"
+                style="font-size: 3.5rem; font-weight: 900; color: #10b981; line-height: 1;">0</span>
+              <span style="font-size: 2rem; color: #64748b; font-weight: 800;">/</span>
+              <span id="dash-exito-tot"
+                style="font-size: 2.5rem; font-weight: 900; color: #0ea5e9; line-height: 1;">0</span>
+            </div>
+            <div id="dash-exito-porc" style="font-size: 5rem; font-weight: 900; color: #fff; line-height: 0.9;">0%</div>
+          </div>
+
+          <div class="glass-panel p-2 premium-card">
+            <h2
+              style="font-size: 1.2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-main); font-style: italic;">
+              <i data-lucide="bar-chart-horizontal" style="color: #fde047;"></i> Preñez por Etapa</h2>
+            <div style="position: relative; height: 350px;">
+              <canvas id="chart-etapas"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila 3: Ingreso Neto Destacado y Tabla ROI -->
+        <div class="grid-2 mb-2" style="grid-template-columns: 1fr 2fr;">
+          <div class="glass-panel premium-card"
+            style="padding: 2rem; text-align: center; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(2, 6, 23, 0.8) 100%); border: 1px solid rgba(16, 185, 129, 0.3);">
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+              <i data-lucide="wallet" style="width: 40px; height: 40px; color: #10b981;"></i>
+            </div>
+            <h2
+              style="font-size: 1.2rem; font-weight: 800; color: #f1f5f9; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">
+              Utilidad Neta</h2>
+            <div id="dash-ingreso-neto"
+              style="font-size: 2.8rem; font-weight: 900; color: #10b981; letter-spacing: -1px; text-shadow: 0 0 20px rgba(16, 185, 129, 0.3); margin-bottom: 1.5rem;">
+              $ 0</div>
+
+            <div style="height: 20px;"></div>
+
+            <!-- Hidden inputs para el exportar Excel -->
+            <span id="res-total-inversion" style="display:none;">0</span>
+            <span id="res-costo-prenez" style="display:none;">0</span>
+            <span id="res-total-preneces" style="display:none;">0</span>
+          </div>
+
+          <div class="glass-panel premium-card p-2">
+            <h2
+              style="font-size: 1.2rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-main);">
+              <i data-lucide="calculator" style="color: #0ea5e9;"></i> <span data-i18n="dash_roi_table">Resumen
+                Financiero (ROI)</span></h2>
+            <div class="table-responsive">
+              <table class="data-table" style="font-size: 0.85rem; text-align: center;">
+                <thead>
+                  <tr>
+                    <th style="text-align: left;">Concepto</th>
+                    <th>PI</th>
+                    <th>ReSx1</th>
+                    <th>ReSx2</th>
+                    <th style="color: var(--accent);">Consolidado</th>
+                  </tr>
+                </thead>
+                <tbody id="res-body-roi">
+                  <!-- Llenado por JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila 4: Desglose de Inversión y Proyecciones Leche/Carne -->
+        <div class="grid-2">
+          <div class="glass-panel p-2 premium-card">
+            <h2 style="font-size: 1.2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;"><i
+                data-lucide="pie-chart" style="color: var(--danger);"></i> <span
+                data-i18n="dash_investment_breakdown">Desglose de Inversión</span></h2>
+            <div style="position: relative; height: 400px;">
+              <canvas id="chart-costos-horizontal"></canvas>
+            </div>
+          </div>
+
+          <div class="glass-panel p-2 premium-card" style="display: flex; flex-direction: column; min-width: 0;">
+            <div class="chart-split-row" style="display: flex; height: 100%; gap: 1rem; min-width: 0;">
+              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+                <h2 style="font-size: 1.1rem; text-align: center; color: var(--text-muted); margin-bottom: 1rem;"><i
+                    data-lucide="droplet" style="color: #0ea5e9; width: 18px; height: 18px;"></i> Leche</h2>
+                <div style="flex: 1; min-width: 0; min-height: 0; position: relative;"><canvas id="chart-leche"></canvas></div>
+              </div>
+              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+                <h2 style="font-size: 1.1rem; text-align: center; color: var(--text-muted); margin-bottom: 1rem;"><i
+                    data-lucide="beef" style="color: #ef4444; width: 18px; height: 18px;"></i> Carne</h2>
+                <div style="flex: 1; min-width: 0; min-height: 0; position: relative;"><canvas id="chart-carne"></canvas></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- 8. BUSCADOR HISTÓRICO -->
+      <section id="buscador-historico" class="tab-content view-transition">
+        <header class="section-header">
+          <div class="header-content">
+            <h1>Buscador Histórico de Protocolos</h1>
+            <p class="text-muted">Consulta el histórico de trabajos realizados filtrando por NIT.</p>
+          </div>
+        </header>
+
+        <div class="glass-panel p-2 mb-2">
+          <div
+            style="display: flex; gap: 1rem; align-items: flex-end; margin-bottom: 1.5rem; background: rgba(14, 165, 233, 0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.1);">
+            <div class="input-group" style="flex: 1;">
+              <label>Ingresa el NIT o C.C. para buscar</label>
+              <input type="text" id="search-nit" placeholder="Ej: 123456789"
+                style="font-size: 1.1rem; padding: 0.75rem; background: rgba(0,0,0,0.2);">
+            </div>
+            <button class="btn btn-primary" onclick="buscarPorNit()"
+              style="height: 50px; padding: 0 2rem; font-weight: bold; background: var(--accent);">
+              <i data-lucide="search"></i> BUSCAR AHORA
+            </button>
+          </div>
+
+          <div id="historial-resultados" style="display: none;">
+            <h3 class="form-title" style="margin-top: 2rem; color: var(--accent);"><i data-lucide="list"></i> Resultados
+              encontrados</h3>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th style="text-align: left;">Fecha</th>
+                    <th style="text-align: left;">Finca</th>
+                    <th style="text-align: left;">Protocolo</th>
+                    <th style="text-align: center;">Animales</th>
+                    <th style="text-align: center;">Preñeces</th>
+                    <th style="text-align: right;">Inversión</th>
+                    <th style="text-align: center;">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="lista-historial">
+                  <!-- Se llena dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="historial-vacio" class="text-muted"
+            style="text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 12px; margin-top: 1rem; border: 1px dashed var(--glass-border);">
+            <i data-lucide="info" style="width: 40px; height: 40px; margin-bottom: 1rem; opacity: 0.5;"></i>
+            <p>Ingresa un NIT para ver el histórico de protocolos realizados.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. PANEL DE ADMINISTRADOR -->
+      <section id="admin-users" class="tab-content view-transition">
+        <header class="section-header">
+          <h1>Panel de Administración</h1>
+          <p>Visualiza y gestiona las personas registradas en tu aplicación</p>
+        </header>
+
+        <div class="stats-grid mb-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+          <div class="stat-card glass-panel" style="background: rgba(14, 165, 233, 0.05); border-left: 4px solid var(--accent); padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; border-radius: 8px;">
+            <div class="stat-icon" style="font-size: 1.5rem; color: var(--accent);">
+              <i data-lucide="users"></i>
+            </div>
+            <div class="stat-info">
+              <h3 style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Total Usuarios Registrados</h3>
+              <div class="stat-value text-accent" id="admin-total-users" style="font-size: 1.8rem; font-weight: bold; color: var(--accent);">0</div>
+            </div>
+          </div>
+          <div class="stat-card glass-panel" style="background: rgba(16, 185, 129, 0.05); border-left: 4px solid var(--success); padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; border-radius: 8px;">
+            <div class="stat-icon" style="font-size: 1.5rem; color: var(--success);">
+              <i data-lucide="activity"></i>
+            </div>
+            <div class="stat-info">
+              <h3 style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Total Accesos Globales</h3>
+              <div class="stat-value text-success" id="admin-total-accesses" style="font-size: 1.8rem; font-weight: bold; color: var(--success);">0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel p-2">
+          <div class="table-responsive">
+            <table class="data-table" id="tabla-usuarios-admin" style="font-size: 0.9rem; min-width: 700px;">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th>Teléfono</th>
+                  <th>Finca</th>
+                  <th>NIT / C.C.</th>
+                  <th style="text-align: center;">Accesos</th>
+                  <th>Fecha de Registro</th>
+                </tr>
+              </thead>
+              <tbody id="admin-users-body">
+                <tr>
+                  <td colspan="7" style="text-align: center;" class="text-muted">Cargando datos...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <style>
+    /* Add specific input styling for the matrix to look like excel cells */
+    .cell-input {
+      width: 100px;
+      background: transparent;
+      border: 1px solid var(--glass-border);
+      color: #fff;
+      text-align: center;
+      border-radius: 4px;
+      padding: 4px;
+    }
+
+    .cell-input:focus {
+      border-color: var(--accent);
+      outline: none;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 0.5rem;
+    }
+  </style>
+
+  <script src="app_master.js?v=V 260530.7"></script>
+
+  <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(reg => {
+            console.log('[Iatf Pro] Service Worker registrado:', reg.scope);
+            
+            // Si hay un service worker esperando, forzar que se active
+            if (reg.waiting) {
+              reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+            }
+
+            reg.addEventListener('updatefound', () => {
+              const newWorker = reg.installing;
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed') {
+                  if (navigator.serviceWorker.controller) {
+                    console.log('[Iatf Pro] Nueva versión disponible. Forzando actualización...');
+                    newWorker.postMessage({ type: 'SKIP_WAITING' });
+                  }
+                }
+              });
+            });
+          })
+          .catch(err => console.warn('[Iatf Pro] SW no registrado:', err));
+
+        // Recargar la página automáticamente cuando el nuevo Service Worker tome el control
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (!refreshing) {
+            refreshing = true;
+            console.log('[Iatf Pro] Service Worker actualizado. Recargando página...');
+            window.location.reload();
+          }
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>
+

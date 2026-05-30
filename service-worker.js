@@ -1,17 +1,13 @@
-// Iatf Pro by Solugan SG - Service Worker V 260528.15
-const CACHE_NAME = 'iatfpro-V260530.01';
-
-
-
-
-
+// Iatf Pro by Solugan SG - Service Worker V 260530.1
+const CACHE_NAME = 'iatfpro-V260530.7';
 
 // Todos los archivos que se guardan en caché para uso offline
 const ASSETS_TO_CACHE = [
   './',
   'index.html',
   'style.css',
-  'app_v42.js',
+  'app.js',
+  'app.min.js',
   'lucide.min.js',
   'manifest.json',
   'icon-192.png',
@@ -23,8 +19,6 @@ const ASSETS_TO_CACHE = [
   'libs/chartjs-plugin-datalabels.min.js',
   'libs/html2pdf.min.js',
   'libs/xlsx.full.min.js',
-  'libs/xlsx-js-style.min.js',
-  'libs/exceljs.min.js',
   // Fuentes locales
   'fonts/inter-400.woff2',
   'fonts/inter-600.woff2',
@@ -89,7 +83,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   const isHTMLorCSS = url.pathname.endsWith('/') ||
                       url.pathname.endsWith('.html') ||
-                      url.pathname.endsWith('.css') || url.pathname.endsWith('app_v42.js') || url.pathname.endsWith('app_core.js');
+                      url.pathname.endsWith('.css');
 
   if (isHTMLorCSS) {
     // ── NETWORK FIRST: siempre traer la versión más nueva del servidor ──

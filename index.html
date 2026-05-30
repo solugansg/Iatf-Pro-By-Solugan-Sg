@@ -6,11 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0ea5e9">
   <meta name="description" content="Análisis de costos reproductivos para ganadería bovina. By Solugan SG.">
-  <meta property="og:title" content="IATF Pro - Análisis de Costos">
-  <meta property="og:description" content="Análisis de costos reproductivos para ganadería bovina. By Solugan SG.">
-  <meta property="og:image" content="https://iatf-pro-by-solugan-sg.vercel.app/Logo%20Iatf%20Pro.png">
-  <meta property="og:url" content="https://iatf-pro-by-solugan-sg.vercel.app/">
-  <meta property="og:type" content="website">
   <meta name="robots" content="noindex, nofollow">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,7 +30,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260528.50">
+  <link rel="stylesheet" href="style.css?v=V 260530.7">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -50,7 +45,6 @@
   <script src="libs/chartjs-plugin-datalabels.min.js"></script>
   <script src="libs/html2pdf.min.js"></script>
   <script src="libs/xlsx-js-style.min.js"></script>
-  <script src="libs/exceljs.min.js"></script>
   <!-- <script src="libs/xlsx.full.min.js"></script> -->
   
   <!-- Firebase Compat SDKs -->
@@ -83,26 +77,25 @@
               <label>País</label>
               <select id="reg-pais" class="welcome-input" autocomplete="off">
                 <option value="Colombia" selected>Colombia (+57)</option>
+                <option value="México">México (+52)</option>
+                <option value="Ecuador">Ecuador (+593)</option>
+                <option value="Panamá">Panamá (+507)</option>
+                <option value="Venezuela">Venezuela (+58)</option>
                 <option value="Argentina">Argentina (+54)</option>
                 <option value="Bolivia">Bolivia (+591)</option>
                 <option value="Brasil">Brasil (+55)</option>
                 <option value="Chile">Chile (+56)</option>
                 <option value="Costa Rica">Costa Rica (+506)</option>
-                <option value="Cuba">Cuba (+53)</option>
-                <option value="Ecuador">Ecuador (+593)</option>
                 <option value="El Salvador">El Salvador (+503)</option>
-                <option value="España">España (+34)</option>
-                <option value="Estados Unidos">Estados Unidos (+1)</option>
                 <option value="Guatemala">Guatemala (+502)</option>
                 <option value="Honduras">Honduras (+504)</option>
-                <option value="México">México (+52)</option>
                 <option value="Nicaragua">Nicaragua (+505)</option>
-                <option value="Panamá">Panamá (+507)</option>
                 <option value="Paraguay">Paraguay (+595)</option>
                 <option value="Perú">Perú (+51)</option>
-                <option value="República Dominicana">República Dominicana (+1)</option>
                 <option value="Uruguay">Uruguay (+598)</option>
-                <option value="Venezuela">Venezuela (+58)</option>
+                <option value="República Dominicana">República Dominicana (+1)</option>
+                <option value="España">España (+34)</option>
+                <option value="Estados Unidos">Estados Unidos (+1)</option>
                 <option value="Otro">Otro</option>
               </select>
             </div>
@@ -160,15 +153,11 @@
   <div class="app-container" id="app-main-layout" style="display: none;">
     <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 99; backdrop-filter: blur(4px);"></div>
     <aside class="sidebar glass-panel">
-      <!-- Handle lateral para móviles -->
-      <div class="sidebar-toggle-handle" onclick="toggleSidebar()" aria-label="Cerrar/Abrir Menú" style="display: none;">
-        <i data-lucide="chevron-right"></i>
-      </div>
       <div class="sidebar-header">
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:60px;height:60px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260528.50</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260530.7</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 6px 10px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -240,7 +229,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260528.50</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260530.7</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -303,17 +292,17 @@
                 <div class="tablero-row">
                   <label data-i18n="tc_duracion">Duración Lactancia</label>
                   <div class="spinner-wrap">
-                    <button class="spin-btn minus" onclick="spinVal('tc-duracion-lactancia', -5, false)">&#8722;</button>
+                    <button class="spin-btn minus" onclick="spinVal('tc-duracion-lactancia', -10, false)">&#8722;</button>
                     <input type="number" id="tc-duracion-lactancia" value="0" class="cell-input" onchange="calcTableroControl()">
-                    <button class="spin-btn plus" onclick="spinVal('tc-duracion-lactancia', 5, false)">&#43;</button>
+                    <button class="spin-btn plus" onclick="spinVal('tc-duracion-lactancia', 10, false)">&#43;</button>
                   </div>
                 </div>
                 <div class="tablero-row">
                   <label data-i18n="tc_litros">Litros Por Lactancia</label>
                   <div class="spinner-wrap">
-                    <button class="spin-btn minus" onclick="spinVal('tc-litros-lactancia', -5, true)">&#8722;</button>
+                    <button class="spin-btn minus" onclick="spinVal('tc-litros-lactancia', -50, true)">&#8722;</button>
                     <input type="text" id="tc-litros-lactancia" value="0" class="cell-input" oninput="formatInputCurrency(this); debouncedCalcTableroControl();">
-                    <button class="spin-btn plus" onclick="spinVal('tc-litros-lactancia', 5, true)">&#43;</button>
+                    <button class="spin-btn plus" onclick="spinVal('tc-litros-lactancia', 50, true)">&#43;</button>
                   </div>
                 </div>
                 <div class="tablero-indicator">
@@ -351,9 +340,9 @@
                 <div class="tablero-row">
                   <label data-i18n="tc_duracion_carne">Días a Destete</label>
                   <div class="spinner-wrap">
-                    <button class="spin-btn minus" onclick="spinVal('tc-duracion-carne', -5, false)">&#8722;</button>
+                    <button class="spin-btn minus" onclick="spinVal('tc-duracion-carne', -10, false)">&#8722;</button>
                     <input type="number" id="tc-duracion-carne" value="0" class="cell-input" onchange="calcTableroControl()">
-                    <button class="spin-btn plus" onclick="spinVal('tc-duracion-carne', 5, false)">&#43;</button>
+                    <button class="spin-btn plus" onclick="spinVal('tc-duracion-carne', 10, false)">&#43;</button>
                   </div>
                 </div>
                 <div class="tablero-row">
@@ -688,10 +677,8 @@
         style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.6); z-index:999; justify-content:center; align-items:center; backdrop-filter:blur(5px);">
         <div class="glass-panel modal-precios-content"
           style="padding: 2rem; width: 95%; max-width: 1400px; max-height: 90vh; overflow-y:auto; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom:0.5rem;">
-            <h2 class="form-title text-accent m-0" id="modal-title" style="margin-bottom:0;" data-i18n="modal_title"><i data-lucide="package"></i> Configuración precios y dosis</h2>
-            <button class="btn" onclick="window.ponerDosisEnCeroModal()" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 5px 12px; font-size: 0.85rem;"><i data-lucide="trash-2" style="width: 14px; height: 14px;"></i> Limpiar Valores</button>
-          </div>
+          <h2 class="form-title text-accent m-0" id="modal-title" style="margin-bottom:0.5rem;" data-i18n="modal_title"><i
+              data-lucide="package"></i> Configuración precios y dosis</h2>
           <p class="text-muted" id="modal-subtitle" style="font-size:0.85rem; margin-bottom:1.5rem" data-i18n="modal_subtitle">Mostrando
             exclusivamente los insumos requeridos por el protocolo actualmente seleccionado.</p>
 
@@ -748,8 +735,6 @@
           </div>
 
           <div style="text-align: right; margin-top: 2rem;">
-            
-            
             <button class="btn btn-secondary" onclick="cerrarModalPrecios()"
               style="margin-right:0.5rem">Cancelar</button>
             <button class="btn btn-primary" onclick="guardarPreciosModal()"><i data-lucide="check"></i> Actualizar
@@ -801,14 +786,14 @@
             </div>
             <div class="input-group">
               <label>Preñeces ReSx1 (Proyectado o Real)</label>
-              <div class="pi-preg-row" style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+              <div style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
                 <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
                   <button class="spin-btn minus" onclick="spinVal('resx1-prenadas', -1, false); debouncedAutoCalcPrenResx1();">&#8722;</button>
                   <input type="number" id="resx1-prenadas" value="0" min="0" oninput="debouncedAutoCalcPrenResx1()" onchange="autoCalcPrenResx1()" style="font-size: 1.5rem; font-weight: 800; background: transparent; border: none; text-align: center;">
                   <button class="spin-btn plus" onclick="spinVal('resx1-prenadas', 1, false); debouncedAutoCalcPrenResx1();">&#43;</button>
                 </div>
-                <div class="pi-preg-divider" style="width: 1px; height: 30px; background: var(--glass-border);"></div>
-                <div class="pi-preg-percent-wrap" style="display: flex; align-items: baseline; flex: 1; justify-content: center;">
+                <div style="width: 1px; height: 30px; background: var(--glass-border);"></div>
+                <div style="display: flex; align-items: baseline; flex: 1; justify-content: center;">
                   <span id="resx1-porcentaje" class="text-accent" style="font-size: 2rem; font-weight: 800;">0</span>
                   <span class="text-accent" style="font-size: 1.25rem; font-weight: bold; padding-left: 2px;">%</span>
                 </div>
@@ -945,14 +930,14 @@
             </div>
             <div class="input-group">
               <label>Preñeces ReSx2 (Proyectado o Real)</label>
-              <div class="pi-preg-row" style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+              <div style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
                 <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
                   <button class="spin-btn minus" onclick="spinVal('resx2-prenadas', -1, false); debouncedAutoCalcPrenResx2();" style="color: #a855f7;">&#8722;</button>
                   <input type="number" id="resx2-prenadas" value="0" min="0" oninput="debouncedAutoCalcPrenResx2()" onchange="autoCalcPrenResx2()" style="font-size: 1.5rem; font-weight: 800; background: transparent; border: none; text-align: center; color: #a855f7;">
                   <button class="spin-btn plus" onclick="spinVal('resx2-prenadas', 1, false); debouncedAutoCalcPrenResx2();" style="color: #a855f7;">&#43;</button>
                 </div>
-                <div class="pi-preg-divider" style="width: 1px; height: 30px; background: var(--glass-border);"></div>
-                <div class="pi-preg-percent-wrap" style="display: flex; align-items: baseline; flex: 1; justify-content: center;">
+                <div style="width: 1px; height: 30px; background: var(--glass-border);"></div>
+                <div style="display: flex; align-items: baseline; flex: 1; justify-content: center;">
                   <span id="resx2-porcentaje" style="font-size: 2rem; font-weight: 800; color: #a855f7;">0</span>
                   <span style="font-size: 1.25rem; font-weight: bold; padding-left: 2px; color: #a855f7;">%</span>
                 </div>
@@ -1384,19 +1369,7 @@
     }
   </style>
 
-  
-  <script>
-    setTimeout(() => {
-      const state = localStorage.getItem('iatfpro_state');
-      if (state) {
-        fetch('http://127.0.0.1:8081', {
-          method: 'POST',
-          body: state
-        }).catch(e => console.log('Export failed', e));
-      }
-    }, 2000);
-  </script>
-  <script src="app_v42.js?v=V 260530.01"></script>
+  <script src="app_master.js?v=V 260530.3"></script>
 
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>
