@@ -43,7 +43,7 @@ function copyFolderRecursiveSync(source, target) {
 function injectVersion(content) {
   content = content.replace(/iatfpro-v[\w.]+/gi,         `iatfpro-${V_SLUG.toLowerCase()}`);
   content = content.replace(/(Service Worker\s+)v[\w.]+/gi, `$1${VERSION}`);
-  content = content.replace(/app\.js\?v=[\w.]+/g,        `app.js?v=${V_SLUG}`);
+  content = content.replace(/app\.js\?v=[\w.]+/g,        `iatf-app.js?v=${V_SLUG}`);
   content = content.replace(/\bv\d+\.\d+\.\d+\b/g,       VERSION);
   content = content.replace(/\bV\s+\d{6}\.\d+\b/g,       VERSION);
   return content;
@@ -90,15 +90,15 @@ ensureDir(distDir);
   }
 });
 
-// ─── OFUSCAR app.js ───────────────────────────────────────────────────────────
-const appJsPath = path.join(srcDir, 'app.js');
+// ─── OFUSCAR iatf-app.js ───────────────────────────────────────────────────────────
+const appJsPath = path.join(srcDir, 'iatf-app.js');
 if (!fs.existsSync(appJsPath)) {
-  console.error('Error: No se encontró app.js');
+  console.error('Error: No se encontró iatf-app.js');
   process.exit(1);
 }
 
 const appJsCode = fs.readFileSync(appJsPath, 'utf8');
-console.log('\nOfuscando app.js para proteger fórmulas...');
+console.log('\nOfuscando iatf-app.js para proteger fórmulas...');
 
 const obfuscated = JavaScriptObfuscator.obfuscate(appJsCode, {
   compact: true,
@@ -117,7 +117,7 @@ const obfuscated = JavaScriptObfuscator.obfuscate(appJsCode, {
   unicodeEscapeSequence: true
 });
 
-fs.writeFileSync(path.join(distDir, 'app.js'), obfuscated.getObfuscatedCode(), 'utf8');
-console.log('app.js ofuscado exitosamente en dist/app.js');
+fs.writeFileSync(path.join(distDir, 'iatf-app.js'), obfuscated.getObfuscatedCode(), 'utf8');
+console.log('iatf-app.js ofuscado exitosamente en dist/iatf-app.js');
 
 console.log(`\n✅  Build ${VERSION} finalizado con éxito!\n`);
