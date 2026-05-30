@@ -8,8 +8,8 @@ const replaceCondition = `if (false) {`; // Bypass loading from cloud user data 
 
 // Wait actually, we just want DEFAULT to be loaded for new users, existing users SHOULD get the new defaults, but how to force it?
 // Best way: Force a migration flag update.
-const targetFlag = `if (!localStorage.getItem('reprocost_user_migrated_v22_' + user.uid)) {`;
-const newFlag = `if (!localStorage.getItem('reprocost_user_migrated_v46_' + user.uid)) {`;
+const targetFlag = `if (!localStorage.getItem('iatfpro_user_migrated_v22_' + user.uid)) {`;
+const newFlag = `if (!localStorage.getItem('iatfpro_user_migrated_v46_' + user.uid)) {`;
 
 js = js.replace(targetFlag, newFlag);
 fs.writeFileSync(jsPath, js, 'utf8');

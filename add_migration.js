@@ -2,15 +2,15 @@ const fs = require('fs');
 const path = 'C:\\Users\\JAN\\Documents\\App Solugan Sg\\Iatf Pro\\app.js';
 let content = fs.readFileSync(path, 'utf8');
 
-const target = `window.loadState = function() {\n  const saved = localStorage.getItem('reprocost_state');\n  if (!saved) return;`;
-const targetCRLF = `window.loadState = function() {\r\n  const saved = localStorage.getItem('reprocost_state');\r\n  if (!saved) return;`;
+const target = `window.loadState = function() {\n  const saved = localStorage.getItem('iatfpro_state');\n  if (!saved) return;`;
+const targetCRLF = `window.loadState = function() {\r\n  const saved = localStorage.getItem('iatfpro_state');\r\n  if (!saved) return;`;
 
 const replacement = `window.loadState = function() {
-  const saved = localStorage.getItem('reprocost_state');
+  const saved = localStorage.getItem('iatfpro_state');
   
   // MIGRACIÓN ÚNICA: Forzar limpieza de caché antigua para la V 260528.5
-  if (!localStorage.getItem('reprocost_migrated_v260528_5')) {
-    localStorage.removeItem('reprocost_custom_matriz');
+  if (!localStorage.getItem('iatfpro_migrated_v260528_5')) {
+    localStorage.removeItem('iatfpro_custom_matriz');
     if (saved) {
       try {
         const p = JSON.parse(saved);
@@ -25,10 +25,10 @@ const replacement = `window.loadState = function() {
           }
         }
         delete p.matriz;
-        localStorage.setItem('reprocost_state', JSON.stringify(p));
+        localStorage.setItem('iatfpro_state', JSON.stringify(p));
       } catch(e) {}
     }
-    localStorage.setItem('reprocost_migrated_v260528_5', 'true');
+    localStorage.setItem('iatfpro_migrated_v260528_5', 'true');
     location.reload();
     return;
   }

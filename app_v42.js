@@ -273,7 +273,7 @@ auth.onAuthStateChanged(user => {
 
     // Mostrar nombre o email inmediatamente como fallback mientras carga Firestore
     if (sidebarConsultor) {
-      const localPerfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+      const localPerfil = JSON.parse(localStorage.getItem('iatfpro_perfil')) || JSON.parse(localStorage.getItem('iatfpro_perfil_consultor')) || {};
       let localName = localPerfil.name || localPerfil.nombre || user.displayName || '';
       if (localName.includes('@')) localName = ''; // Ignorar si es un correo electrónico
       
@@ -329,7 +329,7 @@ auth.onAuthStateChanged(user => {
                 accessCount: firebase.firestore.FieldValue.increment(1)
               }).catch(err => console.warn("Error incrementando accessCount:", err));
               
-              const localPerfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+              const localPerfil = JSON.parse(localStorage.getItem('iatfpro_perfil')) || JSON.parse(localStorage.getItem('iatfpro_perfil_consultor')) || {};
               let localName = localPerfil.name || localPerfil.nombre || '';
               if (localName.includes('@')) localName = '';
               
@@ -364,10 +364,10 @@ auth.onAuthStateChanged(user => {
               };
 
               // Guardar perfil en localStorage para que guardarEnHistorial() pueda leer el NIT
-              localStorage.setItem('reprocost_perfil', JSON.stringify(perfilObj));
+              localStorage.setItem('iatfpro_perfil', JSON.stringify(perfilObj));
               
               // Sincronizar también con la vieja clave de perfil para compatibilidad con plugins/WhatsApp
-              localStorage.setItem('reprocost_perfil_consultor', JSON.stringify({
+              localStorage.setItem('iatfpro_perfil_consultor', JSON.stringify({
                 nit: perfilObj.nit,
                 nombre: perfilObj.name || perfilObj.email,
                 email: perfilObj.email,
@@ -384,7 +384,7 @@ auth.onAuthStateChanged(user => {
               }
               
               // MIGRACION UNICA FIREBASE USER DATA: Limpiar datos cacheados por usuario
-              if (!localStorage.getItem('reprocost_user_migrated_v46_' + user.uid)) {
+              if (!localStorage.getItem('iatfpro_user_migrated_v46_' + user.uid)) {
                 for (let k in state.insumos) {
                   state.insumos[k].def = 0;
                   state.insumos[k].resx1 = 0;
@@ -394,7 +394,7 @@ auth.onAuthStateChanged(user => {
                   }
                 }
 
-                localStorage.setItem('reprocost_user_migrated_v22_' + user.uid, 'true');
+                localStorage.setItem('iatfpro_user_migrated_v22_' + user.uid, 'true');
                 if (typeof window.saveStateToFirestore === 'function') {
                   window.saveStateToFirestore();
                 }
@@ -404,10 +404,10 @@ auth.onAuthStateChanged(user => {
               if (globalMatriz) {
 
                 state.matriz = window.migrarYSanitizarMatriz(globalMatriz);
-                localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
+                localStorage.setItem('iatfpro_custom_matriz', JSON.stringify(state.matriz));
               } else if (userData.matriz && Array.isArray(userData.matriz) && userData.matriz.length > 0) {
                 state.matriz = window.migrarYSanitizarMatriz(userData.matriz);
-                localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
+                localStorage.setItem('iatfpro_custom_matriz', JSON.stringify(state.matriz));
                 // Auto-migración si es el admin y la tabla global estaba vacía
                 if (user.email === ADMIN_EMAIL) {
                   db.collection("global").doc("protocols").set({ matriz: state.matriz, insumos: state.insumos })
@@ -416,7 +416,7 @@ auth.onAuthStateChanged(user => {
                 }
               } else {
                 state.matriz = window.migrarYSanitizarMatriz(window.DEFAULT_MATRIZ);
-                localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
+                localStorage.setItem('iatfpro_custom_matriz', JSON.stringify(state.matriz));
               }
           if (userData.logoEmpresa) {
             state.logoEmpresa = userData.logoEmpresa;
@@ -600,8 +600,8 @@ window.handleRegister = function(event) {
     phone: phone,
     pais: pais
   };
-  localStorage.setItem('reprocost_perfil', JSON.stringify(perfilObj));
-  localStorage.setItem('reprocost_perfil_consultor', JSON.stringify({
+  localStorage.setItem('iatfpro_perfil', JSON.stringify(perfilObj));
+  localStorage.setItem('iatfpro_perfil_consultor', JSON.stringify({
     nit: nit,
     nombre: name,
     email: email,
@@ -698,10 +698,10 @@ window.handleLogout = function() {
     auth.signOut()
       .then(() => {
         // Limpiar LocalStorage sensible para evitar que otro usuario herede datos
-        localStorage.removeItem('reprocost_state');
-        localStorage.removeItem('reprocost_perfil_consultor');
-        localStorage.removeItem('reprocost_custom_matriz');
-        localStorage.removeItem('reprocost_perfil');
+        localStorage.removeItem('iatfpro_state');
+        localStorage.removeItem('iatfpro_perfil_consultor');
+        localStorage.removeItem('iatfpro_custom_matriz');
+        localStorage.removeItem('iatfpro_perfil');
 
         document.getElementById('login-email').value = '';
         document.getElementById('login-pass').value = '';
@@ -982,7 +982,7 @@ window.saveStateToFirestore = function() {
       }
     };
 
-    const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+    const perfil = JSON.parse(localStorage.getItem('iatfpro_perfil')) || JSON.parse(localStorage.getItem('iatfpro_perfil_consultor')) || {};
 
     db.collection("users").doc(auth.currentUser.uid).set({
       name: perfil.name || perfil.nombre || auth.currentUser.displayName || '',
@@ -1427,14 +1427,14 @@ window.t = function(key) {
     : (window.translations['es'][key] || key);
 };
 
-window.currentLang = localStorage.getItem('reprocost_lang') || 'es';
+window.currentLang = localStorage.getItem('iatfpro_lang') || 'es';
 
 window.changeLanguage = function(lang) {
   if (!window.translations || !window.translations[lang]) {
     lang = 'es';
   }
   window.currentLang = lang;
-  localStorage.setItem('reprocost_lang', lang);
+  localStorage.setItem('iatfpro_lang', lang);
   
   // Actualizar textos marcados con data-i18n
   const elements = document.querySelectorAll('[data-i18n]');
@@ -1665,10 +1665,10 @@ const state = {
 // AUTO-HEALING
 (function autoHeal() {
   try {
-    const saved = localStorage.getItem('reprocost_state_v4'); // Reset final
+    const saved = localStorage.getItem('iatfpro_state_v4'); // Reset final
     if (!saved) {
-       localStorage.removeItem('reprocost_state');
-       localStorage.setItem('reprocost_state_v4', 'fixed');
+       localStorage.removeItem('iatfpro_state');
+       localStorage.setItem('iatfpro_state_v4', 'fixed');
        location.reload();
        return;
     }
@@ -2686,7 +2686,7 @@ window.contactarWhatsApp = function() {
   const userText = msgEl ? msgEl.value.trim() : '';
   
   // Obtener perfil del usuario autenticado (intentar ambas claves)
-  const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+  const perfil = JSON.parse(localStorage.getItem('iatfpro_perfil')) || JSON.parse(localStorage.getItem('iatfpro_perfil_consultor')) || {};
   const userName = perfil.name || perfil.nombre || (auth.currentUser ? (auth.currentUser.displayName || auth.currentUser.email) : 'Usuario de Iatf Pro');
   const userEmail = perfil.email || (auth.currentUser ? auth.currentUser.email : '');
   const userNit = perfil.nit || '';
@@ -2747,7 +2747,7 @@ function saveState() {
     }
   };
 
-  localStorage.setItem('reprocost_state', JSON.stringify({ 
+  localStorage.setItem('iatfpro_state', JSON.stringify({ 
     tableroLeche: state.tableroLeche, 
     tableroCarne: state.tableroCarne, 
     insumos: state.insumos, 
@@ -2757,7 +2757,7 @@ function saveState() {
   })); 
   
   // Guardar copia maestra separada de la matriz para evitar regresiones de versión al cargar historial
-  localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz)); 
+  localStorage.setItem('iatfpro_custom_matriz', JSON.stringify(state.matriz)); 
   
   if (typeof window.saveStateToFirestore === 'function') {
     window.saveStateToFirestore();
@@ -2765,11 +2765,11 @@ function saveState() {
 }
 
 window.loadState = function() {
-  const saved = localStorage.getItem('reprocost_state');
+  const saved = localStorage.getItem('iatfpro_state');
   
   // MIGRACIÓN ÚNICA: Forzar limpieza de caché antigua para la V 260528.5
-  if (!localStorage.getItem('reprocost_migrated_v260528_5')) {
-    localStorage.removeItem('reprocost_custom_matriz');
+  if (!localStorage.getItem('iatfpro_migrated_v260528_5')) {
+    localStorage.removeItem('iatfpro_custom_matriz');
     if (saved) {
       try {
         const p = JSON.parse(saved);
@@ -2784,10 +2784,10 @@ window.loadState = function() {
           }
         }
         delete p.matriz;
-        localStorage.setItem('reprocost_state', JSON.stringify(p));
+        localStorage.setItem('iatfpro_state', JSON.stringify(p));
       } catch(e) {}
     }
-    localStorage.setItem('reprocost_migrated_v260528_5', 'true');
+    localStorage.setItem('iatfpro_migrated_v260528_5', 'true');
     location.reload();
     return;
   }
@@ -2819,8 +2819,8 @@ window.loadState = function() {
     
 
     
-    if ((parsed.matriz && Array.isArray(parsed.matriz)) || localStorage.getItem('reprocost_custom_matriz')) {
-      const customMatrizSaved = localStorage.getItem('reprocost_custom_matriz');
+    if ((parsed.matriz && Array.isArray(parsed.matriz)) || localStorage.getItem('iatfpro_custom_matriz')) {
+      const customMatrizSaved = localStorage.getItem('iatfpro_custom_matriz');
       let rawMatrix = null;
       if (customMatrizSaved) {
         try {
@@ -2837,7 +2837,7 @@ window.loadState = function() {
     }
 
     if (parsed.logoEmpresa) {
-      state.logoEmpresa = parsed.logoEmpresa === 'reprocost_logo.png' ? 'Logo Iatf Pro.png' : parsed.logoEmpresa;
+      state.logoEmpresa = parsed.logoEmpresa === 'iatfpro_logo.png' ? 'Logo Iatf Pro.png' : parsed.logoEmpresa;
       actualizarVistaLogo();
     }
 
@@ -3499,12 +3499,12 @@ window.guardarRegistroInicial = function() {
     }
 
     const perfil = { nombre, nit, pais, movil, email, fechaRegistro: new Date().toISOString() };
-    localStorage.setItem('reprocost_perfil_consultor', JSON.stringify(perfil));
+    localStorage.setItem('iatfpro_perfil_consultor', JSON.stringify(perfil));
     
-    let directorio = JSON.parse(localStorage.getItem('reprocost_directorio_consultores')) || [];
+    let directorio = JSON.parse(localStorage.getItem('iatfpro_directorio_consultores')) || [];
     const idx = directorio.findIndex(p => p.nit === nit);
     if (idx !== -1) { directorio[idx] = perfil; } else { directorio.push(perfil); }
-    localStorage.setItem('reprocost_directorio_consultores', JSON.stringify(directorio));
+    localStorage.setItem('iatfpro_directorio_consultores', JSON.stringify(directorio));
 
     // Ocultar pantalla
     const welcome = document.getElementById('welcome-screen');
@@ -3527,7 +3527,7 @@ window.buscarPerfilPorNit = function() {
   console.log("Buscando NIT:", nitBusqueda);
   if (nitBusqueda.length < 3) return;
 
-  const directorio = JSON.parse(localStorage.getItem('reprocost_directorio_consultores')) || [];
+  const directorio = JSON.parse(localStorage.getItem('iatfpro_directorio_consultores')) || [];
   const perfilEncontrado = directorio.find(p => p.nit === nitBusqueda);
 
   if (perfilEncontrado) {
@@ -3548,7 +3548,7 @@ window.buscarPerfilPorNit = function() {
 };
 
 function verificarRegistro() {
-  const perfilStr = localStorage.getItem('reprocost_perfil_consultor');
+  const perfilStr = localStorage.getItem('iatfpro_perfil_consultor');
   const welcome = document.getElementById('welcome-screen');
   const sidebarConsultor = document.getElementById('sidebar-consultor');
 
@@ -3584,7 +3584,7 @@ function verificarRegistro() {
       }
     } catch(e) {
       console.warn("Error parseando perfil consultor:", e);
-      localStorage.removeItem('reprocost_perfil_consultor');
+      localStorage.removeItem('iatfpro_perfil_consultor');
     }
   }
 
@@ -4487,8 +4487,8 @@ window.enviarWhatsApp = function() {
   const finca = document.getElementById('pi-finca')?.value || 'Sin Nombre';
   const fIni = document.getElementById('pi-fecha')?.value || '';
   
-  // Obtener datos del consultor (intentar reprocost_perfil primero, luego reprocost_perfil_consultor)
-  const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+  // Obtener datos del consultor (intentar iatfpro_perfil primero, luego iatfpro_perfil_consultor)
+  const perfil = JSON.parse(localStorage.getItem('iatfpro_perfil')) || JSON.parse(localStorage.getItem('iatfpro_perfil_consultor')) || {};
   
   const nit = perfil.nit || 'N/A';
   const name = perfil.name || perfil.nombre || (auth.currentUser ? (auth.currentUser.displayName || auth.currentUser.email) : '');
@@ -4611,7 +4611,7 @@ window.guardarEnHistorial = async function() {
   const finca = document.getElementById('pi-finca').value.trim();
   let perfilObj = {};
   try {
-    perfilObj = JSON.parse(localStorage.getItem('reprocost_perfil')) || {};
+    perfilObj = JSON.parse(localStorage.getItem('iatfpro_perfil')) || {};
   } catch(e) {}
   
   let nitValue = perfilObj.nit || 'N/A';
@@ -4625,7 +4625,7 @@ window.guardarEnHistorial = async function() {
     
     // Guardar el NIT ingresado para no volver a preguntarlo
     perfilObj.nit = nitValue;
-    localStorage.setItem('reprocost_perfil', JSON.stringify(perfilObj));
+    localStorage.setItem('iatfpro_perfil', JSON.stringify(perfilObj));
     
     // Si hay usuario logueado, actualizar en Firestore
     if (typeof auth !== 'undefined' && auth.currentUser) {
@@ -4646,7 +4646,7 @@ window.guardarEnHistorial = async function() {
   
   let fullStateObj = {};
   try {
-    const localSaved = localStorage.getItem('reprocost_state');
+    const localSaved = localStorage.getItem('iatfpro_state');
     if (localSaved) fullStateObj = JSON.parse(localSaved);
     else fullStateObj = JSON.parse(JSON.stringify(state));
   } catch (e) {
@@ -4680,18 +4680,18 @@ window.guardarEnHistorial = async function() {
     
     // 2. Guardar en localStorage como respaldo local
     const localReport = Object.assign({}, report, { createdAt: reportId });
-    let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    let historial = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
     historial.push(localReport);
-    localStorage.setItem('reprocost_historial', JSON.stringify(historial));
+    localStorage.setItem('iatfpro_historial', JSON.stringify(historial));
     
     alert("✅ ¡Éxito! El reporte ha sido guardado en el historial (nube y local). Ahora podrás buscarlo por NIT cuando lo necesites.");
   } catch (error) {
     console.error("Error guardando en Firestore:", error);
     // Fallback: solo local
     const localReport = Object.assign({}, report, { createdAt: reportId });
-    let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    let historial = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
     historial.push(localReport);
-    localStorage.setItem('reprocost_historial', JSON.stringify(historial));
+    localStorage.setItem('iatfpro_historial', JSON.stringify(historial));
     alert("⚠️ El reporte se guardó de forma local (offline). Se sincronizará cuando haya conexión.");
   } finally {
     if (btnGuardar) {
@@ -4746,7 +4746,7 @@ window.buscarPorNit = async function() {
   }
 
   // 2. Combinar con localStorage y deduplicar por 'id'
-  const historialLocal = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+  const historialLocal = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
   const filtradosLocal = historialLocal.filter(r => String(r.nit || '').toLowerCase().includes(termLower));
   
   filtradosLocal.forEach(localReq => {
@@ -4825,14 +4825,14 @@ window.cargarDeHistorial = async function(id) {
   
   // 2. Fallback localStorage
   if (!record) {
-    const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    const historial = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
     record = historial.find(r => r.id === id);
   }
   
   if (!record) return;
 
   if (confirm(`¿Deseas cargar el reporte de la finca "${record.finca}" realizado el ${record.fecha}?\n\nNota: Esto reemplazará los datos actuales en pantalla.`)) {
-    const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
+    const latestMatrixStr = localStorage.getItem('iatfpro_custom_matriz');
     const newState = Object.assign({}, record.state);
     if (latestMatrixStr) {
       try {
@@ -4842,7 +4842,7 @@ window.cargarDeHistorial = async function(id) {
         }
       } catch(e) {}
     }
-    localStorage.setItem('reprocost_state', JSON.stringify(newState));
+    localStorage.setItem('iatfpro_state', JSON.stringify(newState));
     location.reload(); 
   }
 };
@@ -4857,9 +4857,9 @@ window.eliminarDeHistorial = async function(id) {
       console.warn("Error borrando de Firestore:", e);
     }
     
-    let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    let historial = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
     historial = historial.filter(r => r.id !== id);
-    localStorage.setItem('reprocost_historial', JSON.stringify(historial));
+    localStorage.setItem('iatfpro_historial', JSON.stringify(historial));
     // Refrescar la búsqueda
     buscarPorNit();
   }
@@ -4874,16 +4874,16 @@ window.exportarExcelDesdeHistorial = async function(id) {
     }
   } catch(e) {}
   if (!record) {
-    const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    const historial = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
     record = historial.find(r => r.id === id);
   }
   if (!record) return;
 
-  const originalStateStr = localStorage.getItem('reprocost_state');
+  const originalStateStr = localStorage.getItem('iatfpro_state');
 
   const restaurarEstado = () => {
     if (originalStateStr) {
-      localStorage.setItem('reprocost_state', originalStateStr);
+      localStorage.setItem('iatfpro_state', originalStateStr);
       loadState();
       if (typeof ejecutarProtocoloInicial === 'function') {
         const pv = document.getElementById('pi-protocolo')?.value;
@@ -4893,12 +4893,12 @@ window.exportarExcelDesdeHistorial = async function(id) {
       if (typeof updateResultados === 'function') updateResultados();
       if (typeof calcTableroControl === 'function') calcTableroControl();
     } else {
-      localStorage.removeItem('reprocost_state');
+      localStorage.removeItem('iatfpro_state');
       location.reload();
     }
   };
 
-  const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
+  const latestMatrixStr = localStorage.getItem('iatfpro_custom_matriz');
   const tempState = Object.assign({}, record.state);
   if (latestMatrixStr) {
     try {
@@ -4909,7 +4909,7 @@ window.exportarExcelDesdeHistorial = async function(id) {
     } catch(e) {}
   }
 
-  localStorage.setItem('reprocost_state', JSON.stringify(tempState));
+  localStorage.setItem('iatfpro_state', JSON.stringify(tempState));
   loadState();
 
   if (typeof ejecutarProtocoloInicial === 'function') {
@@ -4940,16 +4940,16 @@ window.exportarPdfDesdeHistorial = async function(id) {
     }
   } catch(e) {}
   if (!record) {
-    const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    const historial = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
     record = historial.find(r => r.id === id);
   }
   if (!record) return;
 
-  const originalStateStr = localStorage.getItem('reprocost_state');
+  const originalStateStr = localStorage.getItem('iatfpro_state');
 
   const restaurarEstado = () => {
     if (originalStateStr) {
-      localStorage.setItem('reprocost_state', originalStateStr);
+      localStorage.setItem('iatfpro_state', originalStateStr);
       loadState();
       if (typeof ejecutarProtocoloInicial === 'function') {
         const pv = document.getElementById('pi-protocolo')?.value;
@@ -4959,12 +4959,12 @@ window.exportarPdfDesdeHistorial = async function(id) {
       if (typeof updateResultados === 'function') updateResultados();
       if (typeof calcTableroControl === 'function') calcTableroControl();
     } else {
-      localStorage.removeItem('reprocost_state');
+      localStorage.removeItem('iatfpro_state');
       location.reload();
     }
   };
 
-  const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
+  const latestMatrixStr = localStorage.getItem('iatfpro_custom_matriz');
   const tempState = Object.assign({}, record.state);
   if (latestMatrixStr) {
     try {
@@ -4975,7 +4975,7 @@ window.exportarPdfDesdeHistorial = async function(id) {
     } catch(e) {}
   }
 
-  localStorage.setItem('reprocost_state', JSON.stringify(tempState));
+  localStorage.setItem('iatfpro_state', JSON.stringify(tempState));
   loadState();
 
   if (typeof ejecutarProtocoloInicial === 'function') {

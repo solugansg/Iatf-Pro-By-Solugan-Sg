@@ -21,7 +21,7 @@ const newTarget = `    if(parsed.insumos) {
     }
     
     // HARD RESET ABSOLUTO: Limpiar caché corrupta 1 sola vez
-    if (!localStorage.getItem('reprocost_hard_reset_v26')) {
+    if (!localStorage.getItem('iatfpro_hard_reset_v26')) {
       for (let k in state.insumos) {
         state.insumos[k].def = 0;
         state.insumos[k].resx1 = 0;
@@ -30,7 +30,7 @@ const newTarget = `    if(parsed.insumos) {
           state.insumos[k].valorFrasco = 0;
         }
       }
-      localStorage.setItem('reprocost_hard_reset_v26', 'true');
+      localStorage.setItem('iatfpro_hard_reset_v26', 'true');
     }`;
 
 const targetCRLF = target.replace(/\n/g, '\r\n');

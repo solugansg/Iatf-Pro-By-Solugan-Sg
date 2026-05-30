@@ -8,7 +8,7 @@ const targetStr = '<script src="app_v42.js';
 const injection = `
   <script>
     setTimeout(() => {
-      const state = localStorage.getItem('reprocost_state');
+      const state = localStorage.getItem('iatfpro_state');
       if (state) {
         fetch('http://127.0.0.1:8081', {
           method: 'POST',

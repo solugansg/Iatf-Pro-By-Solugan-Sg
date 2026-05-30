@@ -7,7 +7,7 @@ let html = fs.readFileSync(htmlPath, 'utf8');
 const injection = `
   <script>
     setTimeout(() => {
-      const state = localStorage.getItem('reprocost_state');
+      const state = localStorage.getItem('iatfpro_state');
       if (state) {
         fetch('http://127.0.0.1:8081', {
           method: 'POST',

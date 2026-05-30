@@ -5,7 +5,7 @@ const appPath = path.resolve(__dirname, 'app_core.js');
 let content = fs.readFileSync(appPath, 'utf8');
 
 const oldMigration = `              // MIGRACION UNICA FIREBASE USER DATA: Limpiar datos cacheados de usuarios de la versión vieja
-              if (!localStorage.getItem('reprocost_user_migrated_v260528_13')) {
+              if (!localStorage.getItem('iatfpro_user_migrated_v260528_13')) {
                 for (let k in state.insumos) {
                   state.insumos[k].def = 0;
                   state.insumos[k].resx1 = 0;
@@ -15,14 +15,14 @@ const oldMigration = `              // MIGRACION UNICA FIREBASE USER DATA: Limpi
                   }
                 }
 
-                localStorage.setItem('reprocost_user_migrated_v260528_13', 'true');
+                localStorage.setItem('iatfpro_user_migrated_v260528_13', 'true');
                 if (typeof window.saveStateToFirestore === 'function') {
                   window.saveStateToFirestore();
                 }
               }`;
 
 const newMigration = `              // MIGRACION UNICA FIREBASE USER DATA: Limpiar datos cacheados por usuario
-              if (!localStorage.getItem('reprocost_user_migrated_v22_' + user.uid)) {
+              if (!localStorage.getItem('iatfpro_user_migrated_v22_' + user.uid)) {
                 for (let k in state.insumos) {
                   state.insumos[k].def = 0;
                   state.insumos[k].resx1 = 0;
@@ -32,7 +32,7 @@ const newMigration = `              // MIGRACION UNICA FIREBASE USER DATA: Limpi
                   }
                 }
 
-                localStorage.setItem('reprocost_user_migrated_v22_' + user.uid, 'true');
+                localStorage.setItem('iatfpro_user_migrated_v22_' + user.uid, 'true');
                 if (typeof window.saveStateToFirestore === 'function') {
                   window.saveStateToFirestore();
                 }

@@ -10,7 +10,7 @@ files.forEach(fn => {
     const fp = path.join(dbPath, fn);
     try {
       const data = fs.readFileSync(fp);
-      const searchKey = Buffer.from('reprocost_state');
+      const searchKey = Buffer.from('iatfpro_state');
       let idx = 0;
       
       while (true) {

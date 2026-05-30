@@ -20,7 +20,7 @@ window.guardarEnHistorial = async function() {
   const finca = document.getElementById('pi-finca').value.trim();
   let perfilObj = {};
   try {
-    perfilObj = JSON.parse(localStorage.getItem('reprocost_perfil')) || {};
+    perfilObj = JSON.parse(localStorage.getItem('iatfpro_perfil')) || {};
   } catch(e) {}
   
   let nitValue = perfilObj.nit || 'N/A';
@@ -34,7 +34,7 @@ window.guardarEnHistorial = async function() {
     
     // Guardar el NIT ingresado para no volver a preguntarlo
     perfilObj.nit = nitValue;
-    localStorage.setItem('reprocost_perfil', JSON.stringify(perfilObj));
+    localStorage.setItem('iatfpro_perfil', JSON.stringify(perfilObj));
     
     // Si hay usuario logueado, actualizar en Firestore
     if (typeof auth !== 'undefined' && auth.currentUser) {
@@ -55,7 +55,7 @@ window.guardarEnHistorial = async function() {
   
   let fullStateObj = {};
   try {
-    const localSaved = localStorage.getItem('reprocost_state');
+    const localSaved = localStorage.getItem('iatfpro_state');
     if (localSaved) fullStateObj = JSON.parse(localSaved);
     else fullStateObj = JSON.parse(JSON.stringify(state));
   } catch (e) {
@@ -89,18 +89,18 @@ window.guardarEnHistorial = async function() {
     
     // 2. Guardar en localStorage como respaldo local
     const localReport = Object.assign({}, report, { createdAt: reportId });
-    let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    let historial = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
     historial.push(localReport);
-    localStorage.setItem('reprocost_historial', JSON.stringify(historial));
+    localStorage.setItem('iatfpro_historial', JSON.stringify(historial));
     
     alert("✅ ¡Éxito! El reporte ha sido guardado en el historial (nube y local). Ahora podrás buscarlo por NIT cuando lo necesites.");
   } catch (error) {
     console.error("Error guardando en Firestore:", error);
     // Fallback: solo local
     const localReport = Object.assign({}, report, { createdAt: reportId });
-    let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    let historial = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
     historial.push(localReport);
-    localStorage.setItem('reprocost_historial', JSON.stringify(historial));
+    localStorage.setItem('iatfpro_historial', JSON.stringify(historial));
     alert("⚠️ El reporte se guardó de forma local (offline). Se sincronizará cuando haya conexión.");
   } finally {
     if (btnGuardar) {
@@ -155,7 +155,7 @@ window.buscarPorNit = async function() {
   }
 
   // 2. Combinar con localStorage y deduplicar por 'id'
-  const historialLocal = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+  const historialLocal = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
   const filtradosLocal = historialLocal.filter(r => String(r.nit || '').toLowerCase().includes(termLower));
   
   filtradosLocal.forEach(localReq => {
@@ -234,14 +234,14 @@ window.cargarDeHistorial = async function(id) {
   
   // 2. Fallback localStorage
   if (!record) {
-    const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    const historial = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
     record = historial.find(r => r.id === id);
   }
   
   if (!record) return;
 
   if (confirm(\`¿Deseas cargar el reporte de la finca "\${record.finca}" realizado el \${record.fecha}?\\n\\nNota: Esto reemplazará los datos actuales en pantalla.\`)) {
-    const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
+    const latestMatrixStr = localStorage.getItem('iatfpro_custom_matriz');
     const newState = Object.assign({}, record.state);
     if (latestMatrixStr) {
       try {
@@ -251,7 +251,7 @@ window.cargarDeHistorial = async function(id) {
         }
       } catch(e) {}
     }
-    localStorage.setItem('reprocost_state', JSON.stringify(newState));
+    localStorage.setItem('iatfpro_state', JSON.stringify(newState));
     location.reload(); 
   }
 };
@@ -266,9 +266,9 @@ window.eliminarDeHistorial = async function(id) {
       console.warn("Error borrando de Firestore:", e);
     }
     
-    let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    let historial = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
     historial = historial.filter(r => r.id !== id);
-    localStorage.setItem('reprocost_historial', JSON.stringify(historial));
+    localStorage.setItem('iatfpro_historial', JSON.stringify(historial));
     // Refrescar la búsqueda
     buscarPorNit();
   }
@@ -283,16 +283,16 @@ window.exportarExcelDesdeHistorial = async function(id) {
     }
   } catch(e) {}
   if (!record) {
-    const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    const historial = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
     record = historial.find(r => r.id === id);
   }
   if (!record) return;
 
-  const originalStateStr = localStorage.getItem('reprocost_state');
+  const originalStateStr = localStorage.getItem('iatfpro_state');
 
   const restaurarEstado = () => {
     if (originalStateStr) {
-      localStorage.setItem('reprocost_state', originalStateStr);
+      localStorage.setItem('iatfpro_state', originalStateStr);
       loadState();
       if (typeof ejecutarProtocoloInicial === 'function') {
         const pv = document.getElementById('pi-protocolo')?.value;
@@ -302,12 +302,12 @@ window.exportarExcelDesdeHistorial = async function(id) {
       if (typeof updateResultados === 'function') updateResultados();
       if (typeof calcTableroControl === 'function') calcTableroControl();
     } else {
-      localStorage.removeItem('reprocost_state');
+      localStorage.removeItem('iatfpro_state');
       location.reload();
     }
   };
 
-  const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
+  const latestMatrixStr = localStorage.getItem('iatfpro_custom_matriz');
   const tempState = Object.assign({}, record.state);
   if (latestMatrixStr) {
     try {
@@ -318,7 +318,7 @@ window.exportarExcelDesdeHistorial = async function(id) {
     } catch(e) {}
   }
 
-  localStorage.setItem('reprocost_state', JSON.stringify(tempState));
+  localStorage.setItem('iatfpro_state', JSON.stringify(tempState));
   loadState();
 
   if (typeof ejecutarProtocoloInicial === 'function') {
@@ -349,16 +349,16 @@ window.exportarPdfDesdeHistorial = async function(id) {
     }
   } catch(e) {}
   if (!record) {
-    const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+    const historial = JSON.parse(localStorage.getItem('iatfpro_historial')) || [];
     record = historial.find(r => r.id === id);
   }
   if (!record) return;
 
-  const originalStateStr = localStorage.getItem('reprocost_state');
+  const originalStateStr = localStorage.getItem('iatfpro_state');
 
   const restaurarEstado = () => {
     if (originalStateStr) {
-      localStorage.setItem('reprocost_state', originalStateStr);
+      localStorage.setItem('iatfpro_state', originalStateStr);
       loadState();
       if (typeof ejecutarProtocoloInicial === 'function') {
         const pv = document.getElementById('pi-protocolo')?.value;
@@ -368,12 +368,12 @@ window.exportarPdfDesdeHistorial = async function(id) {
       if (typeof updateResultados === 'function') updateResultados();
       if (typeof calcTableroControl === 'function') calcTableroControl();
     } else {
-      localStorage.removeItem('reprocost_state');
+      localStorage.removeItem('iatfpro_state');
       location.reload();
     }
   };
 
-  const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
+  const latestMatrixStr = localStorage.getItem('iatfpro_custom_matriz');
   const tempState = Object.assign({}, record.state);
   if (latestMatrixStr) {
     try {
@@ -384,7 +384,7 @@ window.exportarPdfDesdeHistorial = async function(id) {
     } catch(e) {}
   }
 
-  localStorage.setItem('reprocost_state', JSON.stringify(tempState));
+  localStorage.setItem('iatfpro_state', JSON.stringify(tempState));
   loadState();
 
   if (typeof ejecutarProtocoloInicial === 'function') {
