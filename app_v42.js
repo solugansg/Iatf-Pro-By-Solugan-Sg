@@ -579,6 +579,7 @@ window.handleRegister = function(event) {
   const phone = document.getElementById('reg-phone').value.trim();
   const finca = document.getElementById('reg-finca').value.trim();
   const pass = document.getElementById('reg-pass').value;
+  const pais = document.getElementById('reg-pais') ? document.getElementById('reg-pais').value : 'Colombia';
 
   if (pass.length < 6) {
     alert("La contraseña debe tener al menos 6 caracteres.");
@@ -596,7 +597,8 @@ window.handleRegister = function(event) {
     name: name,
     email: email,
     finca: finca,
-    phone: phone
+    phone: phone,
+    pais: pais
   };
   localStorage.setItem('reprocost_perfil', JSON.stringify(perfilObj));
   localStorage.setItem('reprocost_perfil_consultor', JSON.stringify({
@@ -604,7 +606,7 @@ window.handleRegister = function(event) {
     nombre: name,
     email: email,
     movil: phone,
-    pais: 'Colombia'
+    pais: pais
   }));
 
   auth.createUserWithEmailAndPassword(email, pass)
@@ -620,6 +622,7 @@ window.handleRegister = function(event) {
             email: email,
             phone: phone,
             finca: finca,
+            pais: pais,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
           });
         });
@@ -643,6 +646,7 @@ window.handleRegister = function(event) {
                   email: email,
                   phone: phone,
                   finca: finca,
+                  pais: pais,
                   lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
                 }, { merge: true });
               });
@@ -986,6 +990,7 @@ window.saveStateToFirestore = function() {
       nit: perfil.nit || '',
       phone: perfil.phone || perfil.movil || '',
       finca: perfil.finca || '',
+      pais: perfil.pais || '',
       tableroLeche: state.tableroLeche,
       tableroCarne: state.tableroCarne,
       insumos: state.insumos,
