@@ -30,7 +30,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260530.41">
+  <link rel="stylesheet" href="style.css?v=V 260530.45">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -155,13 +155,13 @@
     <aside class="sidebar glass-panel">
       <div class="sidebar-header">
         <div class="logo-icon">
-          <img src="Logo Iatf Pro.png" style="width:60px;height:60px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
+          <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260530.41</span></span>
-        <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 6px 10px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
-          <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260530.45</span></span>
+        <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
+          <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
-            <div id="sidebar-consultor-name" style="font-size: 0.85rem; color: var(--accent); font-weight: 800; letter-spacing: 0.5px; word-break: break-all;"></div>
+            <div id="sidebar-consultor-name" style="font-size: 0.7rem; color: var(--accent); font-weight: 800; letter-spacing: 0.5px; word-break: break-all;"></div>
           </div>
         </div>
       </div>
@@ -185,6 +185,9 @@
         <button class="nav-btn" data-target="buscador-historico">
           <i data-lucide="search"></i> <span data-i18n="sidebar_history">Buscador Histórico</span>
         </button>
+        <button class="nav-btn" data-target="aliados-comerciales" id="nav-btn-aliados">
+          <i data-lucide="handshake"></i> <span data-i18n="sidebar_aliados">Aliados Comerciales</span>
+        </button>
         <button class="nav-btn" data-target="admin-users" id="nav-btn-admin" style="display: none; border-left: 3px solid #f59e0b; color: #f59e0b; background: rgba(245, 158, 11, 0.03);">
           <i data-lucide="users"></i> <span data-i18n="sidebar_admin">Usuarios (Admin)</span>
         </button>
@@ -195,7 +198,7 @@
           
           <!-- SECCIÓN DE CONTACTO / SOPORTE -->
           <div class="input-group" style="width: 100%; margin-bottom: 0;">
-            <button class="btn btn-whatsapp contact-btn" onclick="contactarWhatsApp()">
+            <button class="btn btn-whatsapp contact-btn" onclick="contactarWhatsApp()" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.37 5.028L2 22l5.135-1.348a9.926 9.926 0 0 0 4.877 1.28h.004c5.505 0 9.99-4.478 9.99-9.984C22.007 6.478 17.518 2 12.012 2zm6.09 13.985c-.25.707-1.447 1.3-1.983 1.385-.482.076-1.11.137-3.23-.742-2.707-1.12-4.436-3.882-4.57-4.06-.135-.178-1.101-1.464-1.101-2.793 0-1.328.697-1.983.947-2.247.25-.263.55-.329.734-.329.183 0 .367.002.525.01.163.008.384-.06.6-.06.22 0 .452.082.64.526.194.462.668 1.632.727 1.75.06.118.098.256.02.412-.08.156-.118.256-.237.395-.118.14-.25.312-.355.42-.11.11-.226.23-.097.45.128.22.57 1.012 1.218 1.588.838.745 1.543.976 1.763 1.085.22.11.35.093.48-.057.13-.15.556-.647.705-.87.15-.223.3-.186.505-.11.205.076 1.302.613 1.528.727.227.113.377.17.434.27.057.1.057.576-.192 1.285z"/>
               </svg>
@@ -229,7 +232,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260530.41</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260530.45</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -1369,7 +1372,7 @@
     }
   </style>
 
-  <script src="iatf-app.js?v=V260530.41"></script>
+  <script src="iatf-app.js?v=V260530.45"></script>
 
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>
