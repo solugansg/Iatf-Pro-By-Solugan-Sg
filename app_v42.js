@@ -1425,6 +1425,9 @@ window.t = function(key) {
 window.currentLang = localStorage.getItem('reprocost_lang') || 'es';
 
 window.changeLanguage = function(lang) {
+  if (!window.translations || !window.translations[lang]) {
+    lang = 'es';
+  }
   window.currentLang = lang;
   localStorage.setItem('reprocost_lang', lang);
   
@@ -1432,8 +1435,8 @@ window.changeLanguage = function(lang) {
   const elements = document.querySelectorAll('[data-i18n]');
   elements.forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (translations[lang][key]) {
-      el.innerText = translations[lang][key];
+    if (window.translations[lang] && window.translations[lang][key]) {
+      el.innerText = window.translations[lang][key];
     }
   });
 
@@ -1441,8 +1444,8 @@ window.changeLanguage = function(lang) {
   const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
   placeholders.forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
-    if (translations[lang][key]) {
-      el.placeholder = translations[lang][key];
+    if (window.translations[lang] && window.translations[lang][key]) {
+      el.placeholder = window.translations[lang][key];
     }
   });
 
