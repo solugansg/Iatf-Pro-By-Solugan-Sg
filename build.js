@@ -43,7 +43,7 @@ function copyFolderRecursiveSync(source, target) {
 function injectVersion(content) {
   content = content.replace(/iatfpro-v[\w.]+/gi,         `iatfpro-${V_SLUG.toLowerCase()}`);
   content = content.replace(/(Service Worker\s+)v[\w.]+/gi, `$1${VERSION}`);
-  content = content.replace(/app\.js\?v=[\w.]+/g,        `iatf-app.js?v=${V_SLUG}`);
+  content = content.replace(/iatf-app\.js\?v=[\w.\s]+/g,        `iatf-app.js?v=${V_SLUG}`);
   content = content.replace(/\bv\d+\.\d+\.\d+\b/g,       VERSION);
   content = content.replace(/\bV\s+\d{6}\.\d+\b/g,       VERSION);
   return content;
