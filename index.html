@@ -30,7 +30,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260530.29">
+  <link rel="stylesheet" href="style.css?v=V 260530.33">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -55,24 +55,25 @@
   <div id="auth-container" class="auth-wrapper" style="display: flex; flex-direction: column; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: flex-start; align-items: center; padding: 1rem; overflow-y: auto; -webkit-overflow-scrolling: touch; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
     <div class="welcome-card glass-panel" style="margin: auto 0; width: 100%; max-width: 600px; box-sizing: border-box;">
       <div class="auth-header">
-        <div class="sidebar-header" style="justify-content: center; margin-bottom: 0.8rem;">
-          <div style="display:inline-flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:90px;height:90px;object-fit:contain;border-radius:16px;" alt="IATF Pro Logo"></div>
-          <span style="font-size: 1.1rem; color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg</span>
+        <div class="sidebar-header" style="justify-content: center; margin-bottom: 0.4rem;">
+          <div style="display:inline-flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:70px;height:70px;object-fit:contain;border-radius:12px;" alt="IATF Pro Logo"></div>
+          <span style="font-size: 1.1rem; color: var(--text-muted); font-weight: 600; margin-top: 4px;">By Solugan Sg</span>
         </div>
-        <h3 id="auth-subtitle" style="text-align: center; margin-bottom: 0.5rem; color: var(--accent); letter-spacing: 1px; font-size: 1.15rem;">REGISTRO DE USUARIO</h3>
+        <h3 id="auth-subtitle" style="text-align: center; margin-bottom: 0.2rem; color: var(--accent); letter-spacing: 1px; font-size: 1.15rem;">REGISTRO DE USUARIO</h3>
       </div>
 
       <form id="register-form" onsubmit="handleRegister(event)" autocomplete="off">
-        <div class="grid-1" style="gap: 0.75rem;">
+        <div class="grid-1" style="gap: 0.4rem;">
+        <div class="grid-1" style="gap: 0.2rem;">
           <div class="input-group" style="margin-bottom: 0;">
             <label style="color: var(--accent); font-weight: 800;">NIT / C.C. (Llave de acceso)</label>
-            <input type="text" id="reg-nit" required placeholder="Ingresa tu identificación para buscar tu perfil" class="welcome-input" oninput="debouncedBuscarPerfilPorNit()" autocomplete="off">
+            <input type="text" id="reg-nit" required placeholder="Ingresa tu identificación" class="welcome-input" oninput="debouncedBuscarPerfilPorNit()" autocomplete="off">
           </div>
           <div class="input-group" style="margin-bottom: 0;">
             <label>Nombre Completo / Razón Social</label>
             <input type="text" id="reg-name" required placeholder="Nombre completo" class="welcome-input" autocomplete="name">
           </div>
-          <div class="grid-2" style="gap: 0.75rem;">
+          <div class="grid-2" style="gap: 0.2rem;">
             <div class="input-group" style="margin-bottom: 0;">
               <label>País</label>
               <select id="reg-pais" class="welcome-input" autocomplete="off">
@@ -110,7 +111,7 @@
           </div>
           <div class="input-group" style="margin-bottom: 0;">
             <label>Correo Electrónico</label>
-            <input type="email" id="reg-email" required placeholder="usuario@ejemplo.com" class="welcome-input" autocomplete="off">
+            <input type="email" id="reg-email" required placeholder="usuario@ejemplo.com" class="welcome-input" autocomplete="username">
           </div>
           <div class="input-group" style="margin-bottom: 0;">
             <label>Contraseña</label>
@@ -128,7 +129,7 @@
       </form>
 
       <form id="login-form" onsubmit="handleLogin(event)" style="display: none;" autocomplete="off">
-        <div class="grid-1" style="gap: 0.75rem;">
+        <div class="grid-1" style="gap: 0.4rem;">
           <div class="input-group" style="margin-bottom: 0;">
             <label>Correo Electrónico</label>
             <input type="email" id="login-email" required placeholder="usuario@ejemplo.com" class="welcome-input" autocomplete="off">
@@ -157,7 +158,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:60px;height:60px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260530.29</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260530.33</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 6px 10px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -229,7 +230,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260530.29</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260530.33</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -517,7 +518,7 @@
             <div class="input-group">
               <label data-i18n="pi_preg">Preñeces (Proyectado o Dx1 Real)</label>
               <div class="pi-preg-row"
-                style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                style="display: flex; gap: 0.4rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
                 <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
                   <button class="spin-btn minus"
                     onclick="spinVal('pi-prenadas', -1, false); debouncedAutoCalcPorcentaje();">&#8722;</button>
@@ -786,7 +787,7 @@
             </div>
             <div class="input-group">
               <label>Preñeces ReSx1 (Proyectado o Real)</label>
-              <div style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+              <div style="display: flex; gap: 0.4rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
                 <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
                   <button class="spin-btn minus" onclick="spinVal('resx1-prenadas', -1, false); debouncedAutoCalcPrenResx1();">&#8722;</button>
                   <input type="number" id="resx1-prenadas" value="0" min="0" oninput="debouncedAutoCalcPrenResx1()" onchange="autoCalcPrenResx1()" style="font-size: 1.5rem; font-weight: 800; background: transparent; border: none; text-align: center;">
@@ -839,7 +840,7 @@
               <tfoot style="background: rgba(255,255,255,0.05); border-top: 2px solid var(--accent);">
                 <tr>
                   <td colspan="3" style="text-align: left; padding: 1rem 0.5rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
-                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
                       <span>🧪 <span data-i18n="r1_hormones_ref">Hormonas/Vaca</span>: <strong id="resx1-hormonas-footer" style="color: #fbbf24; font-size: 0.95rem;">$ 0</strong></span>
                       <span style="opacity: 0.3;">|</span>
                       <span>🐂 <span data-i18n="r1_iate_ref">IA/TE/Vaca</span>: <strong id="resx1-iate-footer" style="color: #60a5fa; font-size: 0.95rem;">$ 0</strong></span>
@@ -930,7 +931,7 @@
             </div>
             <div class="input-group">
               <label>Preñeces ReSx2 (Proyectado o Real)</label>
-              <div style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+              <div style="display: flex; gap: 0.4rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
                 <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
                   <button class="spin-btn minus" onclick="spinVal('resx2-prenadas', -1, false); debouncedAutoCalcPrenResx2();" style="color: #a855f7;">&#8722;</button>
                   <input type="number" id="resx2-prenadas" value="0" min="0" oninput="debouncedAutoCalcPrenResx2()" onchange="autoCalcPrenResx2()" style="font-size: 1.5rem; font-weight: 800; background: transparent; border: none; text-align: center; color: #a855f7;">
@@ -983,7 +984,7 @@
               <tfoot style="background: rgba(255,255,255,0.05); border-top: 2px solid #a855f7;">
                 <tr>
                   <td colspan="3" style="text-align: left; padding: 1rem 0.5rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
-                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
                       <span>🧪 <span data-i18n="r2_hormones_ref">Hormonas/Vaca</span>: <strong id="resx2-hormonas-footer" style="color: #fbbf24; font-size: 0.95rem;">$ 0</strong></span>
                       <span style="opacity: 0.3;">|</span>
                       <span>🐂 <span data-i18n="r2_iate_ref">IA/TE/Vaca</span>: <strong id="resx2-iate-footer" style="color: #60a5fa; font-size: 0.95rem;">$ 0</strong></span>
