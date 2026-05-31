@@ -4666,10 +4666,7 @@ try {
   // 0. Verificar registro inmediatamente
   verificarRegistro();
 
-  // 0.5. Cargar aliados de la nube
-  if (typeof window.cargarAliadosDeNube === 'function') {
-    window.cargarAliadosDeNube();
-  }
+  // (La carga de aliados se hará al final del archivo para asegurar que la función esté definida)
 
   // 1. Primero poblar selectores
   actualizarSelectProtocolos();
@@ -4959,3 +4956,8 @@ window.abrirModalAliado = function(index) {
 window.cerrarModalAliado = function() {
   document.getElementById('modal-aliado').style.display = 'none';
 };
+
+// Finalmente, cargar los aliados de la nube
+if (typeof window.cargarAliadosDeNube === 'function') {
+  window.cargarAliadosDeNube();
+}
