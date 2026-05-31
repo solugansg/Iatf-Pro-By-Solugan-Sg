@@ -4846,6 +4846,17 @@ window.cargarAliadosDeNube = function() {
     .catch(err => console.error("Error cargando aliados de la nube:", err));
 };
 
+window.formatAliadoText = function(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  let safeText = div.innerHTML;
+  
+  // Reemplazar "°" y la línea entera con un estilo resaltado
+  safeText = safeText.replace(/(°[^\n]+)/g, '<span style="color: #00F2FE; font-weight: 800; font-size: 1.05rem; letter-spacing: 0.5px; display: inline-block; margin-top: 0.4rem;">$1</span>');
+  return safeText;
+};
+
 window.renderAliadosCards = function() {
   const grid = document.getElementById('grid-aliados');
   if (!grid) return;
@@ -4887,7 +4898,7 @@ window.renderAliadosCards = function() {
       <div class="aliado-header">
         <h3>${nombre}</h3>
       </div>
-      <div class="aliado-desc">${desc}</div>
+      <div class="aliado-desc">${window.formatAliadoText(desc)}</div>
       <div>
         <div class="aliado-loc-pill"><i data-lucide="map-pin" style="width: 14px; height: 14px;"></i> ${ubicacion}</div>
       </div>
@@ -4929,11 +4940,11 @@ window.abrirModalAliado = function(index) {
   
   document.getElementById('modal-aliado-nombre').textContent = nombre;
   document.getElementById('modal-aliado-ubicacion').innerHTML = `<i data-lucide="map-pin" style="width: 16px; height: 16px; color: var(--accent);"></i> <span>${ubicacion}</span>`;
-  document.getElementById('modal-aliado-productos').textContent = prod;
+  document.getElementById('modal-aliado-productos').innerHTML = window.formatAliadoText(prod);
   
   const notaContainer = document.getElementById('modal-aliado-nota-container');
   if (nota) {
-    document.getElementById('modal-aliado-nota').textContent = nota;
+    document.getElementById('modal-aliado-nota').innerHTML = window.formatAliadoText(nota);
     notaContainer.style.display = 'block';
   } else {
     notaContainer.style.display = 'none';
