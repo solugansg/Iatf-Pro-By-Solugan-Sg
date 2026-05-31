@@ -4856,7 +4856,7 @@ window.renderAliadosCards = function() {
   grid.innerHTML = '';
   
   window.aliadosData.rows.forEach((row, index) => {
-    const nombre = row[colNombre] || 'Aliado Sin Nombre';
+    const nombre = String(row[colNombre] || 'Aliado Sin Nombre');
     const desc = row[colDesc] || '';
     const ubicacion = row[colCiudad] || 'Ubicación no especificada';
     
