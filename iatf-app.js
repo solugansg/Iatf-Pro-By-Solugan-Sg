@@ -711,6 +711,10 @@ window.handleImportarAliados = function(event) {
       if (rawData.length === 0) throw new Error("El archivo está vacío.");
       
       const headers = rawData[0];
+      window.aliadosData = {
+        headers: headers,
+        rows: []
+      };
       const theadTr = document.getElementById('aliados-thead-tr');
       if (theadTr) {
         theadTr.innerHTML = '';
@@ -732,12 +736,16 @@ window.handleImportarAliados = function(event) {
           
           hasData = true;
           const tr = document.createElement('tr');
+          const rowDataToStore = [];
           for (let j = 0; j < headers.length; j++) {
             const td = document.createElement('td');
-            td.textContent = row[j] !== undefined ? row[j] : '';
+            const val = row[j] !== undefined ? row[j] : '';
+            td.textContent = val;
             tr.appendChild(td);
+            rowDataToStore.push(val);
           }
           tbody.appendChild(tr);
+          window.aliadosData.rows.push(rowDataToStore);
         }
         
         if (!hasData) {
@@ -4676,6 +4684,11 @@ try {
   // 0. Verificar registro inmediatamente
   verificarRegistro();
 
+  // 0.5. Cargar aliados de la nube
+  if (typeof window.cargarAliadosDeNube === 'function') {
+    window.cargarAliadosDeNube();
+  }
+
   // 1. Primero poblar selectores
   actualizarSelectProtocolos();
   renderMatriz();
@@ -4778,4 +4791,70 @@ window.toggleSidebar = function() {
   }
 };
 
+window.guardarAliadosEnNube = function() {
+  if (!window.aliadosData || !window.aliadosData.rows || window.aliadosData.rows.length === 0) {
+    alert("No hay datos cargados. Por favor carga un archivo Excel primero.");
+    return;
+  }
+  const pwd = prompt("Por favor ingresa la contraseña de administrador:");
+  if (pwd !== "jan5362") {
+    if (pwd !== null) alert("Contraseña incorrecta.");
+    return;
+  }
+  const btn = document.getElementById('btn-guardar-aliados-nube');
+  const oldText = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.innerHTML = 'Guardando...';
+    btn.disabled = true;
+  }
 
+  db.collection('settings').doc('aliados').set(window.aliadosData)
+    .then(() => {
+      alert("¡Directorio de aliados guardado en la nube exitosamente!");
+    })
+    .catch(err => {
+      console.error("Error al guardar aliados:", err);
+      alert("Error al guardar en la nube: " + err.message);
+    })
+    .finally(() => {
+      if (btn) {
+        btn.innerHTML = oldText;
+        btn.disabled = false;
+      }
+    });
+};
+
+window.cargarAliadosDeNube = function() {
+  db.collection('settings').doc('aliados').get()
+    .then(doc => {
+      if (doc.exists) {
+        const data = doc.data();
+        if (data.headers && data.rows) {
+          window.aliadosData = data;
+          const theadTr = document.getElementById('aliados-thead-tr');
+          if (theadTr) {
+            theadTr.innerHTML = '';
+            data.headers.forEach(h => {
+              const th = document.createElement('th');
+              th.textContent = h || 'Columna';
+              theadTr.appendChild(th);
+            });
+          }
+          const tbody = document.getElementById('aliados-tbody');
+          if (tbody) {
+            tbody.innerHTML = '';
+            data.rows.forEach(row => {
+              const tr = document.createElement('tr');
+              row.forEach(cell => {
+                const td = document.createElement('td');
+                td.textContent = cell !== undefined ? cell : '';
+                tr.appendChild(td);
+              });
+              tbody.appendChild(tr);
+            });
+          }
+        }
+      }
+    })
+    .catch(err => console.error("Error cargando aliados de la nube:", err));
+};
