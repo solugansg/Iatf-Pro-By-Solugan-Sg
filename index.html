@@ -1354,8 +1354,13 @@
 
         <div class="glass-panel p-2">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-            <h2 class="form-title" style="margin: 0; border: none; padding: 0;"><i data-lucide="users"></i> Directorio</h2>
-            <div style="display: flex; gap: 0.5rem;">
+            <h2 class="form-title" style="margin: 0; border: none; padding: 0; display: flex; align-items: center; gap: 0.5rem;">
+              <i data-lucide="users"></i> Directorio
+              <button class="btn btn-secondary" style="padding: 4px; border: none; background: transparent;" onclick="desbloquearAdminAliados()" title="Administrar Directorio">
+                <i data-lucide="lock" id="icon-lock-aliados" style="width: 16px; height: 16px; opacity: 0.5;"></i>
+              </button>
+            </h2>
+            <div id="admin-aliados-actions" style="display: none; gap: 0.5rem;">
               <input type="file" id="btn-importar-aliados" accept=".xlsx, .xls" style="display: none;" onchange="handleImportarAliados(event)">
               <button class="btn" style="background: #10b981; color: #fff; font-weight: 700; border-color: #10b981;" onclick="document.getElementById('btn-importar-aliados').click()">
                 <i data-lucide="upload-cloud"></i> Cargar Excel

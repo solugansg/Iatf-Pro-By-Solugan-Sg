@@ -4791,6 +4791,21 @@ window.toggleSidebar = function() {
   }
 };
 
+window.desbloquearAdminAliados = function() {
+  const pwd = prompt("Ingresa la contraseña de administrador para modificar el directorio:");
+  if (pwd === "jan5362") {
+    const actions = document.getElementById('admin-aliados-actions');
+    if (actions) actions.style.display = 'flex';
+    const icon = document.getElementById('icon-lock-aliados');
+    if (icon) {
+      icon.setAttribute('data-lucide', 'unlock');
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+  } else {
+    if (pwd !== null) alert("Contraseña incorrecta.");
+  }
+};
+
 window.guardarAliadosEnNube = function() {
   if (!window.aliadosData || !window.aliadosData.rows || window.aliadosData.rows.length === 0) {
     alert("No hay datos cargados. Por favor carga un archivo Excel primero.");
