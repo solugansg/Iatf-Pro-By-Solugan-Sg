@@ -4851,6 +4851,8 @@ window.renderAliadosCards = function() {
   const colNombre = headers.findIndex(h => h && h.toLowerCase().includes('comercial')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('comercial')) : 0;
   const colDesc = headers.findIndex(h => h && h.toLowerCase().includes('descripcion')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('descripcion')) : 2;
   const colCiudad = headers.findIndex(h => h && h.toLowerCase().includes('ciudad')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('ciudad')) : 6;
+  const colRegion = headers.findIndex(h => h && h.toLowerCase().includes('region')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('region')) : 5;
+  const colPais = headers.findIndex(h => h && h.toLowerCase().includes('pais')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('pais')) : 4;
   const colContacto = headers.findIndex(h => h && h.toLowerCase().includes('contacto')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('contacto')) : 1;
   
   grid.innerHTML = '';
@@ -4858,12 +4860,8 @@ window.renderAliadosCards = function() {
   window.aliadosData.rows.forEach((row, index) => {
     const nombre = String(row[colNombre] || 'Aliado Sin Nombre');
     const desc = row[colDesc] || '';
-    const ubicacion = row[colCiudad] || 'Ubicación no especificada';
-    
-    const words = nombre.split(' ').filter(w => w.length > 0);
-    let initials = 'A';
-    if (words.length >= 2) initials = (words[0][0] + words[1][0]).toUpperCase();
-    else if (words.length === 1) initials = words[0].substring(0, 2).toUpperCase();
+    let ubicacion = [row[colCiudad], row[colRegion], row[colPais]].filter(Boolean).join(', ');
+    if (!ubicacion) ubicacion = 'Ubicación no especificada';
 
     let contactoRaw = row[colContacto] ? String(row[colContacto]) : '';
     let linkWa = '#';
@@ -4878,7 +4876,6 @@ window.renderAliadosCards = function() {
     card.className = 'aliado-card-premium';
     card.innerHTML = `
       <div class="aliado-header">
-        <div class="aliado-avatar">${initials}</div>
         <h3>${nombre}</h3>
       </div>
       <div class="aliado-desc">${desc}</div>
