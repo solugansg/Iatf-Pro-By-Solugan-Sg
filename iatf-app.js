@@ -4805,7 +4805,19 @@ window.guardarAliadosEnNube = function() {
     btn.disabled = true;
   }
 
-  db.collection('settings').doc('aliados').set(window.aliadosData)
+  const cleanData = {
+    headers: (window.aliadosData.headers || []).map(h => h === undefined || h === null ? '' : String(h)),
+    rows: (window.aliadosData.rows || []).map(row => {
+      const rowObj = {};
+      // Convertimos el arreglo interno en un objeto para evitar el error de Firebase "Nested arrays are not supported"
+      for (let i = 0; i < row.length; i++) {
+        rowObj[i.toString()] = row[i] === undefined || row[i] === null ? '' : row[i];
+      }
+      return rowObj;
+    })
+  };
+
+  db.collection('settings').doc('aliados').set(cleanData)
     .then(() => {
       alert("¡Directorio de aliados guardado en la nube exitosamente!");
     })
