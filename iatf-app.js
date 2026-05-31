@@ -4859,23 +4859,41 @@ window.renderAliadosCards = function() {
     const nombre = row[colNombre] || 'Aliado Sin Nombre';
     const desc = row[colDesc] || '';
     const ubicacion = row[colCiudad] || 'Ubicación no especificada';
+    
+    const words = nombre.split(' ').filter(w => w.length > 0);
+    let initials = 'A';
+    if (words.length >= 2) initials = (words[0][0] + words[1][0]).toUpperCase();
+    else if (words.length === 1) initials = words[0].substring(0, 2).toUpperCase();
+
     let contactoRaw = row[colContacto] ? String(row[colContacto]) : '';
     let linkWa = '#';
+    let labelWa = 'Contactar';
     if (contactoRaw) {
       const num = contactoRaw.replace(/\D/g,'');
       linkWa = `https://wa.me/${num}`;
+      labelWa = contactoRaw;
     }
     
     const card = document.createElement('div');
-    card.className = 'aliado-card';
+    card.className = 'aliado-card-premium';
     card.innerHTML = `
-      <h3>${nombre}</h3>
-      <div class="aliado-loc"><i data-lucide="map-pin" style="width: 14px; height: 14px;"></i> ${ubicacion}</div>
+      <div class="aliado-header">
+        <div class="aliado-avatar">${initials}</div>
+        <h3>${nombre}</h3>
+      </div>
       <div class="aliado-desc">${desc}</div>
+      <div>
+        <div class="aliado-loc-pill"><i data-lucide="map-pin" style="width: 14px; height: 14px;"></i> ${ubicacion}</div>
+      </div>
       <div class="aliado-actions">
-        ${contactoRaw ? `<a href="${linkWa}" target="_blank" class="btn-aliado-wa" title="WhatsApp"><i data-lucide="message-circle" style="width: 20px; height: 20px;"></i></a>` : ''}
-        <button class="btn-aliado-detalles" onclick="abrirModalAliado(${index})">
-          <i data-lucide="eye" style="width: 18px; height: 18px;"></i> Ver Detalles
+        ${contactoRaw ? `
+          <a href="${linkWa}" target="_blank" class="btn-whatsapp-glow" title="WhatsApp">
+            <strong>WHATSAPP</strong>
+            <span>${labelWa}</span>
+          </a>
+        ` : ''}
+        <button class="btn-detalles-glow" onclick="abrirModalAliado(${index})">
+          <i data-lucide="eye" style="width: 18px; height: 18px;"></i> Detalles
         </button>
       </div>
     `;
