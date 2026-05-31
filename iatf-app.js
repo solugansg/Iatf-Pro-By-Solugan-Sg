@@ -691,6 +691,7 @@ window.handleImportarExcelFile = function(event) {
   reader.onerror = function() {
     alert("Error al leer el archivo Excel.");
     event.target.value = '';
+  };
   reader.readAsArrayBuffer(file);
 };
 
