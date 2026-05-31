@@ -30,7 +30,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260531.4">
+  <link rel="stylesheet" href="style.css?v=V 260531.5">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -157,7 +157,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260531.4</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260531.5</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -232,7 +232,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260531.4</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260531.5</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -1371,29 +1371,150 @@
             </div>
           </div>
           
-          <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
-            <table class="data-table" id="tabla-aliados" style="font-size: 0.9rem; text-align: left;">
-              <thead style="position: sticky; top: 0; background: #0f172a; z-index: 10;">
-                <tr id="aliados-thead-tr">
-                  <th>No hay datos cargados</th>
-                </tr>
-              </thead>
-              <tbody id="aliados-tbody">
-                <tr>
-                  <td style="text-align: center; color: var(--text-muted); padding: 2rem;">
-                    Usa el botón "Cargar Excel" para visualizar el directorio de aliados comerciales.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div id="grid-aliados" class="aliados-grid">
+            <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--glass-border);">
+              <i data-lucide="info" style="width: 40px; height: 40px; margin-bottom: 1rem; opacity: 0.5;"></i>
+              <p>No hay aliados cargados. Usa el botón de candado para Cargar Excel o espera a que sincronicen desde la nube.</p>
+            </div>
           </div>
         </div>
       </section>
+
+      <!-- Modal Detalles Aliado -->
+      <div id="modal-aliado" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; backdrop-filter:blur(8px);">
+        <div class="glass-panel" style="padding: 2.5rem; width: 90%; max-width: 600px; max-height: 85vh; overflow-y:auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; border-top: 4px solid var(--accent);">
+          <button onclick="cerrarModalAliado()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: transparent; border: none; color: var(--text-muted); cursor: pointer;">
+            <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+          </button>
+          <h2 id="modal-aliado-nombre" style="font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; padding-right: 2rem;">-</h2>
+          <div id="modal-aliado-ubicacion" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.4rem;">
+            <i data-lucide="map-pin" style="width: 16px; height: 16px; color: var(--accent);"></i> <span>-</span>
+          </div>
+          
+          <div style="margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1rem; color: var(--accent); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="package" style="width:18px;height:18px;"></i> Productos y Servicios</h3>
+            <div id="modal-aliado-productos" style="background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--glass-border); color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; white-space: pre-line;">
+              -
+            </div>
+          </div>
+          
+          <div id="modal-aliado-nota-container" style="margin-bottom: 2rem; display: none;">
+            <h3 style="font-size: 1rem; color: #f59e0b; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="info" style="width:18px;height:18px;"></i> Nota Adicional</h3>
+            <div id="modal-aliado-nota" style="background: rgba(245, 158, 11, 0.05); padding: 1.2rem; border-radius: 8px; border-left: 4px solid #f59e0b; color: #e2e8f0; font-size: 0.9rem; font-style: italic;">
+              -
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+            <a id="modal-aliado-wa" href="#" target="_blank" class="btn" style="background: #25D366; color: #fff; border-color: #25D366; font-weight: 700; flex: 1; justify-content: center; text-decoration: none;">
+              <i data-lucide="message-circle"></i> Contactar por WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
 
     </main>
   </div>
 
   <style>
+    /* Estilos Directorio Aliados */
+    .aliados-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .aliado-card {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .aliado-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      border-color: rgba(14, 165, 233, 0.3);
+    }
+    .aliado-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--accent), #a855f7);
+      opacity: 0.8;
+    }
+    .aliado-card h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.25rem;
+      color: #f8fafc;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .aliado-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+    .aliado-loc {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-bottom: 1.5rem;
+    }
+    .aliado-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-aliado-wa {
+      background: rgba(37, 211, 102, 0.1);
+      color: #25D366;
+      border: 1px solid rgba(37, 211, 102, 0.3);
+      padding: 0.5rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex: 0 0 auto;
+      text-decoration: none;
+    }
+    .btn-aliado-wa:hover {
+      background: #25D366;
+      color: #fff;
+    }
+    .btn-aliado-detalles {
+      background: rgba(255,255,255,0.05);
+      color: #e2e8f0;
+      border: 1px solid var(--glass-border);
+      padding: 0.5rem;
+      border-radius: 8px;
+      flex: 1;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+    .btn-aliado-detalles:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
     /* Add specific input styling for the matrix to look like excel cells */
     .cell-input {
       width: 100px;
@@ -1417,7 +1538,7 @@
     }
   </style>
 
-  <script src="iatf-app.js?v=V 260530.15"></script>
+  <script src="iatf-app.js?v=V 260530.16"></script>
 
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>

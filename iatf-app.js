@@ -715,42 +715,24 @@ window.handleImportarAliados = function(event) {
         headers: headers,
         rows: []
       };
-      const theadTr = document.getElementById('aliados-thead-tr');
-      if (theadTr) {
-        theadTr.innerHTML = '';
-        headers.forEach(h => {
-          const th = document.createElement('th');
-          th.textContent = h || 'Columna';
-          theadTr.appendChild(th);
-        });
+      let hasData = false;
+      for (let i = 1; i < rawData.length; i++) {
+        const row = rawData[i];
+        if (row.every(cell => cell === '')) continue;
+        hasData = true;
+        const rowDataToStore = [];
+        for (let j = 0; j < headers.length; j++) {
+          rowDataToStore.push(row[j] !== undefined ? row[j] : '');
+        }
+        window.aliadosData.rows.push(rowDataToStore);
       }
       
-      const tbody = document.getElementById('aliados-tbody');
-      if (tbody) {
-        tbody.innerHTML = '';
-        let hasData = false;
-        
-        for (let i = 1; i < rawData.length; i++) {
-          const row = rawData[i];
-          if (row.every(cell => cell === '')) continue;
-          
-          hasData = true;
-          const tr = document.createElement('tr');
-          const rowDataToStore = [];
-          for (let j = 0; j < headers.length; j++) {
-            const td = document.createElement('td');
-            const val = row[j] !== undefined ? row[j] : '';
-            td.textContent = val;
-            tr.appendChild(td);
-            rowDataToStore.push(val);
-          }
-          tbody.appendChild(tr);
-          window.aliadosData.rows.push(rowDataToStore);
-        }
-        
-        if (!hasData) {
-          tbody.innerHTML = '<tr><td colspan="100%" style="text-align: center; color: var(--text-muted); padding: 2rem;">No se encontraron datos en el Excel.</td></tr>';
-        }
+      if (!hasData) {
+        window.aliadosData.rows = [];
+      }
+      
+      if (typeof window.renderAliadosCards === 'function') {
+        window.renderAliadosCards();
       }
       
       alert("¡Directorio de aliados importado exitosamente!");
@@ -4846,30 +4828,107 @@ window.cargarAliadosDeNube = function() {
         const data = doc.data();
         if (data.headers && data.rows) {
           window.aliadosData = data;
-          const theadTr = document.getElementById('aliados-thead-tr');
-          if (theadTr) {
-            theadTr.innerHTML = '';
-            data.headers.forEach(h => {
-              const th = document.createElement('th');
-              th.textContent = h || 'Columna';
-              theadTr.appendChild(th);
-            });
-          }
-          const tbody = document.getElementById('aliados-tbody');
-          if (tbody) {
-            tbody.innerHTML = '';
-            data.rows.forEach(row => {
-              const tr = document.createElement('tr');
-              row.forEach(cell => {
-                const td = document.createElement('td');
-                td.textContent = cell !== undefined ? cell : '';
-                tr.appendChild(td);
-              });
-              tbody.appendChild(tr);
-            });
+          if (typeof window.renderAliadosCards === 'function') {
+            window.renderAliadosCards();
           }
         }
       }
     })
     .catch(err => console.error("Error cargando aliados de la nube:", err));
+};
+
+window.renderAliadosCards = function() {
+  const grid = document.getElementById('grid-aliados');
+  if (!grid) return;
+  
+  if (!window.aliadosData || !window.aliadosData.rows || window.aliadosData.rows.length === 0) {
+    grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--glass-border);"><i data-lucide="info" style="width: 40px; height: 40px; margin-bottom: 1rem; opacity: 0.5;"></i><p>No hay aliados cargados. Usa el botón de candado para Cargar Excel o espera a que se sincronicen desde la nube.</p></div>';
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    return;
+  }
+  
+  const headers = window.aliadosData.headers || [];
+  const colNombre = headers.findIndex(h => h && h.toLowerCase().includes('comercial')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('comercial')) : 0;
+  const colDesc = headers.findIndex(h => h && h.toLowerCase().includes('descripcion')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('descripcion')) : 2;
+  const colCiudad = headers.findIndex(h => h && h.toLowerCase().includes('ciudad')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('ciudad')) : 6;
+  const colContacto = headers.findIndex(h => h && h.toLowerCase().includes('contacto')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('contacto')) : 1;
+  
+  grid.innerHTML = '';
+  
+  window.aliadosData.rows.forEach((row, index) => {
+    const nombre = row[colNombre] || 'Aliado Sin Nombre';
+    const desc = row[colDesc] || '';
+    const ubicacion = row[colCiudad] || 'Ubicación no especificada';
+    let contactoRaw = row[colContacto] ? String(row[colContacto]) : '';
+    let linkWa = '#';
+    if (contactoRaw) {
+      const num = contactoRaw.replace(/\D/g,'');
+      linkWa = `https://wa.me/${num}`;
+    }
+    
+    const card = document.createElement('div');
+    card.className = 'aliado-card';
+    card.innerHTML = `
+      <h3>${nombre}</h3>
+      <div class="aliado-loc"><i data-lucide="map-pin" style="width: 14px; height: 14px;"></i> ${ubicacion}</div>
+      <div class="aliado-desc">${desc}</div>
+      <div class="aliado-actions">
+        ${contactoRaw ? `<a href="${linkWa}" target="_blank" class="btn-aliado-wa" title="WhatsApp"><i data-lucide="message-circle" style="width: 20px; height: 20px;"></i></a>` : ''}
+        <button class="btn-aliado-detalles" onclick="abrirModalAliado(${index})">
+          <i data-lucide="eye" style="width: 18px; height: 18px;"></i> Ver Detalles
+        </button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+};
+
+window.abrirModalAliado = function(index) {
+  if (!window.aliadosData || !window.aliadosData.rows[index]) return;
+  const row = window.aliadosData.rows[index];
+  const headers = window.aliadosData.headers;
+  
+  const colNombre = headers.findIndex(h => h && h.toLowerCase().includes('comercial')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('comercial')) : 0;
+  const colCiudad = headers.findIndex(h => h && h.toLowerCase().includes('ciudad')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('ciudad')) : 6;
+  const colRegion = headers.findIndex(h => h && h.toLowerCase().includes('region')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('region')) : 5;
+  const colPais = headers.findIndex(h => h && h.toLowerCase().includes('pais')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('pais')) : 4;
+  const colProd = headers.findIndex(h => h && h.toLowerCase().includes('productos')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('productos')) : 3;
+  const colNota = headers.findIndex(h => h && h.toLowerCase().includes('nota')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('nota')) : 7;
+  const colContacto = headers.findIndex(h => h && h.toLowerCase().includes('contacto')) !== -1 ? headers.findIndex(h => h && h.toLowerCase().includes('contacto')) : 1;
+  
+  const nombre = row[colNombre] || 'Aliado';
+  let ubicacion = [row[colCiudad], row[colRegion], row[colPais]].filter(Boolean).join(', ');
+  if (!ubicacion) ubicacion = 'Ubicación no especificada';
+  const prod = row[colProd] || 'No hay productos/servicios registrados.';
+  const nota = row[colNota] || '';
+  
+  document.getElementById('modal-aliado-nombre').textContent = nombre;
+  document.getElementById('modal-aliado-ubicacion').innerHTML = `<i data-lucide="map-pin" style="width: 16px; height: 16px; color: var(--accent);"></i> <span>${ubicacion}</span>`;
+  document.getElementById('modal-aliado-productos').textContent = prod;
+  
+  const notaContainer = document.getElementById('modal-aliado-nota-container');
+  if (nota) {
+    document.getElementById('modal-aliado-nota').textContent = nota;
+    notaContainer.style.display = 'block';
+  } else {
+    notaContainer.style.display = 'none';
+  }
+  
+  const btnWa = document.getElementById('modal-aliado-wa');
+  let contactoRaw = row[colContacto] ? String(row[colContacto]) : '';
+  if (contactoRaw) {
+    const num = contactoRaw.replace(/\D/g,'');
+    btnWa.href = `https://wa.me/${num}`;
+    btnWa.style.display = 'flex';
+  } else {
+    btnWa.style.display = 'none';
+  }
+  
+  document.getElementById('modal-aliado').style.display = 'flex';
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+};
+
+window.cerrarModalAliado = function() {
+  document.getElementById('modal-aliado').style.display = 'none';
 };
