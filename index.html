@@ -15,13 +15,6 @@
 
   <!-- Capturar errores globales -->
   <script>
-    window.onerror = function(message, source, lineno, colno, error) {
-      alert("⚠️ Error en la App:\n" + message + "\n\nArchivo: " + source + "\nLínea: " + lineno + "\nColumna: " + colno + "\n\nPor favor reporta esto.");
-      return false;
-    };
-    window.onunhandledrejection = function(event) {
-      alert("⚠️ Promesa fallida sin capturar:\n" + event.reason + "\n\nStack: " + (event.reason ? event.reason.stack : 'N/A'));
-    };
   </script>
 
   <!-- PWA Manifest -->
@@ -1569,7 +1562,7 @@
     }
   </style>
 
-  <script src="iatf-app.js?v=v260531.20"></script>
+  <script src="iatf-app.js?v=v260531.21"></script>
   
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>
