@@ -896,14 +896,10 @@ window.saveStateToFirestore = function() {
         db.collection("global").doc("protocols").set({ matriz: state.matriz, encabezados: state.encabezados }, { merge: true })
           .then(() => {
             console.log("Protocolos globales actualizados exitosamente.");
-            alert("Los protocolos se han guardado exitosamente en la base de datos GLOBAL para todos los usuarios.");
           })
           .catch(err => {
             console.error("Error guardando en global:", err);
-            alert("ERROR AL GUARDAR GLOBAL: " + err.message);
           });
-      } else {
-        alert("Aviso: Los cambios se guardaron solo localmente porque no tienes privilegios globales.");
       }
     })
     .catch(err => console.error("Error al sincronizar con Firestore:", err));
