@@ -1071,7 +1071,12 @@ window.translations = {
     r2_iate_ref: "IA/TE/Vaca",
     btn_contact_wa: "Contáctenos",
     contact_placeholder: "Escribe tu mensaje aquí...",
-    msg_select_pf: "Por favor selecciona un Protocolo y una Fecha de Inicio antes de continuar."
+    msg_select_pf: "Por favor selecciona un Protocolo y una Fecha de Inicio antes de continuar.",
+    sidebar_aliados: "Aliados Comerciales",
+    sidebar_admin: "Panel Admin",
+    btn_logout: "Cerrar Sesión",
+    aliados_title: "Aliados Comerciales",
+    aliados_subtitle: "Directorio de aliados y socios estratégicos."
   },
   en: {
     sidebar_dashboard: "Control Dashboard",
@@ -1193,7 +1198,12 @@ window.translations = {
     r2_iate_ref: "AI/ET/Cow",
     btn_contact_wa: "Contact Us",
     contact_placeholder: "Type your message here...",
-    msg_select_pf: "Please select a Protocol and a Start Date before continuing."
+    msg_select_pf: "Please select a Protocol and a Start Date before continuing.",
+    sidebar_aliados: "Commercial Partners",
+    sidebar_admin: "Admin Panel",
+    btn_logout: "Log Out",
+    aliados_title: "Commercial Partners",
+    aliados_subtitle: "Directory of partners and strategic allies."
   },
   pt: {
     sidebar_dashboard: "Painel de Controle",
@@ -1313,7 +1323,12 @@ window.translations = {
     r2_iate_ref: "IA/TE/Vaca",
     btn_contact_wa: "Fale Conosco",
     contact_placeholder: "Escreva sua mensagem aqui...",
-    msg_select_pf: "Por favor, selecione um Protocolo e uma Data de Início antes de continuar."
+    msg_select_pf: "Por favor, selecione um Protocolo e uma Data de Início antes de continuar.",
+    sidebar_aliados: "Parceiros Comerciais",
+    sidebar_admin: "Painel Admin",
+    btn_logout: "Sair",
+    aliados_title: "Parceiros Comerciais",
+    aliados_subtitle: "Diretório de parceiros e aliados estratégicos."
   }
 };
 
