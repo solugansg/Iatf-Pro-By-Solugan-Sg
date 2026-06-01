@@ -3821,6 +3821,7 @@ window.syncFases = function() {
     if (isNaN(fBase.getTime())) return;
   } catch(e) { return; }
   
+  const langCode = window.currentLang === 'en' ? 'en-US' : (window.currentLang === 'pt' ? 'pt-BR' : 'es-ES');
 
   // 1. SINCRONIZAR RESX1
   document.getElementById('resx1-fecha').value = fIni;
@@ -3837,9 +3838,9 @@ window.syncFases = function() {
       s1.style.color = "white";
       s1.style.opacity = "1";
       s1.style.webkitTextFillColor = "white";
-      if(lblF) lblF.innerText = fBase.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+      if(lblF) lblF.innerText = fBase.toLocaleDateString(langCode, { day: 'numeric', month: 'long', year: 'numeric' });
     } else if(lblF) {
-      lblF.innerText = fBase.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+      lblF.innerText = fBase.toLocaleDateString(langCode, { day: 'numeric', month: 'long', year: 'numeric' });
     }
   }
 
