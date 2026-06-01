@@ -1246,6 +1246,8 @@ window.translations = {
     ph_login_pass: "Ingresa tu contraseña",
     ph_farm_name: "Nombre del predio",
     ph_search_nit: "Ej: 123456789",
+    cal_planned_start: "Inicio Programado",
+    cal_day: "Día",
     admin_loading_data: "Cargando datos...",
     aliados_contact_wa: "Contactar por WhatsApp"
 ,
@@ -1561,6 +1563,8 @@ window.translations = {
     ph_login_pass: "Enter your password",
     ph_farm_name: "Property name",
     ph_search_nit: "Ex: 123456789",
+    cal_planned_start: "Planned Start",
+    cal_day: "Day",
     admin_loading_data: "Loading data...",
     aliados_contact_wa: "Contact via WhatsApp"
 ,
@@ -1874,6 +1878,8 @@ window.translations = {
     ph_login_pass: "Digite sua senha",
     ph_farm_name: "Nome da propriedade",
     ph_search_nit: "Ex: 123456789",
+    cal_planned_start: "Início Programado",
+    cal_day: "Dia",
     admin_loading_data: "Carregando dados...",
     aliados_contact_wa: "Contato por WhatsApp"
 ,
@@ -3509,7 +3515,6 @@ window.ejecutarResx1 = function() {
       <div style="flex: 1;">
         <div style="font-weight: 800; font-size: 1.1rem; color: var(--accent); margin-bottom: 4px;">${protocol.name}</div>
         <div style="display: flex; gap: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
-          <span><i data-lucide="calendar"></i> ${window.currentLang === 'en' ? 'Planned Start' : 'Inicio Programado'}: ${fBase.toLocaleDateString(langCode, { day: 'numeric', month: 'long' })}</span>
           <span><i data-lucide="activity"></i> IA/TE: Day ${protocol.ia} (${sumDate.toLocaleDateString(langCode, { day: 'numeric', month: 'long' })})</span>
         </div>
         <div style="margin-top: 8px; font-style: italic; color: var(--text-main);"><i data-lucide="message-square" style="width:14px;"></i> ${t('obs_label')} ${protocol.obs || 'S/O'}</div>
