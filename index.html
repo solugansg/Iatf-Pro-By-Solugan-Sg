@@ -23,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260601.40">
+  <link rel="stylesheet" href="style.css?v=V 260601.41">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -150,7 +150,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260601.40</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260601.41</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -225,7 +225,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260601.40</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260601.41</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -583,14 +583,14 @@
             <table class="data-table" style="font-size: 0.8rem;">
               <thead>
                 <tr>
-                  <th>Día</th>
-                  <th>Fecha</th>
-                  <th>Hora</th>
-                  <th>Actividad / Insumo</th>
-                  <th style="text-align: center;">Dosis</th>
-                  <th style="text-align: center;">Und</th>
-                  <th style="text-align: center; color: var(--accent);">VALOR UNITARIO</th>
-                  <th style="text-align: right; color: var(--success);">INVERSIÓN TOTAL</th>
+                  <th data-i18n="th_dia">Día</th>
+                  <th data-i18n="th_fecha">Fecha</th>
+                  <th data-i18n="th_hora">Hora</th>
+                  <th data-i18n="th_actividad">ACTIVIDAD / INSUMO</th>
+                  <th data-i18n="th_dosis">DOSIS</th>
+                  <th data-i18n="th_und">UND</th>
+                  <th data-i18n="th_val_unitario" style="text-align: center; color: var(--accent);">VALOR UNITARIO</th>
+                  <th data-i18n="th_inv_total" style="text-align: center; color: var(--success);">INVERSIÓN TOTAL</th>
                 </tr>
               </thead>
               <tbody id="tc-pi-body"></tbody>
@@ -603,9 +603,8 @@
                       <span>🐂 <span data-i18n="pi_iate_ref">IA/TE/Vaca</span>: <strong id="pi-iate-footer" style="color: #60a5fa; font-size: 0.95rem;">$ 0</strong></span>
                     </div>
                   </td>
-                  <td colspan="3"
-                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);">INVERSIÓN
-                    TOTAL APLICADA POR ANIMAL:</td>
+                  <td colspan="6"
+                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);"><span data-i18n="lbl_inv_animal">INVERSIÓN TOTAL APLICADA POR ANIMAL:</span></td>
                   <td id="pi-total-footer"
                     style="text-align: right; padding: 1rem; font-size: 1.1rem; font-weight: 800; color: var(--success);">
                     $ 0</td>
@@ -617,27 +616,26 @@
           <!-- Desglose por Rubros -->
           <div style="margin-bottom: 1.5rem;">
             <h3 class="form-title"
-              style="border:none; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">DESGLOSE DE
-              INVERSIÓN POR RUBROS</h3>
+              style="border:none; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);"><span data-i18n="lbl_desglose">DESGLOSE DE INVERSIÓN POR RUBROS</span></h3>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
               <div class="glass-panel p-1-5" style="border-left: 4px solid var(--accent);">
-                <span class="stat-label" style="font-size:0.65rem;">Hormonas</span>
+                <span class="stat-label" data-i18n="cat_hormonas" style="font-size:0.65rem;">Hormonas</span>
                 <div id="pi-cat-hormonas" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #a855f7;">
-                <span class="stat-label" style="font-size:0.65rem;">Genética (Semen/Embrión)</span>
+                <span class="stat-label" data-i18n="cat_genetica" style="font-size:0.65rem;">Genética (Semen/Embrión)</span>
                 <div id="pi-cat-genetica" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #f59e0b;">
-                <span class="stat-label" style="font-size:0.65rem;">ASISTENCIA TÉCNICA</span>
+                <span class="stat-label" data-i18n="cat_asistencia" style="font-size:0.65rem;">ASISTENCIA TÉCNICA</span>
                 <div id="pi-cat-asistencia" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #ec4899;">
-                <span class="stat-label" style="font-size:0.65rem;">HONORARIOS IA / TE</span>
+                <span class="stat-label" data-i18n="cat_iate" style="font-size:0.65rem;">HONORARIOS IA / TE</span>
                 <div id="pi-cat-iate" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid var(--success);">
-                <span class="stat-label" style="font-size:0.65rem;">Confirmación de Preñez</span>
+                <span class="stat-label" data-i18n="cat_confirmacion" style="font-size:0.65rem;">Confirmación de Preñez</span>
                 <div id="pi-cat-diagnostico" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
             </div>
@@ -826,8 +824,7 @@
                     </div>
                   </td>
                   <td colspan="2"
-                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);">INVERSIÓN
-                    TOTAL/VACA RESINCRONIZACIÓN 1:</td>
+                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);"><span data-i18n="lbl_inv_total">INVERSIÓN TOTAL/VACA</span> RESINCRONIZACIÓN 1:</td>
                   <td id="resx1-total-footer"
                     style="text-align: center; padding: 1rem; font-size: 1.1rem; font-weight: 800; color: var(--success);">
                     $ 0</td>
@@ -839,27 +836,26 @@
           <!-- Desglose por Rubros ReSx1 -->
           <div style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
             <h3 class="form-title"
-              style="border:none; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">DESGLOSE DE
-              INVERSIÓN POR RUBROS (Resincronización 1)</h3>
+              style="border:none; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);"><span data-i18n="lbl_desglose">DESGLOSE DE INVERSIÓN POR RUBROS</span> (Resincronización 1)</h3>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
               <div class="glass-panel p-1-5" style="border-left: 4px solid var(--accent);">
-                <span class="stat-label" style="font-size:0.65rem;">Hormonas</span>
+                <span class="stat-label" data-i18n="cat_hormonas" style="font-size:0.65rem;">Hormonas</span>
                 <div id="resx1-cat-hormonas" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #a855f7;">
-                <span class="stat-label" style="font-size:0.65rem;">Genética (Semen/Embrión)</span>
+                <span class="stat-label" data-i18n="cat_genetica" style="font-size:0.65rem;">Genética (Semen/Embrión)</span>
                 <div id="resx1-cat-genetica" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #f59e0b;">
-                <span class="stat-label" style="font-size:0.65rem;">ASISTENCIA TÉCNICA</span>
+                <span class="stat-label" data-i18n="cat_asistencia" style="font-size:0.65rem;">ASISTENCIA TÉCNICA</span>
                 <div id="resx1-cat-asistencia" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #ec4899;">
-                <span class="stat-label" style="font-size:0.65rem;">HONORARIOS IA / TE</span>
+                <span class="stat-label" data-i18n="cat_iate" style="font-size:0.65rem;">HONORARIOS IA / TE</span>
                 <div id="resx1-cat-iate" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid var(--success);">
-                <span class="stat-label" style="font-size:0.65rem;">Confirmación de Preñez</span>
+                <span class="stat-label" data-i18n="cat_confirmacion" style="font-size:0.65rem;">Confirmación de Preñez</span>
                 <div id="resx1-cat-diagnostico" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
             </div>
@@ -970,8 +966,7 @@
                     </div>
                   </td>
                   <td colspan="2"
-                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);">INVERSIÓN
-                    TOTAL/VACA RESINCRONIZACIÓN 2:</td>
+                    style="text-align: right; padding: 1rem; font-weight: bold; color: var(--text-muted);"><span data-i18n="lbl_inv_total">INVERSIÓN TOTAL/VACA</span> RESINCRONIZACIÓN 2:</td>
                   <td id="resx2-total-footer"
                     style="text-align: center; padding: 1rem; font-size: 1.1rem; font-weight: 800; color: var(--success);">
                     $ 0</td>
@@ -983,27 +978,26 @@
           <!-- Desglose por Rubros ReSx2 -->
           <div style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
             <h3 class="form-title"
-              style="border:none; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">DESGLOSE DE
-              INVERSIÓN POR RUBROS (Resincronización 2)</h3>
+              style="border:none; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);"><span data-i18n="lbl_desglose">DESGLOSE DE INVERSIÓN POR RUBROS</span> (Resincronización 2)</h3>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
               <div class="glass-panel p-1-5" style="border-left: 4px solid var(--accent);">
-                <span class="stat-label" style="font-size:0.65rem;">Hormonas</span>
+                <span class="stat-label" data-i18n="cat_hormonas" style="font-size:0.65rem;">Hormonas</span>
                 <div id="resx2-cat-hormonas" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #a855f7;">
-                <span class="stat-label" style="font-size:0.65rem;">Genética (Semen/Embrión)</span>
+                <span class="stat-label" data-i18n="cat_genetica" style="font-size:0.65rem;">Genética (Semen/Embrión)</span>
                 <div id="resx2-cat-genetica" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #f59e0b;">
-                <span class="stat-label" style="font-size:0.65rem;">ASISTENCIA TÉCNICA</span>
+                <span class="stat-label" data-i18n="cat_asistencia" style="font-size:0.65rem;">ASISTENCIA TÉCNICA</span>
                 <div id="resx2-cat-asistencia" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid #ec4899;">
-                <span class="stat-label" style="font-size:0.65rem;">HONORARIOS IA / TE</span>
+                <span class="stat-label" data-i18n="cat_iate" style="font-size:0.65rem;">HONORARIOS IA / TE</span>
                 <div id="resx2-cat-iate" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
               <div class="glass-panel p-1-5" style="border-left: 4px solid var(--success);">
-                <span class="stat-label" style="font-size:0.65rem;">Confirmación de Preñez</span>
+                <span class="stat-label" data-i18n="cat_confirmacion" style="font-size:0.65rem;">Confirmación de Preñez</span>
                 <div id="resx2-cat-diagnostico" style="font-weight:700; font-size: 1.1rem;">$ 0</div>
               </div>
             </div>

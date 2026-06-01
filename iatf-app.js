@@ -1093,6 +1093,25 @@ window.translations = {
     modal_val_asistencia: "VALOR ASISTENCIA TÉCNICA",
     modal_val_iate: "VALOR IA / TE",
     modal_val_prenez: "VALOR CONF. PREÑEZ",
+    th_dia: "Día",
+    th_fecha: "Fecha",
+    th_hora: "Hora",
+    th_actividad: "ACTIVIDAD / INSUMO",
+    th_insumo: "Hormona / Insumo",
+    th_dosis: "DOSIS",
+    th_und: "UND",
+    th_val_unitario: "VALOR UNITARIO",
+    th_inv_total: "INVERSIÓN TOTAL",
+    lbl_inv_animal: "INVERSIÓN TOTAL APLICADA POR ANIMAL:",
+    lbl_inv_total: "INVERSIÓN TOTAL/VACA",
+    lbl_desglose: "DESGLOSE DE INVERSIÓN POR RUBROS",
+    cat_hormonas: "Hormonas",
+    cat_genetica: "Genética (Semen/Embrión)",
+    cat_asistencia: "ASISTENCIA TÉCNICA",
+    cat_iate: "HONORARIOS IA / TE",
+    cat_confirmacion: "Confirmación de Preñez",
+    card_inicio: "Inicio",
+    card_inseminar: "Inseminar: Día",
     btn_cancel: "Cancelar",
     btn_update_system: "Actualizar Sistema",
     resx1_protocol_lbl: "Protocolo Resincronización 1",
@@ -1254,6 +1273,25 @@ window.translations = {
     modal_val_asistencia: "TECH ASSISTANCE VALUE",
     modal_val_iate: "AI / ET VALUE",
     modal_val_prenez: "PREG. CONF. VALUE",
+    th_dia: "Day",
+    th_fecha: "Date",
+    th_hora: "Time",
+    th_actividad: "ACTIVITY / ITEM",
+    th_insumo: "Hormone / Item",
+    th_dosis: "DOSE",
+    th_und: "UNIT",
+    th_val_unitario: "UNIT VALUE",
+    th_inv_total: "TOTAL INVESTMENT",
+    lbl_inv_animal: "TOTAL INVESTMENT APPLIED PER ANIMAL:",
+    lbl_inv_total: "TOTAL INVESTMENT/COW",
+    lbl_desglose: "INVESTMENT BREAKDOWN BY CATEGORY",
+    cat_hormonas: "Hormones",
+    cat_genetica: "Genetics (Semen/Embryo)",
+    cat_asistencia: "TECHNICAL ASSISTANCE",
+    cat_iate: "AI / ET FEES",
+    cat_confirmacion: "Pregnancy Confirmation",
+    card_inicio: "Start",
+    card_inseminar: "Inseminate: Day",
     btn_cancel: "Cancel",
     btn_update_system: "Update System",
     resx1_protocol_lbl: "Resynchronization 1 Protocol",
@@ -1413,6 +1451,25 @@ window.translations = {
     modal_val_asistencia: "VALOR ASSIST. TÉCNICA",
     modal_val_iate: "VALOR IA / TE",
     modal_val_prenez: "VALOR CONF. PRENHEZ",
+    th_dia: "Dia",
+    th_fecha: "Data",
+    th_hora: "Hora",
+    th_actividad: "ATIVIDADE / INSUMO",
+    th_insumo: "Hormônio / Insumo",
+    th_dosis: "DOSE",
+    th_und: "UNID",
+    th_val_unitario: "VALOR UNITÁRIO",
+    th_inv_total: "INVESTIMENTO TOTAL",
+    lbl_inv_animal: "INVESTIMENTO TOTAL APLICADO POR ANIMAL:",
+    lbl_inv_total: "INVESTIMENTO TOTAL/VACA",
+    lbl_desglose: "DESDOBRAMENTO DE INVESTIMENTO POR CATEGORIA",
+    cat_hormonas: "Hormônios",
+    cat_genetica: "Genética (Sêmen/Embrião)",
+    cat_asistencia: "ASSISTÊNCIA TÉCNICA",
+    cat_iate: "HONORÁRIOS IA / TE",
+    cat_confirmacion: "Confirmação de Prenhez",
+    card_inicio: "Início",
+    card_inseminar: "Inseminar: Dia",
     btn_cancel: "Cancelar",
     btn_update_system: "Atualizar Sistema",
     resx1_protocol_lbl: "Protocolo Ressincronização 1",
@@ -2561,11 +2618,11 @@ window.ejecutarProtocoloInicial = function() {
             <i data-lucide="award"></i> ${protocol.name}
           </div>
           <div style="display: flex; gap: 2rem; font-size: 0.95rem; color: var(--text-main); font-weight: 600;">
-            <span><i data-lucide="calendar"></i> Inicio: ${fBase.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-            <span><i data-lucide="activity" style="color:var(--accent);"></i> Inseminar: Día ${protocol.ia} (${sumDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })})</span>
+            <span><i data-lucide="calendar"></i> ${t('card_inicio')} ${fBase.toLocaleDateString(currentLang === 'en' ? 'en-US' : (currentLang === 'pt' ? 'pt-BR' : 'es-ES'), { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+            <span><i data-lucide="activity" style="color:var(--accent);"></i> ${t('card_inseminar')} ${protocol.ia} (${sumDate.toLocaleDateString(currentLang === 'en' ? 'en-US' : (currentLang === 'pt' ? 'pt-BR' : 'es-ES'), { day: 'numeric', month: 'long', year: 'numeric' })})</span>
           </div>
           <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1); color: var(--text-muted); font-size: 0.9rem;">
-            <i data-lucide="message-circle" style="width:16px;"></i> <strong>Obs:</strong> ${protocol.obs || 'Protocolo estándar.'}
+            <i data-lucide="message-circle" style="width:16px;"></i> <strong>${t('obs_label')}</strong> ${protocol.obs || '...'}
           </div>
         </div>
         ${state.logoEmpresa ? `<div style="width: 80px; height: 80px; background: white; padding: 5px; border-radius: 8px;"><img src="${state.logoEmpresa}" style="width: 100%; height: 100%; object-fit: contain;"></div>` : ''}
@@ -2652,9 +2709,9 @@ function reCalcTablaPI() {
         htmlRows += `
         <tr style="background: rgba(245, 158, 11, 0.05); border-left: 4px solid #f59e0b; font-size: 0.75rem; color: #f59e0b;">
             <td style="text-align:center;"><strong>${row.dayOffset}</strong></td>
-            <td>${dDate.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' })}</td>
+            <td>${dDate.toLocaleDateString(currentLang === 'en' ? 'en-US' : (currentLang === 'pt' ? 'pt-BR' : 'es-ES'), { weekday: 'short', day: 'numeric', month: 'short' })}</td>
             <td style="text-align:center;"><strong>${rowHour}</strong></td>
-            <td colspan="5" style="text-align:left; padding-left: 1rem;"><i>⚡ Obs: IATF 48-60 hs post PGF/eCG – GnRh opcional al momento de IA/TE</i></td>
+            <td colspan="5" style="text-align:left; padding-left: 1rem;"><i>⚡ ${t('obs_label')} IATF 48-60 hs post PGF/eCG – GnRh opcional al momento de IA/TE</i></td>
         </tr>`;
     }
   });
