@@ -1076,7 +1076,17 @@ window.translations = {
     sidebar_admin: "Panel Admin",
     btn_logout: "Cerrar Sesión",
     aliados_title: "Aliados Comerciales",
-    aliados_subtitle: "Directorio de aliados y socios estratégicos."
+    aliados_subtitle: "Directorio de aliados y socios estratégicos.",
+    tc_finca_name: "Nombre de la Finca / Proyecto",
+    tc_finca_placeholder: "Nombre del predio",
+    tc_location: "Ubicación",
+    tc_location_placeholder: "Municipio / Dpto",
+    opt_select: "-- SELECCIONAR --",
+    opt_select_protocol: "-- SELECCIONAR PROTOCOLO --",
+    opt_lecheria: "Lechería Especializada",
+    opt_cria: "Cría Comercial",
+    opt_puro: "Ganado Puro",
+    opt_doble: "Doble Propósito"
   },
   en: {
     sidebar_dashboard: "Control Dashboard",
@@ -1203,7 +1213,17 @@ window.translations = {
     sidebar_admin: "Admin Panel",
     btn_logout: "Log Out",
     aliados_title: "Commercial Partners",
-    aliados_subtitle: "Directory of partners and strategic allies."
+    aliados_subtitle: "Directory of partners and strategic allies.",
+    tc_finca_name: "Farm / Project Name",
+    tc_finca_placeholder: "Property Name",
+    tc_location: "Location",
+    tc_location_placeholder: "City / State",
+    opt_select: "-- SELECT --",
+    opt_select_protocol: "-- SELECT PROTOCOL --",
+    opt_lecheria: "Specialized Dairy",
+    opt_cria: "Commercial Breeding",
+    opt_puro: "Purebred Cattle",
+    opt_doble: "Dual Purpose"
   },
   pt: {
     sidebar_dashboard: "Painel de Controle",
@@ -1328,7 +1348,17 @@ window.translations = {
     sidebar_admin: "Painel Admin",
     btn_logout: "Sair",
     aliados_title: "Parceiros Comerciais",
-    aliados_subtitle: "Diretório de parceiros e aliados estratégicos."
+    aliados_subtitle: "Diretório de parceiros e aliados estratégicos.",
+    tc_finca_name: "Nome da Fazenda / Projeto",
+    tc_finca_placeholder: "Nome da propriedade",
+    tc_location: "Localização",
+    tc_location_placeholder: "Município / Estado",
+    opt_select: "-- SELECIONAR --",
+    opt_select_protocol: "-- SELECIONAR PROTOCOLO --",
+    opt_lecheria: "Leiteria Especializada",
+    opt_cria: "Criação Comercial",
+    opt_puro: "Gado Puro",
+    opt_doble: "Duplo Propósito"
   }
 };
 
