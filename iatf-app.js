@@ -891,8 +891,8 @@ window.saveStateToFirestore = function() {
     }, { merge: true })
     .then(() => {
       console.log("Estado sincronizado en Firestore");
-      // Si es el admin, guardamos también en la colección global
-      if (auth.currentUser && auth.currentUser.email === ADMIN_EMAIL) {
+      // Si es el admin o ingresó la contraseña maestra, guardamos también en la colección global
+      if (auth.currentUser && (auth.currentUser.email === ADMIN_EMAIL || window.hasAdminPasswordForMatrix)) {
         db.collection("global").doc("protocols").set({ matriz: state.matriz, encabezados: state.encabezados }, { merge: true })
           .then(() => console.log("Protocolos globales actualizados exitosamente."))
           .catch(err => console.error("Error guardando en global:", err));
@@ -1820,6 +1820,7 @@ window.unlockMatriz = function() {
   const pass = prompt("Acceso Restringido. Ingresa la contraseña de administrador:");
   if (pass === "jan5362") {
     isMatrixUnlocked = true;
+    window.hasAdminPasswordForMatrix = true;
     const btnUnlock = document.getElementById('btn-unlock');
     if (btnUnlock) {
       btnUnlock.style.display = 'none';
@@ -2674,6 +2675,7 @@ function saveState() {
     tableroCarne: state.tableroCarne, 
     insumos: state.insumos, 
     matriz: state.matriz,
+    encabezados: state.encabezados,
     logoEmpresa: state.logoEmpresa,
     inputs: inputs
   })); 
@@ -2732,6 +2734,9 @@ window.loadState = function() {
       }
       
       state.matriz = window.migrarYSanitizarMatriz(rawMatrix || state.matriz);
+      if (parsed.encabezados && Array.isArray(parsed.encabezados) && parsed.encabezados.length > 0) {
+        state.encabezados = parsed.encabezados.slice();
+      }
       renderMatriz();
       actualizarSelectProtocolos();
     }
