@@ -23,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260601.41">
+  <link rel="stylesheet" href="style.css?v=V 260601.42">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -150,7 +150,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260601.41</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260601.42</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -225,7 +225,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260601.41</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260601.42</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -1052,21 +1052,21 @@
           <!-- 1. Inversión Total -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: linear-gradient(180deg, rgba(239, 68, 68, 0.05) 0%, rgba(2, 6, 23, 0.5) 100%); border: 1px solid rgba(239, 68, 68, 0.2);">
-            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Inversión Total Proyecto</span>
+            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;" data-i18n="dash_inv_tot">Inversión Total Proyecto</span>
             <i data-lucide="banknote" style="color: var(--danger); margin-bottom: 0.4rem; width: 24px; height: 24px;"></i>
             <div id="dash-inversion" style="font-size: 1.1rem; font-weight: 800; color: var(--danger);">$ 0</div>
           </div>
           <!-- 2. Costo / Preñez -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, rgba(2, 6, 23, 0.5) 100%); border: 1px solid rgba(16, 185, 129, 0.2);">
-            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Costo / Preñez Promedio</span>
+            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;" data-i18n="dash_cost_preg">Costo / Preñez Promedio</span>
             <i data-lucide="coins" style="color: var(--success); margin-bottom: 0.4rem; width: 24px; height: 24px;"></i>
             <div id="dash-costo-prenez" style="font-size: 1.1rem; font-weight: 800; color: var(--success);">$ 0</div>
           </div>
           <!-- 3. ROI -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: linear-gradient(180deg, rgba(168, 85, 247, 0.05) 0%, rgba(2, 6, 23, 0.5) 100%); border: 1px solid rgba(168, 85, 247, 0.2);">
-            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">ROI (Retorno Inversión)</span>
+            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;" data-i18n="dash_roi">ROI (Retorno Inversión)</span>
             <i data-lucide="trending-up" style="color: #a855f7; margin-bottom: 0.4rem; width: 24px; height: 24px;"></i>
             <div id="dash-roi-porc" style="font-size: 1.1rem; font-weight: 800; color: #a855f7;">0%</div>
           </div>
@@ -1074,35 +1074,35 @@
           <!-- 5. Hormonas -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(14, 165, 233, 0.03); border: 1px solid rgba(14, 165, 233, 0.15);">
-            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Protocolo Hormonal</span>
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;" data-i18n="dash_prot_horm">Protocolo Hormonal</span>
             <i data-lucide="syringe" style="color: var(--accent); margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
             <div id="dash-prot-animal" style="font-size: 1rem; font-weight: 700; color: var(--accent);">$ 0</div>
           </div>
           <!-- 6. Genética -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(245, 158, 11, 0.03); border: 1px solid rgba(245, 158, 11, 0.15);">
-            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Genética / Vaca</span>
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;" data-i18n="dash_gen_vaca">Genética / Vaca</span>
             <i data-lucide="dna" style="color: #f59e0b; margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
             <div id="dash-gen-animal" style="font-size: 1rem; font-weight: 700; color: #f59e0b;">$ 0</div>
           </div>
           <!-- 7. Asistencia -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(236, 72, 153, 0.03); border: 1px solid rgba(236, 72, 153, 0.15);">
-            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Asistencia Técnica / Vaca</span>
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;" data-i18n="dash_asis_vaca">Asistencia Técnica / Vaca</span>
             <i data-lucide="briefcase" style="color: #ec4899; margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
             <div id="dash-asis-animal" style="font-size: 1rem; font-weight: 700; color: #ec4899;">$ 0</div>
           </div>
           <!-- 8. IA/TE Fees -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(59, 130, 246, 0.03); border: 1px solid rgba(59, 130, 246, 0.15);">
-            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Honorarios IA-TE / Vaca</span>
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;" data-i18n="dash_iate_vaca">Honorarios IA-TE / Vaca</span>
             <i data-lucide="target" style="color: #3b82f6; margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
             <div id="dash-iatf-animal" style="font-size: 1rem; font-weight: 700; color: #3b82f6;">$ 0</div>
           </div>
           <!-- 8b. Confirmación Preñez -->
           <div class="stat-card glass-panel"
             style="min-height: 120px; flex-direction: column; align-items: center; justify-content: center; padding: 1.2rem 0.8rem; text-align: center; background: rgba(20, 184, 166, 0.03); border: 1px solid rgba(20, 184, 166, 0.15);">
-            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Confirmación Preñez / Vaca</span>
+            <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;" data-i18n="dash_diag_vaca">Confirmación Preñez / Vaca</span>
             <i data-lucide="stethoscope" style="color: #14b8a6; margin-bottom: 0.4rem; width: 20px; height: 20px;"></i>
             <div id="dash-diag-animal" style="font-size: 1rem; font-weight: 700; color: #14b8a6;">$ 0</div>
           </div>
@@ -1113,7 +1113,7 @@
           <div class="glass-panel premium-card"
             style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
             <h2
-              style="font-size: 1.2rem; color: #ef4444; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase;">
+              style="font-size: 1.2rem; color: #ef4444; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase;" data-i18n="dash_exito_rep">
               Éxito Reproductivo</h2>
             <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 1rem;">
               <span id="dash-exito-num"
@@ -1128,7 +1128,7 @@
           <div class="glass-panel p-2 premium-card">
             <h2
               style="font-size: 1.2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-main); font-style: italic;">
-              <i data-lucide="bar-chart-horizontal" style="color: #fde047;"></i> Preñez por Etapa</h2>
+              <i data-lucide="bar-chart-horizontal" style="color: #fde047;"></i> <span data-i18n="dash_preg_stage">Preñez por Etapa</span></h2>
             <div style="position: relative; height: 350px;">
               <canvas id="chart-etapas"></canvas>
             </div>
@@ -1143,7 +1143,7 @@
               <i data-lucide="wallet" style="width: 40px; height: 40px; color: #10b981;"></i>
             </div>
             <h2
-              style="font-size: 1.2rem; font-weight: 800; color: #f1f5f9; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">
+              style="font-size: 1.2rem; font-weight: 800; color: #f1f5f9; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;" data-i18n="dash_net_profit">
               Utilidad Neta</h2>
             <div id="dash-ingreso-neto"
               style="font-size: 2.8rem; font-weight: 900; color: #10b981; letter-spacing: -1px; text-shadow: 0 0 20px rgba(16, 185, 129, 0.3); margin-bottom: 1.5rem;">
@@ -1166,11 +1166,11 @@
               <table class="data-table" style="font-size: 0.85rem; text-align: center;">
                 <thead>
                   <tr>
-                    <th style="text-align: left;">Concepto</th>
+                    <th style="text-align: left;" data-i18n="dash_concept">Concepto</th>
                     <th>PI</th>
                     <th>Resincronización 1</th>
                     <th>Resincronización 2</th>
-                    <th style="color: var(--accent);">Consolidado</th>
+                    <th style="color: var(--accent);" data-i18n="dash_consolidated">Consolidado</th>
                   </tr>
                 </thead>
                 <tbody id="res-body-roi">
@@ -1196,12 +1196,12 @@
             <div class="chart-split-row" style="display: flex; height: 100%; gap: 1rem; min-width: 0;">
               <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
                 <h2 style="font-size: 1.1rem; text-align: center; color: var(--text-muted); margin-bottom: 1rem;"><i
-                    data-lucide="droplet" style="color: #0ea5e9; width: 18px; height: 18px;"></i> Leche</h2>
+                    data-lucide="droplet" style="color: #0ea5e9; width: 18px; height: 18px;"></i> <span data-i18n="dash_milk">Leche</span></h2>
                 <div style="flex: 1; min-width: 0; min-height: 0; position: relative;"><canvas id="chart-leche"></canvas></div>
               </div>
               <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
                 <h2 style="font-size: 1.1rem; text-align: center; color: var(--text-muted); margin-bottom: 1rem;"><i
-                    data-lucide="beef" style="color: #ef4444; width: 18px; height: 18px;"></i> Carne</h2>
+                    data-lucide="beef" style="color: #ef4444; width: 18px; height: 18px;"></i> <span data-i18n="dash_meat">Carne</span></h2>
                 <div style="flex: 1; min-width: 0; min-height: 0; position: relative;"><canvas id="chart-carne"></canvas></div>
               </div>
             </div>
@@ -1214,8 +1214,8 @@
       <section id="buscador-historico" class="tab-content view-transition">
         <header class="section-header">
           <div class="header-content">
-            <h1>Buscador Histórico de Protocolos</h1>
-            <p class="text-muted">Consulta el histórico de trabajos realizados filtrando por NIT.</p>
+            <h1 data-i18n="hist_title">Buscador Histórico de Protocolos</h1>
+            <p class="text-muted" data-i18n="hist_subtitle">Consulta el histórico de trabajos realizados filtrando por NIT.</p>
           </div>
         </header>
 
@@ -1223,30 +1223,30 @@
           <div
             style="display: flex; gap: 1rem; align-items: flex-end; margin-bottom: 1.5rem; background: rgba(14, 165, 233, 0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.1);">
             <div class="input-group" style="flex: 1;">
-              <label>Ingresa el NIT o C.C. para buscar</label>
+              <label data-i18n="hist_search_label">Ingresa el NIT o C.C. para buscar</label>
               <input type="text" id="search-nit" placeholder="Ej: 123456789"
                 style="font-size: 1.1rem; padding: 0.75rem; background: rgba(0,0,0,0.2);">
             </div>
             <button class="btn btn-primary" onclick="buscarPorNit()"
               style="height: 50px; padding: 0 2rem; font-weight: bold; background: var(--accent);">
-              <i data-lucide="search"></i> BUSCAR AHORA
+              <i data-lucide="search"></i> <span data-i18n="hist_btn_search">BUSCAR AHORA</span>
             </button>
           </div>
 
           <div id="historial-resultados" style="display: none;">
-            <h3 class="form-title" style="margin-top: 2rem; color: var(--accent);"><i data-lucide="list"></i> Resultados
-              encontrados</h3>
+            <h3 class="form-title" style="margin-top: 2rem; color: var(--accent);"><i data-lucide="list"></i> <span data-i18n="hist_results_title">Resultados
+              encontrados</span></h3>
             <div class="table-responsive">
               <table class="data-table">
                 <thead>
                   <tr>
-                    <th style="text-align: left;">Fecha</th>
-                    <th style="text-align: left;">Finca</th>
-                    <th style="text-align: left;">Protocolo</th>
-                    <th style="text-align: center;">Animales</th>
-                    <th style="text-align: center;">Preñeces</th>
-                    <th style="text-align: right;">Inversión</th>
-                    <th style="text-align: center;">Acciones</th>
+                    <th style="text-align: left;" data-i18n="hist_th_fecha">Fecha</th>
+                    <th style="text-align: left;" data-i18n="hist_th_finca">Finca</th>
+                    <th style="text-align: left;" data-i18n="hist_th_protocol">Protocolo</th>
+                    <th style="text-align: center;" data-i18n="hist_th_animales">Animales</th>
+                    <th style="text-align: center;" data-i18n="hist_th_preg">Preñeces</th>
+                    <th style="text-align: right;" data-i18n="hist_th_inv">Inversión</th>
+                    <th style="text-align: center;" data-i18n="hist_th_actions">Acciones</th>
                   </tr>
                 </thead>
                 <tbody id="lista-historial">
@@ -1259,7 +1259,7 @@
           <div id="historial-vacio" class="text-muted"
             style="text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 12px; margin-top: 1rem; border: 1px dashed var(--glass-border);">
             <i data-lucide="info" style="width: 40px; height: 40px; margin-bottom: 1rem; opacity: 0.5;"></i>
-            <p>Ingresa un NIT para ver el histórico de protocolos realizados.</p>
+            <p data-i18n="hist_empty_msg">Ingresa un NIT para ver el histórico de protocolos realizados.</p>
           </div>
         </div>
       </section>
@@ -1267,8 +1267,8 @@
       <!-- 7. PANEL DE ADMINISTRADOR -->
       <section id="admin-users" class="tab-content view-transition">
         <header class="section-header">
-          <h1>Panel de Administración</h1>
-          <p>Visualiza y gestiona las personas registradas en tu aplicación</p>
+          <h1 data-i18n="admin_title">Panel de Administración</h1>
+          <p data-i18n="admin_subtitle">Visualiza y gestiona las personas registradas en tu aplicación</p>
         </header>
 
         <div class="stats-grid mb-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
@@ -1277,7 +1277,7 @@
               <i data-lucide="users"></i>
             </div>
             <div class="stat-info">
-              <h3 style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Total Usuarios Registrados</h3>
+              <h3 style="margin: 0; font-size: 0.85rem; color: var(--text-muted);" data-i18n="admin_tot_users">Total Usuarios Registrados</h3>
               <div class="stat-value text-accent" id="admin-total-users" style="font-size: 1.8rem; font-weight: bold; color: var(--accent);">0</div>
             </div>
           </div>
@@ -1286,7 +1286,7 @@
               <i data-lucide="activity"></i>
             </div>
             <div class="stat-info">
-              <h3 style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Total Accesos Globales</h3>
+              <h3 style="margin: 0; font-size: 0.85rem; color: var(--text-muted);" data-i18n="admin_tot_acc">Total Accesos Globales</h3>
               <div class="stat-value text-success" id="admin-total-accesses" style="font-size: 1.8rem; font-weight: bold; color: var(--success);">0</div>
             </div>
           </div>
@@ -1297,13 +1297,13 @@
             <table class="data-table" id="tabla-usuarios-admin" style="font-size: 0.9rem; min-width: 700px;">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Correo</th>
-                  <th>Teléfono</th>
-                  <th>Finca</th>
-                  <th>NIT / C.C.</th>
-                  <th style="text-align: center;">Accesos</th>
-                  <th>Fecha de Registro</th>
+                  <th data-i18n="admin_th_name">Nombre</th>
+                  <th data-i18n="admin_th_email">Correo</th>
+                  <th data-i18n="admin_th_phone">Teléfono</th>
+                  <th data-i18n="admin_th_farm">Finca</th>
+                  <th data-i18n="admin_th_nit">NIT / C.C.</th>
+                  <th style="text-align: center;" data-i18n="admin_th_acc">Accesos</th>
+                  <th data-i18n="admin_th_date">Fecha de Registro</th>
                 </tr>
               </thead>
               <tbody id="admin-users-body">
@@ -1326,7 +1326,7 @@
         <div class="glass-panel p-2">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
             <h2 class="form-title" style="margin: 0; border: none; padding: 0; display: flex; align-items: center; gap: 0.5rem;">
-              <i data-lucide="users"></i> Directorio
+              <i data-lucide="users"></i> <span data-i18n="aliados_dir">Directorio</span>
               <button class="btn btn-secondary" style="padding: 4px; border: none; background: transparent;" onclick="desbloquearAdminAliados()" title="Administrar Directorio">
                 <i data-lucide="lock" id="icon-lock-aliados" style="width: 16px; height: 16px; opacity: 0.5;"></i>
               </button>
@@ -1334,10 +1334,10 @@
             <div id="admin-aliados-actions" style="display: none; gap: 0.5rem;">
               <input type="file" id="btn-importar-aliados" accept=".xlsx, .xls" style="display: none;" onchange="handleImportarAliados(event)">
               <button class="btn" style="background: #10b981; color: #fff; font-weight: 700; border-color: #10b981;" onclick="document.getElementById('btn-importar-aliados').click()">
-                <i data-lucide="upload-cloud"></i> Cargar Excel
+                <i data-lucide="upload-cloud"></i> <span data-i18n="btn_load_excel">Cargar Excel</span>
               </button>
               <button class="btn" style="background: #3b82f6; color: #fff; font-weight: 700; border-color: #3b82f6;" onclick="guardarAliadosEnNube()" id="btn-guardar-aliados-nube">
-                <i data-lucide="cloud-upload"></i> Guardar en Nube
+                <i data-lucide="cloud-upload"></i> <span data-i18n="btn_save_cloud">Guardar en Nube</span>
               </button>
             </div>
           </div>
@@ -1345,7 +1345,7 @@
           <div id="grid-aliados" class="aliados-grid">
             <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--glass-border);">
               <i data-lucide="info" style="width: 40px; height: 40px; margin-bottom: 1rem; opacity: 0.5;"></i>
-              <p>No hay aliados cargados. Usa el botón de candado para Cargar Excel o espera a que sincronicen desde la nube.</p>
+              <p data-i18n="aliados_empty">No hay aliados cargados. Usa el botón de candado para Cargar Excel o espera a que sincronicen desde la nube.</p>
             </div>
           </div>
         </div>
@@ -1363,14 +1363,14 @@
           </div>
           
           <div style="margin-bottom: 1.5rem;">
-            <h3 style="font-size: 1rem; color: var(--accent); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="package" style="width:18px;height:18px;"></i> Productos y Servicios</h3>
+            <h3 style="font-size: 1rem; color: var(--accent); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="package" style="width:18px;height:18px;"></i> <span data-i18n="aliados_prod_serv">Productos y Servicios</span></h3>
             <div id="modal-aliado-productos" style="background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--glass-border); color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; white-space: pre-line;">
               -
             </div>
           </div>
           
           <div id="modal-aliado-nota-container" style="margin-bottom: 2rem; display: none;">
-            <h3 style="font-size: 1rem; color: #f59e0b; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="info" style="width:18px;height:18px;"></i> Nota Adicional</h3>
+            <h3 style="font-size: 1rem; color: #f59e0b; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="info" style="width:18px;height:18px;"></i> <span data-i18n="aliados_nota">Nota Adicional</span></h3>
             <div id="modal-aliado-nota" style="background: rgba(245, 158, 11, 0.05); padding: 1.2rem; border-radius: 8px; border-left: 4px solid #f59e0b; color: #e2e8f0; font-size: 0.9rem; font-style: italic;">
               -
             </div>
@@ -1554,7 +1554,7 @@
     }
   </style>
 
-  <script src="iatf-app.js?v=V260601.41"></script>
+  <script src="iatf-app.js?v=V260601.42"></script>
   
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>

@@ -409,7 +409,7 @@ window.handleRegister = function(event) {
   const pass = document.getElementById('reg-pass').value;
 
   if (pass.length < 6) {
-    alert("La contraseña debe tener al menos 6 caracteres.");
+    alert(t("alert_pass_length"));
     return;
   }
 
@@ -482,13 +482,13 @@ window.handleRegister = function(event) {
             btn.disabled = false;
             btn.innerText = origText;
             console.error("Error en login de recuperación:", loginErr);
-            alert("El correo electrónico ya está registrado. Si es tu cuenta, verifica la contraseña ingresada.");
+            alert(t("alert_email_exists"));
           });
       } else {
         btn.disabled = false;
         btn.innerText = origText;
         console.error("Error en registro:", err);
-        alert("Error al registrarse: " + traducirErrorFirebase(err.code));
+        alert(t("alert_reg_error") + " " + traducirErrorFirebase(err.code));
       }
     });
 };
@@ -512,7 +512,7 @@ window.handleLogin = function(event) {
       btn.disabled = false;
       btn.innerText = origText;
       console.error("Error en login:", err);
-      alert("Error al iniciar sesión: " + traducirErrorFirebase(err.code));
+      alert(t("alert_login_error") + " " + traducirErrorFirebase(err.code));
     });
 };
 
@@ -690,7 +690,7 @@ window.cargarProtocolosDesdeExcelData = function(arrayBuffer) {
     return true;
   } catch (error) {
     console.error("Error al procesar Excel:", error);
-    alert("Error al procesar el Excel: " + error.message);
+    alert(t("alert_excel_error") + " " + error.message);
     return false;
   }
 };
@@ -704,12 +704,12 @@ window.handleImportarExcelFile = function(event) {
     const data = e.target.result;
     const success = window.cargarProtocolosDesdeExcelData(data);
     if (success) {
-      alert("¡Protocolos importados exitosamente desde el archivo Excel y guardados para todos los usuarios!");
+      alert(t("alert_protocols_imported"));
     }
     event.target.value = '';
   };
   reader.onerror = function() {
-    alert("Error al leer el archivo Excel.");
+    alert(t("alert_excel_read_error"));
     event.target.value = '';
   };
   reader.readAsArrayBuffer(file);
@@ -755,15 +755,15 @@ window.handleImportarAliados = function(event) {
         window.renderAliadosCards();
       }
       
-      alert("¡Directorio de aliados importado exitosamente!");
+      alert(t("alert_aliados_imported"));
     } catch (error) {
       console.error("Error al procesar Excel:", error);
-      alert("Error al procesar el Excel: " + error.message);
+      alert(t("alert_excel_error") + " " + error.message);
     }
     event.target.value = '';
   };
   reader.onerror = function() {
-    alert("Error al leer el archivo Excel.");
+    alert(t("alert_excel_read_error"));
     event.target.value = '';
   };
   reader.readAsArrayBuffer(file);
@@ -795,7 +795,7 @@ window.cargarUsuariosAdmin = function() {
   const totalAccessesEl = document.getElementById('admin-total-accesses');
   if (!tbody) return;
 
-  tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;" class="text-muted">Cargando usuarios...</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;" class="text-muted">${t("admin_loading")}</td></tr>';
 
   db.collection("users").orderBy("createdAt", "desc").get()
     .then(querySnapshot => {
@@ -806,7 +806,7 @@ window.cargarUsuariosAdmin = function() {
 
       if (querySnapshot.empty) {
         if (totalAccessesEl) totalAccessesEl.innerText = '0';
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;" class="text-muted">No hay usuarios registrados.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;" class="text-muted">${t("admin_empty")}</td></tr>';
         return;
       }
 
@@ -1114,6 +1114,92 @@ window.translations = {
     card_inseminar: "Inseminar: Día",
     btn_cancel: "Cancelar",
     btn_update_system: "Actualizar Sistema",
+    dash_inv_tot: "Inversión Total Proyecto",
+    dash_cost_preg: "Costo / Preñez Promedio",
+    dash_roi: "ROI (Retorno Inversión)",
+    dash_prot_horm: "Protocolo Hormonal",
+    dash_gen_vaca: "Genética / Vaca",
+    dash_asis_vaca: "Asistencia Técnica / Vaca",
+    dash_iate_vaca: "Honorarios IA-TE / Vaca",
+    dash_diag_vaca: "Confirmación Preñez / Vaca",
+    dash_exito_rep: "Éxito Reproductivo",
+    dash_preg_stage: "Preñez por Etapa",
+    dash_net_profit: "Utilidad Neta",
+    dash_concept: "Concepto",
+    dash_consolidated: "Consolidado",
+    dash_milk: "Leche",
+    dash_meat: "Carne",
+    hist_title: "Buscador Histórico de Protocolos",
+    hist_subtitle: "Consulta el histórico de trabajos realizados filtrando por NIT.",
+    hist_search_label: "Ingresa el NIT o C.C. para buscar",
+    hist_btn_search: "BUSCAR AHORA",
+    hist_results_title: "Resultados encontrados",
+    hist_th_fecha: "Fecha",
+    hist_th_finca: "Finca",
+    hist_th_protocol: "Protocolo",
+    hist_th_animales: "Animales",
+    hist_th_preg: "Preñeces",
+    hist_th_inv: "Inversión",
+    hist_th_actions: "Acciones",
+    hist_empty_msg: "Ingresa un NIT para ver el histórico de protocolos realizados.",
+    admin_title: "Panel de Administración",
+    admin_subtitle: "Visualiza y gestiona las personas registradas en tu aplicación",
+    admin_tot_users: "Total Usuarios Registrados",
+    admin_tot_acc: "Total Accesos Globales",
+    admin_th_name: "Nombre",
+    admin_th_email: "Correo",
+    admin_th_phone: "Teléfono",
+    admin_th_farm: "Finca",
+    admin_th_nit: "NIT / C.C.",
+    admin_th_acc: "Accesos",
+    admin_th_date: "Fecha de Registro",
+    aliados_dir: "Directorio",
+    btn_load_excel: "Cargar Excel",
+    btn_save_cloud: "Guardar en Nube",
+    aliados_empty: "No hay aliados cargados. Usa el botón de candado para Cargar Excel o espera a que sincronicen desde la nube.",
+    aliados_prod_serv: "Productos y Servicios",
+    aliados_nota: "Nota Adicional",
+    col_presentacion: "Presentación Producto",
+    col_valor_c: "VALOR DE COMPRA",
+    alert_pass_length: "La contraseña debe tener al menos 6 caracteres.",
+    alert_email_exists: "El correo electrónico ya está registrado. Si es tu cuenta, verifica la contraseña ingresada.",
+    alert_reg_error: "Error al registrarse:",
+    alert_login_error: "Error al iniciar sesión:",
+    alert_excel_error: "Error al procesar el Excel:",
+    alert_protocols_imported: "¡Protocolos importados exitosamente desde el archivo Excel y guardados para todos los usuarios!",
+    alert_excel_read_error: "Error al leer el archivo Excel.",
+    alert_aliados_imported: "¡Directorio de aliados importado exitosamente!",
+    alert_vital_protocol: "Este protocolo de resincronización es vital para el sistema y no se puede eliminar.",
+    alert_wrong_pass: "Contraseña incorrecta.",
+    alert_protocols_restored: "Protocolos base restaurados correctamente.",
+    alert_protocols_deleted: "Protocolos y encabezados eliminados correctamente. Puedes cargar los nuevos desde Excel o manualmente.",
+    alert_changes_saved: "Cambios guardados con éxito.",
+    alert_select_protocol: "⚠️ Por favor, selecciona primero un 'Protocolo' para configurar sus precios.",
+    alert_invalid_protocol: "Selecciona un protocolo válido.",
+    alert_cal_update_error: "Hubo un error actualizando el calendario:",
+    alert_project_cleared: "Todos los datos del proyecto han sido borrados correctamente.",
+    alert_missing_fields: "Por favor, completa al menos Nombre, Identificación y Teléfono.",
+    alert_export_nodata: "⚠️ No hay datos suficientes para exportar. Selecciona un protocolo y genera el cronograma primero.",
+    alert_nit_required: "Operación cancelada. El NIT es necesario para guardar el reporte.",
+    alert_farm_required: "⚠️ Se requiere completar los campos 'Finca' y 'Ubicación' para guardar el reporte en el historial.",
+    alert_report_saved: "✅ ¡Éxito! El reporte ha sido guardado en el historial. Ahora podrás buscarlo por NIT cuando lo necesites.",
+    alert_enter_nit: "Por favor ingresa un NIT para buscar.",
+    alert_no_excel_data: "No hay datos cargados. Por favor carga un archivo Excel primero.",
+    alert_aliados_saved_cloud: "¡Directorio de aliados guardado en la nube exitosamente!",
+    alert_cloud_save_error: "Error al guardar en la nube:",
+    confirm_delete_history: "¿Estás seguro de que deseas eliminar este registro del historial permanentemente?",
+    confirm_load_history: '¿Deseas cargar el reporte de la finca "{finca}" realizado el {fecha}?\n\nNota: Esto reemplazará los datos actuales en pantalla.',
+    confirm_restore_defaults: "¿Estás seguro de restaurar los protocolos por defecto? Perderás los personalizados actuales.",
+    confirm_delete_all_protocols: "¿Seguro que deseas eliminar TODOS los protocolos personalizados? Quedará vacío hasta que cargues un Excel.",
+    confirm_delete_matrix: "¿Seguro que deseas eliminar TODA la información de la matriz base?",
+    admin_loading: "Cargando usuarios...",
+    admin_empty: "No hay usuarios registrados.",
+    admin_no_name: "Sin nombre",
+    admin_na: "N/A",
+    hist_btn_load: "CARGAR",
+    hist_btn_excel: "EXCEL",
+    hist_btn_delete: "ELIMINAR",
+    hist_no_results: "No se encontraron registros para el NIT:",
     resx1_protocol_lbl: "Protocolo Resincronización 1",
     resx1_animals_lbl: "Animales en Resincronización (Vacías Dx1)",
     resx1_date_lbl: "Fecha Inicio (Auto)",
@@ -1294,6 +1380,92 @@ window.translations = {
     card_inseminar: "Inseminate: Day",
     btn_cancel: "Cancel",
     btn_update_system: "Update System",
+    dash_inv_tot: "Total Project Investment",
+    dash_cost_preg: "Avg. Cost / Pregnancy",
+    dash_roi: "ROI (Return on Investment)",
+    dash_prot_horm: "Hormonal Protocol",
+    dash_gen_vaca: "Genetics / Cow",
+    dash_asis_vaca: "Tech Assistance / Cow",
+    dash_iate_vaca: "AI-ET Fees / Cow",
+    dash_diag_vaca: "Preg. Confirmation / Cow",
+    dash_exito_rep: "Reproductive Success",
+    dash_preg_stage: "Pregnancy by Stage",
+    dash_net_profit: "Net Profit",
+    dash_concept: "Concept",
+    dash_consolidated: "Consolidated",
+    dash_milk: "Milk",
+    dash_meat: "Meat",
+    hist_title: "Protocol History Search",
+    hist_subtitle: "Search the history of completed jobs by filtering by Tax ID (NIT).",
+    hist_search_label: "Enter Tax ID or ID to search",
+    hist_btn_search: "SEARCH NOW",
+    hist_results_title: "Results found",
+    hist_th_fecha: "Date",
+    hist_th_finca: "Farm",
+    hist_th_protocol: "Protocol",
+    hist_th_animales: "Animals",
+    hist_th_preg: "Pregnancies",
+    hist_th_inv: "Investment",
+    hist_th_actions: "Actions",
+    hist_empty_msg: "Enter a Tax ID (NIT) to view the history of completed protocols.",
+    admin_title: "Administration Panel",
+    admin_subtitle: "View and manage the people registered in your application",
+    admin_tot_users: "Total Registered Users",
+    admin_tot_acc: "Total Global Accesses",
+    admin_th_name: "Name",
+    admin_th_email: "Email",
+    admin_th_phone: "Phone",
+    admin_th_farm: "Farm",
+    admin_th_nit: "Tax ID / ID",
+    admin_th_acc: "Accesses",
+    admin_th_date: "Registration Date",
+    aliados_dir: "Directory",
+    btn_load_excel: "Load Excel",
+    btn_save_cloud: "Save to Cloud",
+    aliados_empty: "No partners loaded. Use the padlock button to Load Excel or wait for them to sync from the cloud.",
+    aliados_prod_serv: "Products and Services",
+    aliados_nota: "Additional Note",
+    col_presentacion: "Product Presentation",
+    col_valor_c: "PURCHASE VALUE",
+    alert_pass_length: "The password must be at least 6 characters long.",
+    alert_email_exists: "Email is already registered. If it's your account, verify your password.",
+    alert_reg_error: "Registration error:",
+    alert_login_error: "Login error:",
+    alert_excel_error: "Error processing Excel:",
+    alert_protocols_imported: "Protocols imported successfully from Excel and saved for all users!",
+    alert_excel_read_error: "Error reading the Excel file.",
+    alert_aliados_imported: "Partners directory imported successfully!",
+    alert_vital_protocol: "This resynchronization protocol is vital for the system and cannot be deleted.",
+    alert_wrong_pass: "Incorrect password.",
+    alert_protocols_restored: "Base protocols restored successfully.",
+    alert_protocols_deleted: "Protocols and headers deleted successfully. You can load new ones from Excel or manually.",
+    alert_changes_saved: "Changes saved successfully.",
+    alert_select_protocol: "⚠️ Please select a 'Protocol' first to configure its prices.",
+    alert_invalid_protocol: "Select a valid protocol.",
+    alert_cal_update_error: "There was an error updating the calendar:",
+    alert_project_cleared: "All project data has been cleared successfully.",
+    alert_missing_fields: "Please complete at least Name, ID, and Phone.",
+    alert_export_nodata: "⚠️ Not enough data to export. Select a protocol and generate the schedule first.",
+    alert_nit_required: "Operation canceled. Tax ID is required to save the report.",
+    alert_farm_required: "⚠️ The 'Farm' and 'Location' fields are required to save the report to history.",
+    alert_report_saved: "✅ Success! The report has been saved to history. You can now search for it by Tax ID when needed.",
+    alert_enter_nit: "Please enter a Tax ID to search.",
+    alert_no_excel_data: "No data loaded. Please load an Excel file first.",
+    alert_aliados_saved_cloud: "Partners directory saved to cloud successfully!",
+    alert_cloud_save_error: "Error saving to cloud:",
+    confirm_delete_history: "Are you sure you want to permanently delete this record from history?",
+    confirm_load_history: 'Do you want to load the report for the farm "{finca}" made on {fecha}?\n\nNote: This will replace the current data on screen.',
+    confirm_restore_defaults: "Are you sure you want to restore default protocols? You will lose current custom ones.",
+    confirm_delete_all_protocols: "Are you sure you want to delete ALL custom protocols? It will remain empty until you load an Excel.",
+    confirm_delete_matrix: "Are you sure you want to delete ALL information from the base matrix?",
+    admin_loading: "Loading users...",
+    admin_empty: "No registered users.",
+    admin_no_name: "No name",
+    admin_na: "N/A",
+    hist_btn_load: "LOAD",
+    hist_btn_excel: "EXCEL",
+    hist_btn_delete: "DELETE",
+    hist_no_results: "No records found for Tax ID:",
     resx1_protocol_lbl: "Resynchronization 1 Protocol",
     resx1_animals_lbl: "Animals in Resync. (Open Dx1)",
     resx1_date_lbl: "Start Date (Auto)",
@@ -1472,6 +1644,92 @@ window.translations = {
     card_inseminar: "Inseminar: Dia",
     btn_cancel: "Cancelar",
     btn_update_system: "Atualizar Sistema",
+    dash_inv_tot: "Investimento Total do Projeto",
+    dash_cost_preg: "Custo Médio / Prenhez",
+    dash_roi: "ROI (Retorno sobre Investimento)",
+    dash_prot_horm: "Protocolo Hormonal",
+    dash_gen_vaca: "Genética / Vaca",
+    dash_asis_vaca: "Assistência Técnica / Vaca",
+    dash_iate_vaca: "Honorários IA-TE / Vaca",
+    dash_diag_vaca: "Confirmação de Prenhez / Vaca",
+    dash_exito_rep: "Sucesso Reprodutivo",
+    dash_preg_stage: "Prenhez por Etapa",
+    dash_net_profit: "Lucro Líquido",
+    dash_concept: "Conceito",
+    dash_consolidated: "Consolidado",
+    dash_milk: "Leite",
+    dash_meat: "Carne",
+    hist_title: "Pesquisa de Histórico de Protocolos",
+    hist_subtitle: "Consulte o histórico de trabalhos realizados filtrando por CPF/CNPJ.",
+    hist_search_label: "Digite o CPF/CNPJ para pesquisar",
+    hist_btn_search: "PESQUISAR AGORA",
+    hist_results_title: "Resultados encontrados",
+    hist_th_fecha: "Data",
+    hist_th_finca: "Fazenda",
+    hist_th_protocol: "Protocolo",
+    hist_th_animales: "Animais",
+    hist_th_preg: "Prenhezes",
+    hist_th_inv: "Investimento",
+    hist_th_actions: "Ações",
+    hist_empty_msg: "Insira um CPF/CNPJ para ver o histórico de protocolos realizados.",
+    admin_title: "Painel de Administração",
+    admin_subtitle: "Visualize e gerencie as pessoas registradas no seu aplicativo",
+    admin_tot_users: "Total de Usuários Registrados",
+    admin_tot_acc: "Total de Acessos Globais",
+    admin_th_name: "Nome",
+    admin_th_email: "E-mail",
+    admin_th_phone: "Telefone",
+    admin_th_farm: "Fazenda",
+    admin_th_nit: "CPF / CNPJ",
+    admin_th_acc: "Acessos",
+    admin_th_date: "Data de Registro",
+    aliados_dir: "Diretório",
+    btn_load_excel: "Carregar Excel",
+    btn_save_cloud: "Salvar na Nuvem",
+    aliados_empty: "Nenhum parceiro carregado. Use o botão de cadeado para Carregar Excel ou aguarde a sincronização da nuvem.",
+    aliados_prod_serv: "Produtos e Serviços",
+    aliados_nota: "Nota Adicional",
+    col_presentacion: "Apresentação do Produto",
+    col_valor_c: "VALOR DE COMPRA",
+    alert_pass_length: "A senha deve ter pelo menos 6 caracteres.",
+    alert_email_exists: "O e-mail já está registrado. Se for sua conta, verifique a senha informada.",
+    alert_reg_error: "Erro ao registrar:",
+    alert_login_error: "Erro ao fazer login:",
+    alert_excel_error: "Erro ao processar o Excel:",
+    alert_protocols_imported: "Protocolos importados com sucesso do arquivo Excel e salvos para todos os usuários!",
+    alert_excel_read_error: "Erro ao ler o arquivo Excel.",
+    alert_aliados_imported: "Diretório de parceiros importado com sucesso!",
+    alert_vital_protocol: "Este protocolo de ressincronização é vital para o sistema e não pode ser excluído.",
+    alert_wrong_pass: "Senha incorreta.",
+    alert_protocols_restored: "Protocolos base restaurados com sucesso.",
+    alert_protocols_deleted: "Protocolos e cabeçalhos excluídos com sucesso. Você pode carregar novos do Excel ou manualmente.",
+    alert_changes_saved: "Alterações salvas com sucesso.",
+    alert_select_protocol: "⚠️ Por favor, selecione primeiro um 'Protocolo' para configurar seus preços.",
+    alert_invalid_protocol: "Selecione um protocolo válido.",
+    alert_cal_update_error: "Houve um erro ao atualizar o calendário:",
+    alert_project_cleared: "Todos os dados do projeto foram limpos com sucesso.",
+    alert_missing_fields: "Por favor, preencha pelo menos Nome, Identidade e Telefone.",
+    alert_export_nodata: "⚠️ Não há dados suficientes para exportar. Selecione um protocolo e gere o cronograma primeiro.",
+    alert_nit_required: "Operação cancelada. O CPF/CNPJ é necessário para salvar o relatório.",
+    alert_farm_required: "⚠️ Os campos 'Fazenda' e 'Localização' são necessários para salvar o relatório no histórico.",
+    alert_report_saved: "✅ Sucesso! O relatório foi salvo no histórico. Agora você pode pesquisá-lo por CPF/CNPJ quando precisar.",
+    alert_enter_nit: "Por favor, insira um CPF/CNPJ para pesquisar.",
+    alert_no_excel_data: "Nenhum dado carregado. Por favor, carregue um arquivo Excel primeiro.",
+    alert_aliados_saved_cloud: "Diretório de parceiros salvo na nuvem com sucesso!",
+    alert_cloud_save_error: "Erro ao salvar na nuvem:",
+    confirm_delete_history: "Tem certeza de que deseja excluir este registro do histórico permanentemente?",
+    confirm_load_history: 'Deseja carregar o relatório da fazenda "{finca}" feito em {fecha}?\n\nNota: Isso substituirá os dados atuais na tela.',
+    confirm_restore_defaults: "Tem certeza de que deseja restaurar os protocolos padrão? Você perderá os personalizados atuais.",
+    confirm_delete_all_protocols: "Tem certeza de que deseja excluir TODOS os protocolos personalizados? Ficará vazio até você carregar um Excel.",
+    confirm_delete_matrix: "Tem certeza de que deseja excluir TODAS as informações da matriz base?",
+    admin_loading: "Carregando usuários...",
+    admin_empty: "Nenhum usuário registrado.",
+    admin_no_name: "Sem nome",
+    admin_na: "N/A",
+    hist_btn_load: "CARREGAR",
+    hist_btn_excel: "EXCEL",
+    hist_btn_delete: "EXCLUIR",
+    hist_no_results: "Nenhum registro encontrado para o CPF/CNPJ:",
     resx1_protocol_lbl: "Protocolo Ressincronização 1",
     resx1_animals_lbl: "Animais em Ressincronização (Vazias Dx1)",
     resx1_date_lbl: "Data de Início (Auto)",
@@ -1983,7 +2241,7 @@ window.eliminarProtocolo = function(idx) {
   const pName = state.matriz[idx].name;
   const isResx = state.matriz.find(p => p.name === pName && (window.isResx1(p) || window.isResx2(p)));
   if (isResx) {
-    alert("Este protocolo de resincronización es vital para el sistema y no se puede eliminar.");
+    alert(t("alert_vital_protocol"));
     return;
   }
   if(confirm(`¿Estás seguro de eliminar el protocolo "${pName}"?`)) {
@@ -2017,7 +2275,7 @@ window.unlockMatriz = function() {
     if (lbl) lbl.innerText = t('msg_edit_active');
     renderMatriz();
   } else {
-    if(pass !== null) alert("Contraseña incorrecta.");
+    if(pass !== null) alert(t("alert_wrong_pass"));
   }
 }
 
@@ -2048,7 +2306,7 @@ window.restaurarProtocolosBase = function() {
   if(confirm("¿Restaurar protocolos originales de Solugan SG? Se perderán los cambios actuales.")) {
     state.matriz = window.migrarYSanitizarMatriz(window.DEFAULT_MATRIZ);
     state.encabezados = window.DEFAULT_ENCABEZADOS.slice();
-    renderMatriz(); saveState(); alert("Protocolos base restaurados correctamente.");
+    renderMatriz(); saveState(); alert(t("alert_protocols_restored"));
   }
 }
 
@@ -2063,7 +2321,7 @@ window.vaciarProtocolosYEncabezados = function() {
     renderMatriz(); 
     saveState(); 
     if (typeof actualizarSelectProtocolos === 'function') actualizarSelectProtocolos();
-    alert("Protocolos y encabezados eliminados correctamente. Puedes cargar los nuevos desde Excel o manualmente.");
+    alert(t("alert_protocols_deleted"));
   }
 }
 
@@ -2085,7 +2343,7 @@ window.guardarMatrizProtocolos = function() {
   if (lbl) lbl.innerText = t('msg_view_mode');
   renderMatriz(); 
   saveState();
-  alert("Cambios guardados con éxito.");
+  alert(t("alert_changes_saved"));
 }
 
 window.updateRowName = function(r, val) { 
@@ -2176,7 +2434,7 @@ window.abrirModalPrecios = function(context = 'pi') {
   tbody.innerHTML = '';
   
   const protocol = state.matriz.find(p => p.name === pName);
-  if(!protocol) { alert("Selecciona un protocolo válido."); return; }
+  if(!protocol) { alert(t("alert_invalid_protocol")); return; }
   
   const animalesNum = parseInt(document.getElementById(aId).value) || 0;
   const categories = [
@@ -3517,7 +3775,7 @@ window.onProtocoloChange = function() {
       saveState();
     } catch (error) {
       console.error("Error cambiando protocolo:", error);
-      alert("Hubo un error actualizando el calendario: " + error.message);
+      alert(t("alert_cal_update_error") + " " + error.message);
     }
   }, 100);
 }
@@ -3554,7 +3812,7 @@ window.resetPantallaPI = function() {
   lucide.createIcons();
   saveState();
   updateResultados();
-  alert("Todos los datos del proyecto han sido borrados correctamente.");
+  alert(t("alert_project_cleared"));
 }
 
 // --- LÓGICA DE REGISTRO INICIAL ---
@@ -3567,7 +3825,7 @@ window.guardarRegistroInicial = function() {
     const email = document.getElementById('reg-email').value.trim();
 
     if (!nombre || !nit || !movil) {
-      alert("Por favor, completa al menos Nombre, Identificación y Teléfono.");
+      alert(t("alert_missing_fields"));
       return;
     }
 
@@ -4134,7 +4392,7 @@ window.exportarExcel = function() {
   const pName = document.getElementById('pi-protocolo').value;
   const fIni = document.getElementById('pi-fecha').value;
   if (!pName || !fIni) {
-    alert("⚠️ No hay datos suficientes para exportar. Selecciona un protocolo y genera el cronograma primero.");
+    alert(t("alert_export_nodata"));
     return;
   }
 
@@ -4636,7 +4894,7 @@ window.guardarEnHistorial = function() {
   if (nitValue === 'N/A') {
     nitValue = prompt("Para poder buscar este reporte después, por favor ingresa tu NIT:");
     if (!nitValue || nitValue.trim() === '') {
-      alert("Operación cancelada. El NIT es necesario para guardar el reporte.");
+      alert(t("alert_nit_required"));
       return;
     }
     nitValue = nitValue.trim();
@@ -4678,13 +4936,13 @@ window.guardarEnHistorial = function() {
   historial.push(report);
   localStorage.setItem('reprocost_historial', JSON.stringify(historial));
   
-  alert("✅ ¡Éxito! El reporte ha sido guardado en el historial. Ahora podrás buscarlo por NIT cuando lo necesites.");
+  alert(t("alert_report_saved"));
 };
 
 window.buscarPorNit = function() {
   const term = document.getElementById('search-nit').value.trim();
   if (!term) {
-    alert("Por favor ingresa un NIT para buscar.");
+    alert(t("alert_enter_nit"));
     return;
   }
 
@@ -4723,13 +4981,13 @@ window.buscarPorNit = function() {
         <td style="text-align:right; font-weight:bold;">${r.inversion}</td>
         <td style="text-align:center; white-space:nowrap;">
           <button class="btn btn-secondary" onclick="cargarDeHistorial(${r.id})" style="padding: 4px 10px; font-size: 0.75rem; background: rgba(14, 165, 233, 0.1); color: var(--accent); border: 1px solid var(--accent); margin-right: 5px;">
-            <i data-lucide="eye" style="width:12px; height:12px;"></i> CARGAR
+            <i data-lucide="eye" style="width:12px; height:12px;"></i> ${t("hist_btn_load")}
           </button>
           <button class="btn btn-secondary" onclick="exportarExcelDesdeHistorial(${r.id})" style="padding: 4px 10px; font-size: 0.75rem; background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid #10b981; margin-right: 5px;">
-            <i data-lucide="file-spreadsheet" style="width:12px; height:12px;"></i> EXCEL
+            <i data-lucide="file-spreadsheet" style="width:12px; height:12px;"></i> ${t("hist_btn_excel")}
           </button>
           <button class="btn btn-danger" onclick="eliminarDeHistorial(${r.id})" style="padding: 4px 10px; font-size: 0.75rem; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid var(--danger);">
-            <i data-lucide="trash-2" style="width:12px; height:12px;"></i> ELIMINAR
+            <i data-lucide="trash-2" style="width:12px; height:12px;"></i> ${t("hist_btn_delete")}
           </button>
         </td>
       `;
@@ -4743,7 +5001,7 @@ window.buscarPorNit = function() {
     empty.style.display = 'block';
     empty.innerHTML = `
       <i data-lucide="search-x" style="width: 40px; height: 40px; margin-bottom: 1rem; color: var(--danger);"></i>
-      <p>No se encontraron registros para el NIT: <strong>${term}</strong></p>
+      <p>${t("hist_no_results")} <strong>${term}</strong></p>
     `;
     lucide.createIcons();
   }
@@ -4754,7 +5012,7 @@ window.cargarDeHistorial = function(id) {
   const record = historial.find(r => r.id === id);
   if (!record) return;
 
-  if (confirm(`¿Deseas cargar el reporte de la finca "${record.finca}" realizado el ${record.fecha}?\n\nNota: Esto reemplazará los datos actuales en pantalla.`)) {
+  if (confirm(t("confirm_load_history").replace("{finca}", record.finca).replace("{fecha}", record.fecha))) {
     // Preservar la última versión de los protocolos al cargar un reporte antiguo
     const latestMatrixStr = localStorage.getItem('reprocost_custom_matriz');
     const newState = Object.assign({}, record.state);
@@ -4772,7 +5030,7 @@ window.cargarDeHistorial = function(id) {
 };
 
 window.eliminarDeHistorial = function(id) {
-  if (confirm("¿Estás seguro de que deseas eliminar este registro del historial permanentemente?")) {
+  if (confirm(t("confirm_delete_history"))) {
     let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
     historial = historial.filter(r => r.id !== id);
     localStorage.setItem('reprocost_historial', JSON.stringify(historial));
@@ -5034,18 +5292,18 @@ window.desbloquearAdminAliados = function() {
       if (typeof lucide !== 'undefined') lucide.createIcons();
     }
   } else {
-    if (pwd !== null) alert("Contraseña incorrecta.");
+    if (pwd !== null) alert(t("alert_wrong_pass"));
   }
 };
 
 window.guardarAliadosEnNube = function() {
   if (!window.aliadosData || !window.aliadosData.rows || window.aliadosData.rows.length === 0) {
-    alert("No hay datos cargados. Por favor carga un archivo Excel primero.");
+    alert(t("alert_no_excel_data"));
     return;
   }
   const pwd = prompt("Por favor ingresa la contraseña de administrador:");
   if (pwd !== "jan5362") {
-    if (pwd !== null) alert("Contraseña incorrecta.");
+    if (pwd !== null) alert(t("alert_wrong_pass"));
     return;
   }
   const btn = document.getElementById('btn-guardar-aliados-nube');
@@ -5069,11 +5327,11 @@ window.guardarAliadosEnNube = function() {
 
   db.collection('settings').doc('aliados').set(cleanData)
     .then(() => {
-      alert("¡Directorio de aliados guardado en la nube exitosamente!");
+      alert(t("alert_aliados_saved_cloud"));
     })
     .catch(err => {
       console.error("Error al guardar aliados:", err);
-      alert("Error al guardar en la nube: " + err.message);
+      alert(t("alert_cloud_save_error") + " " + err.message);
     })
     .finally(() => {
       if (btn) {
