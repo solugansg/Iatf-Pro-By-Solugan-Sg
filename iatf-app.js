@@ -1086,7 +1086,12 @@ window.translations = {
     opt_lecheria: "Lechería Especializada",
     opt_cria: "Cría Comercial",
     opt_puro: "Ganado Puro",
-    opt_doble: "Doble Propósito"
+    opt_doble: "Doble Propósito",
+    tc_costo_diario: "Costo Sostenimiento Diario",
+    tc_costo_diario_sub: "Costo de manutención diario por animal",
+    msg_edit_active: "Modo Edición Activo. Puedes añadir, modificar o eliminar protocolos.",
+    msg_view_mode: "Modo Consulta. Haz clic en \"Edición Bloqueada\" para modificar.",
+    btn_hide_p: "Ocultar Protocolos"
   },
   en: {
     sidebar_dashboard: "Control Dashboard",
@@ -1223,7 +1228,12 @@ window.translations = {
     opt_lecheria: "Specialized Dairy",
     opt_cria: "Commercial Breeding",
     opt_puro: "Purebred Cattle",
-    opt_doble: "Dual Purpose"
+    opt_doble: "Dual Purpose",
+    tc_costo_diario: "Daily Maintenance Cost",
+    tc_costo_diario_sub: "Daily upkeep cost per animal",
+    msg_edit_active: "Edit Mode Active. You can add, modify, or delete protocols.",
+    msg_view_mode: "View Mode. Click on \"Locked Edit\" to modify.",
+    btn_hide_p: "Hide Protocols"
   },
   pt: {
     sidebar_dashboard: "Painel de Controle",
@@ -1358,7 +1368,12 @@ window.translations = {
     opt_lecheria: "Leiteria Especializada",
     opt_cria: "Criação Comercial",
     opt_puro: "Gado Puro",
-    opt_doble: "Duplo Propósito"
+    opt_doble: "Duplo Propósito",
+    tc_costo_diario: "Custo de Manutenção Diário",
+    tc_costo_diario_sub: "Custo de manutenção diária por animal",
+    msg_edit_active: "Modo de Edição Ativo. Você pode adicionar, modificar ou excluir protocolos.",
+    msg_view_mode: "Modo de Consulta. Clique em \"Edição Bloqueada\" para modificar.",
+    btn_hide_p: "Ocultar Protocolos"
   }
 };
 
@@ -1889,7 +1904,7 @@ window.unlockMatriz = function() {
     const btnSave = document.getElementById('btn-save-matriz');
     if (btnSave) btnSave.style.display = 'inline-flex';
     const lbl = document.getElementById('lbl-matriz-instruccion');
-    if (lbl) lbl.innerText = "Modo Edición Activo. Puedes añadir, modificar o eliminar protocolos.";
+    if (lbl) lbl.innerText = t('msg_edit_active');
     renderMatriz();
   } else {
     if(pass !== null) alert("Contraseña incorrecta.");
@@ -1957,7 +1972,7 @@ window.guardarMatrizProtocolos = function() {
   const btnSave = document.getElementById('btn-save-matriz');
   if (btnSave) btnSave.style.display = 'none';
   const lbl = document.getElementById('lbl-matriz-instruccion');
-  if (lbl) lbl.innerText = "Modo Consulta. Haz clic en \"Edición Bloqueada\" para modificar.";
+  if (lbl) lbl.innerText = t('msg_view_mode');
   renderMatriz(); 
   saveState();
   alert("Cambios guardados con éxito.");
@@ -2004,14 +2019,14 @@ window.toggleVerProtocolos = function() {
   const btn = document.getElementById('btn-toggle-protocolos');
   if (container.style.display === 'none') {
     container.style.display = 'block';
-    btn.innerHTML = '<i data-lucide="eye-off"></i> Ocultar Protocolos';
+    btn.innerHTML = `<i data-lucide="eye-off"></i> ${t('btn_hide_p')}`;
     btn.style.background = 'var(--danger)';
     btn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
     btn.style.color = '#ffffff';
     renderMatriz();
   } else {
     container.style.display = 'none';
-    btn.innerHTML = '<i data-lucide="eye"></i> Mostrar Protocolos Base';
+    btn.innerHTML = `<i data-lucide="eye"></i> ${t('btn_show_p')}`;
     btn.style.background = 'var(--accent)';
     btn.style.borderColor = 'rgba(14, 165, 233, 0.4)';
     btn.style.color = '#ffffff';

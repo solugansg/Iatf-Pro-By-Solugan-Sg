@@ -23,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260601.35">
+  <link rel="stylesheet" href="style.css?v=V 260601.36">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -150,7 +150,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260601.35</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260601.36</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -225,7 +225,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260601.35</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260601.36</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -367,8 +367,8 @@
             <div style="display: flex; align-items: center; gap: 0.5rem;">
               <span style="font-size: 1.5rem;">💰</span>
               <div>
-                <strong style="color: #fbbf24; font-size: 0.95rem; display: block;">Costo Sostenimiento Diario</strong>
-                <span class="text-muted" style="font-size: 0.75rem;">Costo de manutención diario por animal</span>
+                <strong data-i18n="tc_costo_diario" style="color: #fbbf24; font-size: 0.95rem; display: block;">Costo Sostenimiento Diario</strong>
+                <span class="text-muted" data-i18n="tc_costo_diario_sub" style="font-size: 0.75rem;">Costo de manutención diario por animal</span>
               </div>
             </div>
             <div class="spinner-wrap" style="border-color: #fbbf24; background: rgba(15, 23, 42, 0.5);">
@@ -391,8 +391,7 @@
           <div id="matriz-container" style="display: none; animation: fadeIn 0.3s ease;">
             <div class="matriz-tools-row"
               style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
-              <p class="text-muted" style="font-size: 0.85rem; margin: 0;" id="lbl-matriz-instruccion">Modo Consulta.
-                Haz clic en "Edición Bloqueada" para modificar.</p>
+              <p class="text-muted" style="font-size: 0.85rem; margin: 0;" id="lbl-matriz-instruccion" data-i18n="msg_view_mode">Modo Consulta. Haz clic en "Edición Bloqueada" para modificar.</p>
               <div style="display: flex; gap: 0.5rem;" id="matriz-tools">
                 <button class="btn btn-primary" style="background: var(--accent); color: #fff; font-weight: 700;"
                   onclick="unlockMatriz()" id="btn-unlock"><i data-lucide="lock"></i> <span
@@ -1561,7 +1560,7 @@
     }
   </style>
 
-  <script src="iatf-app.js?v=V260601.35"></script>
+  <script src="iatf-app.js?v=V260601.36"></script>
   
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>
