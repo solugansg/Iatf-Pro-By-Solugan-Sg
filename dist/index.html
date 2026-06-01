@@ -15,13 +15,6 @@
 
   <!-- Capturar errores globales -->
   <script>
-    window.onerror = function(message, source, lineno, colno, error) {
-      alert("⚠️ Error en la App:\n" + message + "\n\nArchivo: " + source + "\nLínea: " + lineno + "\nColumna: " + colno + "\n\nPor favor reporta esto.");
-      return false;
-    };
-    window.onunhandledrejection = function(event) {
-      alert("⚠️ Promesa fallida sin capturar:\n" + event.reason + "\n\nStack: " + (event.reason ? event.reason.stack : 'N/A'));
-    };
   </script>
 
   <!-- PWA Manifest -->
@@ -30,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260531.2">
+  <link rel="stylesheet" href="style.css?v=V 260601.3">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -157,7 +150,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260531.2</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260601.3</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -174,10 +167,10 @@
           <i data-lucide="calendar"></i> <span data-i18n="sidebar_pi">Protocolo Inicial</span>
         </button>
         <button class="nav-btn" data-target="resincronizacion1">
-          <i data-lucide="refresh-cw"></i> <span data-i18n="sidebar_resx1">ReSx1</span>
+          <i data-lucide="refresh-cw"></i> <span data-i18n="sidebar_resx1">Resincronización 1</span>
         </button>
         <button class="nav-btn" data-target="resincronizacion2">
-          <i data-lucide="refresh-cw"></i> <span data-i18n="sidebar_resx2">ReSx2</span>
+          <i data-lucide="refresh-cw"></i> <span data-i18n="sidebar_resx2">Resincronización 2</span>
         </button>
         <button class="nav-btn" data-target="dashboard">
           <i data-lucide="layout-dashboard"></i> <span data-i18n="sidebar_dash_roi">Dashboard y ROI</span>
@@ -232,7 +225,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260531.2</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260601.3</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -419,6 +412,8 @@
                 <button class="btn" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; display: none;"
                   onclick="restaurarProtocolosBase()" id="btn-reset-matriz"><i data-lucide="rotate-ccw"></i> <span
                     data-i18n="btn_reset">Restaurar Base</span></button>
+                <button class="btn" style="background: rgba(239, 68, 68, 0.9); color: #fff; display: none;"
+                  onclick="vaciarProtocolosYEncabezados()" id="btn-delete-all-protocols"><i data-lucide="trash-2"></i> <span>Eliminar Todo</span></button>
                 <button class="btn btn-primary" onclick="guardarMatrizProtocolos()" id="btn-save-matriz"
                   style="display: none;"><i data-lucide="save"></i> <span data-i18n="btn_save">Guardar y
                     Bloquear</span></button>
@@ -429,26 +424,9 @@
               <table class="data-table" id="tabla-matriz" style="font-size: 0.8rem; text-align: center;">
                 <thead
                   style="position: sticky; top: 0; background: #0f172a; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
-                  <tr>
+                  <tr id="tc-matriz-header-row">
                     <th style="text-align: left; background: #0f172a;">Protocolos / Hormonas</th>
-                    <th>DIB<br><small>Día</small></th>
-                    <th>B.E. 1<br><small>Día</small></th>
-                    <th>B.E. 2<br><small>Día</small></th>
-                    <th>GnRh 1<br><small>Día</small></th>
-                    <th>GnRh 2<br><small>Día</small></th>
-                    <th>Pgf2@ 1<br><small>Día</small></th>
-                    <th>Pgf2@ 2<br><small>Día</small></th>
-                    <th>Pgf2@ 3<br><small>Día</small></th>
-                    <th>eCG<br><small>Día</small></th>
-                    <th>C.E.<br><small>Día</small></th>
-                    <th>Genética<br><small>Día</small></th>
-                    <th>Retiro<br><small>Día</small></th>
-                    <th>Asis. 1<br><small>Día</small></th>
-                    <th>Asis. 2<br><small>Día</small></th>
-                    <th style="padding: 4px; font-size: 0.75rem;">IA/TE<br><small>Día</small></th>
-                    <th>Aspiración<br><small>Folicular</small></th>
-                    <th>Dx1<br><small>Día</small></th>
-                    <th>Dx2<br><small>Día</small></th>
+                    <!-- Los encabezados dinámicos se inyectan aquí -->
                     <th style="padding: 4px; font-size: 0.75rem; min-width: 280px;">Observaciones</th>
                     <th id="th-acciones" style="display: none; background: #ef4444; color:#fff;">Acciones</th>
                   </tr>
@@ -1354,38 +1332,212 @@
 
         <div class="glass-panel p-2">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-            <h2 class="form-title" style="margin: 0; border: none; padding: 0;"><i data-lucide="users"></i> Directorio</h2>
-            <div style="display: flex; gap: 0.5rem;">
+            <h2 class="form-title" style="margin: 0; border: none; padding: 0; display: flex; align-items: center; gap: 0.5rem;">
+              <i data-lucide="users"></i> Directorio
+              <button class="btn btn-secondary" style="padding: 4px; border: none; background: transparent;" onclick="desbloquearAdminAliados()" title="Administrar Directorio">
+                <i data-lucide="lock" id="icon-lock-aliados" style="width: 16px; height: 16px; opacity: 0.5;"></i>
+              </button>
+            </h2>
+            <div id="admin-aliados-actions" style="display: none; gap: 0.5rem;">
               <input type="file" id="btn-importar-aliados" accept=".xlsx, .xls" style="display: none;" onchange="handleImportarAliados(event)">
               <button class="btn" style="background: #10b981; color: #fff; font-weight: 700; border-color: #10b981;" onclick="document.getElementById('btn-importar-aliados').click()">
                 <i data-lucide="upload-cloud"></i> Cargar Excel
               </button>
+              <button class="btn" style="background: #3b82f6; color: #fff; font-weight: 700; border-color: #3b82f6;" onclick="guardarAliadosEnNube()" id="btn-guardar-aliados-nube">
+                <i data-lucide="cloud-upload"></i> Guardar en Nube
+              </button>
             </div>
           </div>
           
-          <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
-            <table class="data-table" id="tabla-aliados" style="font-size: 0.9rem; text-align: left;">
-              <thead style="position: sticky; top: 0; background: #0f172a; z-index: 10;">
-                <tr id="aliados-thead-tr">
-                  <th>No hay datos cargados</th>
-                </tr>
-              </thead>
-              <tbody id="aliados-tbody">
-                <tr>
-                  <td style="text-align: center; color: var(--text-muted); padding: 2rem;">
-                    Usa el botón "Cargar Excel" para visualizar el directorio de aliados comerciales.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div id="grid-aliados" class="aliados-grid">
+            <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--glass-border);">
+              <i data-lucide="info" style="width: 40px; height: 40px; margin-bottom: 1rem; opacity: 0.5;"></i>
+              <p>No hay aliados cargados. Usa el botón de candado para Cargar Excel o espera a que sincronicen desde la nube.</p>
+            </div>
           </div>
         </div>
       </section>
+
+      <!-- Modal Detalles Aliado -->
+      <div id="modal-aliado" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; backdrop-filter:blur(8px);">
+        <div class="glass-panel" style="padding: 2.5rem; width: 90%; max-width: 600px; max-height: 85vh; overflow-y:auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; border-top: 4px solid var(--accent);">
+          <button onclick="cerrarModalAliado()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: transparent; border: none; color: var(--text-muted); cursor: pointer;">
+            <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+          </button>
+          <h2 id="modal-aliado-nombre" style="font-size: 1.8rem; font-weight: 800; color: #00F2FE; text-shadow: 0 2px 10px rgba(0, 242, 254, 0.2); margin-bottom: 0.5rem; padding-right: 2rem;">-</h2>
+          <div id="modal-aliado-ubicacion" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.4rem;">
+            <i data-lucide="map-pin" style="width: 16px; height: 16px; color: var(--accent);"></i> <span>-</span>
+          </div>
+          
+          <div style="margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1rem; color: var(--accent); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="package" style="width:18px;height:18px;"></i> Productos y Servicios</h3>
+            <div id="modal-aliado-productos" style="background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--glass-border); color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; white-space: pre-line;">
+              -
+            </div>
+          </div>
+          
+          <div id="modal-aliado-nota-container" style="margin-bottom: 2rem; display: none;">
+            <h3 style="font-size: 1rem; color: #f59e0b; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="info" style="width:18px;height:18px;"></i> Nota Adicional</h3>
+            <div id="modal-aliado-nota" style="background: rgba(245, 158, 11, 0.05); padding: 1.2rem; border-radius: 8px; border-left: 4px solid #f59e0b; color: #e2e8f0; font-size: 0.9rem; font-style: italic;">
+              -
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+            <a id="modal-aliado-wa" href="#" target="_blank" class="btn" style="background: #25D366; color: #fff; border-color: #25D366; font-weight: 700; flex: 1; justify-content: center; text-decoration: none;">
+              <i data-lucide="message-circle"></i> Contactar por WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
 
     </main>
   </div>
 
   <style>
+    /* Estilos Directorio Aliados Premium */
+    .aliados-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .aliado-card-premium {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+    .aliado-card-premium::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 150px;
+      background: radial-gradient(ellipse at top left, rgba(79, 172, 254, 0.15) 0%, rgba(240, 147, 251, 0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .aliado-card-premium:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    }
+    .aliado-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .aliado-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00F2FE, #4FACFE, #F093FB, #F5576C);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+    }
+    .aliado-card-premium h3 {
+      margin: 0;
+      font-size: 1.45rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #00F2FE;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 10px rgba(0, 242, 254, 0.2);
+    }
+    .aliado-desc {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+    }
+    .aliado-loc-pill {
+      font-size: 0.8rem;
+      color: #e2e8f0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .aliado-actions {
+      display: flex;
+      gap: 0.8rem;
+    }
+    .btn-whatsapp-glow {
+      background: rgba(37, 211, 102, 0.1);
+      color: #25D366;
+      border: 1px solid rgba(37, 211, 102, 0.4);
+      padding: 0.6rem;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      flex: 1;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.1);
+    }
+    .btn-whatsapp-glow:hover {
+      background: rgba(37, 211, 102, 0.2);
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+      border-color: #25D366;
+      transform: translateY(-2px);
+    }
+    .btn-whatsapp-glow strong {
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      opacity: 0.8;
+    }
+    .btn-whatsapp-glow span {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .btn-detalles-glow {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.6rem;
+      border-radius: 12px;
+      flex: 1;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+    .btn-detalles-glow:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
     /* Add specific input styling for the matrix to look like excel cells */
     .cell-input {
       width: 100px;
@@ -1409,8 +1561,8 @@
     }
   </style>
 
-  <script src="iatf-app.js?v=V260531.2"></script>
-
+  <script src="iatf-app.js?v=V260601.3"></script>
+  
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>
     if ('serviceWorker' in navigator) {

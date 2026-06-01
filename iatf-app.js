@@ -4,6 +4,8 @@
 // ==========================================
 window.DEFAULT_MATRIZ = [{"name":"Tradicional (IATF)","days":["0","0","-","10","-","8","-","-","8","8","10","8","0","8","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 48-60 hs - GnRh Opcional"},{"name":"Jsynch (IATF)","days":["0","0","-","9","-","6","-","-","6","-","9","6","0","6","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 72 hs + GnRh"},{"name":"Novillas (IATF)","days":["0","0","9","-","-","8","-","-","8","-","10","8","0","8","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 24-32 horas"},{"name":"Ovsynch (IATF)","days":["-","-","-","0","9","7","-","-","-","-","10","-","0","-","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 17-24 horas post GnRh"},{"name":"Cosynch (IATF)","days":["-","-","-","0","9","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 48 horas + GnRh"},{"name":"Heatsynch (IATF)","days":["-","8","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 48-52 horas post Pgf2@"},{"name":"Presynch (IA)","days":["-","-","-","0","9","-26","-12","7","-","-","10","-","0","-","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"Observar celo - IA 12 horas post celo estable"},{"name":"Selectsynch (IA)","days":["-","-","-","0","-","7","-","-","-","-","8","-","0","-","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"Observar celo - IA 12 horas post celo estable"},{"name":"Dib Vacas (IA)","days":["0","-","-","0","8","7","-","-","-","-","8","-","0","7","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"IA celo detectado + GnRh"},{"name":"Dib Novillas (IA)","days":["0","0","-","8","-","7","-","-","-","-","8","-","0","7","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"IA celo detectado + GnRh"},{"name":"DoblePGF2@ (IA)","days":["-","-","-","-","-","0","11","-","-","-","2","-","0","-","2","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"2","obs":"Observar celo 1-5 dias IA 12 horas post celo estable"},{"name":"Monta Natural 1 (IA)","days":["-","-","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado \u00f3 Toro x 5 dias"},{"name":"Monta Natural 2 (IA)","days":["-","8","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado \u00f3 Toro x 5 dias"},{"name":"Monta Natural 3 DIB (IA)","days":["0","-","-","0","-","7","-","-","-","-","9","8","0","7","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado \u00f3 Toro x 5 dias"},{"name":"Receptoras 1 (IATF)","role":"resx1","days":["0","0","9","-","-","5","-","-","5","-","10","8","0","5","18","10","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"18","obs":"Transferencia de Embriones"},{"name":"Receptoras 2 (IATF)","role":"resx2","days":["0","0","-","-","-","8","-","-","8","8","9","8","0","8","17","9","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"17","obs":"Transferencia de Embriones"},{"name":"Resincronizacion 1 (IATF)","role":"resx1b","days":["32","32","-","42","-","40","-","-","40","40","42","40","32","40","42","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"42","obs":"Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional"},{"name":"Resincronizacion 2 (IATF)","role":"resx2b","days":["64","64","-","74","-","72","-","-","72","72","74","72","64","72","74","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"74","obs":"Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional"}];
 
+window.DEFAULT_ENCABEZADOS = ['DIB<br><small>Día</small>', 'B.E. 1<br><small>Día</small>', 'B.E. 2<br><small>Día</small>', 'GnRh 1<br><small>Día</small>', 'GnRh 2<br><small>Día</small>', 'Pgf2@ 1<br><small>Día</small>', 'Pgf2@ 2<br><small>Día</small>', 'Pgf2@ 3<br><small>Día</small>', 'eCG<br><small>Día</small>', 'C.E.<br><small>Día</small>', 'Genética<br><small>Día</small>', 'Retiro<br><small>Día</small>', 'Asis. 1<br><small>Día</small>', 'Asis. 2<br><small>Día</small>', '<div style="padding:4px; font-size:0.75rem;">IA/TE<br><small>Día</small></div>', 'Aspiración<br><small>Folicular</small>', 'Dx1<br><small>Día</small>', 'Dx2<br><small>Día</small>'];
+
 // ==========================================
 // CONFIGURACIÓN E INTEGRACIÓN DE FIREBASE
 // ==========================================
@@ -152,9 +154,10 @@ auth.onAuthStateChanged(user => {
     // Cargar matriz global primero, luego configuraciones del usuario
     db.collection("global").doc("protocols").get()
       .then(globalDoc => {
-        let globalMatriz = null;
+        let globalEncabezados = null;
         if (globalDoc.exists && globalDoc.data() && globalDoc.data().matriz && Array.isArray(globalDoc.data().matriz) && globalDoc.data().matriz.length > 0) {
           globalMatriz = globalDoc.data().matriz;
+          globalEncabezados = globalDoc.data().encabezados;
         }
 
         db.collection("users").doc(user.uid).get()
@@ -224,18 +227,21 @@ auth.onAuthStateChanged(user => {
               // Determinar de dónde cargar la matriz
               if (globalMatriz) {
                 state.matriz = window.migrarYSanitizarMatriz(globalMatriz);
+                if (globalEncabezados) state.encabezados = globalEncabezados.slice();
                 localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
               } else if (userData.matriz && Array.isArray(userData.matriz) && userData.matriz.length > 0) {
                 state.matriz = window.migrarYSanitizarMatriz(userData.matriz);
+                if (userData.encabezados) state.encabezados = userData.encabezados.slice();
                 localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
                 // Auto-migración si es el admin y la tabla global estaba vacía
                 if (user.email === ADMIN_EMAIL) {
-                  db.collection("global").doc("protocols").set({ matriz: state.matriz })
+                  db.collection("global").doc("protocols").set({ matriz: state.matriz, encabezados: state.encabezados }, { merge: true })
                     .then(() => console.log("Migración automática de protocolos del admin a global."))
                     .catch(err => console.error("Error migrando a global:", err));
                 }
               } else {
                 state.matriz = window.migrarYSanitizarMatriz(window.DEFAULT_MATRIZ);
+                state.encabezados = window.DEFAULT_ENCABEZADOS.slice();
                 localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
               }
           if (userData.logoEmpresa) {
@@ -337,10 +343,12 @@ auth.onAuthStateChanged(user => {
       const btnAdd = document.getElementById('btn-add-protocolo');
       const btnExcel = document.getElementById('btn-trigger-excel');
       const btnReset = document.getElementById('btn-reset-matriz');
+      const btnDeleteAll = document.getElementById('btn-delete-all-protocols');
       const btnSave = document.getElementById('btn-save-matriz');
       if (btnAdd) btnAdd.style.display = 'none';
       if (btnExcel) btnExcel.style.display = 'none';
       if (btnReset) btnReset.style.display = 'none';
+      if (btnDeleteAll) btnDeleteAll.style.display = 'none';
       if (btnSave) btnSave.style.display = 'none';
     }
 
@@ -605,6 +613,18 @@ window.cargarProtocolosDesdeExcelData = function(arrayBuffer) {
         dataStartIndex = nameColIndex + 1;
     }
     
+    // EXTRACCIÓN DINÁMICA DE ENCABEZADOS
+    const nuevosEncabezados = [];
+    for (let i = 0; i < state.colDefs.length; i++) {
+      let headVal = String(headerRow[dataStartIndex + i] || '').trim();
+      if (!headVal || headVal === '-') headVal = 'Col ' + (i + 1);
+      
+      // Permitir saltos de línea (Excel alt+enter) convirtiéndolos a <br> y agregar <small> si es posible
+      headVal = headVal.replace(/\n/g, '<br>');
+      nuevosEncabezados.push(headVal);
+    }
+    state.encabezados = nuevosEncabezados;
+    
     for (let r = headerRowIndex + 1; r < rawData.length; r++) {
       const row = rawData[r];
       if (!row || row.length <= 1) continue;
@@ -864,6 +884,7 @@ window.saveStateToFirestore = function() {
       tableroCarne: state.tableroCarne,
       insumos: state.insumos,
       matriz: state.matriz,
+      encabezados: state.encabezados,
       logoEmpresa: state.logoEmpresa || '',
       inputs: inputs,
       lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
@@ -872,7 +893,7 @@ window.saveStateToFirestore = function() {
       console.log("Estado sincronizado en Firestore");
       // Si es el admin, guardamos también en la colección global
       if (auth.currentUser && auth.currentUser.email === ADMIN_EMAIL) {
-        db.collection("global").doc("protocols").set({ matriz: state.matriz }, { merge: true })
+        db.collection("global").doc("protocols").set({ matriz: state.matriz, encabezados: state.encabezados }, { merge: true })
           .then(() => console.log("Protocolos globales actualizados exitosamente."))
           .catch(err => console.error("Error guardando en global:", err));
       }
@@ -1501,6 +1522,7 @@ const state = {
   tableroLeche: { precio: 1100, duracion: 300, litros: 1500 },
   tableroCarne: { precio: 10000, duracion: 240, peso: 240 },
   colDefs: ['dib','be1','be2','gnrh1','gnrh2','pgf1','pgf2','pgf3','ecg','ce','gen','retdib','mo1','mo2','iate','opu','dx1','dx2'],
+  encabezados: window.DEFAULT_ENCABEZADOS ? window.DEFAULT_ENCABEZADOS.slice() : [],
   
   // Inventory
   insumos: {
@@ -1677,7 +1699,35 @@ window.limpiarModuloCarne = function() {
 // 2. MATRIZ
 let isMatrixUnlocked = false;
 
+function renderEncabezados() {
+  const trHead = document.getElementById('tc-matriz-header-row');
+  if (!trHead) return;
+  // Limpiar encabezados existentes dinámicos manteniendo los estáticos (el primero y los dos últimos)
+  trHead.innerHTML = `
+    <th style="text-align: left; background: #0f172a;">Protocolos / Hormonas</th>
+  `;
+  
+  // Agregar encabezados dinámicos
+  if (state.encabezados && state.encabezados.length > 0) {
+    state.encabezados.forEach(enc => {
+      trHead.innerHTML += `<th>${enc}</th>`;
+    });
+  } else {
+    // Fallback if empty (should never happen if default is loaded)
+    for (let i = 0; i < state.colDefs.length; i++) {
+      trHead.innerHTML += `<th>Col ${i+1}</th>`;
+    }
+  }
+
+  // Agregar columnas finales fijas
+  trHead.innerHTML += `
+    <th style="padding: 4px; font-size: 0.75rem; min-width: 280px;">Observaciones</th>
+    <th id="th-acciones" style="display: none; background: #ef4444; color:#fff;">Acciones</th>
+  `;
+}
+
 function renderMatriz() {
+  renderEncabezados();
   const tbody = document.getElementById('tc-matriz-body');
   if(!tbody) return;
   tbody.innerHTML = '';
@@ -1780,6 +1830,8 @@ window.unlockMatriz = function() {
     if (btnExcel) btnExcel.style.display = 'inline-flex';
     const btnReset = document.getElementById('btn-reset-matriz');
     if (btnReset) btnReset.style.display = 'inline-flex';
+    const btnDeleteAll = document.getElementById('btn-delete-all-protocols');
+    if (btnDeleteAll) btnDeleteAll.style.display = 'inline-flex';
     const btnSave = document.getElementById('btn-save-matriz');
     if (btnSave) btnSave.style.display = 'inline-flex';
     const lbl = document.getElementById('lbl-matriz-instruccion');
@@ -1815,8 +1867,24 @@ window.restaurarProtocolosBase = function() {
     if (!isMatrixUnlocked) return;
   }
   if(confirm("¿Restaurar protocolos originales de Solugan SG? Se perderán los cambios actuales.")) {
-    state.matriz = [{"name":"Tradicional (IATF)","days":["0","0","-","10","-","8","-","-","8","8","10","8","0","8","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 48-60 hs - GnRh Opcional"},{"name":"Jsynch (IATF)","days":["0","0","-","9","-","6","-","-","6","-","9","6","0","6","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 72 hs + GnRh"},{"name":"Novillas (IATF)","days":["0","0","9","-","-","8","-","-","8","-","10","8","0","8","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 24-32 horas"},{"name":"Ovsynch (IATF)","days":["-","-","-","0","9","7","-","-","-","-","10","-","0","-","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 17-24 horas post GnRh"},{"name":"Cosynch (IATF)","days":["-","-","-","0","9","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 48 horas + GnRh"},{"name":"Heatsynch (IATF)","days":["-","8","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 48-52 horas post Pgf2@"},{"name":"Presynch (IA)","days":["-","-","-","0","9","-26","-12","7","-","-","10","-","0","-","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"Observar celo - IA 12 horas post celo estable"},{"name":"Selectsynch (IA)","days":["-","-","-","0","-","7","-","-","-","-","8","-","0","-","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"Observar celo - IA 12 horas post celo estable"},{"name":"Dib Vacas (IA)","days":["0","-","-","0","8","7","-","-","-","-","8","-","0","7","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"IA celo detectado + GnRh"},{"name":"Dib Novillas (IA)","days":["0","0","-","8","-","7","-","-","-","-","8","-","0","7","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"IA celo detectado + GnRh"},{"name":"DoblePGF2@ (IA)","days":["-","-","-","-","-","0","11","-","-","-","2","-","0","-","2","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"2","obs":"Observar celo 1-5 dias IA 12 horas post celo estable"},{"name":"Monta Natural 1 (IA)","days":["-","-","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado ó Toro x 5 dias"},{"name":"Monta Natural 2 (IA)","days":["-","8","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado ó Toro x 5 dias"},{"name":"Monta Natural 3 DIB (IA)","days":["0","-","-","0","-","7","-","-","-","-","9","8","0","7","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado ó Toro x 5 dias"},{"name":"Receptoras 1 (IATF)","role":"resx1","days":["0","0","9","-","-","5","-","-","5","-","10","8","0","5","18","10","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"18","obs":"Transferencia de Embriones"},{"name":"Receptoras 2 (IATF)","role":"resx2","days":["0","0","-","-","-","8","-","-","8","8","9","8","0","8","17","9","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"17","obs":"Transferencia de Embriones"},{"name":"Resincronizacion 1 (IATF)","role":"resx1b","days":["32","32","-","42","-","40","-","-","40","40","42","40","32","40","42","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"42","obs":"Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional"},{"name":"Resincronizacion 2 (IATF)","role":"resx2b","days":["64","64","-","74","-","72","-","-","72","72","74","72","64","72","74","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"74","obs":"Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional"}];
+    state.matriz = window.migrarYSanitizarMatriz(window.DEFAULT_MATRIZ);
+    state.encabezados = window.DEFAULT_ENCABEZADOS.slice();
     renderMatriz(); saveState(); alert("Protocolos base restaurados correctamente.");
+  }
+}
+
+window.vaciarProtocolosYEncabezados = function() {
+  if (!isMatrixUnlocked) {
+    unlockMatriz();
+    if (!isMatrixUnlocked) return;
+  }
+  if(confirm("¿Estás seguro de que deseas eliminar todos los protocolos actuales para cargar nuevos?")) {
+    state.matriz = [];
+    state.encabezados = state.colDefs.map((_, i) => 'Columna ' + (i+1));
+    renderMatriz(); 
+    saveState(); 
+    if (typeof actualizarSelectProtocolos === 'function') actualizarSelectProtocolos();
+    alert("Protocolos y encabezados eliminados correctamente. Puedes cargar los nuevos desde Excel o manualmente.");
   }
 }
 
@@ -1830,6 +1898,8 @@ window.guardarMatrizProtocolos = function() {
   if (btnExcel) btnExcel.style.display = 'none';
   const btnReset = document.getElementById('btn-reset-matriz');
   if (btnReset) btnReset.style.display = 'none';
+  const btnDeleteAll = document.getElementById('btn-delete-all-protocols');
+  if (btnDeleteAll) btnDeleteAll.style.display = 'none';
   const btnSave = document.getElementById('btn-save-matriz');
   if (btnSave) btnSave.style.display = 'none';
   const lbl = document.getElementById('lbl-matriz-instruccion');
