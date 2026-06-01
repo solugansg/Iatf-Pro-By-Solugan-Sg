@@ -11,7 +11,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Iatf Pro">
-  <title>Iatf Pro - Análisis de Costos</title>
+  <title data-i18n="app_title">Iatf Pro - Análisis de Costos</title>
 
   <!-- Capturar errores globales -->
   <script>
@@ -23,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260601.43">
+  <link rel="stylesheet" href="style.css?v=V 260601.44">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -50,24 +50,24 @@
       <div class="auth-header">
         <div class="sidebar-header" style="justify-content: center; margin-bottom: 0.4rem;">
           <div style="display:inline-flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:110px;height:110px;object-fit:contain;border-radius:20px;" alt="IATF Pro Logo"></div>
-          <span style="font-size: 1rem; color: var(--text-muted); font-weight: 600; margin-top: 4px;">By Solugan Sg</span>
+          <span style="font-size: 1rem; color: var(--text-muted); font-weight: 600; margin-top: 4px;" data-i18n="by_solugan">By Solugan Sg</span>
         </div>
-        <h3 id="auth-subtitle" style="text-align: center; margin-bottom: 0.2rem; color: var(--accent); letter-spacing: 1px; font-size: 1rem;">REGISTRO DE USUARIO</h3>
+        <h3 id="auth-subtitle" style="text-align: center; margin-bottom: 0.2rem; color: var(--accent); letter-spacing: 1px; font-size: 1rem;" data-i18n="auth_register_title">REGISTRO DE USUARIO</h3>
       </div>
 
       <form id="register-form" onsubmit="handleRegister(event)" autocomplete="off">
         <div class="grid-1" style="gap: 0.4rem;">
           <div class="input-group" style="margin-bottom: 0;">
-            <label style="color: var(--accent); font-weight: 800;">NIT / C.C. (Llave de acceso)</label>
-            <input type="text" id="reg-nit" required placeholder="Ingresa tu identificación" class="welcome-input" oninput="debouncedBuscarPerfilPorNit()" autocomplete="off">
+            <label style="color: var(--accent); font-weight: 800;" data-i18n="auth_nit">NIT / C.C. (Llave de acceso)</label>
+            <input type="text" id="reg-nit" required placeholder="Ingresa tu identificación" data-i18n-placeholder="ph_nit" class="welcome-input" oninput="debouncedBuscarPerfilPorNit()" autocomplete="off">
           </div>
           <div class="input-group" style="margin-bottom: 0;">
-            <label>Nombre Completo / Razón Social</label>
-            <input type="text" id="reg-name" required placeholder="Nombre completo" class="welcome-input" autocomplete="name">
+            <label data-i18n="auth_name">Nombre Completo / Razón Social</label>
+            <input type="text" id="reg-name" required placeholder="Nombre completo" data-i18n-placeholder="ph_name" class="welcome-input" autocomplete="name">
           </div>
           <div class="grid-2" style="gap: 0.2rem;">
             <div class="input-group" style="margin-bottom: 0;">
-              <label>País</label>
+              <label data-i18n="auth_country">País</label>
               <select id="reg-pais" class="welcome-input" autocomplete="off">
                 <option value="Argentina">Argentina (+54)</option>
                 <option value="Bolivia">Bolivia (+591)</option>
@@ -93,21 +93,21 @@
               </select>
             </div>
             <div class="input-group" style="margin-bottom: 0;">
-              <label>Teléfono / WhatsApp</label>
-              <input type="tel" id="reg-phone" required placeholder="Ej: 3147084328" class="welcome-input" autocomplete="tel">
+              <label data-i18n="auth_phone">Teléfono / WhatsApp</label>
+              <input type="tel" id="reg-phone" required placeholder="Ej: 3147084328" data-i18n-placeholder="ph_phone" class="welcome-input" autocomplete="tel">
             </div>
           </div>
           <div class="input-group" style="margin-bottom: 0;">
-            <label>Finca o Empresa</label>
-            <input type="text" id="reg-finca" required placeholder="Nombre de tu finca" class="welcome-input" autocomplete="organization">
+            <label data-i18n="auth_farm">Finca o Empresa</label>
+            <input type="text" id="reg-finca" required placeholder="Nombre de tu finca" data-i18n-placeholder="ph_farm" class="welcome-input" autocomplete="organization">
           </div>
           <div class="input-group" style="margin-bottom: 0;">
-            <label>Correo Electrónico</label>
-            <input type="email" id="reg-email" required placeholder="usuario@ejemplo.com" class="welcome-input" autocomplete="username">
+            <label data-i18n="auth_email">Correo Electrónico</label>
+            <input type="email" id="reg-email" required placeholder="usuario@ejemplo.com" data-i18n-placeholder="ph_email" class="welcome-input" autocomplete="username">
           </div>
           <div class="input-group" style="margin-bottom: 0;">
-            <label>Contraseña</label>
-            <input type="password" id="reg-pass" required placeholder="Mínimo 6 caracteres" class="welcome-input" autocomplete="new-password">
+            <label data-i18n="auth_pass">Contraseña</label>
+            <input type="password" id="reg-pass" required placeholder="Mínimo 6 caracteres" data-i18n-placeholder="ph_pass" class="welcome-input" autocomplete="new-password">
           </div>
         </div>
         
@@ -116,19 +116,19 @@
         </button>
         
         <p class="auth-toggle" style="text-align: center; margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted);">
-          ¿Ya tienes cuenta? <span onclick="showLoginForm()" style="color: var(--accent); cursor: pointer; font-weight: bold; text-decoration: underline;">Inicia Sesión</span>
+          ¿Ya tienes cuenta? <span onclick="showLoginForm()" style="color: var(--accent); cursor: pointer; font-weight: bold; text-decoration: underline;" data-i18n="auth_login_link">Inicia Sesión</span>
         </p>
       </form>
 
       <form id="login-form" onsubmit="handleLogin(event)" style="display: none;" autocomplete="off">
         <div class="grid-1" style="gap: 0.4rem;">
           <div class="input-group" style="margin-bottom: 0;">
-            <label>Correo Electrónico</label>
-            <input type="email" id="login-email" required placeholder="usuario@ejemplo.com" class="welcome-input" autocomplete="off">
+            <label data-i18n="auth_email">Correo Electrónico</label>
+            <input type="email" id="login-email" required placeholder="usuario@ejemplo.com" data-i18n-placeholder="ph_email" class="welcome-input" autocomplete="off">
           </div>
           <div class="input-group" style="margin-bottom: 0;">
-            <label>Contraseña</label>
-            <input type="password" id="login-pass" required placeholder="Ingresa tu contraseña" class="welcome-input" autocomplete="new-password">
+            <label data-i18n="auth_pass">Contraseña</label>
+            <input type="password" id="login-pass" required placeholder="Ingresa tu contraseña" data-i18n-placeholder="ph_login_pass" class="welcome-input" autocomplete="new-password">
           </div>
         </div>
         
@@ -137,7 +137,7 @@
         </button>
         
         <p class="auth-toggle" style="text-align: center; margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted);">
-          ¿No tienes cuenta? <span onclick="showRegisterForm()" style="color: var(--accent); cursor: pointer; font-weight: bold; text-decoration: underline;">Regístrate</span>
+          ¿No tienes cuenta? <span onclick="showRegisterForm()" style="color: var(--accent); cursor: pointer; font-weight: bold; text-decoration: underline;" data-i18n="auth_register_link">Regístrate</span>
         </p>
       </form>
     </div>
@@ -150,9 +150,9 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260601.43</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260601.44</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
-          <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
+          <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;" data-i18n="sidebar_active_user">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
             <div id="sidebar-consultor-name" style="font-size: 0.7rem; color: var(--accent); font-weight: 800; letter-spacing: 0.5px; word-break: break-all;"></div>
           </div>
@@ -225,7 +225,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260601.43</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260601.44</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -253,7 +253,7 @@
               </div>
               <div class="input-group" style="grid-column: span 1;">
                 <label style="color: var(--text-muted);" data-i18n="tc_finca_name">Nombre de la Finca / Proyecto</label>
-                <input type="text" id="pi-finca" placeholder="Nombre del predio" data-i18n-placeholder="tc_finca_placeholder" style="font-size: 1.1rem; padding: 0.7rem;" oninput="debouncedUpdateResultados()">
+                <input type="text" id="pi-finca" placeholder="Nombre del predio" data-i18n-placeholder="ph_farm_name" data-i18n-placeholder="tc_finca_placeholder" style="font-size: 1.1rem; padding: 0.7rem;" oninput="debouncedUpdateResultados()">
               </div>
               <div class="input-group" style="grid-column: span 2;">
                 <label style="color: var(--text-muted);" data-i18n="tc_location">Ubicación</label>
@@ -412,7 +412,7 @@
                   onclick="restaurarProtocolosBase()" id="btn-reset-matriz"><i data-lucide="rotate-ccw"></i> <span
                     data-i18n="btn_reset">Restaurar Base</span></button>
                 <button class="btn" style="background: rgba(239, 68, 68, 0.9); color: #fff; display: none;"
-                  onclick="vaciarProtocolosYEncabezados()" id="btn-delete-all-protocols"><i data-lucide="trash-2"></i> <span>Eliminar Todo</span></button>
+                  onclick="vaciarProtocolosYEncabezados()" id="btn-delete-all-protocols"><i data-lucide="trash-2"></i> <span data-i18n="config_delete_all">Eliminar Todo</span></button>
                 <button class="btn btn-primary" onclick="guardarMatrizProtocolos()" id="btn-save-matriz"
                   style="display: none;"><i data-lucide="save"></i> <span data-i18n="btn_save">Guardar y
                     Bloquear</span></button>
@@ -424,10 +424,10 @@
                 <thead
                   style="position: sticky; top: 0; background: #0f172a; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
                   <tr id="tc-matriz-header-row">
-                    <th style="text-align: left; background: #0f172a;">Protocolos / Hormonas</th>
+                    <th style="text-align: left; background: #0f172a;" data-i18n="config_th_protocol">Protocolos / Hormonas</th>
                     <!-- Los encabezados dinámicos se inyectan aquí -->
-                    <th style="padding: 4px; font-size: 0.75rem; min-width: 280px;">Observaciones</th>
-                    <th id="th-acciones" style="display: none; background: #ef4444; color:#fff;">Acciones</th>
+                    <th style="padding: 4px; font-size: 0.75rem; min-width: 280px;" data-i18n="config_th_obs">Observaciones</th>
+                    <th id="th-acciones" style="display: none; background: #ef4444; color:#fff;" data-i18n="config_th_actions">Acciones</th>
                   </tr>
                 </thead>
                 <tbody id="tc-matriz-body">
@@ -666,7 +666,7 @@
                 <tr>
                   <th style="text-align: left; padding-left: 2rem;" data-i18n="col_insumo">Insumo / Servicio</th>
                   <th style="text-align: center;"><span data-i18n="col_dosis">Dosis
-                      Estándar</span><br><small>(Und/ml)</small></th>
+                      Estándar</span><br><small data-i18n="und_ml">(Und/ml)</small></th>
                   <th style="text-align: center;" data-i18n="col_presentacion">Presentación Producto</th>
                   <th style="text-align: center; vertical-align: middle;">
                     <div style="display: flex; flex-direction: column; align-items: center; line-height: 1.2;">
@@ -733,7 +733,7 @@
         <div class="glass-panel p-2 mb-2" style="background: rgba(14, 165, 233, 0.02);">
           <div class="grid-4 mb-2" style="align-items: center;">
             <div class="input-group">
-              <label>Protocolo Resincronización 1</label>
+              <label data-i18n="resx1_prot">Protocolo Resincronización 1</label>
               <div style="display: flex; gap: 0.5rem; align-items: center;">
                 <select id="resx1-protocolo" style="flex: 1; color: white !important; opacity: 1 !important; -webkit-text-fill-color: white !important;" disabled>
                   <option value="REC 1" selected>RESINCRONIZACIÓN 1 (REC 1)</option>
@@ -741,17 +741,17 @@
               </div>
             </div>
             <div class="input-group">
-              <label>Animales en Resincronización (Vacías Dx1)</label>
+              <label data-i18n="resx1_animals">Animales en Resincronización (Vacías Dx1)</label>
               <div id="resx1-lbl-animales" style="font-size: 2rem; font-weight: 800; color: var(--accent);">0</div>
               <input type="hidden" id="resx1-animales" value="0">
             </div>
             <div class="input-group" style="text-align: center;">
-              <label>Fecha Inicio (Auto)</label>
+              <label data-i18n="resx1_date_auto">Fecha Inicio (Auto)</label>
               <div id="resx1-lbl-fecha" class="text-muted" style="font-size: 1.1rem; font-weight: 600;">-- -- --</div>
               <input type="hidden" id="resx1-fecha">
             </div>
             <div class="input-group">
-              <label>Hora de Inicio</label>
+              <label data-i18n="resx1_time">Hora de Inicio</label>
               <div style="display: flex; gap: 0.5rem; align-items: center;">
                 <input type="time" id="resx1-hora" value="08:00" class="cell-input"
                   style="flex: 1; font-weight: 800; font-size: 1.1rem; color: var(--warning);"
@@ -763,7 +763,7 @@
               </div>
             </div>
             <div class="input-group">
-              <label>Preñeces Resincronización 1 (Proyectado o Real)</label>
+              <label data-i18n="resx1_preg">Preñeces Resincronización 1 (Proyectado o Real)</label>
               <div style="display: flex; gap: 0.4rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
                 <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
                   <button class="spin-btn minus" onclick="spinVal('resx1-prenadas', -1, false); debouncedAutoCalcPrenResx1();">&#8722;</button>
@@ -805,12 +805,12 @@
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>Día</th>
-                  <th>Fecha</th>
-                  <th>Hora</th>
-                  <th>Hormona / Insumo</th>
-                  <th style="text-align:center;">Dosis</th>
-                  <th style="text-align:center;">VALOR UNITARIO</th>
+                  <th data-i18n="table_th_day">Día</th>
+                  <th data-i18n="table_th_date">Fecha</th>
+                  <th data-i18n="table_th_time">Hora</th>
+                  <th data-i18n="table_th_hormone">Hormona / Insumo</th>
+                  <th style="text-align:center;" data-i18n="table_th_dose">Dosis</th>
+                  <th style="text-align:center;" data-i18n="table_th_value">VALOR UNITARIO</th>
                 </tr>
               </thead>
               <tbody id="tc-resx1-body"></tbody>
@@ -875,7 +875,7 @@
         <div class="glass-panel p-2 mb-2" style="background: rgba(168, 85, 247, 0.02);">
           <div class="grid-4 mb-2" style="align-items: center;">
             <div class="input-group">
-              <label>Protocolo Resincronización 2</label>
+              <label data-i18n="resx2_prot">Protocolo Resincronización 2</label>
               <div style="display: flex; gap: 0.5rem; align-items: center;">
                 <select id="resx2-protocolo" style="flex: 1; color: white !important; opacity: 1 !important; -webkit-text-fill-color: white !important;" disabled>
                   <option value="REC 2" selected>RESINCRONIZACIÓN 2 (REC 2)</option>
@@ -883,17 +883,17 @@
               </div>
             </div>
             <div class="input-group">
-              <label>Animales en Resincronización (Vacías ReSx1)</label>
+              <label data-i18n="resx2_animals">Animales en Resincronización (Vacías ReSx1)</label>
               <div id="resx2-lbl-animales" style="font-size: 2rem; font-weight: 800; color: #a855f7;">0</div>
               <input type="hidden" id="resx2-animales" value="0">
             </div>
             <div class="input-group" style="text-align: center;">
-              <label>Fecha Inicio (Auto)</label>
+              <label data-i18n="resx1_date_auto">Fecha Inicio (Auto)</label>
               <div id="resx2-lbl-fecha" class="text-muted" style="font-size: 1.1rem; font-weight: 600;">-- -- --</div>
               <input type="hidden" id="resx2-fecha">
             </div>
             <div class="input-group">
-              <label>Hora de Inicio</label>
+              <label data-i18n="resx1_time">Hora de Inicio</label>
               <div style="display: flex; gap: 0.5rem; align-items: center;">
                 <input type="time" id="resx2-hora" value="08:00" class="cell-input"
                   style="flex: 1; font-weight: 800; font-size: 1.1rem; color: var(--warning);"
@@ -905,7 +905,7 @@
               </div>
             </div>
             <div class="input-group">
-              <label>Preñeces Resincronización 2 (Proyectado o Real)</label>
+              <label data-i18n="resx2_preg">Preñeces Resincronización 2 (Proyectado o Real)</label>
               <div style="display: flex; gap: 0.4rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
                 <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
                   <button class="spin-btn minus" onclick="spinVal('resx2-prenadas', -1, false); debouncedAutoCalcPrenResx2();" style="color: #a855f7;">&#8722;</button>
@@ -947,12 +947,12 @@
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>Día</th>
-                  <th>Fecha</th>
-                  <th>Hora</th>
-                  <th>Hormona / Insumo</th>
-                  <th style="text-align:center;">Dosis</th>
-                  <th style="text-align:center;">VALOR UNITARIO</th>
+                  <th data-i18n="table_th_day">Día</th>
+                  <th data-i18n="table_th_date">Fecha</th>
+                  <th data-i18n="table_th_time">Hora</th>
+                  <th data-i18n="table_th_hormone">Hormona / Insumo</th>
+                  <th style="text-align:center;" data-i18n="table_th_dose">Dosis</th>
+                  <th style="text-align:center;" data-i18n="table_th_value">VALOR UNITARIO</th>
                 </tr>
               </thead>
               <tbody id="tc-resx2-body"></tbody>
@@ -1167,7 +1167,7 @@
                 <thead>
                   <tr>
                     <th style="text-align: left;" data-i18n="dash_concept">Concepto</th>
-                    <th>PI</th>
+                    <th data-i18n="dash_pi">PI</th>
                     <th data-i18n="resx1_title">Resincronización 1</th>
                     <th data-i18n="resx2_title">Resincronización 2</th>
                     <th style="color: var(--accent);" data-i18n="dash_consolidated">Consolidado</th>
@@ -1224,7 +1224,7 @@
             style="display: flex; gap: 1rem; align-items: flex-end; margin-bottom: 1.5rem; background: rgba(14, 165, 233, 0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.1);">
             <div class="input-group" style="flex: 1;">
               <label data-i18n="hist_search_label">Ingresa el NIT o C.C. para buscar</label>
-              <input type="text" id="search-nit" placeholder="Ej: 123456789"
+              <input type="text" id="search-nit" placeholder="Ej: 123456789" data-i18n-placeholder="ph_search_nit"
                 style="font-size: 1.1rem; padding: 0.75rem; background: rgba(0,0,0,0.2);">
             </div>
             <button class="btn btn-primary" onclick="buscarPorNit()"
@@ -1554,7 +1554,7 @@
     }
   </style>
 
-  <script src="iatf-app.js?v=V260601.43"></script>
+  <script src="iatf-app.js?v=V260601.44"></script>
   
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>
