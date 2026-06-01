@@ -23,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260601.37">
+  <link rel="stylesheet" href="style.css?v=V 260601.38">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -150,7 +150,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260601.37</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260601.38</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -225,7 +225,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260601.37</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260601.38</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -693,32 +693,32 @@
           <div id="modal-footer-summary" class="modal-summary-grid"
             style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border); display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem;">
             <div class="glass-panel p-1" style="background: rgba(14, 165, 233, 0.05);">
-              <span class="stat-label" style="font-size:0.6rem;">VALOR HORMONA APLICADA</span>
+              <span class="stat-label" data-i18n="modal_val_hormona" style="font-size:0.6rem;">VALOR HORMONA APLICADA</span>
               <div id="mod-total-hormonas" style="font-weight:700; color: var(--accent);">$ 0</div>
             </div>
             <div class="glass-panel p-1" style="background: rgba(168, 85, 247, 0.05);">
-              <span class="stat-label" style="font-size:0.6rem;">VALOR COMPRA GENÉTICA</span>
+              <span class="stat-label" data-i18n="modal_val_genetica" style="font-size:0.6rem;">VALOR COMPRA GENÉTICA</span>
               <div id="mod-total-genetica" style="font-weight:700; color: #a855f7;">$ 0</div>
             </div>
             <div class="glass-panel p-1" style="background: rgba(245, 158, 11, 0.05);">
-              <span class="stat-label" style="font-size:0.6rem;">VALOR ASISTENCIA TÉCNICA</span>
+              <span class="stat-label" data-i18n="modal_val_asistencia" style="font-size:0.6rem;">VALOR ASISTENCIA TÉCNICA</span>
               <div id="mod-total-asistencia" style="font-weight:700; color: #f59e0b;">$ 0</div>
             </div>
             <div class="glass-panel p-1" style="background: rgba(236, 72, 153, 0.05);">
-              <span class="stat-label" style="font-size:0.6rem;">VALOR IA / TE</span>
+              <span class="stat-label" data-i18n="modal_val_iate" style="font-size:0.6rem;">VALOR IA / TE</span>
               <div id="mod-total-iate" style="font-weight:700; color: #ec4899;">$ 0</div>
             </div>
             <div class="glass-panel p-1" style="background: rgba(16, 185, 129, 0.05);">
-              <span class="stat-label" style="font-size:0.6rem;">VALOR CONF. PREÑEZ</span>
+              <span class="stat-label" data-i18n="modal_val_prenez" style="font-size:0.6rem;">VALOR CONF. PREÑEZ</span>
               <div id="mod-total-diagnostico" style="font-weight:700; color: var(--success);">$ 0</div>
             </div>
           </div>
 
           <div style="text-align: right; margin-top: 2rem;">
             <button class="btn btn-secondary" onclick="cerrarModalPrecios()"
-              style="margin-right:0.5rem">Cancelar</button>
-            <button class="btn btn-primary" onclick="guardarPreciosModal()"><i data-lucide="check"></i> Actualizar
-              Sistema</button>
+              style="margin-right:0.5rem" data-i18n="btn_cancel">Cancelar</button>
+            <button class="btn btn-primary" onclick="guardarPreciosModal()"><i data-lucide="check"></i> <span data-i18n="btn_update_system">Actualizar
+              Sistema</span></button>
           </div>
         </div>
       </div>
@@ -1560,7 +1560,7 @@
     }
   </style>
 
-  <script src="iatf-app.js?v=V260601.37"></script>
+  <script src="iatf-app.js?v=V260601.38"></script>
   
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>

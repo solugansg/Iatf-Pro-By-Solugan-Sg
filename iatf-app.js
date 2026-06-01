@@ -1087,7 +1087,14 @@ window.translations = {
     tc_costo_diario_sub: "Costo de manutención diario por animal",
     msg_edit_active: "Modo Edición Activo. Puedes añadir, modificar o eliminar protocolos.",
     msg_view_mode: "Modo Consulta. Haz clic en \"Edición Bloqueada\" para modificar.",
-    btn_hide_p: "Ocultar Protocolos"
+    btn_hide_p: "Ocultar Protocolos",
+    modal_val_hormona: "VALOR HORMONA APLICADA",
+    modal_val_genetica: "VALOR COMPRA GENÉTICA",
+    modal_val_asistencia: "VALOR ASISTENCIA TÉCNICA",
+    modal_val_iate: "VALOR IA / TE",
+    modal_val_prenez: "VALOR CONF. PREÑEZ",
+    btn_cancel: "Cancelar",
+    btn_update_system: "Actualizar Sistema"
   },
   en: {
     sidebar_dashboard: "Control Dashboard",
@@ -1229,7 +1236,14 @@ window.translations = {
     tc_costo_diario_sub: "Daily upkeep cost per animal",
     msg_edit_active: "Edit Mode Active. You can add, modify, or delete protocols.",
     msg_view_mode: "View Mode. Click on \"Locked Edit\" to modify.",
-    btn_hide_p: "Hide Protocols"
+    btn_hide_p: "Hide Protocols",
+    modal_val_hormona: "APPLIED HORMONE VALUE",
+    modal_val_genetica: "GENETICS PURCHASE VALUE",
+    modal_val_asistencia: "TECH ASSISTANCE VALUE",
+    modal_val_iate: "AI / ET VALUE",
+    modal_val_prenez: "PREG. CONF. VALUE",
+    btn_cancel: "Cancel",
+    btn_update_system: "Update System"
   },
   pt: {
     sidebar_dashboard: "Painel de Controle",
@@ -1369,7 +1383,14 @@ window.translations = {
     tc_costo_diario_sub: "Custo de manutenção diária por animal",
     msg_edit_active: "Modo de Edição Ativo. Você pode adicionar, modificar ou excluir protocolos.",
     msg_view_mode: "Modo de Consulta. Clique em \"Edição Bloqueada\" para modificar.",
-    btn_hide_p: "Ocultar Protocolos"
+    btn_hide_p: "Ocultar Protocolos",
+    modal_val_hormona: "VALOR HORMÔNIO APLICADO",
+    modal_val_genetica: "VALOR COMPRA GENÉTICA",
+    modal_val_asistencia: "VALOR ASSIST. TÉCNICA",
+    modal_val_iate: "VALOR IA / TE",
+    modal_val_prenez: "VALOR CONF. PRENHEZ",
+    btn_cancel: "Cancelar",
+    btn_update_system: "Atualizar Sistema"
   }
 };
 
@@ -2223,7 +2244,7 @@ window.abrirModalPrecios = function(context = 'pi') {
       if (cat.id === 'hormonas') {
         htmlBuffer += `
           <tr id="row-total-hormonas-compra" style="background: rgba(14, 165, 233, 0.08); font-weight: bold; border-top: 1px solid rgba(14, 165, 233, 0.2); border-bottom: 1.5px solid rgba(14, 165, 233, 0.3);">
-            <td colspan="5" style="text-align: right; padding: 0.75rem 1rem; color: var(--accent); font-size: 0.85rem;" data-i18n="modal_total_hormonas">TOTAL COMPRA HORMONAS:</td>
+            <td colspan="5" style="text-align: right; padding: 0.75rem 1rem; color: var(--accent); font-size: 0.85rem;" data-i18n="modal_total_hormonas">${t('modal_total_hormonas')}</td>
             <td id="mod-total-hormonas-compra" style="text-align: center; padding: 0.75rem 1rem; font-size: 0.95rem; color: var(--success); font-weight: 800;">$ 0</td>
             <td></td>
           </tr>
