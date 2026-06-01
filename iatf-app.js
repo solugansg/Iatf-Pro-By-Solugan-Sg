@@ -950,8 +950,8 @@ window.translations = {
   es: {
     sidebar_dashboard: "Tablero de Control",
     sidebar_pi: "Protocolo Inicial",
-    sidebar_resx1: "ReSx1",
-    sidebar_resx2: "ReSx2",
+    sidebar_resx1: "Resincronización 1",
+    sidebar_resx2: "Resincronización 2",
     sidebar_dash_roi: "Dashboard y ROI",
     sidebar_history: "Buscador Histórico",
     sidebar_info: "Tablas de Información",
@@ -995,12 +995,12 @@ window.translations = {
     pi_include_resync: "¿Deseas incluir fases de resincronización?",
     pi_include_resx1: "INCLUIR Resincronización 1",
     pi_include_resx2: "INCLUIR Resincronización 2",
-    resx1_title: "Resincronización 1 (ReSx1)",
+    resx1_title: "Resincronización 1",
     resx1_subtitle: "Gestión de animales vacíos tras el primer diagnóstico (Dx1).",
     resx1_animals: "Animales en Resincronización (Vacías PI)",
-    resx2_title: "Resincronización 2 (ReSx2)",
+    resx2_title: "Resincronización 2",
     resx2_subtitle: "Gestión de animales vacíos tras el segundo diagnóstico (Dx2).",
-    resx2_animals: "Animales en Resincronización (Vacías ReSx1)",
+    resx2_animals: "Animales en Resincronización (Vacías Resincronización 1)",
     dash_title: "Reporte de Sincronización y ROI",
     dash_protocolo: "Protocolo",
     dash_animales: "Animales Sincronizados",
@@ -1094,13 +1094,25 @@ window.translations = {
     modal_val_iate: "VALOR IA / TE",
     modal_val_prenez: "VALOR CONF. PREÑEZ",
     btn_cancel: "Cancelar",
-    btn_update_system: "Actualizar Sistema"
+    btn_update_system: "Actualizar Sistema",
+    resx1_protocol_lbl: "Protocolo Resincronización 1",
+    resx1_animals_lbl: "Animales en Resincronización (Vacías Dx1)",
+    resx1_date_lbl: "Fecha Inicio (Auto)",
+    resx1_time_lbl: "Hora de Inicio",
+    resx1_preg_lbl: "Preñeces Resincronización 1 (Proyectado o Real)",
+    resx2_protocol_lbl: "Protocolo Resincronización 2",
+    resx2_animals_lbl: "Animales en Resincronización (Vacías Resincronización 1)",
+    resx2_date_lbl: "Fecha Inicio (Auto)",
+    resx2_time_lbl: "Hora de Inicio",
+    resx2_preg_lbl: "Preñeces Resincronización 2 (Proyectado o Real)",
+    btn_ajustar_precios: "Ver/Ajustar Precios Fase",
+    btn_reiniciar_fase: "REINICIAR FASE"
   },
   en: {
     sidebar_dashboard: "Control Dashboard",
     sidebar_pi: "Initial Protocol",
-    sidebar_resx1: "ReSx1",
-    sidebar_resx2: "ReSx2",
+    sidebar_resx1: "Resynchronization 1",
+    sidebar_resx2: "Resynchronization 2",
     sidebar_dash_roi: "Dashboard & ROI",
     sidebar_history: "Historical Search",
     sidebar_info: "Information Tables",
@@ -1144,12 +1156,12 @@ window.translations = {
     pi_include_resync: "Do you want to include resync phases?",
     pi_include_resx1: "INCLUDE Resynchronization 1",
     pi_include_resx2: "INCLUDE Resynchronization 2",
-    resx1_title: "Resynchronization 1 (ReSx1)",
-    resx1_subtitle: "Management of empty animals after first diagnosis (Dx1).",
+    resx1_title: "Resynchronization 1",
+    resx1_subtitle: "Management of empty animals after the first diagnosis (Dx1).",
     resx1_animals: "Animals in Resync (Empty PI)",
-    resx2_title: "Resynchronization 2 (ReSx2)",
-    resx2_subtitle: "Management of empty animals after second diagnosis (Dx2).",
-    resx2_animals: "Animals in Resync (Empty ReSx1)",
+    resx2_title: "Resynchronization 2",
+    resx2_subtitle: "Management of empty animals after the second diagnosis (Dx2).",
+    resx2_animals: "Animals in Resync (Empty Resynchronization 1)",
     dash_title: "Synchronization Report & ROI",
     dash_protocolo: "Protocol",
     dash_animales: "Synced Animals",
@@ -1243,13 +1255,25 @@ window.translations = {
     modal_val_iate: "AI / ET VALUE",
     modal_val_prenez: "PREG. CONF. VALUE",
     btn_cancel: "Cancel",
-    btn_update_system: "Update System"
+    btn_update_system: "Update System",
+    resx1_protocol_lbl: "Resynchronization 1 Protocol",
+    resx1_animals_lbl: "Animals in Resync. (Open Dx1)",
+    resx1_date_lbl: "Start Date (Auto)",
+    resx1_time_lbl: "Start Time",
+    resx1_preg_lbl: "Resynchronization 1 Pregnancies (Projected or Real)",
+    resx2_protocol_lbl: "Resynchronization 2 Protocol",
+    resx2_animals_lbl: "Animals in Resync. (Open Resynchronization 1)",
+    resx2_date_lbl: "Start Date (Auto)",
+    resx2_time_lbl: "Start Time",
+    resx2_preg_lbl: "Resynchronization 2 Pregnancies (Projected or Real)",
+    btn_ajustar_precios: "View/Adjust Phase Prices",
+    btn_reiniciar_fase: "RESET PHASE"
   },
   pt: {
     sidebar_dashboard: "Painel de Controle",
     sidebar_pi: "Protocolo Inicial",
-    sidebar_resx1: "ReSx1",
-    sidebar_resx2: "ReSx2",
+    sidebar_resx1: "Ressincronização 1",
+    sidebar_resx2: "Ressincronização 2",
     sidebar_dash_roi: "Dashboard & ROI",
     sidebar_history: "Histórico de Buscas",
     sidebar_info: "Tabelas de Informação",
@@ -1293,12 +1317,12 @@ window.translations = {
     pi_include_resync: "Deseja incluir fases de ressincronização?",
     pi_include_resx1: "INCLUIR Ressincronização 1",
     pi_include_resx2: "INCLUIR Ressincronização 2",
-    resx1_title: "Ressincronização 1 (ReSx1)",
+    resx1_title: "Ressincronização 1",
     resx1_subtitle: "Gestão de animais vazios após o primeiro diagnóstico (Dx1).",
     resx1_animals: "Animais em Ressincronização (Vazias PI)",
-    resx2_title: "Ressincronização 2 (ReSx2)",
+    resx2_title: "Ressincronização 2",
     resx2_subtitle: "Gestão de animais vazios após o segundo diagnóstico (Dx2).",
-    resx2_animals: "Animais em Ressincronização (Vazias ReSx1)",
+    resx2_animals: "Animais em Ressincronização (Vazias Ressincronização 1)",
     dash_title: "Relatório de Sincronização e ROI",
     dash_protocolo: "Protocolo",
     dash_animales: "Animais Sincronizados",
@@ -1390,7 +1414,19 @@ window.translations = {
     modal_val_iate: "VALOR IA / TE",
     modal_val_prenez: "VALOR CONF. PRENHEZ",
     btn_cancel: "Cancelar",
-    btn_update_system: "Atualizar Sistema"
+    btn_update_system: "Atualizar Sistema",
+    resx1_protocol_lbl: "Protocolo Ressincronização 1",
+    resx1_animals_lbl: "Animais em Ressincronização (Vazias Dx1)",
+    resx1_date_lbl: "Data de Início (Auto)",
+    resx1_time_lbl: "Hora de Início",
+    resx1_preg_lbl: "Prenhezes Ressincronização 1 (Projetado ou Real)",
+    resx2_protocol_lbl: "Protocolo Ressincronização 2",
+    resx2_animals_lbl: "Animais em Ressincronização (Vazias Ressincronização 1)",
+    resx2_date_lbl: "Data de Início (Auto)",
+    resx2_time_lbl: "Hora de Início",
+    resx2_preg_lbl: "Prenhezes Ressincronização 2 (Projetado ou Real)",
+    btn_ajustar_precios: "Ver/Ajustar Preços da Fase",
+    btn_reiniciar_fase: "REINICIAR FASE"
   }
 };
 
@@ -3756,8 +3792,8 @@ window.updateResultados = function() {
       <tr>
         <th style="text-align: left;">Concepto</th>
         <th>PI</th>
-        <th>ReSx1</th>
-        <th>ReSx2</th>
+        <th>Resincronización 1</th>
+        <th>Resincronización 2</th>
         <th style="color: var(--accent);">Consolidado</th>
       </tr>
     `;
@@ -4080,7 +4116,7 @@ window.exportarExcel = function() {
   data.push(["TABLA DE RETORNO DE INVERSIÓN (ROI)"]);
   const roiBody = document.getElementById('res-body-roi');
   if (roiBody) {
-    data.push(["Categoría", "Protocolo Inicial", "ReSx1", "ReSx2", "Total Proyecto"]);
+    data.push(["Categoría", "Protocolo Inicial", "Resincronización 1", "Resincronización 2", "Total Proyecto"]);
     for (let i = 0; i < roiBody.rows.length; i++) {
       let rowData = [];
       for (let j = 0; j < roiBody.rows[i].cells.length; j++) {
@@ -4122,7 +4158,7 @@ window.exportarExcel = function() {
   // --- 4. RESINCRO 1 ---
   const resx1Res = document.getElementById('resx1-resultados');
   if (resx1Res && resx1Res.style.display !== 'none') {
-    data.push(["DETALLE: RESINCRONIZACIÓN 1 (ReSx1)"]);
+    data.push(["DETALLE: RESINCRONIZACIÓN 1"]);
     data.push(["Protocolo:", document.getElementById('resx1-protocolo').value, "Fecha Inicio:", document.getElementById('resx1-fecha').value, "Animales:", document.getElementById('resx1-animales').value]);
     const r1Rows = extractToAOA('tc-resx1-body', ["Día", "Fecha", "Hora", "Hormona / Insumo", "Dosis", "Valor Unitario"]);
     data = data.concat(r1Rows);
@@ -4133,7 +4169,7 @@ window.exportarExcel = function() {
   // --- 5. RESINCRO 2 ---
   const resx2Res = document.getElementById('resx2-resultados');
   if (resx2Res && resx2Res.style.display !== 'none') {
-    data.push(["DETALLE: RESINCRONIZACIÓN 2 (ReSx2)"]);
+    data.push(["DETALLE: RESINCRONIZACIÓN 2"]);
     data.push(["Protocolo:", document.getElementById('resx2-protocolo').value, "Fecha Inicio:", document.getElementById('resx2-fecha').value, "Animales:", document.getElementById('resx2-animales').value]);
     const r2Rows = extractToAOA('tc-resx2-body', ["Día", "Fecha", "Hora", "Hormona / Insumo", "Dosis", "Valor Unitario"]);
     data = data.concat(r2Rows);
