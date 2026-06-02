@@ -1268,7 +1268,16 @@ window.translations = {
     roi_preg_logradas: "Preñeces Logradas",
     roi_inv_perdida: "Inversión Perdida (Vacías)",
     roi_costo_preg: "Costo/Preñez en Fase",
-    roi_retorno_total: "RETORNO TOTAL PROYECTADO"
+    roi_retorno_total: "RETORNO TOTAL PROYECTADO",
+    chart_pi: "Prot. Inicial",
+    chart_r1: "Resinc. 1",
+    chart_r2: "Resinc. 2",
+    chart_preg: "preñeces",
+    chart_hormones: "Hormonas",
+    chart_genetics: "Genética",
+    chart_ta: "Asistencia Técnica",
+    chart_iate: "Honorarios IA/TE",
+    chart_dx: "Dx Preñez"
   },
   en: {
     sidebar_dashboard: "Control Dashboard",
@@ -1591,7 +1600,16 @@ window.translations = {
     roi_preg_logradas: "Pregnancies Achieved",
     roi_inv_perdida: "Lost Investment (Open)",
     roi_costo_preg: "Cost/Pregnancy in Phase",
-    roi_retorno_total: "TOTAL PROJECTED RETURN"
+    roi_retorno_total: "TOTAL PROJECTED RETURN",
+    chart_pi: "Initial Prot.",
+    chart_r1: "Resync. 1",
+    chart_r2: "Resync. 2",
+    chart_preg: "pregnancies",
+    chart_hormones: "Hormones",
+    chart_genetics: "Genetics",
+    chart_ta: "Technical Assistance",
+    chart_iate: "AI/ET Fees",
+    chart_dx: "Pregnancy Dx"
   },
   pt: {
     sidebar_dashboard: "Painel de Controle",
@@ -1912,7 +1930,16 @@ window.translations = {
     roi_preg_logradas: "Prenhezes Alcançadas",
     roi_inv_perdida: "Investimento Perdido (Vazias)",
     roi_costo_preg: "Custo/Prenhez na Fase",
-    roi_retorno_total: "RETORNO TOTAL PROJETADO"
+    roi_retorno_total: "RETORNO TOTAL PROJETADO",
+    chart_pi: "Prot. Inicial",
+    chart_r1: "Ressinc. 1",
+    chart_r2: "Ressinc. 2",
+    chart_preg: "prenhezes",
+    chart_hormones: "Hormônios",
+    chart_genetics: "Genética",
+    chart_ta: "Assistência Técnica",
+    chart_iate: "Honorários IA/TE",
+    chart_dx: "Dx Prenhez"
   }
 };
 
@@ -4368,9 +4395,9 @@ function renderNewDashboardCharts(aPI, pPI, aR1, pR1, aR2, pR2, cHormonas, cGene
     chartEtapas = new Chart(ctxEtapas, {
       type: 'bar',
       data: {
-        labels: ['Prot. Inicial', 'Resinc. 1', 'Resinc. 2'].filter((_, i) => [aPI > 0, aR1 > 0, aR2 > 0][i]),
+        labels: [t('chart_pi'), t('chart_r1'), t('chart_r2')].filter((_, i) => [aPI > 0, aR1 > 0, aR2 > 0][i]),
         datasets: [{
-          label: 'Preñeces',
+          label: t('chart_preg'),
           data: [pPI, pR1, pR2].filter((_, i) => [aPI > 0, aR1 > 0, aR2 > 0][i]),
           backgroundColor: '#fde047',
           borderRadius: 4
@@ -4389,7 +4416,7 @@ function renderNewDashboardCharts(aPI, pPI, aR1, pR1, aR2, pR2, cHormonas, cGene
             formatter: (val, ctx) => {
               const anims = [aPI, aR1, aR2].filter((v) => v > 0)[ctx.dataIndex];
               const porc = anims > 0 ? Math.round((val / anims) * 100) : 0;
-              return `${val} preñeces (${porc}%)`;
+              return `${val} ${t('chart_preg')} (${porc}%)`;
             }
           }
         },
@@ -4413,11 +4440,11 @@ function renderNewDashboardCharts(aPI, pPI, aR1, pR1, aR2, pR2, cHormonas, cGene
     if(chartCostosH) chartCostosH.destroy();
     
     const dataObj = [
-      { lbl: 'Hormonas', val: cHormonas, col: '#ef4444' },
-      { lbl: 'Genética', val: cGenetica, col: '#f59e0b' },
-      { lbl: 'Asistencia Técnica', val: cAsistencia, col: '#a855f7' },
-      { lbl: 'Honorarios IA/TE', val: cIate, col: '#ec4899' },
-      { lbl: 'Dx Preñez', val: cDiagnostico, col: '#0ea5e9' }
+      { lbl: t('chart_hormones'), val: cHormonas, col: '#ef4444' },
+      { lbl: t('chart_genetics'), val: cGenetica, col: '#f59e0b' },
+      { lbl: t('chart_ta'), val: cAsistencia, col: '#a855f7' },
+      { lbl: t('chart_iate'), val: cIate, col: '#ec4899' },
+      { lbl: t('chart_dx'), val: cDiagnostico, col: '#0ea5e9' }
     ].sort((a,b) => b.val - a.val);
 
     const maxVal = Math.max(...dataObj.map(d => d.val));
