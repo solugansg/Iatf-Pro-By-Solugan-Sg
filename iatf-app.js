@@ -1262,7 +1262,13 @@ window.translations = {
     resx2_time_lbl: "Hora de Inicio",
     resx2_preg_lbl: "Preñeces Resincronización 2 (Proyectado o Real)",
     btn_ajustar_precios: "Ver/Ajustar Precios Fase",
-    btn_reiniciar_fase: "REINICIAR FASE"
+    btn_reiniciar_fase: "REINICIAR FASE",
+    roi_inv_fase: "Inversión por Fase",
+    roi_anim_fase: "Animales en Fase",
+    roi_preg_logradas: "Preñeces Logradas",
+    roi_inv_perdida: "Inversión Perdida (Vacías)",
+    roi_costo_preg: "Costo/Preñez en Fase",
+    roi_retorno_total: "RETORNO TOTAL PROYECTADO"
   },
   en: {
     sidebar_dashboard: "Control Dashboard",
@@ -1579,7 +1585,13 @@ window.translations = {
     resx2_time_lbl: "Start Time",
     resx2_preg_lbl: "Resynchronization 2 Pregnancies (Projected or Real)",
     btn_ajustar_precios: "View/Adjust Phase Prices",
-    btn_reiniciar_fase: "RESET PHASE"
+    btn_reiniciar_fase: "RESET PHASE",
+    roi_inv_fase: "Investment per Phase",
+    roi_anim_fase: "Animals in Phase",
+    roi_preg_logradas: "Pregnancies Achieved",
+    roi_inv_perdida: "Lost Investment (Open)",
+    roi_costo_preg: "Cost/Pregnancy in Phase",
+    roi_retorno_total: "TOTAL PROJECTED RETURN"
   },
   pt: {
     sidebar_dashboard: "Painel de Controle",
@@ -1894,7 +1906,13 @@ window.translations = {
     resx2_time_lbl: "Hora de Início",
     resx2_preg_lbl: "Prenhezes Ressincronização 2 (Projetado ou Real)",
     btn_ajustar_precios: "Ver/Ajustar Preços da Fase",
-    btn_reiniciar_fase: "REINICIAR FASE"
+    btn_reiniciar_fase: "REINICIAR FASE",
+    roi_inv_fase: "Investimento por Fase",
+    roi_anim_fase: "Animais na Fase",
+    roi_preg_logradas: "Prenhezes Alcançadas",
+    roi_inv_perdida: "Investimento Perdido (Vazias)",
+    roi_costo_preg: "Custo/Prenhez na Fase",
+    roi_retorno_total: "RETORNO TOTAL PROJETADO"
   }
 };
 
@@ -4258,11 +4276,11 @@ window.updateResultados = function() {
   if (thead) {
     thead.innerHTML = `
       <tr>
-        <th style="text-align: left;">Concepto</th>
-        <th>PI</th>
-        <th>Resincronización 1</th>
-        <th>Resincronización 2</th>
-        <th style="color: var(--accent);">Consolidado</th>
+        <th style="text-align: left;">${t("dash_concept")}</th>
+        <th>${t("dash_pi")}</th>
+        <th>${t("resx1_title")}</th>
+        <th>${t("resx2_title")}</th>
+        <th style="color: var(--accent);">${t("dash_consolidated")}</th>
       </tr>
     `;
   }
@@ -4271,42 +4289,42 @@ window.updateResultados = function() {
   if (tbody) {
     tbody.innerHTML = `
       <tr>
-        <td style="text-align:left;">Inversión por Fase</td>
+        <td style="text-align:left;">${t("roi_inv_fase")}</td>
         <td>${piAnim > 0 ? formatter.format(piCost) : '-'}</td>
         <td>${hasR1 ? formatter.format(r1Cost) : '-'}</td>
         <td>${hasR2 ? formatter.format(r2Cost) : '-'}</td>
         <td><strong>${formatter.format(totalInv)}</strong></td>
       </tr>
       <tr>
-        <td style="text-align:left;">Animales en Fase</td>
+        <td style="text-align:left;">${t("roi_anim_fase")}</td>
         <td>${piAnim > 0 ? piAnim : '-'}</td>
         <td>${hasR1 ? r1Anim : '-'}</td>
         <td>${hasR2 ? r2Anim : '-'}</td>
         <td>-</td>
       </tr>
       <tr>
-        <td style="text-align:left;">Preñeces Logradas</td>
+        <td style="text-align:left;">${t("roi_preg_logradas")}</td>
         <td>${piAnim > 0 ? piPren : '-'}</td>
         <td>${hasR1 ? r1Pren : '-'}</td>
         <td>${hasR2 ? r2Pren : '-'}</td>
         <td><strong>${totalPren}</strong></td>
       </tr>
       <tr>
-        <td style="text-align:left;">Inversión Perdida (Vacías)</td>
+        <td style="text-align:left;">${t("roi_inv_perdida")}</td>
         <td>${piAnim > 0 ? formatter.format((piAnim - piPren) * (piCost / piAnim)) : '-'}</td>
         <td>${hasR1 ? formatter.format((r1Anim - r1Pren) * (r1Cost / r1Anim)) : '-'}</td>
         <td>${hasR2 ? formatter.format((r2Anim - r2Pren) * (r2Cost / r2Anim)) : '-'}</td>
         <td><strong style="color:var(--danger);">${formatter.format( (piAnim > 0 ? (piAnim - piPren) * (piCost / piAnim) : 0) + (hasR1 ? (r1Anim - r1Pren) * (r1Cost / r1Anim) : 0) + (hasR2 ? (r2Anim - r2Pren) * (r2Cost / r2Anim) : 0) )}</strong></td>
       </tr>
       <tr>
-        <td style="text-align:left;">Costo/Preñez en Fase</td>
+        <td style="text-align:left;">${t("roi_costo_preg")}</td>
         <td>${piPren > 0 ? formatter.format(piCost / piPren) : '-'}</td>
         <td>${(hasR1 && r1Pren > 0) ? formatter.format(r1Cost / r1Pren) : '-'}</td>
         <td>${(hasR2 && r2Pren > 0) ? formatter.format(r2Cost / r2Pren) : '-'}</td>
         <td><strong style="color: #f59e0b;">${formatter.format(totalCostPren)}</strong></td>
       </tr>
       <tr style="background: rgba(16, 185, 129, 0.1);">
-        <td style="text-align:left;"><strong>RETORNO TOTAL PROYECTADO</strong></td>
+        <td style="text-align:left;"><strong>${t("roi_retorno_total")}</strong></td>
         <td>-</td>
         <td>-</td>
         <td>-</td>

@@ -8,4 +8,5 @@ Este documento contiene el registro de los cambios, implementaciones y tareas pe
 
 ## Tareas Pendientes / Notas
 
-- (Espacio para agregar futuras tareas)
+- [x] **Traducción**: Solucionar el tema de la traducción, ya que hay algunos textos que aún no se logran traducir correctamente (especialmente al portugués).
+- [ ] **Diseño Responsivo (Móviles)**: Revisar y ajustar la parte visual en lo que se refiere a la presentación en dispositivos móviles.
