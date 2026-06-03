@@ -3142,13 +3142,10 @@ window.abrirModalPrecios = function(context = 'pi') {
       trk.style.display = 'flex';
       wrp1.style.display = 'flex';
       wrp2.style.display = 'none';
-      // Mover el valor actual del input
-      document.getElementById('pi-check-resx1').checked = state.activePhases.includes('resincronizacion1');
     } else if (context === 'resx1') {
       trk.style.display = 'flex';
       wrp1.style.display = 'none';
       wrp2.style.display = 'flex';
-      document.getElementById('pi-check-resx2').checked = state.activePhases.includes('resincronizacion2');
     } else {
       trk.style.display = 'none';
       wrp1.style.display = 'none';
