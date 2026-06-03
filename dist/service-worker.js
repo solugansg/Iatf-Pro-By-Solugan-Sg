@@ -1,5 +1,5 @@
-// Iatf Pro by Solugan SG - Service Worker V 260603.40
-const CACHE_NAME = 'iatfpro-v260603.40';
+// Iatf Pro by Solugan SG - Service Worker V 260603.41
+const CACHE_NAME = 'iatfpro-v260603.41';
 
 // Todos los archivos que se guardan en caché para uso offline
 const ASSETS_TO_CACHE = [
@@ -80,11 +80,13 @@ self.addEventListener('fetch', (event) => {
       event.request.url.includes('securetoken')) return;
 
   const url = new URL(event.request.url);
-  const isHTMLorCSS = url.pathname.endsWith('/') ||
-                      url.pathname.endsWith('.html') ||
-                      url.pathname.endsWith('.css');
+  // Network First: HTML, CSS, y el JS principal de la app
+  const isNetworkFirst = url.pathname.endsWith('/') ||
+                         url.pathname.endsWith('.html') ||
+                         url.pathname.endsWith('.css') ||
+                         url.pathname.endsWith('iatf-app.js');
 
-  if (isHTMLorCSS) {
+  if (isNetworkFirst) {
     // ── NETWORK FIRST: siempre traer la versión más nueva del servidor ──
     event.respondWith(
       fetch(event.request)
