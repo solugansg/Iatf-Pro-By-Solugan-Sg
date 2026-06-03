@@ -1006,6 +1006,8 @@ window.tProtocol = function(val) {
     'Monta Natural 3 DIB (IA)': 'Natural Mating 3 DIB (AI)',
     'Receptoras 1 (IATF)': 'Recipients 1 (FTAI)',
     'Receptoras 2 (IATF)': 'Recipients 2 (FTAI)',
+    'Receptoras': 'Recipients',
+    'receptoras': 'recipients',
     'Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional': 'Use 2nd use DIB - FTAI 48-60 hs optional GnRh',
     'Transferencia de Embriones': 'Embryo Transfer',
     'IA celo detectado ó Toro x 5 dias': 'AI detected heat or Bull x 5 days',
@@ -1041,6 +1043,8 @@ window.tProtocol = function(val) {
     'Monta Natural 3 DIB (IA)': 'Monta Natural 3 DIB (IA)',
     'Receptoras 1 (IATF)': 'Receptoras 1 (IATF)',
     'Receptoras 2 (IATF)': 'Receptoras 2 (IATF)',
+    'Receptoras': 'Receptoras',
+    'receptoras': 'receptoras',
     'Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional': 'Usar DIB de segundo uso - IATF 48-60 hs GnRh opcional',
     'Transferencia de Embriones': 'Transferência de Embriões',
     'IA celo detectado ó Toro x 5 dias': 'IA cio detectado ou Touro x 5 dias',
@@ -1140,6 +1144,7 @@ window.translations = {
     btn_config: "Configuración precios y dosis",
     btn_excel: "EXCEL",
     btn_pdf: "PDF",
+    evento_te: "EVENTO: TRANSFERENCIA DE EMBRIONES",
     pi_title: "Protocolo Inicial",
     pi_subtitle: "Generación de cronograma detallado comercial y aplicado.",
     pi_date: "Fecha de Inicio",
@@ -1516,6 +1521,7 @@ window.translations = {
     btn_config: "Price & Dose Configuration",
     btn_excel: "EXCEL",
     btn_pdf: "PDF",
+    evento_te: "EVENT: EMBRYO TRANSFER",
     pi_title: "Initial Protocol",
     pi_subtitle: "Detailed commercial and applied schedule generation.",
     pi_date: "Start Date",
@@ -1891,6 +1897,7 @@ window.translations = {
     btn_config: "Configuração de preços e doses",
     btn_excel: "EXCEL",
     btn_pdf: "PDF",
+    evento_te: "EVENTO: TRANSFERÊNCIA DE EMBRIÕES",
     pi_title: "Protocolo Inicial",
     pi_subtitle: "Geração de cronograma detalhado comercial e aplicado.",
     pi_date: "Data de Início",
@@ -3431,7 +3438,7 @@ function reCalcTablaPI() {
     
     if (row.colId === 'ia_event') {
         const isReceptora = row.pName && row.pName.toLowerCase().includes('receptora');
-        const eventoText = isReceptora ? 'EVENTO: TRANSFERENCIA DE EMBRIONES' : t('act_ia');
+        const eventoText = isReceptora ? t('evento_te') : t('act_ia');
         htmlRows += `
           <tr style="background: rgba(14, 165, 233, 0.15); border-left: 4px solid var(--accent);">
             <td style="text-align:center;"><strong>${row.dayOffset}</strong> <span class="badge" style="background:var(--accent); color:#fff; font-size:0.6rem; margin-left:4px;">IA/TE</span></td>
@@ -3812,7 +3819,7 @@ window.ejecutarResx1 = function() {
     
     if (row.colId === 'ia_event') {
         const isReceptora = row.pName && row.pName.toLowerCase().includes('receptora');
-        const eventoText = isReceptora ? 'EVENTO: TRANSFERENCIA DE EMBRIONES' : t('act_ia');
+        const eventoText = isReceptora ? t('evento_te') : t('act_ia');
         htmlRows += `
           <tr style="background: rgba(14, 165, 233, 0.15); border-left: 4px solid var(--accent);">
             <td><strong>${row.dayOffset}</strong> <span class="badge" style="background:var(--accent); color:#fff; font-size:0.6rem; margin-left:4px;">IA/TE</span></td>
@@ -3989,7 +3996,7 @@ window.ejecutarResx2 = function() {
     
     if (row.colId === 'ia_event') {
         const isReceptora = row.pName && row.pName.toLowerCase().includes('receptora');
-        const eventoText = isReceptora ? 'EVENTO: TRANSFERENCIA DE EMBRIONES' : t('act_ia');
+        const eventoText = isReceptora ? t('evento_te') : t('act_ia');
         htmlRows += `
           <tr style="background: rgba(168, 85, 247, 0.15); border-left: 4px solid #a855f7;">
             <td><strong>${row.dayOffset}</strong> <span class="badge" style="background:#a855f7; color:#fff; font-size:0.6rem; margin-left:4px;">IA/TE</span></td>
