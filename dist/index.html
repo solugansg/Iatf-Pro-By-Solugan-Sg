@@ -23,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260603.31">
+  <link rel="stylesheet" href="style.css?v=V 260603.32">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -154,7 +154,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260603.31</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260603.32</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;" data-i18n="sidebar_active_user">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -227,7 +227,7 @@
       <!-- Cabecera Móvil (Hamburguesa) -->
       <div class="mobile-header" style="display: none;">
         
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260603.31</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260603.32</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -916,16 +916,20 @@
             </div>
             <div class="input-group">
               <label data-i18n="resx2_preg">Preñeces Resincronización 2 (Proyectado o Real)</label>
-              <div style="display: flex; gap: 0.4rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+              <div class="pi-preg-row" style="display: flex; gap: 0.4rem; align-items: center; background: rgba(255,255,255,0.02); padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
                 <div class="spinner-wrap" style="border-radius: 8px; flex: 0 0 auto; width: 42%;">
                   <button class="spin-btn minus" onclick="spinVal('resx2-prenadas', -1, false); debouncedAutoCalcPrenResx2();" style="color: #a855f7;">&#8722;</button>
                   <input type="number" id="resx2-prenadas" value="0" min="0" oninput="debouncedAutoCalcPrenResx2()" onchange="autoCalcPrenResx2()" style="font-size: 1.5rem; font-weight: 800; background: transparent; border: none; text-align: center; color: #a855f7;">
                   <button class="spin-btn plus" onclick="spinVal('resx2-prenadas', 1, false); debouncedAutoCalcPrenResx2();" style="color: #a855f7;">&#43;</button>
                 </div>
-                <div style="width: 1px; height: 30px; background: var(--glass-border);"></div>
-                <div style="display: flex; align-items: baseline; flex: 1; justify-content: center;">
-                  <span id="resx2-porcentaje" style="font-size: 2rem; font-weight: 800; color: #a855f7;">0</span>
-                  <span style="font-size: 1.25rem; font-weight: bold; padding-left: 2px; color: #a855f7;">%</span>
+                <div class="pi-preg-divider" style="width: 1px; height: 30px; background: var(--glass-border);"></div>
+                <div class="pi-preg-percent-wrap" style="display: flex; align-items: center; flex: 1; justify-content: center;">
+                  <div class="spinner-wrap" style="border-radius: 8px; border-color: #a855f7;">
+                    <button class="spin-btn minus" onclick="spinVal('resx2-porcentaje', -1, false); debouncedAutoCalcDesdePorcentajeResx2();" style="color: #a855f7;">&#8722;</button>
+                    <input type="number" id="resx2-porcentaje" value="0" min="0" max="100" oninput="debouncedAutoCalcDesdePorcentajeResx2()" onchange="autoCalcDesdePorcentajeResx2()" style="width: 55px; font-size: 2rem; font-weight: 800; background: transparent; border: none; padding: 0 4px; text-align: center; outline: none; color: #a855f7;">
+                    <span style="font-size: 1.25rem; font-weight: bold; padding-right: 4px; color: #a855f7;">%</span>
+                    <button class="spin-btn plus" onclick="spinVal('resx2-porcentaje', 1, false); debouncedAutoCalcDesdePorcentajeResx2();" style="color: #a855f7;">&#43;</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1595,7 +1599,7 @@
     }
   </style>
 
-  <script src="iatf-app.js?v=V260603.31"></script>
+  <script src="iatf-app.js?v=V260603.32"></script>
   
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>
