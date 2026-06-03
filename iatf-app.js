@@ -2,9 +2,9 @@
 // MATRIZ DE PROTOCOLOS POR DEFECTO (Solugan SG)
 // Se carga para usuarios nuevos o cuando no hay datos guardados
 // ==========================================
-window.DEFAULT_MATRIZ = [{"name":"Tradicional (IATF)","days":["0","0","-","10","-","8","-","-","8","8","10","8","0","8","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 48-60 hs - GnRh Opcional"},{"name":"Jsynch (IATF)","days":["0","0","-","9","-","6","-","-","6","-","9","6","0","6","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 72 hs + GnRh"},{"name":"Novillas (IATF)","days":["0","0","9","-","-","8","-","-","8","-","10","8","0","8","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 24-32 horas"},{"name":"Ovsynch (IATF)","days":["-","-","-","0","9","7","-","-","-","-","10","-","0","-","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 17-24 horas post GnRh"},{"name":"Cosynch (IATF)","days":["-","-","-","0","9","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 48 horas + GnRh"},{"name":"Heatsynch (IATF)","days":["-","8","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 48-52 horas post Pgf2@"},{"name":"Presynch (IA)","days":["-","-","-","0","9","-26","-12","7","-","-","10","-","0","-","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"Observar celo - IA 12 horas post celo estable"},{"name":"Selectsynch (IA)","days":["-","-","-","0","-","7","-","-","-","-","8","-","0","-","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"Observar celo - IA 12 horas post celo estable"},{"name":"Dib Vacas (IA)","days":["0","-","-","0","8","7","-","-","-","-","8","-","0","7","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"IA celo detectado + GnRh"},{"name":"Dib Novillas (IA)","days":["0","0","-","8","-","7","-","-","-","-","8","-","0","7","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"IA celo detectado + GnRh"},{"name":"DoblePGF2@ (IA)","days":["-","-","-","-","-","0","11","-","-","-","2","-","0","-","2","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"2","obs":"Observar celo 1-5 dias IA 12 horas post celo estable"},{"name":"Monta Natural 1 (IA)","days":["-","-","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado \u00f3 Toro x 5 dias"},{"name":"Monta Natural 2 (IA)","days":["-","8","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado \u00f3 Toro x 5 dias"},{"name":"Monta Natural 3 DIB (IA)","days":["0","-","-","0","-","7","-","-","-","-","9","8","0","7","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado \u00f3 Toro x 5 dias"},{"name":"Receptoras 1 (IATF)","role":"resx1","days":["0","0","9","-","-","5","-","-","5","-","10","8","0","5","18","10","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"18","obs":"Transferencia de Embriones"},{"name":"Receptoras 2 (IATF)","role":"resx2","days":["0","0","-","-","-","8","-","-","8","8","9","8","0","8","17","9","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"17","obs":"Transferencia de Embriones"},{"name":"Resincronizacion 1 (IATF)","role":"resx1b","days":["32","32","-","42","-","40","-","-","40","40","42","40","32","40","42","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"42","obs":"Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional"},{"name":"Resincronizacion 2 (IATF)","role":"resx2b","days":["64","64","-","74","-","72","-","-","72","72","74","72","64","72","74","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"74","obs":"Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional"}];
+window.DEFAULT_MATRIZ = [{"name":"Tradicional (IATF)","days":["0","-","0","-","10","-","8","-","-","8","8","10","8","0","8","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 48-60 hs - GnRh Opcional"},{"name":"Jsynch (IATF)","days":["0","-","0","-","9","-","6","-","-","6","-","9","6","0","6","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 72 hs + GnRh"},{"name":"Novillas (IATF)","days":["0","-","0","9","-","-","8","-","-","8","-","10","8","0","8","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 24-32 horas"},{"name":"Ovsynch (IATF)","days":["-","-","-","-","0","9","7","-","-","-","-","10","-","0","-","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 17-24 horas post GnRh"},{"name":"Cosynch (IATF)","days":["-","-","-","-","0","9","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 48 horas + GnRh"},{"name":"Heatsynch (IATF)","days":["-","-","8","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 48-52 horas post Pgf2@"},{"name":"Presynch (IA)","days":["-","-","-","-","0","9","-26","-12","7","-","-","10","-","0","-","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"Observar celo - IA 12 horas post celo estable"},{"name":"Selectsynch (IA)","days":["-","-","-","-","0","-","7","-","-","-","-","8","-","0","-","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"Observar celo - IA 12 horas post celo estable"},{"name":"Dib Vacas (IA)","days":["0","-","-","-","0","8","7","-","-","-","-","8","-","0","7","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"IA celo detectado + GnRh"},{"name":"Dib Novillas (IA)","days":["0","-","0","-","8","-","7","-","-","-","-","8","-","0","7","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"IA celo detectado + GnRh"},{"name":"DoblePGF2@ (IA)","days":["-","-","-","-","-","-","0","11","-","-","-","2","-","0","-","2","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"2","obs":"Observar celo 1-5 dias IA 12 horas post celo estable"},{"name":"Monta Natural 1 (IA)","days":["-","-","-","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado ó Toro x 5 dias"},{"name":"Monta Natural 2 (IA)","days":["-","-","8","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado ó Toro x 5 dias"},{"name":"Monta Natural 3 DIB (IA)","days":["0","-","-","-","0","-","7","-","-","-","-","9","8","0","7","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado ó Toro x 5 dias"},{"name":"Receptoras 1 (IATF)","role":"resx1","days":["0","-","0","9","-","-","5","-","-","5","-","10","8","0","5","18","10","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"18","obs":"Transferencia de Embriones"},{"name":"Receptoras 2 (IATF)","role":"resx2","days":["0","-","0","-","-","-","8","-","-","8","8","9","8","0","8","17","9","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"17","obs":"Transferencia de Embriones"},{"name":"Resincronizacion 1 (IATF)","role":"resx1b","days":["32","-","32","-","42","-","40","-","-","40","40","42","40","32","40","42","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"42","obs":"Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional"},{"name":"Resincronizacion 2 (IATF)","role":"resx2b","days":["64","-","64","-","74","-","72","-","-","72","72","74","72","64","72","74","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"74","obs":"Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional"}];
 
-window.DEFAULT_ENCABEZADOS = ['DIB<br><small>Día</small>', 'B.E. 1<br><small>Día</small>', 'B.E. 2<br><small>Día</small>', 'GnRh 1<br><small>Día</small>', 'GnRh 2<br><small>Día</small>', 'Pgf2@ 1<br><small>Día</small>', 'Pgf2@ 2<br><small>Día</small>', 'Pgf2@ 3<br><small>Día</small>', 'eCG<br><small>Día</small>', 'C.E.<br><small>Día</small>', 'Genética<br><small>Día</small>', 'Retiro<br><small>Día</small>', 'Asis. 1<br><small>Día</small>', 'Asis. 2<br><small>Día</small>', '<div style="padding:4px; font-size:0.75rem;">IA/TE<br><small>Día</small></div>', 'Aspiración<br><small>Folicular</small>', 'Dx1<br><small>Día</small>', 'Dx2<br><small>Día</small>'];
+window.DEFAULT_ENCABEZADOS = ['DIB<br><small>Día</small>', 'P4 Iny<br><small>Día</small>', 'B.E. 1<br><small>Día</small>', 'B.E. 2<br><small>Día</small>', 'GnRh 1<br><small>Día</small>', 'GnRh 2<br><small>Día</small>', 'Pgf2@ 1<br><small>Día</small>', 'Pgf2@ 2<br><small>Día</small>', 'Pgf2@ 3<br><small>Día</small>', 'eCG<br><small>Día</small>', 'C.E.<br><small>Día</small>', 'Genética<br><small>Día</small>', 'Retiro<br><small>Día</small>', 'Asis. 1<br><small>Día</small>', 'Asis. 2<br><small>Día</small>', '<div style="padding:4px; font-size:0.75rem;">IA/TE<br><small>Día</small></div>', 'Aspiración<br><small>Folicular</small>', 'Dx1<br><small>Día</small>', 'Dx2<br><small>Día</small>'];
 
 // ==========================================
 // CONFIGURACIÓN E INTEGRACIÓN DE FIREBASE
@@ -36,7 +36,7 @@ db.enablePersistence()
 const ADMIN_EMAIL = "solugansg@gmail.com";
 
 function adaptarDiasProtocolo(days, iaVal) {
-  const currentLen = 18; // Longitud actual de colDefs
+  const currentLen = 19; // Longitud actual de colDefs
   if (!Array.isArray(days)) {
     return Array(currentLen).fill('-');
   }
@@ -44,13 +44,21 @@ function adaptarDiasProtocolo(days, iaVal) {
     return days;
   }
   let newDays = Array(currentLen).fill('-');
-  if (days.length === 17) {
+  if (days.length === 18) {
+    // Migración: insertar en el índice 1 (nueva hormona: prog_iny)
+    newDays[0] = days[0] !== undefined ? days[0] : '-';
+    newDays[1] = '-';
+    for (let i = 1; i < 18; i++) {
+      newDays[i+1] = days[i] !== undefined ? days[i] : '-';
+    }
+  } else if (days.length === 17) {
     for (let i = 0; i <= 14; i++) {
       newDays[i] = days[i] !== undefined ? days[i] : '-';
     }
     newDays[15] = '-';
     newDays[16] = days[15] !== undefined ? days[15] : '-';
     newDays[17] = days[16] !== undefined ? days[16] : '-';
+    return adaptarDiasProtocolo(newDays, iaVal);
   } else if (days.length === 16) {
     for (let i = 0; i <= 13; i++) {
       newDays[i] = days[i] !== undefined ? days[i] : '-';
@@ -59,6 +67,7 @@ function adaptarDiasProtocolo(days, iaVal) {
     newDays[15] = '-';
     newDays[16] = days[14] !== undefined ? days[14] : '-';
     newDays[17] = days[15] !== undefined ? days[15] : '-';
+    return adaptarDiasProtocolo(newDays, iaVal);
   } else {
     for (let i = 0; i < currentLen; i++) {
       newDays[i] = days[i] !== undefined ? days[i] : '-';
@@ -68,7 +77,7 @@ function adaptarDiasProtocolo(days, iaVal) {
 }
 
 function adaptarHorasProtocolo(hours) {
-  const currentLen = 18; // Longitud actual de colDefs
+  const currentLen = 19; // Longitud actual de colDefs
   if (!Array.isArray(hours)) {
     return Array(currentLen).fill('08:00');
   }
@@ -76,13 +85,20 @@ function adaptarHorasProtocolo(hours) {
     return hours;
   }
   let newHours = Array(currentLen).fill('08:00');
-  if (hours.length === 17) {
+  if (hours.length === 18) {
+    newHours[0] = hours[0] !== undefined ? hours[0] : '08:00';
+    newHours[1] = '08:00';
+    for (let i = 1; i < 18; i++) {
+      newHours[i+1] = hours[i] !== undefined ? hours[i] : '08:00';
+    }
+  } else if (hours.length === 17) {
     for (let i = 0; i <= 14; i++) {
       newHours[i] = hours[i] !== undefined ? hours[i] : '08:00';
     }
     newHours[15] = '08:00';
     newHours[16] = hours[15] !== undefined ? hours[15] : '08:00';
     newHours[17] = hours[16] !== undefined ? hours[16] : '08:00';
+    return adaptarHorasProtocolo(newHours);
   } else if (hours.length === 16) {
     for (let i = 0; i <= 13; i++) {
       newHours[i] = hours[i] !== undefined ? hours[i] : '08:00';
@@ -91,6 +107,7 @@ function adaptarHorasProtocolo(hours) {
     newHours[15] = '08:00';
     newHours[16] = hours[14] !== undefined ? hours[14] : '08:00';
     newHours[17] = hours[15] !== undefined ? hours[15] : '08:00';
+    return adaptarHorasProtocolo(newHours);
   } else {
     for (let i = 0; i < currentLen; i++) {
       newHours[i] = hours[i] !== undefined ? hours[i] : '08:00';
@@ -99,7 +116,39 @@ function adaptarHorasProtocolo(hours) {
   return newHours;
 }
 
+
+window.migrarYSanitizarEncabezados = function(rawEncabezados) {
+  if (!Array.isArray(rawEncabezados)) return window.DEFAULT_ENCABEZADOS.slice();
+  if (rawEncabezados.length === 19) return rawEncabezados.slice();
+  
+  if (rawEncabezados.length === 18) {
+    let newEnc = [];
+    newEnc[0] = rawEncabezados[0];
+    newEnc[1] = 'P4 Iny<br><small>Día</small>';
+    for (let i = 1; i < 18; i++) {
+      newEnc[i+1] = rawEncabezados[i];
+    }
+    return newEnc;
+  }
+  
+  if (rawEncabezados.length === 17) {
+    let newEnc = [];
+    newEnc[0] = rawEncabezados[0];
+    newEnc[1] = 'P4 Iny<br><small>Día</small>';
+    for (let i = 1; i < 15; i++) {
+      newEnc[i+1] = rawEncabezados[i];
+    }
+    newEnc[16] = '<div style="padding:4px; font-size:0.75rem;">IA/TE<br><small>Día</small></div>';
+    newEnc[17] = rawEncabezados[15];
+    newEnc[18] = rawEncabezados[16];
+    return newEnc;
+  }
+  
+  return rawEncabezados.slice();
+};
+
 window.migrarYSanitizarMatriz = function(rawMatrix) {
+
   if (!Array.isArray(rawMatrix) || rawMatrix.length === 0) {
     rawMatrix = window.DEFAULT_MATRIZ;
   }
@@ -227,11 +276,11 @@ auth.onAuthStateChanged(user => {
               // Determinar de dónde cargar la matriz
               if (globalMatriz) {
                 state.matriz = window.migrarYSanitizarMatriz(globalMatriz);
-                if (globalEncabezados) state.encabezados = globalEncabezados.slice();
+                if (globalEncabezados) state.encabezados = window.migrarYSanitizarEncabezados(globalEncabezados);
                 localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
               } else if (userData.matriz && Array.isArray(userData.matriz) && userData.matriz.length > 0) {
                 state.matriz = window.migrarYSanitizarMatriz(userData.matriz);
-                if (userData.encabezados) state.encabezados = userData.encabezados.slice();
+                if (userData.encabezados) state.encabezados = window.migrarYSanitizarEncabezados(userData.encabezados);
                 localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
                 // Auto-migración si es el admin y la tabla global estaba vacía
                 if (user.email === ADMIN_EMAIL) {
@@ -643,36 +692,22 @@ window.cargarProtocolosDesdeExcelData = function(arrayBuffer) {
         return s;
       };
       
-      const dib    = valStr(row[dataStartIndex]);
-      const be1    = valStr(row[dataStartIndex + 1]);
-      const be2    = valStr(row[dataStartIndex + 2]);
-      const gnrh1  = valStr(row[dataStartIndex + 3]);
-      const gnrh2  = valStr(row[dataStartIndex + 4]);
-      const pgf1   = valStr(row[dataStartIndex + 5]);
-      const pgf2   = valStr(row[dataStartIndex + 6]);
-      const pgf3   = valStr(row[dataStartIndex + 7]);
-      const ecg    = valStr(row[dataStartIndex + 8]);
-      const ce     = valStr(row[dataStartIndex + 9]);
-      const gen    = valStr(row[dataStartIndex + 10]);
-      const retdib = valStr(row[dataStartIndex + 11]);
-      const mo1    = valStr(row[dataStartIndex + 12]);
-      const mo2    = valStr(row[dataStartIndex + 13]);
-      const iate   = valStr(row[dataStartIndex + 14]); 
-      const opu    = valStr(row[dataStartIndex + 15]); 
-      const dx1    = valStr(row[dataStartIndex + 16]);
-      const dx2    = valStr(row[dataStartIndex + 17]);
-      const obs    = valStr(row[dataStartIndex + 18]);
+      const days = [];
+      for (let i = 0; i < state.colDefs.length; i++) {
+        days.push(valStr(row[dataStartIndex + i]));
+      }
       
-      const days = [
-        dib, be1, be2, gnrh1, gnrh2, pgf1, pgf2, pgf3, ecg, ce, gen, retdib, mo1, mo2, iate, opu, dx1, dx2
-      ];
+      const obs = valStr(row[dataStartIndex + state.colDefs.length]);
       
+      // Encontrar el índice de iate. Actualmente está en la posición 15 ('iate') en colDefs
+      const iateIndex = state.colDefs.indexOf('iate');
+      const iate = iateIndex !== -1 ? days[iateIndex] : '-';
       const iaVal = iate !== '-' ? iate : '10';
       
       nuevosProtocolos.push({
         name: pName,
         days: days,
-        hours: Array(18).fill('08:00'),
+        hours: Array(state.colDefs.length).fill('08:00'),
         ia: iaVal,
         obs: obs !== '-' ? obs : ''
       });
@@ -1160,6 +1195,8 @@ window.translations = {
     cat_diagnostico: "DIAGNÓSTICO Y OTROS",
     // Insumos y Actividades
     ins_dib: "Dispositivo Intravaginal Bovino",
+    ins_prog_iny: "Progesterona Injetável",
+    ins_prog_iny: "Progesterona Inyectable",
     ins_be1: "Benzoato de Estradiol (1a Dosis)",
     ins_be2: "Benzoato de Estradiol (2a Dosis)",
     ins_gnrh1: "GnRh (1a Dosis)",
@@ -1534,6 +1571,7 @@ window.translations = {
     cat_diagnostico: "DIAGNOSTICS & OTHERS",
     // Insumos y Actividades
     ins_dib: "Bovine Intravaginal Device",
+    ins_prog_iny: "Injectable Progesterone",
     ins_be1: "Estradiol Benzoate (1st Dose)",
     ins_be2: "Estradiol Benzoate (2nd Dose)",
     ins_gnrh1: "GnRh (1st Dose)",
@@ -2370,12 +2408,13 @@ navBtns.forEach(btn => {
 const state = {
   tableroLeche: { precio: 1100, duracion: 300, litros: 1500 },
   tableroCarne: { precio: 10000, duracion: 240, peso: 240 },
-  colDefs: ['dib','be1','be2','gnrh1','gnrh2','pgf1','pgf2','pgf3','ecg','ce','gen','retdib','mo1','mo2','iate','opu','dx1','dx2'],
+  colDefs: ['dib','prog_iny','be1','be2','gnrh1','gnrh2','pgf1','pgf2','pgf3','ecg','ce','gen','retdib','mo1','mo2','iate','opu','dx1','dx2'],
   encabezados: window.DEFAULT_ENCABEZADOS ? window.DEFAULT_ENCABEZADOS.slice() : [],
   
   // Inventory
   insumos: {
     dib: { name: 'Dispositivo Intravaginal Bovino', tipo: 'Und', tamano: 10, valorFrasco: 160000, def: 0, resx1: 1, resx2: 1, cat: 'hormonas', obs: 'P4', usos: 1 },
+    prog_iny: { name: 'Progesterona Inyectable', tipo: 'ml', tamano: 50, valorFrasco: 0, def: 1, resx1: 1, resx2: 1, cat: 'hormonas', obs: 'P4 Iny', usos: 1 },
     be1: { name: 'Benzoato de Estradiol (1a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 69000, def: 0, resx1: 0.5, resx2: 0.5, cat: 'hormonas', obs: 'B.E 1a Dosis' },
     be2: { name: 'Benzoato de Estradiol (2a Dosis)', tipo: 'ml', tamano: 100, valorFrasco: 69000, def: 0, resx1: 0.5, resx2: 0.5, cat: 'hormonas', obs: 'B.E 2a Dosis' },
     gnrh1: { name: 'GnRh (1a Dosis)', tipo: 'ml', tamano: 50, valorFrasco: 94000, def: 0, resx1: 2.5, resx2: 2.5, cat: 'hormonas', obs: 'GnRh 1a Dosis' },
@@ -3584,7 +3623,7 @@ window.loadState = function() {
       
       state.matriz = window.migrarYSanitizarMatriz(rawMatrix || state.matriz);
       if (parsed.encabezados && Array.isArray(parsed.encabezados) && parsed.encabezados.length > 0) {
-        state.encabezados = parsed.encabezados.slice();
+        state.encabezados = window.migrarYSanitizarEncabezados(parsed.encabezados);
       }
       renderMatriz();
       actualizarSelectProtocolos();
