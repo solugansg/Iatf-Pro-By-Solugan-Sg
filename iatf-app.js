@@ -1269,6 +1269,12 @@ window.translations = {
     roi_inv_perdida: "Inversión Perdida (Vacías)",
     roi_costo_preg: "Costo/Preñez en Fase",
     roi_retorno_total: "RETORNO TOTAL PROYECTADO",
+    chart_ingreso_neto: "Ingreso Neto",
+    chart_inversion_total: "Inversión Total",
+    chart_bruto: "Bruto",
+    chart_bruto_upper: "BRUTO",
+    chart_inv: "Inv.",
+    chart_neto: "Neto",
     chart_pi: "Prot. Inicial",
     chart_r1: "Resinc. 1",
     chart_r2: "Resinc. 2",
@@ -1601,6 +1607,12 @@ window.translations = {
     roi_inv_perdida: "Lost Investment (Open)",
     roi_costo_preg: "Cost/Pregnancy in Phase",
     roi_retorno_total: "TOTAL PROJECTED RETURN",
+    chart_ingreso_neto: "Net Income",
+    chart_inversion_total: "Total Investment",
+    chart_bruto: "Gross",
+    chart_bruto_upper: "GROSS",
+    chart_inv: "Inv.",
+    chart_neto: "Net",
     chart_pi: "Initial Prot.",
     chart_r1: "Resync. 1",
     chart_r2: "Resync. 2",
@@ -1931,6 +1943,12 @@ window.translations = {
     roi_inv_perdida: "Investimento Perdido (Vazias)",
     roi_costo_preg: "Custo/Prenhez na Fase",
     roi_retorno_total: "RETORNO TOTAL PROJETADO",
+    chart_ingreso_neto: "Receita Líquida",
+    chart_inversion_total: "Investimento Total",
+    chart_bruto: "Bruto",
+    chart_bruto_upper: "BRUTO",
+    chart_inv: "Inv.",
+    chart_neto: "Líquido",
     chart_pi: "Prot. Inicial",
     chart_r1: "Ressinc. 1",
     chart_r2: "Ressinc. 2",
@@ -4504,7 +4522,7 @@ function renderNewDashboardCharts(aPI, pPI, aR1, pR1, aR2, pR2, cHormonas, cGene
     chartLeche = new Chart(ctxLeche, {
       type: 'doughnut',
       data: {
-        labels: ['Ingreso Neto', 'Inversión Total'],
+        labels: [t('chart_ingreso_neto'), t('chart_inversion_total')],
         datasets: [{
           data: [retL > 0 ? retL : 0, cTotal],
           backgroundColor: ['#10b981', '#ef4444'],
@@ -4537,7 +4555,7 @@ function renderNewDashboardCharts(aPI, pPI, aR1, pR1, aR2, pR2, cHormonas, cGene
           ctx.textBaseline = 'middle';
           ctx.font = 'bold 11px Inter';
           ctx.fillStyle = isExport ? '#475569' : '#94a3b8';
-          ctx.fillText('BRUTO', centerX, centerY - 15);
+          ctx.fillText(t('chart_bruto_upper'), centerX, centerY - 15);
           ctx.font = 'bold 13px Inter';
           ctx.fillStyle = isExport ? '#0ea5e9' : '#fff';
           ctx.fillText(formatter.format(ingBrutoL), centerX, centerY + 5);
@@ -4556,7 +4574,7 @@ function renderNewDashboardCharts(aPI, pPI, aR1, pR1, aR2, pR2, cHormonas, cGene
     chartCarne = new Chart(ctxCarne, {
       type: 'bar',
       data: {
-        labels: ['Bruto', 'Inv.', 'Neto'],
+        labels: [t('chart_bruto'), t('chart_inv'), t('chart_neto')],
         datasets: [{
           data: [ingBrutoC, cTotal, retC],
           backgroundColor: ['#0ea5e9', '#ef4444', '#10b981'],
