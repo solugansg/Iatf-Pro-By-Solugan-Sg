@@ -946,6 +946,90 @@ window.getResx2 = function(matriz) {
 };
 
 // --- i18n: DICCIONARIO DE TRADUCCIONES ---
+
+window.tProtocol = function(val) {
+  if (!val) return val;
+  const currentLang = window.currentLang || 'es';
+  if (currentLang === 'es') return val;
+  
+  const mapEn = {
+    'Resincronizacion 1 (IATF)': 'Resynchronization 1 (FTAI)',
+    'Resincronizacion 2 (IATF)': 'Resynchronization 2 (FTAI)',
+    'Tradicional (IATF)': 'Traditional (FTAI)',
+    'Jsynch (IATF)': 'Jsynch (FTAI)',
+    'Novillas (IATF)': 'Heifers (FTAI)',
+    'Ovsynch (IATF)': 'Ovsynch (FTAI)',
+    'Cosynch (IATF)': 'Cosynch (FTAI)',
+    'Heatsynch (IATF)': 'Heatsynch (FTAI)',
+    'Presynch (IA)': 'Presynch (AI)',
+    'Selectsynch (IA)': 'Selectsynch (AI)',
+    'Dib Vacas (IA)': 'Dib Cows (AI)',
+    'Dib Novillas (IA)': 'Dib Heifers (AI)',
+    'DoblePGF2@ (IA)': 'DoublePGF2@ (AI)',
+    'Monta Natural 1 (IA)': 'Natural Mating 1 (AI)',
+    'Monta Natural 2 (IA)': 'Natural Mating 2 (AI)',
+    'Monta Natural 3 DIB (IA)': 'Natural Mating 3 DIB (AI)',
+    'Receptoras 1 (IATF)': 'Recipients 1 (FTAI)',
+    'Receptoras 2 (IATF)': 'Recipients 2 (FTAI)',
+    'Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional': 'Use 2nd use DIB - FTAI 48-60 hs optional GnRh',
+    'Transferencia de Embriones': 'Embryo Transfer',
+    'IA celo detectado ó Toro x 5 dias': 'AI detected heat or Bull x 5 days',
+    'Observar celo 1-5 dias IA 12 horas post celo estable': 'Observe heat 1-5 days AI 12 hours post stable heat',
+    'IA celo detectado + GnRh': 'AI detected heat + GnRh',
+    'Observar celo - IA 12 horas post celo estable': 'Observe heat - AI 12 hours post stable heat',
+    'IATF 48-52 horas post Pgf2@': 'FTAI 48-52 hours post Pgf2@',
+    'IATF 48 horas + GnRh': 'FTAI 48 hours + GnRh',
+    'IATF 17-24 horas post GnRh': 'FTAI 17-24 hours post GnRh',
+    'IATF 24-32 horas': 'FTAI 24-32 hours',
+    'IATF 72 hs + GnRh': 'FTAI 72 hs + GnRh',
+    'IATF 48-60 hs - GnRh Opcional': 'FTAI 48-60 hs - Optional GnRh',
+    'IATF 48-56 hs - GnRh Opcional': 'FTAI 48-56 hs - Optional GnRh',
+    'Utilizar DIB de segundo uso - iatf 48-60 hs GnRh opcional': 'Use 2nd use DIB - FTAI 48-60 hs optional GnRh'
+  };
+  
+  const mapPt = {
+    'Resincronizacion 1 (IATF)': 'Ressincronização 1 (IATF)',
+    'Resincronizacion 2 (IATF)': 'Ressincronização 2 (IATF)',
+    'Tradicional (IATF)': 'Tradicional (IATF)',
+    'Jsynch (IATF)': 'Jsynch (IATF)',
+    'Novillas (IATF)': 'Novilhas (IATF)',
+    'Ovsynch (IATF)': 'Ovsynch (IATF)',
+    'Cosynch (IATF)': 'Cosynch (IATF)',
+    'Heatsynch (IATF)': 'Heatsynch (IATF)',
+    'Presynch (IA)': 'Presynch (IA)',
+    'Selectsynch (IA)': 'Selectsynch (IA)',
+    'Dib Vacas (IA)': 'Dib Vacas (IA)',
+    'Dib Novillas (IA)': 'Dib Novilhas (IA)',
+    'DoblePGF2@ (IA)': 'DuploPGF2@ (IA)',
+    'Monta Natural 1 (IA)': 'Monta Natural 1 (IA)',
+    'Monta Natural 2 (IA)': 'Monta Natural 2 (IA)',
+    'Monta Natural 3 DIB (IA)': 'Monta Natural 3 DIB (IA)',
+    'Receptoras 1 (IATF)': 'Receptoras 1 (IATF)',
+    'Receptoras 2 (IATF)': 'Receptoras 2 (IATF)',
+    'Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional': 'Usar DIB de segundo uso - IATF 48-60 hs GnRh opcional',
+    'Transferencia de Embriones': 'Transferência de Embriões',
+    'IA celo detectado ó Toro x 5 dias': 'IA cio detectado ou Touro x 5 dias',
+    'Observar celo 1-5 dias IA 12 horas post celo estable': 'Observar cio 1-5 dias IA 12 horas pós cio estável',
+    'IA celo detectado + GnRh': 'IA cio detectado + GnRh',
+    'Observar celo - IA 12 horas post celo estable': 'Observar cio - IA 12 horas pós cio estável',
+    'IATF 48-52 horas post Pgf2@': 'IATF 48-52 horas pós Pgf2@',
+    'IATF 48 horas + GnRh': 'IATF 48 horas + GnRh',
+    'IATF 17-24 horas post GnRh': 'IATF 17-24 horas pós GnRh',
+    'IATF 24-32 horas': 'IATF 24-32 horas',
+    'IATF 72 hs + GnRh': 'IATF 72 hs + GnRh',
+    'IATF 48-60 hs - GnRh Opcional': 'IATF 48-60 hs - GnRh Opcional',
+    'IATF 48-56 hs - GnRh Opcional': 'IATF 48-56 hs - GnRh Opcional',
+    'Utilizar DIB de segundo uso - iatf 48-60 hs GnRh opcional': 'Usar DIB de segundo uso - IATF 48-60 hs GnRh opcional'
+  };
+
+  if (currentLang === 'en') {
+    return mapEn[val] || val;
+  }
+  if (currentLang === 'pt') {
+    return mapPt[val] || val;
+  }
+  return val;
+};
 window.translations = {
   es: {
     sidebar_dashboard: "Tablero de Control",
@@ -1261,7 +1345,7 @@ window.translations = {
     resx2_date_lbl: "Fecha Inicio (Auto)",
     resx2_time_lbl: "Hora de Inicio",
     resx2_preg_lbl: "Preñeces Resincronización 2 (Proyectado o Real)",
-    btn_ajustar_precios: "Ver/Ajustar Precios Fase",
+    btn_ajustar_precios: "VER/AJUSTAR PRECIOS FASE",
     btn_reiniciar_fase: "REINICIAR FASE",
     roi_inv_fase: "Inversión por Fase",
     roi_anim_fase: "Animales en Fase",
@@ -1599,7 +1683,7 @@ window.translations = {
     resx2_date_lbl: "Start Date (Auto)",
     resx2_time_lbl: "Start Time",
     resx2_preg_lbl: "Resynchronization 2 Pregnancies (Projected or Real)",
-    btn_ajustar_precios: "View/Adjust Phase Prices",
+    btn_ajustar_precios: "VIEW/ADJUST PHASE PRICES",
     btn_reiniciar_fase: "RESET PHASE",
     roi_inv_fase: "Investment per Phase",
     roi_anim_fase: "Animals in Phase",
@@ -1935,7 +2019,7 @@ window.translations = {
     resx2_date_lbl: "Data de Início (Auto)",
     resx2_time_lbl: "Hora de Início",
     resx2_preg_lbl: "Prenhezes Ressincronização 2 (Projetado ou Real)",
-    btn_ajustar_precios: "Ver/Ajustar Preços da Fase",
+    btn_ajustar_precios: "VER/AJUSTAR PREÇOS DA FASE",
     btn_reiniciar_fase: "REINICIAR FASE",
     roi_inv_fase: "Investimento por Fase",
     roi_anim_fase: "Animais na Fase",
@@ -1979,7 +2063,7 @@ window.changeLanguage = function(lang) {
   const elements = document.querySelectorAll('[data-i18n]');
   elements.forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (translations[lang][key]) {
+    if (translations[lang] && translations[lang][key]) {
       el.innerText = translations[lang][key];
     }
   });
@@ -1988,7 +2072,7 @@ window.changeLanguage = function(lang) {
   const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
   placeholders.forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
-    if (translations[lang][key]) {
+    if (translations[lang] && translations[lang][key]) {
       el.placeholder = translations[lang][key];
     }
   });
@@ -2000,6 +2084,12 @@ window.changeLanguage = function(lang) {
   // Re-renderizar componentes dinámicos
   if (typeof updateResultados === 'function') updateResultados();
   if (typeof calcTableroControl === 'function') calcTableroControl();
+  if (typeof actualizarSelectProtocolos === 'function') actualizarSelectProtocolos();
+  if (typeof ejecutarProtocoloInicial === 'function') ejecutarProtocoloInicial();
+  if (typeof actualizarProtocoloSeleccionado === 'function') {
+    actualizarProtocoloSeleccionado('resx1');
+    actualizarProtocoloSeleccionado('resx2');
+  }
   lucide.createIcons();
 };
 
@@ -2273,7 +2363,7 @@ function actualizarSelectProtocolos() {
     if (!p.role) {
       const opt = document.createElement('option'); 
       opt.value = p.name; 
-      opt.innerText = p.name;
+      opt.innerText = window.tProtocol(p.name);
       selectPI.appendChild(opt);
     }
   });
@@ -2391,8 +2481,8 @@ function renderMatriz() {
     
     // 1. Nombre (Col 1)
     let nameHtml = isMatrixUnlocked 
-      ? `<input type="text" class="cell-input matrix-nav" data-row="${rowIdx}" data-col="0" style="width:140px; text-align:left; background: var(--bg-input);" value="${protocol.name}" onchange="updateRowName(${rowIdx}, this.value)">`
-      : `<span style="font-weight: 500; font-size: 0.85rem;">${protocol.name}</span>`;
+      ? `<input type="text" class="cell-input matrix-nav" data-row="${rowIdx}" data-col="0" style="width:140px; text-align:left; background: var(--bg-input);" value="${window.tProtocol(protocol.name)}" onchange="updateRowName(${rowIdx}, this.value)">`
+      : `<span style="font-weight: 500; font-size: 0.85rem;">${window.tProtocol(protocol.name)}</span>`;
     tr.innerHTML = `<td style="text-align: left;">${nameHtml}</td>`;
     
     // 2. Días (Cols 2 a 19 - Son exactamente 18 columnas de datos)
@@ -3089,7 +3179,7 @@ window.ejecutarProtocoloInicial = function() {
       infoDiv.innerHTML = `
         <div style="flex: 1;">
           <div style="font-weight: 800; font-size: 1.2rem; color: var(--accent); margin-bottom: 6px; display:flex; align-items:center; gap:8px;">
-            <i data-lucide="award"></i> ${protocol.name}
+            <i data-lucide="award"></i> ${window.tProtocol(protocol.name)}
           </div>
           <div style="display: flex; gap: 2rem; font-size: 0.95rem; color: var(--text-main); font-weight: 600;">
             <span><i data-lucide="calendar"></i> ${t('card_inicio')} ${fBase.toLocaleDateString(currentLang === 'en' ? 'en-US' : (currentLang === 'pt' ? 'pt-BR' : 'es-ES'), { day: 'numeric', month: 'long', year: 'numeric' })}</span>
@@ -3576,11 +3666,11 @@ window.ejecutarResx1 = function() {
     const sumDate = new Date(fBase); sumDate.setDate(fBase.getDate() + (parseInt(protocol.ia) || 0));
     document.getElementById('resx1-ia-info').innerHTML = `
       <div style="flex: 1;">
-        <div style="font-weight: 800; font-size: 1.1rem; color: var(--accent); margin-bottom: 4px;">${protocol.name}</div>
+        <div style="font-weight: 800; font-size: 1.1rem; color: var(--accent); margin-bottom: 4px;">${window.tProtocol(protocol.name)}</div>
         <div style="display: flex; gap: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
-          <span><i data-lucide="activity"></i> IA/TE: Day ${protocol.ia} (${sumDate.toLocaleDateString(langCode, { day: 'numeric', month: 'long' })})</span>
+          <span><i data-lucide="activity"></i> IA/TE: ${t('table_th_day')} ${protocol.ia} (${sumDate.toLocaleDateString(langCode, { day: 'numeric', month: 'long' })})</span>
         </div>
-        <div style="margin-top: 8px; font-style: italic; color: var(--text-main);"><i data-lucide="message-square" style="width:14px;"></i> ${t('obs_label')} ${protocol.obs || 'S/O'}</div>
+        <div style="margin-top: 8px; font-style: italic; color: var(--text-main);"><i data-lucide="message-square" style="width:14px;"></i> ${t('obs_label')} ${protocol.obs ? window.tProtocol(protocol.obs) : 'S/O'}</div>
       </div>
       ${state.logoEmpresa ? `<div style="width: 70px; height: 70px; background: white; padding: 4px; border-radius: 6px;"><img src="${state.logoEmpresa}" style="width: 100%; height: 100%; object-fit: contain;"></div>` : ''}
     `;
@@ -3751,12 +3841,12 @@ window.ejecutarResx2 = function() {
     const sumDate = new Date(fBase); sumDate.setDate(fBase.getDate() + (parseInt(protocol.ia) || 0));
     document.getElementById('resx2-ia-info').innerHTML = `
       <div style="flex: 1;">
-        <div style="font-weight: 800; font-size: 1.1rem; color: #a855f7; margin-bottom: 4px;">${protocol.name}</div>
+        <div style="font-weight: 800; font-size: 1.1rem; color: #a855f7; margin-bottom: 4px;">${window.tProtocol(protocol.name)}</div>
         <div style="display: flex; gap: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
           <span><i data-lucide="calendar"></i> ${window.currentLang === 'en' ? 'Planned Start' : 'Inicio Programado'}: ${fBase.toLocaleDateString(langCode, { day: 'numeric', month: 'long' })}</span>
-          <span><i data-lucide="activity"></i> IA/TE: Day ${protocol.ia} (${sumDate.toLocaleDateString(langCode, { day: 'numeric', month: 'long' })})</span>
+          <span><i data-lucide="activity"></i> IA/TE: ${t('table_th_day')} ${protocol.ia} (${sumDate.toLocaleDateString(langCode, { day: 'numeric', month: 'long' })})</span>
         </div>
-        <div style="margin-top: 8px; font-style: italic; color: var(--text-main);"><i data-lucide="message-square" style="width:14px;"></i> ${t('obs_label')} ${protocol.obs || 'S/O'}</div>
+        <div style="margin-top: 8px; font-style: italic; color: var(--text-main);"><i data-lucide="message-square" style="width:14px;"></i> ${t('obs_label')} ${protocol.obs ? window.tProtocol(protocol.obs) : 'S/O'}</div>
       </div>
       ${state.logoEmpresa ? `<div style="width: 70px; height: 70px; background: white; padding: 4px; border-radius: 6px;"><img src="${state.logoEmpresa}" style="width: 100%; height: 100%; object-fit: contain;"></div>` : ''}
     `;
