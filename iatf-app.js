@@ -2416,6 +2416,23 @@ navBtns.forEach(btn => {
   });
 });
 
+
+window.irAPestana = function(target) {
+  const navBtns = document.querySelectorAll('.nav-btn, .nav-btn-bottom');
+  const tabContents = document.querySelectorAll('.tab-content');
+  
+  navBtns.forEach(b => b.classList.remove('active'));
+  tabContents.forEach(tc => tc.classList.remove('active'));
+  
+  const targetBtns = document.querySelectorAll(`[data-target="${target}"]`);
+  targetBtns.forEach(b => b.classList.add('active'));
+  
+  const targetEl = document.getElementById(target);
+  if (targetEl) targetEl.classList.add('active');
+  
+  window.scrollTo(0,0);
+};
+
 // INITIAL STATE// INITIAL STATE
 const state = {
   tableroLeche: { precio: 1100, duracion: 300, litros: 1500 },
@@ -3312,21 +3329,13 @@ window.guardarPreciosModal = function() {
     ejecutarProtocoloInicial(); 
     renderMatriz(); 
     if (document.getElementById('pi-check-resx1')?.checked) {
-      setTimeout(() => {
-        const btn = document.querySelector('.nav-btn[data-target="resincronizacion1"]');
-        if(btn) btn.click();
-        
-      }, 300);
+      setTimeout(() => { irAPestana('resincronizacion1'); }, 100);
     }
   }
   else if (modalContext === 'resx1') { 
     ejecutarResx1(); 
     if (document.getElementById('pi-check-resx2')?.checked) {
-      setTimeout(() => {
-        const btn = document.querySelector('.nav-btn[data-target="resincronizacion2"]');
-        if(btn) btn.click();
-        
-      }, 300);
+      setTimeout(() => { irAPestana('resincronizacion2'); }, 100);
     }
   }
   else if (modalContext === 'resx2') { 
