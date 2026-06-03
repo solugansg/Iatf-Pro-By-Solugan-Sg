@@ -5526,8 +5526,16 @@ window.buscarPorNit = function() {
     return;
   }
 
+  // Remove spaces, dots, dashes for a clean comparison
+  const termClean = term.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+
   const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
-  const filtrados = historial.filter(r => String(r.nit || '').includes(term));
+  
+  const filtrados = historial.filter(r => {
+    const nitGuardado = String(r.nit || '');
+    const nitClean = nitGuardado.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+    return nitClean.includes(termClean) || nitGuardado.toLowerCase().includes(term.toLowerCase());
+  });
 
   const container = document.getElementById('historial-resultados');
   const empty = document.getElementById('historial-vacio');
