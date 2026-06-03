@@ -3315,6 +3315,7 @@ window.guardarPreciosModal = function() {
       setTimeout(() => {
         const btn = document.querySelector('.nav-btn[data-target="resincronizacion1"]');
         if(btn) btn.click();
+        setTimeout(() => abrirModalPrecios('resx1'), 100);
       }, 300);
     }
   }
@@ -3324,6 +3325,7 @@ window.guardarPreciosModal = function() {
       setTimeout(() => {
         const btn = document.querySelector('.nav-btn[data-target="resincronizacion2"]');
         if(btn) btn.click();
+        setTimeout(() => abrirModalPrecios('resx2'), 100);
       }, 300);
     }
   }
