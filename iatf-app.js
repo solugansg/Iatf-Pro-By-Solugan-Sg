@@ -2279,6 +2279,8 @@ window.debouncedAutoCalcDesdePorcentaje = debounce((...args) => { if (typeof win
 window.debouncedAutoCalcPorcentaje = debounce((...args) => { if (typeof window.autoCalcPorcentaje === 'function') window.autoCalcPorcentaje(...args); }, 150);
 window.debouncedAutoCalcPrenResx1 = debounce((...args) => { if (typeof window.autoCalcPrenResx1 === 'function') window.autoCalcPrenResx1(...args); }, 150);
 window.debouncedAutoCalcPrenResx2 = debounce((...args) => { if (typeof window.autoCalcPrenResx2 === 'function') window.autoCalcPrenResx2(...args); }, 150);
+window.debouncedAutoCalcDesdePorcentajeResx1 = debounce((...args) => { if (typeof window.autoCalcDesdePorcentajeResx1 === 'function') window.autoCalcDesdePorcentajeResx1(...args); }, 150);
+window.debouncedAutoCalcDesdePorcentajeResx2 = debounce((...args) => { if (typeof window.autoCalcDesdePorcentajeResx2 === 'function') window.autoCalcDesdePorcentajeResx2(...args); }, 150);
 window.debouncedUpdateResultados = debounce((...args) => { if (typeof window.updateResultados === 'function') window.updateResultados(...args); }, 150);
 window.debouncedCalcTableroControl = debounce((...args) => { if (typeof window.calcTableroControl === 'function') window.calcTableroControl(...args); }, 150);
 window.debouncedBuscarPerfilPorNit = debounce((...args) => { if (typeof window.buscarPerfilPorNit === 'function') window.buscarPerfilPorNit(...args); }, 150);
@@ -3969,7 +3971,7 @@ window.autoCalcPrenResx1 = function() {
   const tot = Math.max(0, parseInt(document.getElementById('resx1-animales').value) || 0);
   const pren = Math.max(0, parseInt(document.getElementById('resx1-prenadas').value) || 0);
   const porc = tot > 0 ? (pren / tot) * 100 : 0;
-  document.getElementById('resx1-porcentaje').innerText = Math.round(porc);
+  if(document.getElementById('resx1-porcentaje')) document.getElementById('resx1-porcentaje').value = Math.round(porc);
   
   // Actualizar animales para ReSx2
   const vacias = tot - pren;
@@ -4147,7 +4149,7 @@ window.autoCalcPrenResx2 = function() {
   const tot = Math.max(0, parseInt(document.getElementById('resx2-animales').value) || 0);
   const pren = Math.max(0, parseInt(document.getElementById('resx2-prenadas').value) || 0);
   const porc = tot > 0 ? (pren / tot) * 100 : 0;
-  document.getElementById('resx2-porcentaje').innerText = Math.round(porc);
+  if(document.getElementById('resx2-porcentaje')) document.getElementById('resx2-porcentaje').value = Math.round(porc);
   updateResultados();
 }
 
@@ -6061,3 +6063,20 @@ window.cerrarModalAliado = function() {
 if (typeof window.cargarAliadosDeNube === 'function') {
   window.cargarAliadosDeNube();
 }
+
+window.autoCalcDesdePorcentajeResx1 = function() {
+  const tot = Math.max(0, parseInt(document.getElementById('resx1-animales').value) || 0);
+  const porc = Math.max(0, parseFloat(document.getElementById('resx1-porcentaje').value) || 0);
+  const pren = Math.round(tot * (porc / 100));
+  const elPren = document.getElementById('resx1-prenadas');
+  if(elPren) { elPren.value = pren; }
+  window.updateResultados();
+};
+window.autoCalcDesdePorcentajeResx2 = function() {
+  const tot = Math.max(0, parseInt(document.getElementById('resx2-animales').value) || 0);
+  const porc = Math.max(0, parseFloat(document.getElementById('resx2-porcentaje').value) || 0);
+  const pren = Math.round(tot * (porc / 100));
+  const elPren = document.getElementById('resx2-prenadas');
+  if(elPren) { elPren.value = pren; }
+  window.updateResultados();
+};
