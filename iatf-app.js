@@ -3521,7 +3521,7 @@ function reCalcTablaPI() {
     let aplic = (isServ ? comp : units * (ins.valorFrasco / (ins.tamano || 1))) / factorUsos;
     let costoDosis = (isServ ? ins.valorFrasco : (ins.valorFrasco / (ins.tamano || 1) * ins.def)) / factorUsos;
     
- gComp += comp; gAplic += aplic; gTotalPorVaca += costoDosis;
+ gTotalPorVaca += costoDosis;
     tCat[ins.cat] += aplic;
     tCatPerCow[ins.cat] += costoDosis;
 
@@ -3897,7 +3897,7 @@ window.ejecutarResx1 = function() {
     let aplic = (isServ ? (units * ins.valorFrasco) : units * (ins.valorFrasco / (ins.tamano || 1))) / factorUsos;
 
     let costoDosis = (isServ ? ins.valorFrasco : (ins.valorFrasco / (ins.tamano || 1) * dose)) / factorUsos;
- gComp += comp; gAplic += aplic; gTotalPorVaca += costoDosis;
+ gTotalPorVaca += costoDosis;
     if(ins.cat) {
       tCat[ins.cat] += aplic;
       tCatPerCow[ins.cat] += costoDosis;
@@ -4074,7 +4074,7 @@ window.ejecutarResx2 = function() {
     let aplic = (isServ ? (units * ins.valorFrasco) : units * (ins.valorFrasco / (ins.tamano || 1))) / factorUsos;
 
     let costoDosis = (isServ ? ins.valorFrasco : (ins.valorFrasco / (ins.tamano || 1) * dose)) / factorUsos;
- gComp += comp; gAplic += aplic; gTotalPorVaca += costoDosis;
+ gTotalPorVaca += costoDosis;
     if(ins.cat) {
       tCat[ins.cat] += aplic;
       tCatPerCow[ins.cat] += costoDosis;
