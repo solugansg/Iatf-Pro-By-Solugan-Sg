@@ -3299,7 +3299,7 @@ window.ejecutarProtocoloInicial = function() {
   }
   // HITO DE INSEMINACIÓN ARTIFICIAL: ia_event se mantiene para la lógica de visualización de hitos
   if (protocol.ia !== '' && protocol.ia !== '-') {
-    state.activeList.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: protocol.ia_hour || '16:00' });
+    state.activeList.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: protocol.ia_hour || '16:00', pName: protocol.name });
   }
 
   state.activeList.sort((a,b) => {
@@ -3370,16 +3370,18 @@ function reCalcTablaPI() {
   const langCode = window.currentLang === 'en' ? 'en-US' : (window.currentLang === 'pt' ? 'pt-BR' : 'es-ES');
 
   state.activeList.forEach(row => {
-    const dDate = new Date(fBase); dDate.setDate(dDate.getDate() + row.dayOffset);
+    const dDate = new Date(fBase); dDate.setDate(fBase.getDate() + row.dayOffset);
     const rowHour = row.hour || hBase;
     
     if (row.colId === 'ia_event') {
+        const isReceptora = row.pName && row.pName.toLowerCase().includes('receptora');
+        const eventoText = isReceptora ? 'EVENTO: TRANSFERENCIA DE EMBRIONES' : t('act_ia');
         htmlRows += `
           <tr style="background: rgba(14, 165, 233, 0.15); border-left: 4px solid var(--accent);">
             <td style="text-align:center;"><strong>${row.dayOffset}</strong> <span class="badge" style="background:var(--accent); color:#fff; font-size:0.6rem; margin-left:4px;">IA/TE</span></td>
             <td>${dDate.toLocaleDateString(langCode, { weekday: 'short', day: 'numeric', month: 'short' })}</td>
             <td style="text-align:center;"><strong>${rowHour}</strong></td>
-            <td colspan="5"><strong style="color: var(--accent); font-size: 1.05rem;"><i data-lucide="activity"></i> ${t('act_ia')}</strong></td>
+            <td colspan="5"><strong style="color: var(--accent); font-size: 1.05rem;"><i data-lucide="activity"></i> ${eventoText}</strong></td>
           </tr>`;
         return;
     }
@@ -3399,7 +3401,7 @@ function reCalcTablaPI() {
     let aplic = (isServ ? comp : units * (ins.valorFrasco / (ins.tamano || 1))) / factorUsos;
     let costoDosis = (isServ ? ins.valorFrasco : (ins.valorFrasco / (ins.tamano || 1) * ins.def)) / factorUsos;
     
-    gComp += comp; gAplic += aplic; gTotalPorVaca += costoDosis;
+ += comp; gAplic += aplic; gTotalPorVaca += costoDosis;
     tCat[ins.cat] += aplic;
     tCatPerCow[ins.cat] += costoDosis;
 
@@ -3738,7 +3740,7 @@ window.ejecutarResx1 = function() {
   });
   
   if (protocol.ia !== '' && protocol.ia !== '-') {
-    resx1Rows.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: protocol.ia_hour || '16:00' });
+    resx1Rows.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: protocol.ia_hour || '16:00', pName: protocol.name });
   }
   
   resx1Rows.sort((a,b) => {
@@ -3753,12 +3755,14 @@ window.ejecutarResx1 = function() {
     const rowHour = row.hour || hBase;
     
     if (row.colId === 'ia_event') {
+        const isReceptora = row.pName && row.pName.toLowerCase().includes('receptora');
+        const eventoText = isReceptora ? 'EVENTO: TRANSFERENCIA DE EMBRIONES' : t('act_ia');
         htmlRows += `
           <tr style="background: rgba(14, 165, 233, 0.15); border-left: 4px solid var(--accent);">
             <td><strong>${row.dayOffset}</strong> <span class="badge" style="background:var(--accent); color:#fff; font-size:0.6rem; margin-left:4px;">IA/TE</span></td>
             <td>${dDate.toLocaleDateString(langCode, { weekday: 'short', day: 'numeric', month: 'short' })}</td>
             <td style="text-align:center;"><strong>${rowHour}</strong></td>
-            <td colspan="3"><strong style="color: var(--accent); font-size: 1.05rem;"><i data-lucide="activity"></i> ${t('act_ia')}</strong></td>
+            <td colspan="3"><strong style="color: var(--accent); font-size: 1.05rem;"><i data-lucide="activity"></i> ${eventoText}</strong></td>
           </tr>`;
         return;
     }
@@ -3773,7 +3777,7 @@ window.ejecutarResx1 = function() {
     let aplic = (isServ ? (units * ins.valorFrasco) : units * (ins.valorFrasco / (ins.tamano || 1))) / factorUsos;
 
     let costoDosis = (isServ ? ins.valorFrasco : (ins.valorFrasco / (ins.tamano || 1) * dose)) / factorUsos;
-    gTotalPorVaca += costoDosis;
+ += comp; gAplic += aplic; gTotalPorVaca += costoDosis;
     if(ins.cat) {
       tCat[ins.cat] += aplic;
       tCatPerCow[ins.cat] += costoDosis;
@@ -3913,7 +3917,7 @@ window.ejecutarResx2 = function() {
   });
   
   if (protocol.ia !== '' && protocol.ia !== '-') {
-    resx2Rows.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: protocol.ia_hour || '16:00' });
+    resx2Rows.push({ colId: 'ia_event', dayOffset: parseInt(protocol.ia), hour: protocol.ia_hour || '16:00', pName: protocol.name });
   }
   
   resx2Rows.sort((a,b) => {
@@ -3928,12 +3932,14 @@ window.ejecutarResx2 = function() {
     const rowHour = row.hour || hBase;
     
     if (row.colId === 'ia_event') {
+        const isReceptora = row.pName && row.pName.toLowerCase().includes('receptora');
+        const eventoText = isReceptora ? 'EVENTO: TRANSFERENCIA DE EMBRIONES' : t('act_ia');
         htmlRows += `
           <tr style="background: rgba(168, 85, 247, 0.15); border-left: 4px solid #a855f7;">
             <td><strong>${row.dayOffset}</strong> <span class="badge" style="background:#a855f7; color:#fff; font-size:0.6rem; margin-left:4px;">IA/TE</span></td>
             <td>${dDate.toLocaleDateString(langCode, { weekday: 'short', day: 'numeric', month: 'short' })}</td>
             <td style="text-align:center;"><strong>${rowHour}</strong></td>
-            <td colspan="3"><strong style="color: #a855f7; font-size: 1.05rem;"><i data-lucide="activity"></i> ${t('act_ia')}</strong></td>
+            <td colspan="3"><strong style="color: #a855f7; font-size: 1.05rem;"><i data-lucide="activity"></i> ${eventoText}</strong></td>
           </tr>`;
         return;
     }
@@ -3948,7 +3954,7 @@ window.ejecutarResx2 = function() {
     let aplic = (isServ ? (units * ins.valorFrasco) : units * (ins.valorFrasco / (ins.tamano || 1))) / factorUsos;
 
     let costoDosis = (isServ ? ins.valorFrasco : (ins.valorFrasco / (ins.tamano || 1) * dose)) / factorUsos;
-    gTotalPorVaca += costoDosis;
+ += comp; gAplic += aplic; gTotalPorVaca += costoDosis;
     if(ins.cat) {
       tCat[ins.cat] += aplic;
       tCatPerCow[ins.cat] += costoDosis;
