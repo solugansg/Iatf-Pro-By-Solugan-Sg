@@ -5469,8 +5469,8 @@ window.enviarWhatsApp = function() {
 window.guardarEnHistorial = function() {
   const ubicacion = document.getElementById('pi-ubicacion').value.trim();
   const finca = document.getElementById('pi-finca').value.trim();
-  const perfilStr = localStorage.getItem('reprocost_perfil');
-  let nitValue = perfilStr ? (JSON.parse(perfilStr).nit || 'N/A') : 'N/A';
+  const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+  let nitValue = perfil.nit || 'N/A';
   if (nitValue === 'N/A') {
     nitValue = prompt("Para poder buscar este reporte después, por favor ingresa tu NIT:");
     if (!nitValue || nitValue.trim() === '') {
