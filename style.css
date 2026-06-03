@@ -1055,18 +1055,19 @@ input:checked + .slider:before { transform: translateX(20px); }
 
 /* Scrollbar Style */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 14px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(14, 165, 233, 0.6);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(14, 165, 233, 0.9);
 }
 
 @media print {
@@ -1938,66 +1939,6 @@ input:checked + .slider:before { transform: translateX(20px); }
   /* Main content padding for bottom nav */
   .main-content {
     padding-bottom: 90px !important; /* Espacio para la barra inferior */
-  }
-
-  /* Transformar Tablas de Resultados a Tarjetas (Responsive Cards) */
-  #tc-pi-body, #tc-resx1-body, #tc-resx2-body {
-    display: block;
-    width: 100%;
-  }
-
-  #tc-pi-body tr, #tc-resx1-body tr, #tc-resx2-body tr {
-    display: flex;
-    flex-direction: column;
-    background: rgba(30, 41, 59, 0.6);
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  }
-
-  #tc-pi-body td, #tc-resx1-body td, #tc-resx2-body td {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.6rem 0 !important;
-    border-bottom: 1px dashed rgba(255,255,255,0.1) !important;
-    text-align: right !important;
-    min-height: auto !important;
-  }
-
-  #tc-pi-body td:last-child, #tc-resx1-body td:last-child, #tc-resx2-body td:last-child {
-    border-bottom: none !important;
-  }
-
-  /* Etiquetas generadas con nth-of-type para las 8 columnas estándar de PI/Resync */
-  #tc-pi-body td::before, #tc-resx1-body td::before, #tc-resx2-body td::before {
-    font-weight: 700;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    text-align: left;
-    margin-right: 1rem;
-    flex-shrink: 0;
-  }
-
-  #tc-pi-body td:nth-of-type(1)::before, #tc-resx1-body td:nth-of-type(1)::before, #tc-resx2-body td:nth-of-type(1)::before { content: "Día"; }
-  #tc-pi-body td:nth-of-type(2)::before, #tc-resx1-body td:nth-of-type(2)::before, #tc-resx2-body td:nth-of-type(2)::before { content: "Fecha"; }
-  #tc-pi-body td:nth-of-type(3)::before, #tc-resx1-body td:nth-of-type(3)::before, #tc-resx2-body td:nth-of-type(3)::before { content: "Hora"; }
-  #tc-pi-body td:nth-of-type(4)::before, #tc-resx1-body td:nth-of-type(4)::before, #tc-resx2-body td:nth-of-type(4)::before { content: "ACTIVIDAD / INSUMO"; }
-  #tc-pi-body td:nth-of-type(5)::before, #tc-resx1-body td:nth-of-type(5)::before, #tc-resx2-body td:nth-of-type(5)::before { content: "DOSIS"; }
-  #tc-pi-body td:nth-of-type(6)::before, #tc-resx1-body td:nth-of-type(6)::before, #tc-resx2-body td:nth-of-type(6)::before { content: "UND"; }
-  #tc-pi-body td:nth-of-type(7)::before, #tc-resx1-body td:nth-of-type(7)::before, #tc-resx2-body td:nth-of-type(7)::before { content: "VALOR UNITARIO"; }
-  #tc-pi-body td:nth-of-type(8)::before, #tc-resx1-body td:nth-of-type(8)::before, #tc-resx2-body td:nth-of-type(8)::before { content: "INVERSIÓN TOTAL"; }
-
-  /* En el modo de edición de tabla (si tiene menos columnas o inputs), adaptar */
-  #tc-pi-body td[colspan], #tc-resx1-body td[colspan], #tc-resx2-body td[colspan] {
-    justify-content: center !important;
-    text-align: center !important;
-  }
-  #tc-pi-body td[colspan]::before, #tc-resx1-body td[colspan]::before, #tc-resx2-body td[colspan]::before {
-    display: none !important;
   }
 
   /* Modales a 100% y deslizables */

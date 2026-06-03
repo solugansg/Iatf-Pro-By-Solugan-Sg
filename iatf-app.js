@@ -6080,3 +6080,21 @@ window.autoCalcDesdePorcentajeResx2 = function() {
   if(elPren) { elPren.value = pren; }
   window.updateResultados();
 };
+
+window.desactivarFase = function(faseId) {
+  if (faseId === 'resincronizacion1') {
+    const cb = document.getElementById('pi-check-resx1');
+    if(cb) {
+      cb.checked = false;
+      window.toggleFase('resincronizacion1', false);
+    }
+    window.irAPestana('protocolo-inicial');
+  } else if (faseId === 'resincronizacion2') {
+    const cb = document.getElementById('pi-check-resx2');
+    if(cb) {
+      cb.checked = false;
+      window.toggleFase('resincronizacion2', false);
+    }
+    window.irAPestana('protocolo-inicial');
+  }
+};

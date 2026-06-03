@@ -23,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260603.32">
+  <link rel="stylesheet" href="style.css?v=V 260603.33">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -154,7 +154,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260603.32</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260603.33</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;" data-i18n="sidebar_active_user">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -227,7 +227,7 @@
       <!-- Cabecera Móvil (Hamburguesa) -->
       <div class="mobile-header" style="display: none;">
         
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260603.32</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260603.33</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -721,12 +721,15 @@
       </div>
 
       <section id="resincronizacion1" class="tab-content view-transition">
-        <header class="section-header">
+        <header class="section-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
           <div class="header-content">
             <h1 data-i18n="resx1_title">Resincronización 1</h1>
             <p class="text-muted" data-i18n="resx1_subtitle">Gestión de animales vacíos tras el primer diagnóstico
               (Dx1).</p>
           </div>
+          <button class="btn" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);" onclick="desactivarFase('resincronizacion1')">
+            <i data-lucide="power-off"></i> <span data-i18n="btn_deactivate">Desactivar Fase</span>
+          </button>
         </header>
 
         <div class="glass-panel p-2 mb-2" style="background: rgba(14, 165, 233, 0.02);">
@@ -874,12 +877,15 @@
       </section>
 
       <section id="resincronizacion2" class="tab-content view-transition">
-        <header class="section-header">
+        <header class="section-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
           <div class="header-content">
             <h1 data-i18n="resx2_title">Resincronización 2</h1>
             <p class="text-muted" data-i18n="resx2_subtitle">Gestión de animales vacíos tras el segundo diagnóstico
               (Dx2).</p>
           </div>
+          <button class="btn" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);" onclick="desactivarFase('resincronizacion2')">
+            <i data-lucide="power-off"></i> <span data-i18n="btn_deactivate">Desactivar Fase</span>
+          </button>
         </header>
 
         <div class="glass-panel p-2 mb-2" style="background: rgba(168, 85, 247, 0.02);">
@@ -1599,7 +1605,7 @@
     }
   </style>
 
-  <script src="iatf-app.js?v=V260603.32"></script>
+  <script src="iatf-app.js?v=V260603.33"></script>
   
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>
