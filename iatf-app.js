@@ -1032,6 +1032,42 @@ window.tProtocol = function(val) {
 };
 window.translations = {
   es: {
+    app_title: "Iatf Pro",
+    by_solugan: "por Solugan SG",
+    auth_register_title: "Registro de Usuario",
+    auth_nit: "Identificación (NIT o C.C.)",
+    auth_name: "Nombre Completo",
+    auth_country: "País",
+    auth_phone: "Teléfono",
+    auth_farm: "Nombre de Finca o Proyecto",
+    auth_email: "Correo Electrónico",
+    auth_pass: "Contraseña",
+    auth_login_link: "¿Ya tienes cuenta? Inicia sesión",
+    auth_register_link: "¿No tienes cuenta? Regístrate aquí",
+    sidebar_active_user: "Usuario Activo",
+    config_delete_all: "ELIMINAR TODOS",
+    config_th_protocol: "Protocolo",
+    config_th_obs: "Observaciones",
+    config_th_actions: "Acciones",
+    und_ml: "ml / Und",
+    resx1_prot: "Protocolo Resincronización 1",
+    resx1_date_auto: "Fecha Inicio (Auto)",
+    resx1_time: "Hora de Inicio",
+    resx1_preg: "Preñeces Resincronización 1 (Proyectado o Real)",
+    btn_ajustar_precios: "AJUSTAR PRECIOS",
+    btn_reiniciar_fase: "REINICIAR FASE",
+    table_th_day: "Día",
+    table_th_date: "Fecha",
+    table_th_time: "Hora",
+    table_th_hormone: "Hormona / Insumo",
+    table_th_dose: "Dosis",
+    table_th_value: "Valor",
+    resx2_prot: "Protocolo Resincronización 2",
+    resx2_preg: "Preñeces Resincronización 2 (Proyectado o Real)",
+    dash_pi: "Protocolo Inicial (PI)",
+    admin_loading_data: "Cargando datos...",
+    aliados_contact_wa: "Contactar por WhatsApp",
+
     sidebar_dashboard: "Tablero de Control",
     sidebar_pi: "Protocolo Inicial",
     sidebar_resx1: "Resincronización 1",
@@ -1370,6 +1406,42 @@ window.translations = {
     chart_dx: "Dx Preñez"
   },
   en: {
+    app_title: "Iatf Pro",
+    by_solugan: "by Solugan SG",
+    auth_register_title: "User Registration",
+    auth_nit: "ID (NIT or SSN)",
+    auth_name: "Full Name",
+    auth_country: "Country",
+    auth_phone: "Phone",
+    auth_farm: "Farm or Project Name",
+    auth_email: "Email",
+    auth_pass: "Password",
+    auth_login_link: "Already have an account? Log in",
+    auth_register_link: "Don't have an account? Register here",
+    sidebar_active_user: "Active User",
+    config_delete_all: "DELETE ALL",
+    config_th_protocol: "Protocol",
+    config_th_obs: "Observations",
+    config_th_actions: "Actions",
+    und_ml: "ml / Unit",
+    resx1_prot: "Resynchronization 1 Protocol",
+    resx1_date_auto: "Start Date (Auto)",
+    resx1_time: "Start Time",
+    resx1_preg: "Resync 1 Pregnancies (Projected or Real)",
+    btn_ajustar_precios: "ADJUST PRICES",
+    btn_reiniciar_fase: "RESET PHASE",
+    table_th_day: "Day",
+    table_th_date: "Date",
+    table_th_time: "Time",
+    table_th_hormone: "Hormone / Input",
+    table_th_dose: "Dose",
+    table_th_value: "Value",
+    resx2_prot: "Resynchronization 2 Protocol",
+    resx2_preg: "Resync 2 Pregnancies (Projected or Real)",
+    dash_pi: "Initial Protocol (IP)",
+    admin_loading_data: "Loading data...",
+    aliados_contact_wa: "Contact via WhatsApp",
+
     sidebar_dashboard: "Control Dashboard",
     sidebar_pi: "Initial Protocol",
     sidebar_resx1: "Resynchronization 1",
@@ -1708,6 +1780,42 @@ window.translations = {
     chart_dx: "Pregnancy Dx"
   },
   pt: {
+    app_title: "Iatf Pro",
+    by_solugan: "por Solugan SG",
+    auth_register_title: "Registro de Usuário",
+    auth_nit: "Identificação (CPF ou CNPJ)",
+    auth_name: "Nome Completo",
+    auth_country: "País",
+    auth_phone: "Telefone",
+    auth_farm: "Nome da Fazenda ou Projeto",
+    auth_email: "E-mail",
+    auth_pass: "Senha",
+    auth_login_link: "Já tem uma conta? Faça login",
+    auth_register_link: "Não tem uma conta? Registre-se aqui",
+    sidebar_active_user: "Usuário Ativo",
+    config_delete_all: "APAGAR TODOS",
+    config_th_protocol: "Protocolo",
+    config_th_obs: "Observações",
+    config_th_actions: "Ações",
+    und_ml: "ml / Unid",
+    resx1_prot: "Protocolo de Ressincronização 1",
+    resx1_date_auto: "Data de Início (Auto)",
+    resx1_time: "Hora de Início",
+    resx1_preg: "Prenhezes Ressincronização 1 (Projetado ou Real)",
+    btn_ajustar_precios: "AJUSTAR PREÇOS",
+    btn_reiniciar_fase: "REINICIAR FASE",
+    table_th_day: "Dia",
+    table_th_date: "Data",
+    table_th_time: "Hora",
+    table_th_hormone: "Hormônio / Insumo",
+    table_th_dose: "Dose",
+    table_th_value: "Valor",
+    resx2_prot: "Protocolo de Ressincronização 2",
+    resx2_preg: "Prenhezes Ressincronização 2 (Projetado ou Real)",
+    dash_pi: "Protocolo Inicial (PI)",
+    admin_loading_data: "Carregando dados...",
+    aliados_contact_wa: "Contatar pelo WhatsApp",
+
     sidebar_dashboard: "Painel de Controle",
     sidebar_pi: "Protocolo Inicial",
     sidebar_resx1: "Ressincronização 1",
@@ -1736,7 +1844,7 @@ window.translations = {
     tc_ingreso_carne: "Receita de Venda de Carne/Animal",
     btn_limpiar: "Limpar",
     btn_guardar: "SALVAR RELATÓRIO",
-    btn_wa: "ENVIAR POR WA",
+    btn_wa: "ENVIAR PELO WHATSAPP",
     btn_edit: "EDITAR",
     btn_new: "NOVO",
     btn_show: "MOSTRAR",
@@ -1787,9 +1895,9 @@ window.translations = {
     modal_total_hormonas: "TOTAL COMPRA HORMÔNIOS:",
     info_title: "Tabelas de Informação e Referência",
     info_subtitle: "Consulta de parâmetros técnicos e bancos de dados do sistema.",
-    tc_matriz_title: "MATRIZ DE PROTOCOLOS",
-    btn_show_p: "MOSTRAR PROTOCOLO",
-    btn_hide_p: "OCULTAR PROTOCOLO",
+    tc_matriz_title: "QUADRO DE PROTOCOLOS",
+    btn_show_p: "EXIBIR PROTOCOLO",
+    btn_hide_p: "ESCONDER PROTOCOLO",
     btn_reset: "Restaurar Base",
     btn_save: "Salvar e Bloquear",
     cat_hormonas: "MEDICAMENTOS HORMONAIS",
@@ -1845,8 +1953,7 @@ window.translations = {
     tc_costo_diario_sub: "Custo de manutenção diária por animal",
     msg_edit_active: "Modo de Edição Ativo. Você pode adicionar, modificar ou excluir protocolos.",
     msg_view_mode: "Modo de Consulta. Clique em \"Edição Bloqueada\" para modificar.",
-    btn_hide_p: "Ocultar Protocolos",
-    modal_val_hormona: "VALOR HORMÔNIO APLICADO",
+        modal_val_hormona: "VALOR HORMÔNIO APLICADO",
     modal_val_genetica: "VALOR COMPRA GENÉTICA",
     modal_val_asistencia: "VALOR ASSIST. TÉCNICA",
     modal_val_iate: "VALOR IA / TE",
@@ -2592,7 +2699,7 @@ window.irAEditarMatriz = function() {
   // Mostrar la sección si está oculta
   if(container.style.display === 'none') {
     container.style.display = 'block';
-    btnToggle.innerHTML = '<i data-lucide="eye-off"></i> Ocultar Protocolos';
+    btnToggle.innerHTML = `<i data-lucide="eye-off"></i> ${t('btn_hide_p')}`;
   }
   
   // Desplazar a la sección
@@ -4021,9 +4128,9 @@ window.syncFases = function() {
       s2.style.color = "white";
       s2.style.opacity = "1";
       s2.style.webkitTextFillColor = "white";
-      if(lblF2) lblF2.innerText = fBase.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+      if(lblF2) lblF2.innerText = fBase.toLocaleDateString(langCode, { day: 'numeric', month: 'long', year: 'numeric' });
     } else if(lblF2) {
-      lblF2.innerText = fBase.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+      lblF2.innerText = fBase.toLocaleDateString(langCode, { day: 'numeric', month: 'long', year: 'numeric' });
     }
   }
 
@@ -4087,7 +4194,7 @@ window.onProtocoloChange = function() {
 }
 
 window.resetPantallaPI = function() {
-  if(!confirm("¿Deseas BORRAR TODOS los datos del proyecto actual? Esta acción no se puede deshacer.")) return;
+  if(!confirm(t("confirm_delete_all"))) return;
   
   // Limpiar todos los campos de entrada
   ['pi-fecha','pi-finca'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
@@ -4109,11 +4216,11 @@ window.resetPantallaPI = function() {
   });
   
   const btnPI = document.getElementById('btn-toggle-pi');
-  if(btnPI) { btnPI.innerHTML = '<i data-lucide="eye"></i> MOSTRAR PROTOCOLO'; btnPI.classList.remove('active-toggle'); }
+  if(btnPI) { btnPI.innerHTML = `<i data-lucide="eye"></i> <span id="txt-toggle-pi">${t('btn_show_p')}</span>`; btnPI.classList.remove('active-toggle'); }
   const btnReSx1 = document.getElementById('btn-toggle-resx1');
-  if(btnReSx1) { btnReSx1.innerHTML = '<i data-lucide="eye"></i> MOSTRAR PROTOCOLO RESX1'; btnReSx1.classList.remove('active-toggle'); }
+  if(btnReSx1) { btnReSx1.innerHTML = `<i data-lucide="eye"></i> <span id="txt-toggle-resx1">${t('btn_show_p')}</span>`; btnReSx1.classList.remove('active-toggle'); }
   const btnReSx2 = document.getElementById('btn-toggle-resx2');
-  if(btnReSx2) { btnReSx2.innerHTML = '<i data-lucide="eye"></i> MOSTRAR PROTOCOLO RESX2'; btnReSx2.classList.remove('active-toggle'); }
+  if(btnReSx2) { btnReSx2.innerHTML = `<i data-lucide="eye"></i> <span id="txt-toggle-resx2">${t('btn_show_p')}</span>`; btnReSx2.classList.remove('active-toggle'); }
 
   lucide.createIcons();
   saveState();
@@ -4311,7 +4418,7 @@ window.updateResultados = function() {
     
     fechaRetornoHtml = `<div style="font-size: 0.65rem; margin-top: 4px; color: rgba(255,255,255,0.6); font-weight: 500;">
       Ciclo completo: ${totalDiasCiclo} días<br>
-      <span style="color: var(--accent); opacity: 0.9;">Retorno: ${fRetorno.toLocaleDateString('es-ES', {month:'short', year:'numeric'}).toUpperCase()}</span>
+      <span style="color: var(--accent); opacity: 0.9;">Retorno: ${fRetorno.toLocaleDateString((window.currentLang === 'en' ? 'en-US' : (window.currentLang === 'pt' ? 'pt-BR' : 'es-ES')), {month:'short', year:'numeric'}).toUpperCase()}</span>
     </div>`;
   }
 
@@ -5679,7 +5786,7 @@ window.renderAliadosCards = function() {
   if (!grid) return;
   
   if (!window.aliadosData || !window.aliadosData.rows || window.aliadosData.rows.length === 0) {
-    grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--glass-border);"><i data-lucide="info" style="width: 40px; height: 40px; margin-bottom: 1rem; opacity: 0.5;"></i><p>No hay aliados cargados. Usa el botón de candado para Cargar Excel o espera a que se sincronicen desde la nube.</p></div>';
+    grid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--glass-border);"><i data-lucide="info" style="width: 40px; height: 40px; margin-bottom: 1rem; opacity: 0.5;"></i><p>${t('aliados_empty')}</p></div>`;
     if (typeof lucide !== 'undefined') lucide.createIcons();
     return;
   }
