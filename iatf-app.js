@@ -5529,12 +5529,36 @@ window.buscarPorNit = function() {
   // Remove spaces, dots, dashes for a clean comparison
   const termClean = term.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
 
-  const historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
+  let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
   
+  // MIGRACIÓN AUTOMÁTICA: Si hay reportes con N/A, asignarles el NIT del usuario actual
+  const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
+  if (perfil.nit) {
+    let changed = false;
+    historial.forEach(r => {
+      if (!r.nit || r.nit === 'N/A') {
+        r.nit = perfil.nit;
+        changed = true;
+      }
+    });
+    if (changed) {
+      localStorage.setItem('reprocost_historial', JSON.stringify(historial));
+    }
+  }
+
   const filtrados = historial.filter(r => {
     const nitGuardado = String(r.nit || '');
     const nitClean = nitGuardado.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-    return nitClean.includes(termClean) || nitGuardado.toLowerCase().includes(term.toLowerCase());
+    
+    // Buscar también por finca o fecha para que sea más útil
+    const fincaClean = String(r.finca || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+    const fechaClean = String(r.fecha || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+
+    return nitClean.includes(termClean) || 
+           nitGuardado.toLowerCase().includes(term.toLowerCase()) ||
+           fincaClean.includes(termClean) ||
+           String(r.finca || '').toLowerCase().includes(term.toLowerCase()) ||
+           String(r.fecha || '').toLowerCase().includes(term.toLowerCase());
   });
 
   const container = document.getElementById('historial-resultados');
