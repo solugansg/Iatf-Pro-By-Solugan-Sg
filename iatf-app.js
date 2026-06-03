@@ -4,7 +4,7 @@
 // ==========================================
 window.DEFAULT_MATRIZ = [{"name":"Tradicional (IATF)","days":["0","-","0","-","10","-","8","-","-","8","8","10","8","0","8","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 48-60 hs - GnRh Opcional"},{"name":"Jsynch (IATF)","days":["0","-","0","-","9","-","6","-","-","6","-","9","6","0","6","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 72 hs + GnRh"},{"name":"Novillas (IATF)","days":["0","-","0","9","-","-","8","-","-","8","-","10","8","0","8","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 24-32 horas"},{"name":"Ovsynch (IATF)","days":["-","-","-","-","0","9","7","-","-","-","-","10","-","0","-","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"IATF 17-24 horas post GnRh"},{"name":"Cosynch (IATF)","days":["-","-","-","-","0","9","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 48 horas + GnRh"},{"name":"Heatsynch (IATF)","days":["-","-","8","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IATF 48-52 horas post Pgf2@"},{"name":"Presynch (IA)","days":["-","-","-","-","0","9","-26","-12","7","-","-","10","-","0","-","10","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"10","obs":"Observar celo - IA 12 horas post celo estable"},{"name":"Selectsynch (IA)","days":["-","-","-","-","0","-","7","-","-","-","-","8","-","0","-","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"Observar celo - IA 12 horas post celo estable"},{"name":"Dib Vacas (IA)","days":["0","-","-","-","0","8","7","-","-","-","-","8","-","0","7","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"IA celo detectado + GnRh"},{"name":"Dib Novillas (IA)","days":["0","-","0","-","8","-","7","-","-","-","-","8","-","0","7","8","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"8","obs":"IA celo detectado + GnRh"},{"name":"DoblePGF2@ (IA)","days":["-","-","-","-","-","-","0","11","-","-","-","2","-","0","-","2","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"2","obs":"Observar celo 1-5 dias IA 12 horas post celo estable"},{"name":"Monta Natural 1 (IA)","days":["-","-","-","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado ó Toro x 5 dias"},{"name":"Monta Natural 2 (IA)","days":["-","-","8","-","0","-","7","-","-","-","-","9","-","0","-","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado ó Toro x 5 dias"},{"name":"Monta Natural 3 DIB (IA)","days":["0","-","-","-","0","-","7","-","-","-","-","9","8","0","7","9","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"9","obs":"IA celo detectado ó Toro x 5 dias"},{"name":"Receptoras 1 (IATF)","role":"resx1","days":["0","-","0","9","-","-","5","-","-","5","-","10","8","0","5","18","10","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"18","obs":"Transferencia de Embriones"},{"name":"Receptoras 2 (IATF)","role":"resx2","days":["0","-","0","-","-","-","8","-","-","8","8","9","8","0","8","17","9","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"17","obs":"Transferencia de Embriones"},{"name":"Resincronizacion 1 (IATF)","role":"resx1b","days":["32","-","32","-","42","-","40","-","-","40","40","42","40","32","40","42","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"42","obs":"Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional"},{"name":"Resincronizacion 2 (IATF)","role":"resx2b","days":["64","-","64","-","74","-","72","-","-","72","72","74","72","64","72","74","-","30","-"],"hours":["08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00","08:00"],"ia":"74","obs":"Utilizar DIB de segundo uso - Iatf 48-60 hs GnRh opcional"}];
 
-window.DEFAULT_ENCABEZADOS = ['DIB<br><small>Día</small>', 'P4 Iny<br><small>Día</small>', 'B.E. 1<br><small>Día</small>', 'B.E. 2<br><small>Día</small>', 'GnRh 1<br><small>Día</small>', 'GnRh 2<br><small>Día</small>', 'Pgf2@ 1<br><small>Día</small>', 'Pgf2@ 2<br><small>Día</small>', 'Pgf2@ 3<br><small>Día</small>', 'eCG<br><small>Día</small>', 'C.E.<br><small>Día</small>', 'Genética<br><small>Día</small>', 'Retiro<br><small>Día</small>', 'Asis. 1<br><small>Día</small>', 'Asis. 2<br><small>Día</small>', '<div style="padding:4px; font-size:0.75rem;">IA/TE<br><small>Día</small></div>', 'Aspiración<br><small>Folicular</small>', 'Dx1<br><small>Día</small>', 'Dx2<br><small>Día</small>'];
+window.DEFAULT_ENCABEZADOS = ["DISPOSITIVO INTRAVAGINAL BOVINO (P4)","PROGESTERONA INYECTABLE","BENZOATO DE ESTRADIOL (BE) 1A DOSIS","BENZOATO DE ESTRADIOL (BE) 2A DOSIS","HORMONA LIBERADORA DE GONADOTROPINA (GNRH) 1A DOSIS","HORMONA LIBERADORA DE GONADOTROPINA (GNRH) 2A DOSIS","PROSTAGLANDINA (PGF2@) 1A DOSIS","PROSTAGLANDINA (PGF2@) 2A DOSIS","PROSTAGLANDINA (PGF2@) 3A DOSIS","GONADOTROPINA CORIÓNICA EQUINA (ECG)","CIPIONATO DE ESTRADIOL (C.E)","GENÉTICA (SEMEN / EMBRIÓN)","RETIRO DIB","ASISTENCIA TÉCNICA 1","ASISTENCIA TÉCNICA 2","IA/TE","ASPIRACIÓN FOLICULAR (OPU)","CONFIRMACIÓN PREÑEZ DX1","CONFIRMACIÓN PREÑEZ DX2"];
 
 // ==========================================
 // CONFIGURACIÓN E INTEGRACIÓN DE FIREBASE
@@ -276,11 +276,11 @@ auth.onAuthStateChanged(user => {
               // Determinar de dónde cargar la matriz
               if (globalMatriz) {
                 state.matriz = window.migrarYSanitizarMatriz(globalMatriz);
-                if (globalEncabezados) state.encabezados = window.migrarYSanitizarEncabezados(globalEncabezados);
+                if (globalEncabezados) { state.encabezados = window.DEFAULT_ENCABEZADOS.slice(); }
                 localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
               } else if (userData.matriz && Array.isArray(userData.matriz) && userData.matriz.length > 0) {
                 state.matriz = window.migrarYSanitizarMatriz(userData.matriz);
-                if (userData.encabezados) state.encabezados = window.migrarYSanitizarEncabezados(userData.encabezados);
+                if (userData.encabezados) { state.encabezados = window.DEFAULT_ENCABEZADOS.slice(); }
                 localStorage.setItem('reprocost_custom_matriz', JSON.stringify(state.matriz));
                 // Auto-migración si es el admin y la tabla global estaba vacía
                 if (user.email === ADMIN_EMAIL) {
@@ -2235,6 +2235,7 @@ window.changeLanguage = function(lang) {
     actualizarProtocoloSeleccionado('resx1');
     actualizarProtocoloSeleccionado('resx2');
   }
+  if (typeof renderMatriz === 'function') renderMatriz();
   lucide.createIcons();
 };
 
@@ -2584,6 +2585,61 @@ window.limpiarModuloCarne = function() {
   if (typeof updateResultados === 'function') updateResultados();
 }
 
+window.tHeader = function(val) {
+  if (!val) return val;
+  const currentLang = window.currentLang || 'es';
+  if (currentLang === 'es') return val;
+
+  const mapEn = {
+    'PROTOCOLOS / HORMONAS': 'PROTOCOLS / HORMONES',
+    'DISPOSITIVO INTRAVAGINAL BOVINO (P4)': 'BOVINE INTRAVAGINAL DEVICE (P4)',
+    'PROGESTERONA INYECTABLE': 'INJECTABLE PROGESTERONE',
+    'BENZOATO DE ESTRADIOL (BE) 1A DOSIS': 'ESTRADIOL BENZOATE (EB) 1ST DOSE',
+    'BENZOATO DE ESTRADIOL (BE) 2A DOSIS': 'ESTRADIOL BENZOATE (EB) 2ND DOSE',
+    'HORMONA LIBERADORA DE GONADOTROPINA (GNRH) 1A DOSIS': 'GONADOTROPIN RELEASING HORMONE (GNRH) 1ST DOSE',
+    'HORMONA LIBERADORA DE GONADOTROPINA (GNRH) 2A DOSIS': 'GONADOTROPIN RELEASING HORMONE (GNRH) 2ND DOSE',
+    'PROSTAGLANDINA (PGF2@) 1A DOSIS': 'PROSTAGLANDIN (PGF2@) 1ST DOSE',
+    'PROSTAGLANDINA (PGF2@) 2A DOSIS': 'PROSTAGLANDIN (PGF2@) 2ND DOSE',
+    'PROSTAGLANDINA (PGF2@) 3A DOSIS': 'PROSTAGLANDIN (PGF2@) 3RD DOSE',
+    'GONADOTROPINA CORIÓNICA EQUINA (ECG)': 'EQUINE CHORIONIC GONADOTROPIN (ECG)',
+    'CIPIONATO DE ESTRADIOL (C.E)': 'ESTRADIOL CYPIONATE (E.C)',
+    'GENÉTICA (SEMEN / EMBRIÓN)': 'GENETICS (SEMEN / EMBRYO)',
+    'RETIRO DIB': 'DIB WITHDRAWAL',
+    'ASISTENCIA TÉCNICA 1': 'TECHNICAL ASSISTANCE 1',
+    'ASISTENCIA TÉCNICA 2': 'TECHNICAL ASSISTANCE 2',
+    'IA/TE': 'AI/ET',
+    'ASPIRACIÓN FOLICULAR (OPU)': 'FOLLICULAR ASPIRATION (OPU)',
+    'CONFIRMACIÓN PREÑEZ DX1': 'PREGNANCY CONFIRMATION DX1',
+    'CONFIRMACIÓN PREÑEZ DX2': 'PREGNANCY CONFIRMATION DX2'
+  };
+
+  const mapPt = {
+    'PROTOCOLOS / HORMONAS': 'PROTOCOLOS / HORMÔNIOS',
+    'DISPOSITIVO INTRAVAGINAL BOVINO (P4)': 'DISPOSITIVO INTRAVAGINAL BOVINO (P4)',
+    'PROGESTERONA INYECTABLE': 'PROGESTERONA INJETÁVEL',
+    'BENZOATO DE ESTRADIOL (BE) 1A DOSIS': 'BENZOATO DE ESTRADIOL (BE) 1a DOSE',
+    'BENZOATO DE ESTRADIOL (BE) 2A DOSIS': 'BENZOATO DE ESTRADIOL (BE) 2a DOSE',
+    'HORMONA LIBERADORA DE GONADOTROPINA (GNRH) 1A DOSIS': 'HORMÔNIO LIBERADOR DE GONADOTROFINA (GNRH) 1a DOSE',
+    'HORMONA LIBERADORA DE GONADOTROPINA (GNRH) 2A DOSIS': 'HORMÔNIO LIBERADOR DE GONADOTROFINA (GNRH) 2a DOSE',
+    'PROSTAGLANDINA (PGF2@) 1A DOSIS': 'PROSTAGLANDINA (PGF2@) 1a DOSE',
+    'PROSTAGLANDINA (PGF2@) 2A DOSIS': 'PROSTAGLANDINA (PGF2@) 2a DOSE',
+    'PROSTAGLANDINA (PGF2@) 3A DOSIS': 'PROSTAGLANDINA (PGF2@) 3a DOSE',
+    'GONADOTROPINA CORIÓNICA EQUINA (ECG)': 'GONADOTROFINA CORIÔNICA EQUINA (ECG)',
+    'CIPIONATO DE ESTRADIOL (C.E)': 'CIPIONATO DE ESTRADIOL (C.E)',
+    'GENÉTICA (SEMEN / EMBRIÓN)': 'GENÉTICA (SÊMEN / EMBRIÃO)',
+    'RETIRO DIB': 'RETIRADA DIB',
+    'ASISTENCIA TÉCNICA 1': 'ASSISTÊNCIA TÉCNICA 1',
+    'ASISTENCIA TÉCNICA 2': 'ASSISTÊNCIA TÉCNICA 2',
+    'IA/TE': 'IA/TE',
+    'ASPIRACIÓN FOLICULAR (OPU)': 'ASPIRAÇÃO FOLICULAR (OPU)',
+    'CONFIRMACIÓN PREÑEZ DX1': 'CONFIRMAÇÃO DE PRENHEZ DX1',
+    'CONFIRMACIÓN PREÑEZ DX2': 'CONFIRMAÇÃO DE PRENHEZ DX2'
+  };
+
+  if (currentLang === 'en') return mapEn[val] || val;
+  if (currentLang === 'pt') return mapPt[val] || val;
+  return val;
+};
 // 2. MATRIZ
 let isMatrixUnlocked = false;
 
@@ -2592,18 +2648,18 @@ function renderEncabezados() {
   if (!trHead) return;
   // Limpiar encabezados existentes dinámicos manteniendo los estáticos (el primero y los dos últimos)
   trHead.innerHTML = `
-    <th style="text-align: left; background: #0f172a;">Protocolos / Hormonas</th>
+    <th style="text-align: left; background: #0f172a; font-size: 90%; font-weight: 500;">${window.tHeader ? window.tHeader("PROTOCOLOS / HORMONAS") : "PROTOCOLOS / HORMONAS"}</th>
   `;
   
   // Agregar encabezados dinámicos
   if (state.encabezados && state.encabezados.length > 0) {
     state.encabezados.forEach(enc => {
-      trHead.innerHTML += `<th>${enc}</th>`;
+      trHead.innerHTML += `<th style="font-size: 90%; font-weight: 500;">${window.tHeader ? window.tHeader(enc) : enc}</th>`;
     });
   } else {
     // Fallback if empty (should never happen if default is loaded)
     for (let i = 0; i < state.colDefs.length; i++) {
-      trHead.innerHTML += `<th>Col ${i+1}</th>`;
+      trHead.innerHTML += `<th style="font-size: 90%; font-weight: 500;">Col ${i+1}</th>`;
     }
   }
 
@@ -3625,7 +3681,7 @@ window.loadState = function() {
       
       state.matriz = window.migrarYSanitizarMatriz(rawMatrix || state.matriz);
       if (parsed.encabezados && Array.isArray(parsed.encabezados) && parsed.encabezados.length > 0) {
-        state.encabezados = window.migrarYSanitizarEncabezados(parsed.encabezados);
+        state.encabezados = window.DEFAULT_ENCABEZADOS.slice();
       }
       renderMatriz();
       actualizarSelectProtocolos();
