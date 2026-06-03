@@ -1,6 +1,6 @@
 {
   "name": "iatf-pro",
-  "version": "V 260603.20",
+  "version": "V 260603.21",
   "description": "Iatf Pro - Analisis de Costos con proteccion de formulas y soporte offline",
   "main": "iatf-app.js",
   "scripts": {

@@ -3329,13 +3329,13 @@ window.guardarPreciosModal = function() {
     ejecutarProtocoloInicial(); 
     renderMatriz(); 
     if (document.getElementById('pi-check-resx1')?.checked) {
-      setTimeout(() => { irAPestana('resincronizacion1'); }, 100);
+      setTimeout(() => { irAPestana('resincronizacion1'); ejecutarResx1(); lucide.createIcons(); }, 100);
     }
   }
   else if (modalContext === 'resx1') { 
     ejecutarResx1(); 
     if (document.getElementById('pi-check-resx2')?.checked) {
-      setTimeout(() => { irAPestana('resincronizacion2'); }, 100);
+      setTimeout(() => { irAPestana('resincronizacion2'); ejecutarResx2(); lucide.createIcons(); }, 100);
     }
   }
   else if (modalContext === 'resx2') { 
