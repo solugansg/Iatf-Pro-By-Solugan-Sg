@@ -23,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260603.14">
+  <link rel="stylesheet" href="style.css?v=V 260603.15">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -154,7 +154,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260603.14</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260603.15</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;" data-i18n="sidebar_active_user">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -229,7 +229,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260603.14</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260603.15</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -531,34 +531,7 @@
             </div>
           </div>
 
-          <!-- Fila 3: Opciones de Resincronización (Destacadas) -->
-          <div class="resync-toggle-card"
-            style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid var(--glass-border); margin-top: 1rem;">
-            <div style="display: flex; flex-direction: column;">
-              <span style="font-weight: 600; color: var(--text-main);" data-i18n="pi_include_resync">¿Deseas incluir
-                fases de resincronización?</span>
-            </div>
-            <div class="resync-toggle-options" style="display: flex; gap: 1.5rem;">
-              <div id="wrapper-check-resx1"
-                style="display: flex; align-items: center; gap: 1rem; background: rgba(14, 165, 233, 0.1); padding: 12px 24px; border-radius: 12px; border: 1px solid var(--accent); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.1);">
-                <span id="label-check-resx1" class="text-accent" style="font-size: 1rem; font-weight: 800; white-space: nowrap;"
-                  data-i18n="pi_include_resx1">INCLUIR Resincronización 1</span>
-                <label class="switch" style="transform: scale(1.25);">
-                  <input type="checkbox" id="pi-check-resx1" onchange="toggleFase('resincronizacion1', this.checked)">
-                  <span class="slider round"></span>
-                </label>
-              </div>
-              <div id="wrapper-check-resx2"
-                style="display: flex; align-items: center; gap: 1rem; background: rgba(168, 85, 247, 0.1); padding: 12px 24px; border-radius: 12px; border: 1px solid #a855f7; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.1);">
-                <span id="label-check-resx2" style="font-size: 1rem; font-weight: 800; white-space: nowrap; color: #a855f7;"
-                  data-i18n="pi_include_resx2">INCLUIR Resincronización 2</span>
-                <label class="switch" style="transform: scale(1.25);">
-                  <input type="checkbox" id="pi-check-resx2" onchange="toggleFase('resincronizacion2', this.checked)">
-                  <span class="slider round"></span>
-                </label>
-              </div>
-            </div>
-          </div>
+          
 
 
 
@@ -716,7 +689,31 @@
             </div>
           </div>
 
-          <div style="text-align: right; margin-top: 2rem;">
+          
+          <!-- Opciones de Resincronizacion movidas al Modal -->
+          <div id="modal-resync-toggles" class="resync-toggle-card" style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid var(--glass-border); margin-top: 2rem;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-weight: 600; color: var(--text-main);" data-i18n="pi_include_resync">¿Deseas incluir la siguiente fase?</span>
+            </div>
+            <div class="resync-toggle-options" style="display: flex; gap: 1.5rem;">
+              <div id="wrapper-check-resx1" style="display: none; align-items: center; gap: 1rem; background: rgba(14, 165, 233, 0.1); padding: 12px 24px; border-radius: 12px; border: 1px solid var(--accent); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.1);">
+                <span id="label-check-resx1" class="text-accent" style="font-size: 1rem; font-weight: 800; white-space: nowrap;" data-i18n="pi_include_resx1">INCLUIR Resincronización 1</span>
+                <label class="switch" style="transform: scale(1.25);">
+                  <input type="checkbox" id="pi-check-resx1" onchange="toggleFase('resincronizacion1', this.checked)">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <div id="wrapper-check-resx2" style="display: none; align-items: center; gap: 1rem; background: rgba(168, 85, 247, 0.1); padding: 12px 24px; border-radius: 12px; border: 1px solid #a855f7; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.1);">
+                <span id="label-check-resx2" style="font-size: 1rem; font-weight: 800; white-space: nowrap; color: #a855f7;" data-i18n="pi_include_resx2">INCLUIR Resincronización 2</span>
+                <label class="switch" style="transform: scale(1.25);">
+                  <input type="checkbox" id="pi-check-resx2" onchange="toggleFase('resincronizacion2', this.checked)">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+  
+          <div style="text-align: right; margin-top: 1rem;">
             <button class="btn btn-secondary" onclick="cerrarModalPrecios()"
               style="margin-right:0.5rem" data-i18n="btn_cancel">Cancelar</button>
             <button class="btn btn-primary" onclick="guardarPreciosModal()"><i data-lucide="check"></i> <span data-i18n="btn_update_system">Actualizar
@@ -1600,7 +1597,7 @@
     }
   </style>
 
-  <script src="iatf-app.js?v=V260603.14"></script>
+  <script src="iatf-app.js?v=V260603.15"></script>
   
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>
