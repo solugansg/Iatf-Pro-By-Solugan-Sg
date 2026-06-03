@@ -23,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260603.11">
+  <link rel="stylesheet" href="style.css?v=V 260603.12">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -150,7 +150,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260603.11</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260603.12</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;" data-i18n="sidebar_active_user">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -225,7 +225,7 @@
         <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Abrir Menú">
           <i data-lucide="menu"></i>
         </button>
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260603.11</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260603.12</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -1397,6 +1397,34 @@
           </div>
         </div>
       </div>
+
+    
+      
+
+    
+      <!-- Barra de Navegación Inferior (Móvil) -->
+      <nav class="mobile-bottom-nav" style="display: none;">
+        <button class="nav-btn-bottom active" data-target="tablero-control" onclick="document.querySelector('.nav-btn[data-target=\'tablero-control\']').click()">
+          <i data-lucide="settings"></i>
+          <span data-i18n="sidebar_dashboard">Tablero</span>
+        </button>
+        <button class="nav-btn-bottom" data-target="protocolo-inicial" onclick="document.querySelector('.nav-btn[data-target=\'protocolo-inicial\']').click()">
+          <i data-lucide="calendar"></i>
+          <span data-i18n="sidebar_pi">Inicial</span>
+        </button>
+        <button class="nav-btn-bottom" data-target="resincronizacion1" onclick="document.querySelector('.nav-btn[data-target=\'resincronizacion1\']').click()">
+          <i data-lucide="refresh-cw"></i>
+          <span data-i18n="sidebar_resx1">Resinc 1</span>
+        </button>
+        <button class="nav-btn-bottom" data-target="dashboard" onclick="document.querySelector('.nav-btn[data-target=\'dashboard\']').click()">
+          <i data-lucide="layout-dashboard"></i>
+          <span data-i18n="sidebar_dash_roi">ROI</span>
+        </button>
+        <button class="nav-btn-bottom mobile-menu-trigger" onclick="toggleSidebar()">
+          <i data-lucide="menu"></i>
+          <span>Menú</span>
+        </button>
+      </nav>
 
     </main>
   </div>
