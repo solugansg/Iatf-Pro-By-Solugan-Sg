@@ -1,5 +1,5 @@
-// Iatf Pro by Solugan SG - Service Worker V 260617.5
-const CACHE_NAME = 'iatfpro-v260617.5';
+// Iatf Pro by Solugan SG - Service Worker V 260618.2
+const CACHE_NAME = 'iatfpro-v260618.2';
 
 // Todos los archivos que se guardan en caché para uso offline
 const ASSETS_TO_CACHE = [
@@ -18,6 +18,9 @@ const ASSETS_TO_CACHE = [
   'libs/chartjs-plugin-datalabels.min.js',
   'libs/html2pdf.min.js',
   'libs/xlsx.full.min.js',
+  'libs/firebase-app-compat.js',
+  'libs/firebase-auth-compat.js',
+  'libs/firebase-firestore-compat.js',
   // Fuentes locales
   'fonts/inter-400.woff2',
   'fonts/inter-600.woff2',
