@@ -1,5 +1,5 @@
 // Iatf Pro by Solugan SG - Service Worker V 260618.1
-const CACHE_NAME = 'iatfpro-V260618.2';
+const CACHE_NAME = 'iatfpro-V260618.5';
 
 // Todos los archivos que se guardan en caché para uso offline
 const ASSETS_TO_CACHE = [
