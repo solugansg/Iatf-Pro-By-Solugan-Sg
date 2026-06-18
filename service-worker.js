@@ -1,5 +1,5 @@
 // Iatf Pro by Solugan SG - Service Worker V 260618.6
-const CACHE_NAME = 'iatfpro-V260618.23';
+const CACHE_NAME = 'iatfpro-V260618.26';
 
 // Todos los archivos que se guardan en caché para uso offline
 const ASSETS_TO_CACHE = [
@@ -100,7 +100,14 @@ self.addEventListener('fetch', (event) => {
           }
           return networkResponse;
         })
-        .catch(() => caches.match(event.request, { ignoreSearch: true })) // Offline: usar caché
+        .catch(() => {
+          return caches.match(event.request, { ignoreSearch: true }).then(cached => {
+            if (cached) return cached;
+            if (event.request.mode === 'navigate' || event.request.destination === 'document') {
+              return caches.match('index.html', { ignoreSearch: true });
+            }
+          });
+        })
     );
   } else {
     // ── CACHE FIRST REAL: fuentes, imágenes, librerías JS ──
