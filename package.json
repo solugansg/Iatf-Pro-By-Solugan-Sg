@@ -1,18 +1,18 @@
 {
   "name": "iatf-pro",
-  "version": "V 260618.29",
+  "version": "V 260618.33",
   "description": "Iatf Pro - Analisis de Costos con proteccion de formulas y soporte offline",
   "main": "iatf-app.js",
   "scripts": {
     "prepublishOnly": "npm run bump-version",
     "prebuild": "npm run bump-version",
     "predev": "npm run bump-version",
-    "dev": "npx -y http-server . -p 8080 -c-1 -o",
+    "dev": "http-server . -p 8080 -c-1 -o",
     "build": "node build.js",
     "bump-version": "node scripts/version-bump.js"
   },
-  "dependencies": {},
   "devDependencies": {
+    "http-server": "^14.1.1",
     "javascript-obfuscator": "^4.1.0"
   }
 }
