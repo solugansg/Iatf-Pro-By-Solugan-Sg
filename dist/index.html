@@ -23,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=V 260626.2">
+  <link rel="stylesheet" href="style.css?v=V 260701.2">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -154,7 +154,7 @@
         <div class="logo-icon">
           <img src="Logo Iatf Pro.png" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" alt="IATF Pro">
         </div>
-        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260626.2</span></span>
+        <span class="sidebar-by-text" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 8px;">By Solugan Sg <span style="color:var(--accent); font-weight:bold; margin-left:2px;">V 260701.2</span></span>
         <div id="sidebar-consultor" style="display:none; margin-top: 8px; padding: 4px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); border-radius: 8px; text-align: center;">
           <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;" data-i18n="sidebar_active_user">Usuario activo</div>
           <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -227,7 +227,7 @@
       <!-- Cabecera Móvil (Hamburguesa) -->
       <div class="mobile-header" style="display: none;">
         
-        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260626.2</span></span>
+        <span class="mobile-logo-text">IATF PRO <span style="font-size:0.75rem; opacity:0.8; color:var(--accent);">V 260701.2</span></span>
         <div style="width:32px;height:32px;margin:0;display:flex;align-items:center;justify-content:center;"><img src="Logo Iatf Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="IATF Pro"></div>
       </div>
 
@@ -1247,46 +1247,37 @@
         </header>
 
         <div class="glass-panel p-2 mb-2">
-          <div
-            style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; margin-bottom: 1.5rem; background: rgba(14, 165, 233, 0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.1);">
-            <div class="input-group" style="flex: 1 1 250px; margin-bottom: 0;">
-              <label data-i18n="hist_search_label">Ingresa el NIT o C.C. para buscar</label>
-              <input type="text" id="search-nit" placeholder="Ej: 123456789" data-i18n-placeholder="ph_search_nit"
-                style="font-size: 1.1rem; padding: 0.75rem; background: rgba(0,0,0,0.2); width: 100%;">
+          <!-- Búsqueda y Filtros -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; align-items: end; margin-bottom: 1.5rem; background: rgba(14, 165, 233, 0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.1);">
+            <div class="input-group" style="margin-bottom: 0;">
+              <label>Buscar</label>
+              <input type="text" id="search-nit" placeholder="Cédula, nombre o finca..." style="font-size: 1.1rem; padding: 0.75rem; background: rgba(0,0,0,0.2); width: 100%;">
+              <div style="font-size:0.65rem;color:var(--text-muted);margin-top:4px;line-height:1.2;">
+                * Puedes buscar por: cédula/NIT o nombre de la finca.
+              </div>
             </div>
-            <button class="btn btn-primary" onclick="buscarPorNit()"
-              style="flex: 1 1 auto; height: 50px; padding: 0 2rem; font-weight: bold; background: var(--accent); justify-content: center;">
-              <i data-lucide="search"></i> <span data-i18n="hist_btn_search">BUSCAR AHORA</span>
-            </button>
-          </div>
+            
+            <div class="input-group" style="margin-bottom: 0;">
+              <label>Filtrar por Fecha</label>
+              <input type="date" id="hist-fecha" style="font-size: 1.1rem; padding: 0.75rem; background: rgba(0,0,0,0.2); width: 100%;">
+            </div>
 
-          <div id="historial-resultados" style="display: none;">
-            <h3 class="form-title" style="margin-top: 2rem; color: var(--accent);"><i data-lucide="list"></i> <span data-i18n="hist_results_title">Resultados
-              encontrados</span></h3>
-            <div class="table-responsive">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th style="text-align: left;" data-i18n="hist_th_fecha">Fecha</th>
-                    <th style="text-align: left;" data-i18n="hist_th_finca">Finca</th>
-                    <th style="text-align: left;" data-i18n="hist_th_protocol">Protocolo</th>
-                    <th style="text-align: center;" data-i18n="hist_th_animales">Animales</th>
-                    <th style="text-align: center;" data-i18n="hist_th_preg">Preñeces</th>
-                    <th style="text-align: right;" data-i18n="hist_th_inv">Inversión</th>
-                    <th style="text-align: center;" data-i18n="hist_th_actions">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody id="lista-historial">
-                  <!-- Se llena dinámicamente -->
-                </tbody>
-              </table>
+            <div style="display:flex; gap:0.5rem; height: 50px;">
+              <button class="btn btn-primary" onclick="buscarPorNit()" style="flex: 1; font-weight: bold; background: var(--success); border-color: var(--success); justify-content: center;">
+                <i data-lucide="refresh-cw"></i> Actualizar
+              </button>
+              <button class="btn" onclick="limpiarFiltrosHistorico()" style="flex: 1; font-weight: bold; background: rgba(239,68,68,0.1); color: #ef4444; border-color: rgba(239,68,68,0.3); justify-content: center;">
+                <i data-lucide="x"></i> Limpiar
+              </button>
             </div>
           </div>
 
-          <div id="historial-vacio" class="text-muted"
-            style="text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 12px; margin-top: 1rem; border: 1px dashed var(--glass-border);">
-            <i data-lucide="info" style="width: 40px; height: 40px; margin-bottom: 1rem; opacity: 0.5;"></i>
-            <p data-i18n="hist_empty_msg">Ingresa un NIT para ver el histórico de protocolos realizados.</p>
+          <!-- Contenedor de Resultados (Tarjetas) -->
+          <div id="historial-lista">
+            <div style="text-align:center; padding:3rem; color:var(--text-muted); background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--glass-border);">
+              <i data-lucide="archive" style="width:48px; height:48px; margin-bottom:1rem; opacity:0.3;"></i>
+              <p>Haz clic en "Actualizar" para cargar el histórico de registros.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1605,7 +1596,7 @@
     }
   </style>
 
-  <script src="iatf-app.js?v=V260626.2"></script>
+  <script src="iatf-app.js?v=V260701.2"></script>
   
   <!-- Registro del Service Worker (PWA Offline) con actualización automática -->
   <script>

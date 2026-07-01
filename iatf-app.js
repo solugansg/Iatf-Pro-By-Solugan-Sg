@@ -5464,13 +5464,13 @@ window.enviarWhatsApp = function() {
   
   window.open(waUrl, '_blank');
 }
-
 // --- SISTEMA DE HISTORIAL Y BÚSQUEDA ---
 window.guardarEnHistorial = function() {
   const ubicacion = document.getElementById('pi-ubicacion').value.trim();
   const finca = document.getElementById('pi-finca').value.trim();
   const perfil = JSON.parse(localStorage.getItem('reprocost_perfil')) || JSON.parse(localStorage.getItem('reprocost_perfil_consultor')) || {};
   let nitValue = perfil.nit || 'N/A';
+  
   if (nitValue === 'N/A') {
     nitValue = prompt("Para poder buscar este reporte después, por favor ingresa tu NIT:");
     if (!nitValue || nitValue.trim() === '') {
@@ -5521,14 +5521,8 @@ window.guardarEnHistorial = function() {
 
 window.buscarPorNit = function() {
   const term = document.getElementById('search-nit').value.trim();
-  if (!term) {
-    alert(t("alert_enter_nit"));
-    return;
-  }
-
-  // Remove spaces, dots, dashes for a clean comparison
-  const termClean = term.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-
+  const fechaFiltro = document.getElementById('hist-fecha')?.value || '';
+  
   let historial = JSON.parse(localStorage.getItem('reprocost_historial')) || [];
   
   // MIGRACIÓN AUTOMÁTICA: Si hay reportes con N/A, asignarles el NIT del usuario actual
@@ -5546,29 +5540,51 @@ window.buscarPorNit = function() {
     }
   }
 
+  // Filtrado
   const filtrados = historial.filter(r => {
-    const nitGuardado = String(r.nit || '');
-    const nitClean = nitGuardado.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-    
-    // Buscar también por finca o fecha para que sea más útil
-    const fincaClean = String(r.finca || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-    const fechaClean = String(r.fecha || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+    let coincideTermino = true;
+    let coincideFecha = true;
 
-    return nitClean.includes(termClean) || 
-           nitGuardado.toLowerCase().includes(term.toLowerCase()) ||
-           fincaClean.includes(termClean) ||
-           String(r.finca || '').toLowerCase().includes(term.toLowerCase()) ||
-           String(r.fecha || '').toLowerCase().includes(term.toLowerCase());
+    if (term) {
+      const termClean = term.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+      const nitGuardado = String(r.nit || '');
+      const nitClean = nitGuardado.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+      const fincaClean = String(r.finca || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+      
+      coincideTermino = nitClean.includes(termClean) || 
+             nitGuardado.toLowerCase().includes(term.toLowerCase()) ||
+             fincaClean.includes(termClean) ||
+             String(r.finca || '').toLowerCase().includes(term.toLowerCase());
+    }
+
+    if (fechaFiltro) {
+      // Comparar con la fecha del protocolo
+      let fechaProtocoloStr = '';
+      try {
+        const piDate = r.state?.inputs?.pi?.fecha;
+        if (piDate) {
+          fechaProtocoloStr = piDate;
+        } else if (r.fechaProtocolo) {
+          // Extraer YYYY-MM-DD de r.fechaProtocolo (suele venir como DD/MM/YYYY)
+          const partes = r.fechaProtocolo.split('/');
+          if(partes.length === 3) fechaProtocoloStr = `${partes[2]}-${partes[1]}-${partes[0]}`;
+        }
+      } catch(e) {}
+      
+      coincideFecha = fechaProtocoloStr === fechaFiltro;
+    }
+
+    return coincideTermino && coincideFecha;
   });
 
-  const container = document.getElementById('historial-resultados');
-  const empty = document.getElementById('historial-vacio');
-  const tbody = document.getElementById('lista-historial');
+  const lista = document.getElementById('historial-lista');
+  if (!lista) return;
   
-  tbody.innerHTML = '';
-
   if (filtrados.length > 0) {
-    filtrados.forEach((r) => {
+    // Ordenar de más reciente a más antiguo
+    filtrados.reverse();
+    
+    lista.innerHTML = filtrados.map((r) => {
       // Obtener fecha de inicio del protocolo desde el estado guardado
       let fechaMostrar = r.fecha; // fallback: fecha de registro
       try {
@@ -5583,40 +5599,65 @@ window.buscarPorNit = function() {
         }
       } catch(e) { /* usar fallback */ }
 
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td style="font-weight:bold; color:var(--text-muted);">${fechaMostrar}</td>
-        <td>${r.finca}</td>
-        <td style="font-size:0.85rem;">${r.protocolo}</td>
-        <td style="text-align:center;">${r.animales}</td>
-        <td style="text-align:center; color:var(--success); font-weight:bold;">${r.preneces}</td>
-        <td style="text-align:right; font-weight:bold;">${r.inversion}</td>
-        <td style="text-align:center; white-space:nowrap;">
-          <button class="btn btn-secondary" onclick="cargarDeHistorial(${r.id})" style="padding: 4px 10px; font-size: 0.75rem; background: rgba(14, 165, 233, 0.1); color: var(--accent); border: 1px solid var(--accent); margin-right: 5px;">
-            <i data-lucide="eye" style="width:12px; height:12px;"></i> ${t("hist_btn_load")}
-          </button>
-          <button class="btn btn-secondary" onclick="exportarExcelDesdeHistorial(${r.id})" style="padding: 4px 10px; font-size: 0.75rem; background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid #10b981; margin-right: 5px;">
-            <i data-lucide="file-spreadsheet" style="width:12px; height:12px;"></i> ${t("hist_btn_excel")}
-          </button>
-          <button class="btn btn-danger" onclick="eliminarDeHistorial(${r.id})" style="padding: 4px 10px; font-size: 0.75rem; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid var(--danger);">
-            <i data-lucide="trash-2" style="width:12px; height:12px;"></i> ${t("hist_btn_delete")}
-          </button>
-        </td>
+      return `
+        <div class="historico-card" onclick="cargarDeHistorial(${r.id})">
+          <div class="hc-date">${fechaMostrar}</div>
+          <div class="hc-finca">${r.finca}</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);">Protocolo: ${r.protocolo}</div>
+          <div class="hc-meta">
+            <span>🐄 <strong>${r.animales}</strong> animales</span>
+            <span>✅ <strong>${r.preneces}</strong> preñeces</span>
+            <span>💰 <strong>${r.inversion}</strong></span>
+          </div>
+          <div style="display:flex;gap:0.5rem;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.05);padding-top:0.75rem;">
+            <button class="btn-outline-action btn-cargar" onclick="event.stopPropagation(); cargarDeHistorial(${r.id})">
+              <i data-lucide="eye" style="width:14px;height:14px;"></i> ${t("hist_btn_load")}
+            </button>
+            <button class="btn-outline-action btn-excel" onclick="event.stopPropagation(); exportarExcelDesdeHistorial(${r.id})">
+              <i data-lucide="file-spreadsheet" style="width:14px;height:14px;"></i> ${t("hist_btn_excel")}
+            </button>
+            <button class="btn-outline-action btn-eliminar" onclick="event.stopPropagation(); eliminarDeHistorial(${r.id})">
+              <i data-lucide="trash-2" style="width:14px;height:14px;"></i> ${t("hist_btn_delete")}
+            </button>
+          </div>
+        </div>
       `;
-      tbody.appendChild(tr);
-    });
-    container.style.display = 'block';
-    empty.style.display = 'none';
-    lucide.createIcons();
+    }).join('');
+    
+    // Renderizar iconos
+    setTimeout(() => {
+      if(window.lucide) lucide.createIcons();
+    }, 10);
   } else {
-    container.style.display = 'none';
-    empty.style.display = 'block';
-    empty.innerHTML = `
-      <i data-lucide="search-x" style="width: 40px; height: 40px; margin-bottom: 1rem; color: var(--danger);"></i>
-      <p>${t("hist_no_results")} <strong>${term}</strong></p>
+    lista.innerHTML = `
+      <div style="text-align:center; padding:3rem; color:var(--text-muted); background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--glass-border);">
+        <i data-lucide="inbox" style="width:48px; height:48px; margin-bottom:1rem; opacity:0.3;"></i>
+        <p>No se encontraron registros que coincidan con la búsqueda.</p>
+      </div>
     `;
-    lucide.createIcons();
+    setTimeout(() => {
+      if(window.lucide) lucide.createIcons();
+    }, 10);
   }
+};
+
+window.limpiarFiltrosHistorico = function() {
+  document.getElementById('search-nit').value = '';
+  const dateInput = document.getElementById('hist-fecha');
+  if (dateInput) dateInput.value = '';
+  
+  const lista = document.getElementById('historial-lista');
+  if (lista) {
+    lista.innerHTML = `
+      <div style="text-align:center; padding:3rem; color:var(--text-muted); background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--glass-border);">
+        <i data-lucide="archive" style="width:48px; height:48px; margin-bottom:1rem; opacity:0.3;"></i>
+        <p>Haz clic en "Actualizar" para cargar el histórico de registros.</p>
+      </div>
+    `;
+  }
+  setTimeout(() => {
+    if(window.lucide) lucide.createIcons();
+  }, 10);
 };
 
 window.cargarDeHistorial = function(id) {

@@ -1969,3 +1969,65 @@ input:checked + .slider:before { transform: translateX(20px); }
     font-size: 1.25rem !important;
   }
 }
+
+/* Historico Cards */
+.historico-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
+}
+.historico-card:hover {
+  border-left-color: var(--accent);
+  background: rgba(14, 165, 233, 0.03);
+  transform: translateX(4px);
+}
+.hc-date { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.25rem; }
+.hc-finca { font-weight: 700; font-size: 1rem; }
+.hc-meta { display: flex; gap: 1.5rem; margin-top: 0.5rem; }
+.hc-meta span { font-size: 0.8rem; color: var(--text-muted); }
+.hc-meta strong { color: var(--accent); }
+
+/* Botones de acción en card */
+.btn-outline-action {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 8px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.btn-cargar {
+  color: var(--accent);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+}
+.btn-cargar:hover {
+  background: rgba(14, 165, 233, 0.1);
+  border-color: var(--accent);
+}
+.btn-excel {
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.btn-excel:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #10b981;
+}
+.btn-eliminar {
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.btn-eliminar:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+}
